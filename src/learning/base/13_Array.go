@@ -29,11 +29,18 @@ func main() {
 		fmt.Println(value)
 
 	}
+	//二维数组 可以看成一维数组 然后每个元素又是一个一维数组
 	c := [3][4]int{{1, 3, 5, 7}, {2, 4, 6, 8}, {3, 6, 9, 12}}
 	for i := 0; i < len(c); i++ {
 		for j := 0; j < len(c[i]); j++ {
 			fmt.Printf("c[%d][%d]=%d\n", i, j, c[i][j])
 		}
 
+	}
+	fmt.Println("-----------------")
+	for _, value := range c {
+		for _, value2 := range value {
+			fmt.Println(value2)
+		}
 	}
 }
