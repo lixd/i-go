@@ -107,6 +107,7 @@ func main() {
 	flag.Parse()
 
 	fmt.Printf("user:%v,pwd:%v,host:%v,port:%v", user, pwd, host, port)
+
 }
 
 func CopyFile(src string, dst string) (written int64, err error) {
