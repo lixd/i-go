@@ -1,4 +1,4 @@
-package mian
+package main
 
 import "fmt"
 
