@@ -12,10 +12,13 @@ func main() {
 	fmt.Println("---------------------")
 	stu := StudentR{"illusory", 22}
 	reflectTest02(stu)
-	//reflectTest03(num)
+
+	fmt.Println("---------------------")
+	reflectTest03(num)
 
 	fmt.Println("---------------------")
 	reflectTest04(stu)
+
 }
 func reflectTest01(i interface{}) {
 	//获取传入变量的类型
@@ -66,8 +69,10 @@ func reflectTest02(i interface{}) {
 }
 
 func reflectTest03(i interface{}) {
-	rVal := reflect.ValueOf(i)
+	var num int = 100
+	rVal := reflect.ValueOf(&num)
 	rVal.Elem().SetInt(20)
+	fmt.Printf("int=%d \n", num)
 }
 
 func reflectTest04(i interface{}) {

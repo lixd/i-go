@@ -72,7 +72,6 @@ func main() {
 	fmt.Println("-------------")
 	src := "d:/abc.png"
 	dst := "d:/def.png"
-	// TODO拷贝小文件（1kb的txt）的时候无效
 	written, e := CopyFile(src, dst)
 	if e != nil {
 		fmt.Printf("Copy error: %v \n", e)
