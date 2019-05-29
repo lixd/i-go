@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
-	"i-go/src/gin/routers"
+	"i-go/gin/routers"
 	"log"
 	"net/http"
 	"time"

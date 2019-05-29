@@ -2,15 +2,15 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	user2 "i-go/src/gin/user"
+	"i-go/gin/user"
 )
 
 func RegisterRoutes(router *gin.Engine) {
 
-	v1Controller := &user2.V1Controller{}
+	v1Controller := &user.V1Controller{}
 	// 加载静态资源
 	// router.LoadHTMLFiles("E:/illusory/MyProject/i-go/gin/templates/index.html")
-	router.LoadHTMLGlob("E:/illusory/MyProject/i-go/src/gin/templates/*")
+	router.LoadHTMLGlob("E:/illusory/MyProject/i-go/gin/templates/*")
 	// 设定请求url不存在的返回值
 	router.NoRoute(v1Controller.NoResponse)
 	// 重定向
@@ -51,7 +51,7 @@ func RegisterRoutes(router *gin.Engine) {
 		v1.GET("/cookie", v1Controller.CookieHandler)
 	}
 
-	v2Controller := &user2.ParamBind{}
+	v2Controller := &user.ParamBind{}
 	v2 := router.Group("/v2")
 	{
 		v2.GET("/upload", v2Controller.UploadFileHandler)
@@ -67,7 +67,7 @@ func RegisterRoutes(router *gin.Engine) {
 		v2.POST("/multipartform", v2Controller.MultipartFormHandler)
 	}
 
-	v3Controller := &user2.ModelBind{}
+	v3Controller := &user.ModelBind{}
 	v3 := router.Group("/v3")
 	{
 		v3.GET("/bind", v3Controller.BindHandler)
@@ -75,7 +75,7 @@ func RegisterRoutes(router *gin.Engine) {
 		v3.GET("/shouldbind", v3Controller.ShouldBindHandler)
 		v3.GET("/shouldbindjson", v3Controller.ShouldBindJSONHandler)
 	}
-	v4Controller := user2.V4Controller{}
+	v4Controller := user.V4Controller{}
 	v4 := router.Group("/v4")
 	{
 		v4.GET("/string", v4Controller.StringHandler)
