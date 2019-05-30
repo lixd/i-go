@@ -1,4 +1,4 @@
-package routers
+package router
 
 import (
 	"github.com/gin-gonic/gin"
@@ -72,8 +72,10 @@ func RegisterRoutes(router *gin.Engine) {
 	{
 		v3.GET("/bind", v3Controller.BindHandler)
 		v3.GET("/bindjson", v3Controller.BindJSONHandler)
+		v3.GET("/bindquery", v3Controller.BindQueryHandler)
 		v3.GET("/shouldbind", v3Controller.ShouldBindHandler)
 		v3.GET("/shouldbindjson", v3Controller.ShouldBindJSONHandler)
+		v3.GET("/shouldbindquery", v3Controller.ShouldBindQueryHandler)
 	}
 	v4Controller := user.V4Controller{}
 	v4 := router.Group("/v4")
@@ -82,6 +84,11 @@ func RegisterRoutes(router *gin.Engine) {
 		v4.GET("/json", v4Controller.JSONHandler)
 		v4.GET("/data", v4Controller.DATAHandler)
 		v4.GET("/html", v4Controller.HTMLHandler)
+	}
+	v5Controller := user.V5Controller{}
+	v5 := router.Group("/v5")
+	{
+		v5.GET("/get", v5Controller.Get)
 	}
 
 }

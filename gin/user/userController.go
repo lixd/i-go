@@ -18,7 +18,7 @@ func (v1Controller *V1Controller) IndexHandler(c *gin.Context) {
 func (v1Controller *V1Controller) CheckBoxHandler(c *gin.Context) {
 	var myForm myForm
 	c.ShouldBind(&myForm)
-	c.JSON(http.StatusOK, gin.H{"colors": Colors})
+	c.JSON(http.StatusOK, gin.H{"colors": myForm.Colors})
 }
 func (v1Controller *V1Controller) QueryMap(c *gin.Context) {
 	// map
@@ -30,9 +30,9 @@ func (v1Controller *V1Controller) RequestBodyHandler(c *gin.Context) {
 	user := LoginForm{}
 	class := Class{}
 	if c.ShouldBindBodyWith(&user, binding.JSON) == nil {
-		c.String(http.StatusOK, "the body should be LoginForm  user=%v password= %v", User, Password)
+		c.String(http.StatusOK, "the body should be LoginForm  user=%v password= %v", user.User, user.Password)
 	} else if c.ShouldBindBodyWith(&class, binding.JSON) == nil {
-		c.String(http.StatusOK, "he body should be class id=%v number= %v", Id, Number)
+		c.String(http.StatusOK, "he body should be class id=%v number= %v", class.Id, class.Number)
 	}
 }
 func (v1Controller *V1Controller) LongSyncHandler(c *gin.Context) {
@@ -108,7 +108,7 @@ func (v1Controller *V1Controller) JSONPHandler(c *gin.Context) {
 func (v1Controller *V1Controller) LoginHandler(c *gin.Context) {
 	var form LoginForm
 	if c.ShouldBind(&form) == nil {
-		if User == "user" && Password == "password" {
+		if form.User == "user" && form.Password == "password" {
 			c.JSON(200, gin.H{"status": "you are logged in"})
 		} else {
 			c.JSON(401, gin.H{"status": "unauthorized"})
@@ -140,21 +140,21 @@ func (v1Controller *V1Controller) Login3Handler(c *gin.Context) {
 func (v1Controller *V1Controller) Login4Handler(c *gin.Context) {
 	var form LoginForm
 	if c.ShouldBindQuery(&form) == nil {
-		name := User
-		password := Password
+		name := form.User
+		password := form.Password
 		c.String(http.StatusOK, "name=%v password=%v ", name, password)
 	}
 }
 func (v1Controller *V1Controller) ParamsBind(c *gin.Context) {
 	var form LoginForm
 	err := c.Bind(&form)
-	log.Printf("ShouldBind error= %v  form.user=%v form.password=%v", err, User, Password)
+	log.Printf("ShouldBind error= %v  form.user=%v form.password=%v", err, form.User, form.Password)
 
 }
 func (v1Controller *V1Controller) ParamsShouldBind(c *gin.Context) {
 	var form LoginForm
 	err := c.ShouldBind(&form)
-	log.Printf("ShouldBind error= %v  form.user=%v form.password=%v", err, User, Password)
+	log.Printf("ShouldBind error= %v  form.user=%v form.password=%v", err, form.User, form.Password)
 }
 
 func (v1Controller *V1Controller) CookieHandler(c *gin.Context) {

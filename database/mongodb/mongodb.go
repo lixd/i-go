@@ -1,4 +1,4 @@
-package main
+package mongodb
 
 import (
 	"context"
@@ -11,25 +11,25 @@ import (
 	"time"
 )
 
-func main() {
-	fmt.Println("------------Main Begin----------")
-
-	client, e := ConnMongo()
-	if e != nil {
-		fmt.Printf("mongo.Conn error=%v \n", e)
-	}
-	//选择数据库和集合
-	//collection := client.Database("db2").Collection("mycol2")
-	// 测试 增删改查
-	//Insert(collection)
-	//Find(collection)
-	//Delete(collection)
-	//Update(collection)
-	//Others(collection)
-
-	AggregateTest(client)
-	fmt.Println("------------Main End----------")
-}
+// func main() {
+// 	fmt.Println("------------Main Begin----------")
+//
+// 	client, e := ConnMongo()
+// 	if e != nil {
+// 		fmt.Printf("mongo.Conn error=%v \n", e)
+// 	}
+// 	//选择数据库和集合
+// 	collection := client.Database("db2").Collection("mycol2")
+// 	// 测试 增删改查
+// 	//Insert(collection)
+// 	//Find(collection)
+// 	//Delete(collection)
+// 	//Update(collection)
+// 	//Others(collection)
+//
+// 	AggregateTest(client)
+// 	fmt.Println("------------Main End----------")
+// }
 
 func AggregateTest(client *mongo.Client) {
 	collection := client.Database("db2").Collection("mycol3")
@@ -218,4 +218,17 @@ func ConnMongo() (*mongo.Client, error) {
 		fmt.Print(errP)
 	}
 	return client, err
+}
+
+type MongoCollection interface {
+	GetCollectionName() string
+}
+
+func GetCollection(c MongoCollection) *mongo.Collection {
+	client, e := ConnMongo()
+	if e != nil {
+		return nil
+	}
+	database := client.Database("vaptcha")
+	return database.Collection(c.GetCollectionName())
 }
