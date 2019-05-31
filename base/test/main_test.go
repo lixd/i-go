@@ -1,8 +1,8 @@
 package main
 
 import (
-	"i-go/gin/demo/model"
-	"i-go/gin/demo/utils"
+	"i-go/demo/model"
+	"i-go/demo/utils"
 	"testing"
 )
 

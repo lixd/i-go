@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
-	"i-go/gin/routers"
+	router2 "i-go/gin/routers"
 	"log"
 	"net/http"
 	"time"
@@ -12,7 +12,7 @@ import (
 func main() {
 	// Default方法创建一个路由handler。
 	router := gin.Default()
-	routers.RegisterRoutes(router)
+	router2.RegisterRoutes(router)
 	// 修改模式
 	// gin.SetMode(gin.ReleaseMode)
 	// 记录日志到文件
