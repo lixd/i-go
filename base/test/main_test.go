@@ -1,14 +1,10 @@
 package main
 
 import (
-	"i-go/demo/model"
-	"i-go/demo/utils"
 	"testing"
 )
 
 func TestAdd(t *testing.T) {
-	user := model.User{"1233333", "123456"}
-	utils.TrimForStruct(&user, "Phone", "Password")
 	sum := Add(1, 2)
 	if sum != 3 {
 		t.Error("1 and 2 result is not 3")
@@ -30,5 +26,10 @@ func TestMultiAdd(t *testing.T) {
 		if sum != test.Sum {
 			t.Errorf("Add %v and %v result is not %v", test.Arg1, test.Arg2, test.Sum)
 		}
+	}
+}
+func BenchmarkLoop(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Add(1, 2)
 	}
 }

@@ -11,7 +11,6 @@ type Router struct {
 }
 
 func (r *Router) RegisterRouter(e *gin.Engine) {
-	// coll1 := database.GetCollection(new(model.User))
 	accountDAO := repository.AccountDAO{}
 	dao := repository.DAO(&accountDAO)
 	accountServer := server.AccountServer{Dao: &dao}
