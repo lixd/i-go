@@ -1,11 +1,15 @@
 package user
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"i-go/demo/constant/resultcode"
+	"i-go/demo/model"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -13,7 +17,7 @@ type V1Controller struct {
 }
 
 func (v1Controller *V1Controller) IndexHandler(c *gin.Context) {
-	c.HTML(http.StatusOK, "index.html", nil)
+	c.HTML(http.StatusOK, "vaptcha.html", nil)
 }
 func (v1Controller *V1Controller) CheckBoxHandler(c *gin.Context) {
 	var myForm myForm
@@ -104,16 +108,80 @@ func (v1Controller *V1Controller) JSONPHandler(c *gin.Context) {
 	c.JSONP(http.StatusOK, User1)
 }
 
+type loginVer struct {
+	id        string
+	secretkey string
+	scene     string
+	token     string
+	ip        string
+}
+
 // form 表单绑定
 func (v1Controller *V1Controller) LoginHandler(c *gin.Context) {
 	var form LoginForm
-	if c.ShouldBind(&form) == nil {
-		if form.User == "user" && form.Password == "password" {
-			c.JSON(200, gin.H{"status": "you are logged in"})
-		} else {
-			c.JSON(401, gin.H{"status": "unauthorized"})
+	vaptcha_token, ok := c.GetQuery("vaptcha_token")
+	if !ok {
+		fmt.Println("get token false")
+		c.JSON(http.StatusBadRequest, &model.Response{Code: resultcode.Fail})
+	}
+	fmt.Printf("token= %v \n", vaptcha_token)
+	if vaptcha_token == "" {
+		fmt.Printf("token empty %v \n", vaptcha_token)
+		return
+	}
+	remoteIP := c.Request.RemoteAddr
+	fmt.Printf("ip= %v \n", remoteIP)
+	//
+	data := loginVer{"5cf6052afc650e737499bfc5", "6041baccdbe6461ab2bede74a7a3b4ee", "01", vaptcha_token, remoteIP}
+	url := "http://api.vaptcha.com/v2/validate"
+	response := httpPost(&data, url)
+	fmt.Printf("response =%v \n", response)
+	if response != nil {
+		body := make([]byte, 1024)
+		n, err := response.Body.Read(body)
+		if err != nil || n > 0 {
+			fmt.Printf("response body read error=%v read size=%v \n", err, n)
+		}
+		fmt.Printf("二次校验 body= %v \n", string(body))
+		resp := model.Response{}
+		err = json.Unmarshal(body, &resp)
+		if err != nil || n > 0 {
+			fmt.Printf("response body Unmarshal error=%v  \n", err)
+		}
+		fmt.Printf("二次校验 Header= %v \n", response.Header)
+		fmt.Printf("二次校验 StatusCode= %v \n", response.StatusCode)
+		if response.StatusCode == http.StatusOK && resp.Msg == "success" {
+			fmt.Printf("二次校验通过 data=%v \n", resp)
+		}
+		if c.ShouldBind(&form) == nil {
+			if form.User == "admin" && form.Password == "root" {
+				c.JSON(200, gin.H{"status": "you are logged in"})
+			} else {
+				c.JSON(401, gin.H{"status": "unauthorized"})
+			}
 		}
 	}
+
+}
+
+func httpPost(data *loginVer, url string) *http.Response {
+	var r http.Request
+	r.ParseForm()
+	r.Form.Add("id", data.id)
+	r.Form.Add("secretkey", data.secretkey)
+	r.Form.Add("token", data.token)
+	r.Form.Add("scene", data.scene)
+	r.Form.Add("ip", data.ip)
+	bodystr := strings.TrimSpace(r.Form.Encode())
+	request, err := http.NewRequest("POST", url, strings.NewReader(bodystr))
+	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	var resp *http.Response
+	resp, err = http.DefaultClient.Do(request)
+	if err != nil {
+		fmt.Printf("二次验证error=%v \n", err)
+		return nil
+	}
+	return resp
 }
 
 // 快速参数匹配

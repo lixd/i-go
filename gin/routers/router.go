@@ -32,7 +32,7 @@ func RegisterRoutes(router *gin.Engine) {
 		v1.GET("/index", v1Controller.LoadHTMLGlobHandler)
 		v1.GET("/JSONP?callback=x", v1Controller.JSONPHandler)
 		// 表单绑定
-		v1.POST("/login", v1Controller.LoginHandler)
+		v1.GET("/login", v1Controller.LoginHandler)
 		// 快速参数匹配
 		v1.GET("/login2/:name/:password", v1Controller.Login2Handler)
 		// 普通参数匹配 http://localhost:8080/v1/login3?name=root&password=root
