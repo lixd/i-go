@@ -1,4 +1,4 @@
-package routers
+package router
 
 import (
 	"github.com/gin-gonic/gin"
@@ -32,7 +32,7 @@ func RegisterRoutes(router *gin.Engine) {
 		v1.GET("/index", v1Controller.LoadHTMLGlobHandler)
 		v1.GET("/JSONP?callback=x", v1Controller.JSONPHandler)
 		// 表单绑定
-		v1.POST("/login", v1Controller.LoginHandler)
+		v1.GET("/login", v1Controller.LoginHandler)
 		// 快速参数匹配
 		v1.GET("/login2/:name/:password", v1Controller.Login2Handler)
 		// 普通参数匹配 http://localhost:8080/v1/login3?name=root&password=root
@@ -72,8 +72,10 @@ func RegisterRoutes(router *gin.Engine) {
 	{
 		v3.GET("/bind", v3Controller.BindHandler)
 		v3.GET("/bindjson", v3Controller.BindJSONHandler)
+		v3.GET("/bindquery", v3Controller.BindQueryHandler)
 		v3.GET("/shouldbind", v3Controller.ShouldBindHandler)
 		v3.GET("/shouldbindjson", v3Controller.ShouldBindJSONHandler)
+		v3.GET("/shouldbindquery", v3Controller.ShouldBindQueryHandler)
 	}
 	v4Controller := user.V4Controller{}
 	v4 := router.Group("/v4")
@@ -82,6 +84,11 @@ func RegisterRoutes(router *gin.Engine) {
 		v4.GET("/json", v4Controller.JSONHandler)
 		v4.GET("/data", v4Controller.DATAHandler)
 		v4.GET("/html", v4Controller.HTMLHandler)
+	}
+	v5Controller := user.V5Controller{}
+	v5 := router.Group("/v5")
+	{
+		v5.GET("/get", v5Controller.Get)
 	}
 
 }

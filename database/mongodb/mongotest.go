@@ -7,32 +7,30 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"time"
+	"i-go/demo/database"
 )
 
 func main() {
 	fmt.Println("------------Main Begin----------")
 
-	client, e := ConnMongo()
+	database, e := database.InitMongoDB()
 	if e != nil {
 		fmt.Printf("mongo.Conn error=%v \n", e)
 	}
-	//选择数据库和集合
-	//collection := client.Database("db2").Collection("mycol2")
+	// 选择数据库和集合
+	collection := database.Collection("mycol1")
 	// 测试 增删改查
-	//Insert(collection)
-	//Find(collection)
-	//Delete(collection)
-	//Update(collection)
-	//Others(collection)
+	Insert(collection)
+	Find(collection)
+	Delete(collection)
+	Update(collection)
+	Others(collection)
 
-	AggregateTest(client)
+	AggregateTest(collection)
 	fmt.Println("------------Main End----------")
 }
 
-func AggregateTest(client *mongo.Client) {
-	collection := client.Database("db2").Collection("mycol3")
+func AggregateTest(collection *mongo.Collection) {
 	data := []interface{}{}
 	data = append(data, bson.M{"title": "first", "score": 80, "type": "Java"})
 	data = append(data, bson.M{"title": "second", "score": 70, "type": "Java"})
@@ -48,10 +46,10 @@ func AggregateTest(client *mongo.Client) {
 	result, _ := collection.InsertMany(context.Background(), data)
 	fmt.Printf("InsertMany result= %v \n", result)
 	// Aggregate()
-	//db.getCollection('mycol3').aggregate([{$group:{_id:"$title",total:{$sum:"$score"}}}])
-	//db.getCollection('mycol3').aggregate([{$group:{_id:"$title",total:{$sum:"$score"}}},{$match:{total:{$gt:110,$lt:150}}}])
-	//db.getCollection('mycol3').aggregate(
-	//[{
+	// db.getCollection('mycol3').aggregate([{$group:{_id:"$title",total:{$sum:"$score"}}}])
+	// db.getCollection('mycol3').aggregate([{$group:{_id:"$title",total:{$sum:"$score"}}},{$match:{total:{$gt:110,$lt:150}}}])
+	// db.getCollection('mycol3').aggregate(
+	// [{
 	//     $group:
 	//        {_id:"$type",
 	//        totalScore:{$sum:"$score"}}},
@@ -60,18 +58,18 @@ func AggregateTest(client *mongo.Client) {
 	//            $gt:10,$lt:160}}},
 	//    {$sort:
 	//        {totalScore:1}}
-	//])
+	// ])
 }
 
 func Others(collection *mongo.Collection) {
-	//查询集合里面有多少数据
+	// 查询集合里面有多少数据
 	fmt.Println("------------CountDocuments----------")
 	CountDocuments, e := collection.CountDocuments(context.Background(), nil)
 	if e != nil {
 		fmt.Printf("collection.CountDocuments error=%v \n", e)
 	}
 	fmt.Printf("collection.CountDocuments  result=%v \n", CountDocuments)
-	//查询集合里面有多少数据(age>=20的数据)
+	// 查询集合里面有多少数据(age>=20的数据)
 	fmt.Println("------------CountDocuments Filter----------")
 	CountDocuments2, e := collection.CountDocuments(context.Background(), bson.M{"age": bson.M{"$gte": 20}})
 	if e != nil {
@@ -82,14 +80,14 @@ func Others(collection *mongo.Collection) {
 }
 
 func Update(collection *mongo.Collection) {
-	//更新一条数据
+	// 更新一条数据
 	fmt.Println("------------UpdateOne----------")
 	UpdateOne, e := collection.UpdateOne(context.Background(), bson.M{"name": "illusory"}, bson.M{"$set": bson.M{"name": "new Name"}})
 	if e != nil {
 		fmt.Printf("collection.UpdateOne error=%v \n", e)
 	}
 	fmt.Printf("collection.UpdateOne  result=%v \n", UpdateOne)
-	//批量更新
+	// 批量更新
 	fmt.Println("------------UpdateMany----------")
 	UpdateMany, e := collection.UpdateMany(context.Background(), bson.M{"age": bson.M{"$gte": 20}}, bson.M{"$set": bson.M{"age": 33}})
 	if e != nil {
@@ -107,7 +105,7 @@ func Delete(collection *mongo.Collection) {
 		fmt.Printf("collection.DeleteOne error=%v \n", e)
 	}
 	fmt.Printf("collection.DeleteOne  result=%v \n", DeleteOne)
-	//删除多条数据
+	// 删除多条数据
 	fmt.Println("------------DeleteMany----------")
 	deleteResult, e := collection.DeleteMany(context.Background(), bson.M{"name": "illusory"})
 	if e != nil {
@@ -119,14 +117,14 @@ func Delete(collection *mongo.Collection) {
 
 type User struct {
 	Id primitive.ObjectID `bson:"_id" form:"id"`
-	//Name string             `bson:"name"`
+	// Name string             `bson:"name"`
 	Name string `bson:"name" form:"name"`
 }
 
 func Find(collection *mongo.Collection) {
 	user1 := bson.M{}
 	user2 := User{}
-	//查询单条数据
+	// 查询单条数据
 	fmt.Println("------------FindOne----------")
 	e := collection.FindOne(context.Background(), bson.M{"name": "illusory"}).Decode(&user1)
 	e = collection.FindOne(context.Background(), bson.M{"name": "illusory"}).Decode(&user2)
@@ -135,7 +133,7 @@ func Find(collection *mongo.Collection) {
 	}
 	fmt.Printf("collection.FindOne to bson result=%v \n", user1)
 	fmt.Printf("collection.FindOne to user result=%v \n", user2)
-	//批量查询
+	// 批量查询
 	fmt.Println("------------FindMany----------")
 	cursor, e := collection.Find(context.Background(), bson.M{})
 	for cursor.Next(context.Background()) {
@@ -182,7 +180,7 @@ func Insert(collection *mongo.Collection) {
 		fmt.Printf("collection.InsertOne error=%v \n", e)
 	}
 	fmt.Printf("collection.InsertOne result=%v \n", InsertOne)
-	//插入多条数据
+	// 插入多条数据
 	fmt.Println("------------InsertMany----------")
 	users := []interface{}{}
 	users = append(users, bson.M{"name": "illusory"})
@@ -193,29 +191,4 @@ func Insert(collection *mongo.Collection) {
 		fmt.Printf("collection.InsertMany error=%v \n", e)
 	}
 	fmt.Printf("collection.InsertMany result=%v \n", manyResult)
-}
-
-func ConnMongo() (*mongo.Client, error) {
-	// username:password@hostname/dbname
-	// 获取 client
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://192.168.0.138:27017").SetAuth(options.Credential{
-		Username:   "admin",
-		Password:   "123456",
-		AuthSource: "admin"}))
-	if err != nil {
-		fmt.Printf("mongo.NewClient error=%v", err)
-	}
-	// 设置 30s 超时
-	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
-	//连接
-	errC := client.Connect(ctx)
-	if errC != nil {
-		fmt.Print(errC)
-	}
-	// 判断服务是否可用
-	errP := client.Ping(ctx, readpref.Primary())
-	if errP != nil {
-		fmt.Print(errP)
-	}
-	return client, err
 }

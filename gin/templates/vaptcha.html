@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人机验证</title>
+</head>
+<!--官方预加载动画-->
+<style>
+    .vaptcha-init-main {
+        display: table;
+        width: 100%;
+        height: 100%;
+        background-color: #EEEEEE;
+    }
+
+    .vaptcha-init-loading {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center
+    }
+
+    .vaptcha-init-loading > a {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: none;
+    }
+
+    .vaptcha-init-loading > a img {
+        vertical-align: middle
+    }
+
+    .vaptcha-init-loading .vaptcha-text {
+        font-family: sans-serif;
+        font-size: 12px;
+        color: #CCCCCC;
+        vertical-align: middle
+    }
+</style>
+<body>
+<form method="get" action="http://localhost:8080/v1/login" id="login-form">
+    <div>
+        <label for="phone">账号:</label>
+        <input type="text" id="phone" name="user" placeholder="输入手机号"><br/>
+    </div>
+    <div>
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" placeholder="输入密码"><br/>
+    </div>
+    <!--初始化一 配置data-vid，填入验证单元的VID，此种方式默认初始化点击式 -->
+    <!--
+<div id="vaptchaContainer" data-vid="5cf6052afc650e737499bfc5" style="width: 300px;height: 36px;">
+    <div class="vaptcha-init-main">
+        <div class="vaptcha-init-loading">
+            <a href="https://www.vaptcha.com" target="_blank">
+                <img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/>
+            </a>
+            <span class="vaptcha-text">Vaptcha启动中...</span>
+        </div>
+    </div>
+</div>
+        -->
+
+    <!--初始化二 类型可选-->
+    <div id="vaptchaContainer" data-config='{"vid": "5cf6052afc650e737499bfc5","type": "embed","scene":"01"}'
+         style="width: 300px;height: 230px;"></div>
+
+    <input id="login" type="submit" value="登录">
+</form>
+
+</body>
+<script src="https://cdn.vaptcha.com/v2.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    console.log(" init");
+    window.vaptcha({
+        vid: '5cf6052afc650e737499bfc5', // 验证单元id
+        type: 'click', // 显示类型 点击式
+        container: '#vaptchaContainer' // 按钮容器，可为Element 或者 selector
+    }).then(function (vaptchaObj) {
+        console.log(" init vaptcha");
+        obj = vaptchaObj; //将VAPTCHA验证实例保存到局部变量中
+        obj.renderTokenInput('.login-form'); //向表单中添加input标签
+        obj.listen('pass', function () {
+            // 验证成功， 进行登录操作
+            console.log(" 验证成功， 进行登录操作");
+            $("#login").style.disable="false"
+            login(obj)
+        });
+        obj.listen('close', function () {
+            console.log(" 验证弹窗关闭触发");
+            //验证弹窗关闭触发
+        });
+    });
+
+    function login(obj) {
+        var data = {
+            user: $("#phone").valueOf(),
+            password: $("#password").valueOf(),
+            token: obj.getToken()
+        };
+        console.log("data:" + data.token);
+        console.log("password: " + data.password);
+        console.log("token:" + data.token);
+
+        if (data.token === '') {
+            console.log("token为空")
+        } else {
+            $.get('http://localhost:8080/v1/login', data, function (result) {
+                if (result.code !== 200) {
+                    console.log('登录失败');
+                    obj.reset() //重置验证码
+                }
+            })
+        }
+    }
+</script>
+</html>

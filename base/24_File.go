@@ -100,7 +100,7 @@ func main() {
 	flag.StringVar(&pwd, "p", "", "密码默认为空")
 	flag.StringVar(&host, "h", "localhost", "主机名默认为localhost")
 	flag.IntVar(&port, "P", 3306, "端口号默认为3306")
-	// 这里有个非常重要的操作 转换 必须调用该方法
+	// 这里有个非常重要的操作 Parse 必须调用该方法
 	// 从arguments中解析注册的flag。必须在所有flag都注册好而未访问其值时执行。
 	// 未注册却使用flag -help时，会返回ErrHelp。
 	flag.Parse()
