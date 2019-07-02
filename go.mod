@@ -14,6 +14,7 @@ require (
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/mock v1.3.1 // indirect
+	github.com/golang/protobuf v1.3.1
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/pprof v0.0.0-20190515194954-54271f7e092f // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
@@ -44,6 +45,6 @@ require (
 	golang.org/x/tools v0.0.0-20190606050223-4d9ae51c2468 // indirect
 	google.golang.org/appengine v1.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20190605220351-eb0b1bdb6ae6 // indirect
-	google.golang.org/grpc v1.21.1 // indirect
+	google.golang.org/grpc v1.21.1
 	honnef.co/go/tools v0.0.0-20190605142022-0a11fc526260 // indirect
 )
