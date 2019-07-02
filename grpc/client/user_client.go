@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	// grpc.WithInsecure() 禁用传输安全性
+	// grpc.Dial 创建连接 grpc.WithInsecure() 禁用传输安全性
 	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
