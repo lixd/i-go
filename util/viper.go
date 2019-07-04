@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// 配置文件读取工具viper github.com/spf13/viper
 func main() {
 	initConfig2()
 }

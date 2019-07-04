@@ -16,6 +16,8 @@ Day of month | Yes        | 1-31            | * / , - ?
 Month        | Yes        | 1-12 or JAN-DEC | * / , -
 Day of week  | Yes        | 0-6 or SUN-SAT  | * / , - ?
 */
+
+// 定时任务 github.com/robfig/cron
 func main() {
 	c := cron.New()
 	job := job{"1", "cron job"}
