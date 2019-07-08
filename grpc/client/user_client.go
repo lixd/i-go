@@ -15,7 +15,7 @@ func main() {
 	}
 	defer conn.Close()
 	client := pb.NewUserServiceClient(conn)
-	resp, err := client.Create(context.Background(), &pb.User{Name: "illusory", Age: "23"})
+	resp, err := client.Create(context.Background(), &pb.UserReq{Name: "illusory", Age: "23"})
 	if err != nil {
 		log.Fatalf("could not Create: %v", err)
 	}

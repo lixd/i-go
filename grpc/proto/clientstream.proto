@@ -1,0 +1,20 @@
+syntax = "proto3"; //声明proto的版本 只能 是3，才支持 gRPC
+//声明 包名
+package helloworld;
+
+//声明gRPC服务
+service ClientStreamServer {
+    // 客户端推送流
+    rpc ClientStream (stream ClientStreamReq) returns (ClientStreamResp) {
+    }
+}
+
+//stream 请求结构
+message ClientStreamReq {
+    string data = 1;
+}
+//stream 返回结构
+message ClientStreamResp {
+    string data = 1;
+}
+

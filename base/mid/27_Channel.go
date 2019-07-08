@@ -5,14 +5,14 @@ import (
 )
 
 func main() {
-	//1.声明管道
+	// 1.声明管道
 	var intChan chan int
 	var intChant chan int
 	intChant = make(chan int, 5)
-	//只写 channel
+	// 只写 channel
 	var writeChan chan<- int
 	writeChan = make(chan int, 2)
-	//只读 channel
+	// 只读 channel
 	var readChan <-chan int
 	readChan = make(chan int, 2)
 	for i := 0; i < 5; i++ {
@@ -23,15 +23,15 @@ func main() {
 lable:
 	for {
 		select {
-		//这里 如果 intChan 一直没有关闭，不会一直阻塞二deadlock
-		//会自动到下一个 case 匹配
+		// 这里 如果 intChan 一直没有关闭，不会一直阻塞二deadlock
+		// 会自动到下一个 case 匹配
 		case v := <-intChan:
 			fmt.Printf("取到的数据 %v \n", v)
 		case v := <-intChant:
 			fmt.Printf("取到的数据 %v \n", v)
 		default:
 			fmt.Printf("都取不到数据，程序员可以添加自己的逻辑")
-			//return
+			// return
 			break lable
 		}
 	}
@@ -41,16 +41,16 @@ lable:
 	// 2.引用类型 值为地址 0xc000094080
 	fmt.Println(intChan)
 
-	//3.向管道写入数据
+	// 3.向管道写入数据
 	intChan <- 10
 	intChan <- 11
 	intChan <- 12
-	//注意：写入数据时不能超过其容量
+	// 注意：写入数据时不能超过其容量
 	fmt.Printf("channel len%v cap %v \n", len(intChan), cap(intChan))
 
-	//4.读取数据 读取后len减少 cap不变 可以继续存数据了
+	// 4.读取数据 读取后len减少 cap不变 可以继续存数据了
 	var num int
-	//希望等到第三个数据 直接把前两个推出
+	// 希望等到第三个数据 直接把前两个推出
 	<-intChan
 	<-intChan
 	num = <-intChan
@@ -61,7 +61,7 @@ lable:
 	intChan2 := make(chan int, 3)
 	intChan2 <- 100
 	intChan2 <- 101
-	//关闭 channel 不能再写数据 可以继续读取
+	// 关闭 channel 不能再写数据 可以继续读取
 	close(intChan2)
 
 	intChan3 := make(chan int, 100)
@@ -106,6 +106,7 @@ func readData(intChan chan int, exitChan chan bool) {
 	exitChan <- true
 	close(exitChan)
 }
+
 func testPanic() {
 	defer func() {
 		if err := recover(); err != nil {

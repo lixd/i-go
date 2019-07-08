@@ -2,32 +2,19 @@ syntax = "proto3";
 
 package helloworld;
 
-// The greeting service definition.
-service Greeter {
-    // Sends a greeting
-    rpc SayHello (HelloRequest) returns (HelloReply) {
-    }
-}
-
-// The request message containing the user's name.
-message HelloRequest {
-    string name = 1;
-}
-
-// The response message containing the greetings
-message HelloReply {
-    string message = 1;
-}
-
 // 定义一个服务
-service UserService {
-    rpc Create (User) returns (Resp) {
+service Hello {
+    // 定义 SayHello 方法
+    rpc SayHello (HelloReq) returns (HelloRep) {
     }
 }
-message User {
+
+//  request
+message HelloReq {
     string name = 1;
-    string age = 2;
 }
-message Resp {
+
+//  response
+message HelloRep {
     string message = 1;
 }

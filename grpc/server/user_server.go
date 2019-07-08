@@ -11,12 +11,12 @@ import (
 type userServer struct {
 }
 
-func (s *userServer) Create(ctx context.Context, user *pb.User) (msg *pb.Resp, err error) {
-	return &pb.Resp{Message: "Create Success"}, nil
+func (s *userServer) Create(ctx context.Context, user *pb.UserReq) (msg *pb.UserResp, err error) {
+	return &pb.UserResp{Message: "Create Success"}, nil
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "50052")
+	listener, err := net.Listen("tcp", ":50052")
 	if err != nil {
 		log.Fatalf("net.Listen fail: %v", err)
 	}

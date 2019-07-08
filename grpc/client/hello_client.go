@@ -1,12 +1,10 @@
 package main
 
 import (
-	"log"
-	"os"
-
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	pb "i-go/grpc/proto"
+	"log"
 )
 
 const (
@@ -15,20 +13,16 @@ const (
 )
 
 func main() {
-	// Set up a connection to the server.
+	// 开启一个链接
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	c := pb.NewGreeterClient(conn)
-
-	// Contact the server and print out its response.
-	name := defaultName
-	if len(os.Args) > 1 {
-		name = os.Args[1]
-	}
-	r, err := c.SayHello(context.Background(), &pb.HelloRequest{Name: name})
+	// 用conn new一个client
+	c := pb.NewHelloClient(conn)
+	// 用client 调用方法
+	r, err := c.SayHello(context.Background(), &pb.HelloReq{Name: defaultName})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
