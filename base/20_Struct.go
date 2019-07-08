@@ -20,6 +20,14 @@ type Person struct {
 	map1   map[string]string
 }
 
+// 返回的是局部变量的地址
+// 该对象是在堆还是栈上
+// go语言编译器会自动决定把一个变量放在栈还是放在堆，编译器会做逃逸分析(escape analysis)
+// 当发现变量的作用域没有跑出函数范围，就可以在栈上，反之则必须分配在堆。
+func createCat(name, color string, age int) *Cat {
+	return &Cat{name, age, color}
+}
+
 type DAO interface {
 	Query() string
 }
