@@ -6,6 +6,7 @@ import (
 	"google.golang.org/grpc"
 	pro "i-go/grpc/proto"
 	"net"
+	"sync"
 	"time"
 )
 
@@ -16,14 +17,17 @@ type allStream struct {
 
 var AllStream = &allStream{}
 
+// waitGroup 等待goroutine退出
 func (server *allStream) AllStream(allStream pro.AllStreamServer_AllStreamServer) error {
-	ok := make(chan bool, 2)
+	waitGroup := sync.WaitGroup{}
+	waitGroup.Add(2)
+
 	go func() {
 		for {
 			data, _ := allStream.Recv()
 			fmt.Println(data)
 		}
-		ok <- true
+		waitGroup.Done()
 	}()
 
 	go func() {
@@ -34,12 +38,11 @@ func (server *allStream) AllStream(allStream pro.AllStreamServer_AllStreamServer
 			}
 			time.Sleep(time.Second)
 		}
-		ok <- true
+		waitGroup.Done()
 	}()
 	// 让主线程卡在这里 如果两个 goroutine 都结束了 则结束主线程
-	for i := 0; i < 2; i++ {
-		<-ok
-	}
+	waitGroup.Wait()
+
 	return nil
 
 }
