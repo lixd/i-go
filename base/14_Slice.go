@@ -73,7 +73,6 @@ func main() {
 	} else {
 		fmt.Println("不存在")
 	}
-
 }
 func printMsg(s []int) {
 	fmt.Printf("len=%d cap=%d slice=%v \n", len(s), cap(s), s)

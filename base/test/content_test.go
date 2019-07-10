@@ -1,8 +1,9 @@
-package main
+package main_test
 
 import (
 	"context"
 	"fmt"
+	"testing"
 	"time"
 )
 
@@ -47,7 +48,7 @@ func C(ctx context.Context) int {
 	return 3
 }
 
-func main() {
+func TestContext(t *testing.T) {
 	// 自动取消(定时取消)
 	{
 		timeout := 10 * time.Second
