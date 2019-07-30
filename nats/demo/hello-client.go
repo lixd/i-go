@@ -12,4 +12,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer nc.Close()
+	if err := nc.Publish("updates", []byte("All is Well")); err != nil {
+		log.Fatal(err)
+	}
 }
