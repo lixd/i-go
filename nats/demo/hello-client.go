@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// 1.连接到默认服务器
-	nc, err := nats.Connect(nats.DefaultURL)
+	nc, err := nats.Connect("nats://192.168.1.9:4222")
 	if err != nil {
 		log.Fatal(err)
 	}
