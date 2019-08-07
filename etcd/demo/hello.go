@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+const (
+	localhost  = "127.0.0.1:2379"
+	remotehost = "192.168.1.9:2379"
+)
+
 func main() {
 	var (
 		config                clientv3.Config
@@ -17,9 +22,10 @@ func main() {
 		delResp               *clientv3.DeleteResponse
 		leaseResp, leaseResp1 *clientv3.LeaseGrantResponse
 	)
+
 	// 配置客户端
 	config = clientv3.Config{
-		Endpoints:   []string{"192.168.1.9:2379"},
+		Endpoints:   []string{localhost, remotehost},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -62,6 +68,9 @@ func main() {
 	} else {
 		fmt.Println(len(delResp.PrevKvs))
 	}
+	watch := client.Watch(context.Background(), "test")
+	<-watch
+	fmt.Println(client.Get(context.Background(), "test"))
 	// 建立租约
 	if leaseResp, err = client.Grant(con, 10); err != nil {
 		fmt.Println(err)
