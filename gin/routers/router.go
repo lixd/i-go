@@ -10,7 +10,7 @@ func RegisterRoutes(router *gin.Engine) {
 	v1Controller := &user.V1Controller{}
 	// 加载静态资源
 	// router.LoadHTMLFiles("E:/illusory/MyProject/i-go/gin/templates/index.html")
-	router.LoadHTMLGlob("E:/illusory/MyProject/i-go/gin/templates/*")
+	// router.LoadHTMLGlob("../templates/*")
 	// 设定请求url不存在的返回值
 	router.NoRoute(v1Controller.NoResponse)
 	// 重定向
@@ -88,7 +88,7 @@ func RegisterRoutes(router *gin.Engine) {
 	v5Controller := user.V5Controller{}
 	v5 := router.Group("/v5")
 	{
-		v5.GET("/get", v5Controller.Get)
+		v5.GET("/register", v5Controller.Register)
 	}
 
 }
