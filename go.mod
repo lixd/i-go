@@ -18,23 +18,23 @@ require (
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/protobuf v1.3.2
 	github.com/golang/snappy v0.0.1 // indirect
-	github.com/google/go-cmp v0.3.0 // indirect
 	github.com/hashicorp/go-msgpack v0.5.5
 	github.com/hashicorp/raft v1.1.0
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lib/pq v1.1.1
+	github.com/micro/go-micro v1.8.2
+	github.com/micro/protobuf v0.0.0-20180321161605-ebd3be6d4fdb // indirect
+	github.com/micro/protoc-gen-micro v0.8.0 // indirect
 	github.com/nats-io/nats-server/v2 v2.0.2
 	github.com/nats-io/nats-streaming-server v0.15.1
 	github.com/nats-io/nats.go v1.8.1
 	github.com/nats-io/nuid v1.0.1
 	github.com/nats-io/stan.go v0.5.0
-	github.com/onsi/ginkgo v1.8.0 // indirect
-	github.com/onsi/gomega v1.5.0 // indirect
-	github.com/prometheus/procfs v0.0.2
+	github.com/prometheus/procfs v0.0.3
 	github.com/robfig/cron v1.1.0
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
-	github.com/sirupsen/logrus v1.2.0
+	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.4.0
 	github.com/stretchr/testify v1.3.0
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
@@ -45,10 +45,8 @@ require (
 	go.etcd.io/etcd v3.3.13+incompatible // indirect
 	go.mongodb.org/mongo-driver v1.0.2
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
-	golang.org/x/net v0.0.0-20190603091049-60506f45cf65
+	golang.org/x/net v0.0.0-20190628185345-da137c7871d7
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 	golang.org/x/sys v0.0.0-20190710143415-6ec70d6a5542
-	golang.org/x/text v0.3.2 // indirect
-	google.golang.org/genproto v0.0.0-20190605220351-eb0b1bdb6ae6 // indirect
-	google.golang.org/grpc v1.21.1
+	google.golang.org/grpc v1.22.0
 )
