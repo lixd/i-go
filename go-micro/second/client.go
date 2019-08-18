@@ -7,7 +7,7 @@ import (
 	"github.com/micro/go-plugins/registry/etcdv3"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
-	pb "i-go/go-micro/first/new_micro/pb"
+	pb "i-go/go-micro/second/pb"
 )
 
 const (
@@ -16,8 +16,18 @@ const (
 )
 
 func main() {
-	// Create a new service. Optionally include some options here.
-	service := micro.NewService(micro.Name("go.micro.srv.hello"))
+	// 我这里用的etcd 做为服务发现，如果使用consul可以去掉
+	reg := etcdv3.NewRegistry(func(op *registry.Options) {
+		op.Addrs = []string{
+			"http://192.168.3.34:2379", "http://192.168.3.18:2379", "http://192.168.3.110:2379",
+		}
+	})
+
+	// 初始化服务
+	service := micro.NewService(
+		micro.Registry(reg),
+	)
+
 	service.Init()
 
 	// Create new greeter client
