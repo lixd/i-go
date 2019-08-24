@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	pb "i-go/go-micro/second/pb"
+	"time"
 )
 
 const (
@@ -16,15 +17,20 @@ const (
 )
 
 func main() {
-	// 我这里用的etcd 做为服务发现，如果使用consul可以去掉
+	// 我这里用的etcd 做为服务发现
 	reg := etcdv3.NewRegistry(func(op *registry.Options) {
 		op.Addrs = []string{
-			"http://192.168.3.34:2379", "http://192.168.3.18:2379", "http://192.168.3.110:2379",
+			"http://192.168.1.9:32772", "http://192.168.1.9:32773", "http://192.168.1.9:32769",
 		}
 	})
 
 	// 初始化服务
 	service := micro.NewService(
+		micro.Name("go.micro.srv.hello"),
+		// 注册服务的过期时间
+		micro.RegisterTTL(time.Second*30),
+		// 间隔多久再次注册服
+		micro.RegisterInterval(time.Second*20),
 		micro.Registry(reg),
 	)
 
