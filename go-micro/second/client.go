@@ -20,7 +20,7 @@ func main() {
 	// 我这里用的etcd 做为服务发现
 	reg := etcdv3.NewRegistry(func(op *registry.Options) {
 		op.Addrs = []string{
-			"http://192.168.1.9:32772", "http://192.168.1.9:32773", "http://192.168.1.9:32769",
+			"http://192.168.1.9:2379", "http://192.168.1.9:32772", "http://192.168.1.9:32773", "http://192.168.1.9:32769",
 		}
 	})
 

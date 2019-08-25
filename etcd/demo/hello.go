@@ -26,7 +26,7 @@ func main() {
 
 	// 配置客户端
 	config = clientv3.Config{
-		Endpoints:   []string{clusterhost},
+		Endpoints:   []string{remotehost},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -35,10 +35,8 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
-	// 用于读写etcd的键值对
-	con := context.TODO()
 
-	if putResp, err = client.Put(con, "test", "haha"); err != nil {
+	if putResp, err = client.Put(context.TODO(), "maxProcess", "3"); err != nil {
 		return
 	} else {
 		fmt.Println(putResp.Header)
@@ -46,7 +44,17 @@ func main() {
 
 	kv := clientv3.NewKV(client)
 	// 用kv设置key
-	if putResp, err = kv.Put(con, "/cron/jobs/job2", "hello", clientv3.WithPrevKV()); err != nil {
+	if putResp, err = kv.Put(context.TODO(), "/illusory/cloud", "hello", clientv3.WithPrevKV()); err != nil {
+		fmt.Println(err)
+		return
+	} else {
+		// fmt.Println(putResp.Header)
+		if putResp.PrevKv != nil {
+			fmt.Println(string(putResp.PrevKv.Value))
+		}
+	}
+	// 用kv设置key
+	if putResp, err = kv.Put(context.TODO(), "/illusory/wind", "world"); err != nil {
 		fmt.Println(err)
 		return
 	} else {
@@ -56,35 +64,43 @@ func main() {
 		}
 	}
 	// 用kv获取Key
-	if getResp, err = kv.Get(con, "/cron/jobs/", clientv3.WithPrefix()); err != nil {
+	if getResp, err = kv.Get(context.TODO(), "/illusory/cloud"); err != nil {
+		fmt.Println(err)
+		return
+	} else {
+		fmt.Println(getResp.Kvs)
+	} // 用kv获取Key 获取前缀为/illusory/cloud的 即 /illusory/cloud的所有孩子
+	if getResp, err = kv.Get(context.TODO(), "/illusory/cloud", clientv3.WithPrefix()); err != nil {
 		fmt.Println(err)
 		return
 	} else {
 		fmt.Println(getResp.Kvs)
 	}
 	// 用kv删除key
-	if delResp, err = kv.Delete(con, "/cron/jobs/job2", clientv3.WithPrevKV()); err != nil {
+	if delResp, err = kv.Delete(context.TODO(), "/illusory/wind"); err != nil {
 		fmt.Println(err)
 		return
 	} else {
 		fmt.Println(len(delResp.PrevKvs))
 	}
-	watch := client.Watch(context.Background(), "test")
+	watch := client.Watch(context.Background(), "maxProcess")
 	<-watch
-	fmt.Println(client.Get(context.Background(), "test"))
+	fmt.Println(client.Get(context.Background(), "maxProcess"))
 	// 建立租约
-	if leaseResp, err = client.Grant(con, 10); err != nil {
+	// 获取定时器
+	if leaseResp, err = client.Grant(context.TODO(), 10); err != nil {
 		fmt.Println(err)
 		return
 	}
 	// 用client也可以设置key，kv是client的一个结构，因此可以使用其方法
-	if putResp, err = client.Put(con, "/cron/lock/job1", "ok", clientv3.WithLease(leaseResp.ID)); err != nil {
+	if putResp, err = kv.Put(context.TODO(), "/illusory/cloud/x", "ok", clientv3.WithLease(leaseResp.ID)); err != nil {
 		fmt.Println(err)
 		return
 	} else {
 		fmt.Println(putResp.Header.Revision)
 	}
-	if keepAliveChan, err := client.KeepAlive(con, leaseResp.ID); err != nil { // 有协程来帮自动续租，每秒一次。
+	// 主动给Lease进行续约
+	if keepAliveChan, err := client.KeepAlive(context.TODO(), leaseResp.ID); err != nil { // 有协程来帮自动续租，每秒一次。
 		fmt.Println(err)
 		return
 	} else {
@@ -105,7 +121,7 @@ func main() {
 	}
 	k := 8
 	for k != 0 {
-		if getResp, err = client.Get(con, "/cron/lock/job1"); err != nil {
+		if getResp, err = client.Get(context.TODO(), "/illusory/cloud"); err != nil {
 			fmt.Println(err)
 			return
 		} else {
@@ -114,16 +130,26 @@ func main() {
 		}
 		k--
 	}
-
-	go func() {
-		for {
-			client.Put(con, "/cron/watch/job1", "I am watch job1")
-			time.Sleep(1 * time.Second)
-			client.Delete(con, "/cron/watch/job1")
-			time.Sleep(1 * time.Second)
-		}
-
-	}()
+	// 给key设置新的value并返回设置之前的值
+	op := clientv3.OpPut("/illusory/cloud", "newKey", clientv3.WithPrevKV())
+	response, err := kv.Do(context.TODO(), op)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(response)
+	}
+	// 开启事务
+	txn := kv.Txn(context.TODO())
+	// 如果/illusory/cloud的值为hello则获取/illusory/cloud的值 否则获取/illusory/wind的值
+	txnResp, err := txn.If(clientv3.Compare(clientv3.Value("/illusory/cloud"), "=", "hello")).
+		Then(clientv3.OpGet("/illusory/cloud")).
+		Else(clientv3.OpGet("/illusory/wind", clientv3.WithPrefix())).
+		Commit()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(txnResp.Responses)
+	}
 	conWithTimeout, cancelFunc := context.WithCancel(context.TODO())
 	wch := client.Watch(conWithTimeout, "/cron/watch/job1", clientv3.WithRev(getResp.Header.Revision))
 	tt := time.After(10 * time.Second)
@@ -144,12 +170,12 @@ func main() {
 	// 做分布式锁相关,执行事务
 	// 建立租约、用租约抢key，抢到后执行业务逻辑，抢失败返回。函数退出时要defer把租约关闭
 	client.Grant(conWithTimeout1, 10)
-	if leaseResp1, err = client.Grant(con, 10); err != nil {
+	if leaseResp1, err = client.Grant(context.TODO(), 10); err != nil {
 		fmt.Println(err)
 		return
 	}
 	// defer逻辑可以保证租约被清理，防止长期占用key
-	defer client.Revoke(con, leaseResp1.ID)
+	defer client.Revoke(context.TODO(), leaseResp1.ID)
 	defer cancelFunc1()
 	if keepAliveChan1, err := client.KeepAlive(conWithTimeout1, leaseResp1.ID); err != nil {
 		fmt.Println(err)
@@ -165,7 +191,7 @@ func main() {
 	// client.Put(con,"/cron/txn/job1","I GET FIRST",clientv3.WithLease(leaseResp1.ID))
 
 	// 执行事务，必须带上租约ID，这样在取消租约的时候key会同时失效。
-	txn := client.Txn(con)
+	txn := client.Txn(context.TODO())
 	txn.If(clientv3.Compare(clientv3.CreateRevision("/cron/txn/job1"), "=", 0)).
 		Then(clientv3.OpPut("/cron/txn/job1", "my job", clientv3.WithLease(leaseResp1.ID))).
 		Else(clientv3.OpGet("/cron/txn/job1"))
