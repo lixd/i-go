@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/registry"
+	"github.com/micro/go-micro/service/grpc"
 	"github.com/micro/go-plugins/registry/etcdv3"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
@@ -25,7 +26,9 @@ func main() {
 	})
 
 	// 初始化服务
-	service := micro.NewService(
+	// 	"github.com/micro/go-micro/service/grpc"
+	// Go-grpc服务与go-micro服务一样，也就是说你可以直接将服务声明方式`micro.NewService`换成`grpc.NewService`，而不需要改动其它代码。
+	service := grpc.NewService(
 		micro.Name("go.micro.srv.hello"),
 		// 注册服务的过期时间
 		micro.RegisterTTL(time.Second*30),
