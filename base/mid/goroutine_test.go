@@ -45,3 +45,4 @@ func TestContext(t *testing.T) {
 	b := <-locusChan
 	fmt.Printf("featureChan=%v locusChan=%v \n", a, b)
 }
+

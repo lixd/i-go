@@ -10,6 +10,7 @@ import (
 const (
 	localhost   = "127.0.0.1:2379"
 	remotehost  = "192.168.1.9:2379"
+	remotehost2  = "192.168.0.2:2379"
 	clusterhost = "192.168.1.9:32773"
 )
 
@@ -26,7 +27,7 @@ func main() {
 
 	// 配置客户端
 	config = clientv3.Config{
-		Endpoints:   []string{remotehost},
+		Endpoints:   []string{remotehost2},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -37,7 +38,7 @@ func main() {
 	}
 
 	if putResp, err = client.Put(context.TODO(), "maxProcess", "3"); err != nil {
-		return
+		fmt.Println(err)
 	} else {
 		fmt.Println(putResp.Header)
 	}
@@ -46,7 +47,6 @@ func main() {
 	// 用kv设置key
 	if putResp, err = kv.Put(context.TODO(), "/illusory/cloud", "hello", clientv3.WithPrevKV()); err != nil {
 		fmt.Println(err)
-		return
 	} else {
 		// fmt.Println(putResp.Header)
 		if putResp.PrevKv != nil {
@@ -56,7 +56,6 @@ func main() {
 	// 用kv设置key
 	if putResp, err = kv.Put(context.TODO(), "/illusory/wind", "world"); err != nil {
 		fmt.Println(err)
-		return
 	} else {
 		// fmt.Println(putResp.Header)
 		if putResp.PrevKv != nil {
@@ -191,7 +190,7 @@ func main() {
 	// client.Put(con,"/cron/txn/job1","I GET FIRST",clientv3.WithLease(leaseResp1.ID))
 
 	// 执行事务，必须带上租约ID，这样在取消租约的时候key会同时失效。
-	txn := client.Txn(context.TODO())
+	txn = client.Txn(context.TODO())
 	txn.If(clientv3.Compare(clientv3.CreateRevision("/cron/txn/job1"), "=", 0)).
 		Then(clientv3.OpPut("/cron/txn/job1", "my job", clientv3.WithLease(leaseResp1.ID))).
 		Else(clientv3.OpGet("/cron/txn/job1"))
