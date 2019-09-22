@@ -10,7 +10,7 @@ import (
 const (
 	localhost   = "127.0.0.1:2379"
 	remotehost  = "192.168.1.9:2379"
-	remotehost2  = "192.168.0.2:2379"
+	remotehost2 = "192.168.0.2:2379"
 	clusterhost = "192.168.1.9:32773"
 )
 
@@ -83,8 +83,10 @@ func main() {
 		fmt.Println(len(delResp.PrevKvs))
 	}
 	watch := client.Watch(context.Background(), "maxProcess")
-	<-watch
-	fmt.Println(client.Get(context.Background(), "maxProcess"))
+	select {
+	case <-watch:
+		fmt.Println(client.Get(context.Background(), "maxProcess"))
+	}
 	// 建立租约
 	// 获取定时器
 	if leaseResp, err = client.Grant(context.TODO(), 10); err != nil {
