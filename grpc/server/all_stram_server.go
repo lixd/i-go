@@ -20,9 +20,9 @@ var AllStream = &allStream{}
 // waitGroup 等待goroutine退出
 func (server *allStream) AllStream(allStream pro.AllStreamServer_AllStreamServer) error {
 	waitGroup := sync.WaitGroup{}
-	waitGroup.Add(2)
 
 	go func() {
+		waitGroup.Add(1)
 		for {
 			data, _ := allStream.Recv()
 			fmt.Println(data)
@@ -31,6 +31,7 @@ func (server *allStream) AllStream(allStream pro.AllStreamServer_AllStreamServer
 	}()
 
 	go func() {
+		waitGroup.Add(1)
 		for {
 			err := allStream.Send(&pro.AllStreamResp{Data: "All Stream From Server"})
 			if err != nil {
