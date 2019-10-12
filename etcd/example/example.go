@@ -71,4 +71,36 @@ func main() {
 	} else {
 		fmt.Println("response ", putResponse)
 	}
+
+	// 	6.OP 获取一个op对象 在调用KV.Do()方法执行
+	op := clientv3.OpPut("/test/op", "fourth")
+	opResponse, err := kv.Do(ctx, op)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "OpPut"}).Error(err)
+	} else {
+		fmt.Println("response ", opResponse.Put())
+	}
+	opg := clientv3.OpGet("/test/op")
+	opResponse, err = kv.Do(ctx, opg)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "OpGet"}).Error(err)
+	} else {
+		fmt.Println("response ", opResponse.Get())
+	}
+	// 	7.Txn
+	txn := kv.Txn(ctx)
+	txnResponse, err := txn.If(clientv3.Compare(clientv3.Value("/test/op"), "=", "fourth")).
+		Then(clientv3.OpPut("/test/txn", "then")).
+		Else(clientv3.OpPut("/test/txn", "else")).
+		Commit()
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "txn.If"}).Error(err)
+	} else {
+		fmt.Println("response ", txnResponse)
+	}
+	if txnResponse.Succeeded {
+		fmt.Println("Txn Success")
+	} else {
+		fmt.Println("Txn Failure")
+	}
 }
