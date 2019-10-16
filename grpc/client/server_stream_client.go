@@ -12,14 +12,14 @@ import (
 const ServerStreamAddress = "localhost:50053"
 
 func main() {
-	conn, err := grpc.Dial(ServerStreamAddress, grpc.WithInsecure())
+	conn, err := grpc.Dial(ServerStreamAddress, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Error(err.Error())
 		return
 	}
 	defer conn.Close()
 	// 通过conn new 一个 client
-	client := pro.NewMyStreamServerClient(conn)
+	client := pro.NewServerStreamServerClient(conn)
 
 	data := &pro.ServerStreamReq{Data: "1"}
 	// 这里获取到的 res 是一个stream

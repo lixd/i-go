@@ -13,7 +13,7 @@ const AllStreamAddress = "localhost:50055"
 
 // channel 等待goroutine退出
 func main() {
-	conn, err := grpc.Dial(AllStreamAddress, grpc.WithInsecure())
+	conn, err := grpc.Dial(AllStreamAddress, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Error(err.Error())
 		return
