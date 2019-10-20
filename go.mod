@@ -15,7 +15,9 @@ require (
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
+	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/protobuf v1.3.2
+	github.com/grpc-ecosystem/go-grpc-middleware v1.0.1-0.20190118093823-f849b5445de4
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/micro/go-micro v1.8.2
 	github.com/micro/go-plugins v1.2.0
