@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>FAQ - 文档中心 - 手势验证码（VAPTCHA）</title>
+		<meta name="keywords" content="VAPTCHA常见问题,FAQ,帮助文档,新手指南">
+		<meta name="description" content="VAPTCHA帮助文档、常见问题、FAQ">
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/public/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/public/common.min.css" />
+		<!-- <link rel="stylesheet" href="common.css"> -->
+		<!-- <link rel="stylesheet" href="document.2.0.3.css"> -->
+
+		<link rel="stylesheet" type="text/css" href="../../assets/css/public/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/v2/css/document.2.0.3.min.css" />
+		<script src="https://static.vaptcha.com/assets/js/jquery.min.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/vaptcha-language.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/document_left.js"></script>
+		<!-- <script src="document_left.js"></script> -->
+		<!-- <script src="https://static.vaptcha.com/assets/js/canvas-particle.js"></script> -->
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				hm.src = "https://hm.baidu.com/hm.js?e3da96e182f65086e71c28cfdbb64b10";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();
+			(function(){
+				var bp = document.createElement('script');
+				var curProtocol = window.location.protocol.split(':')[0];
+				if (curProtocol === 'https') {
+					bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+				}
+				else {
+					bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+				}
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(bp, s);
+			})();
+		</script>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div id="canvas-cont"></div>
+		<div class="vaptcha">
+			<div class="nav">
+				<a href="/" title="VAPTCHA">
+					<img class="logo" src="https://static.vaptcha.com/assets/img/index/logo.png" alt="VAPTCHA">
+			</a>
+			<div class="nav-link">
+					<a href="/">首页</a>
+					<a href="/demo/index.html">演示</a>
+					<a href="/login.html">登录</a>
+					<a href="/register.html" class="">注册</a>
+			</div>
+				<div class="canvas-cont">
+					<h1>VAPTCHA文档中心</h1>
+				</div>
+				<div class="bar">
+					<a href="/document/index.html">产品介绍</a>
+					<a href="/document/install.html"  >代码部署</a>
+					<a href="/document/plugin.html" style="display:none">插件</a>
+					<a href="/document/faq.html"  class="active">FAQ</a>
+					<!-- <a href="/document/sms.html" >V-SMS</a> -->
+					<a href="/document/contract.html">服务协议</a>
+				</div>
+			</div>
+			<div class="main-cont">
+				<div class="main-left-cont">
+					<div class="scroll">
+						<ul class="main-left">
+							<li>
+								<a  class="title" href="#FAQ"><i class="fa fa-question-circle-o"></i>FAQ</a>
+							</li>
+							<ul class="main-left-one">
+								<li>
+									<a class="current" href="#产品介绍">产品介绍？</a>
+								</li>
+								<li>
+									<a href="#VAPTCHA收费吗">VAPTCHA收费吗？</a>
+								</li>
+								<li>
+									<a href="#验证流程图">验证流程图？</a>
+								</li>
+								<li>
+									<a href="#验证流量图">验证流量图？</a>
+								</li>
+
+								<li>
+									<a href="#服务稳定吗">服务稳定吗？</a>
+								</li>
+								<li>
+									<a href="#攻击数大于请求数">攻击数大于请求数？</a>
+								</li>
+                <li>
+									<a href="#什么是离线验证模式">离线验证模式？</a>
+								</li>
+								<li>
+									<a href="#进入离线验证模式条件">进入离线验证模式条件？</a>
+								</li>
+								<li>
+									<a href="#离线验证模式原理">离线验证模式原理？</a>
+								</li>
+								<li>
+									<a href="#无感验证">无感验证？</a>
+								</li>
+								<li>
+									<a href="#域名绑定">域名绑定？</a>
+								</li>
+								<li>
+									<a href="#短信补贴">短信补贴？</a>
+								</li>
+								<li>
+									<a href="#操作演示">操作演示？</a>
+								</li>
+							</ul>
+
+						</ul>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="con">
+							<h1 id="FAQ"><span></span>FAQ</h1>
+							<div class="item" id="产品介绍">
+								<h2>什么是VAPTCHA手势验证码？</h2>
+								<p>VAPTCHA是“Variation Analysis based Public Turing Test to Tell Computers and Humans Apart”（基于变量分析来区分人类和计算机的图灵测试程序）的缩写，又称为手势验证码，
+										一种基于人工智能和大数据的人机验证解决方案 。用户仅需用鼠标绘制指定轨迹即可完成人机验证。VAPTCHA能有效防止恶意密码破解、论坛灌水、垃圾邮件、撞库等。  </p>
+								<p class="mt10 mb10">与传统验证码相比，它具有如下特点：</p>
+								<div>
+									<span class="sectitle">易识别</span>
+									<span class="secdescribe">验证码由简单的轨迹构成，不会因为过度污染、干扰或者变形处理导致无法识别的情况</span> <br>
+									<span class="sectitle vis-hide">易识别</span>
+									<span class="secdescribe">手势是世界通用语言，任意语言背景用户均可无障碍轻松识别。</span>
+								</div>
+								<div class="mt5">
+									<span class="sectitle">速度快</span>
+									<span class="secdescribe">不同于传统验证码，VAPTCHA仅需要用户用鼠标或手指绘制指定轨迹，在不超过1秒的时间内即可完成人机验证。</span> <br>
+									<span class="sectitle vis-hide">速度快</span>
+									<span class="secdescribe">受信任的客户端可以直接无感验证通过，甚至感觉不到人机验证的存在。</span>
+								</div>
+								<div class="mt5">
+									<span class="sectitle">更安全</span>
+									<span class="secdescribe">手势有无限种组合，与有限组合的传统验证码相比有天然的优势。</span> <br>
+									<span class="sectitle vis-hide">更安全</span>
+									<span class="secdescribe">手势图经过逆向干扰处理，程序识别时会在二值化、查找边缘、聚类等各阶段遇到巨大挑战。</span> <br>
+									<span class="sectitle vis-hide">更安全</span>
+									<span class="secdescribe">人类绘制轨迹时会在加速度、角速度、抖动幅度等指标上具备稳定的生物特征，VAPTCHA特征库会对提交轨迹做进一步筛选且动态更新。</span> <br>
+									<span class="sectitle vis-hide">更安全</span>
+									<span class="secdescribe">用户的历史验证行为会被记录并建档用于下次人机验证时的辅助判断条件，多次恶意验证的客户端设备指纹会加入黑名单。</span>
+								</div>
+							</div>
+							<div class="item" id="VAPTCHA收费吗" >
+								<h2>VAPTCHA收费吗？</h2>
+								<p>用户注册后默认版本为VAPTCHA通用版，通用版完全免费且无验证量峰值或总量上限。如果有自定义手势图、安全策略及攻击日志存储、导出等需要消耗额外服务器资源的需求则需要升级到企业版。</p>
+							</div>
+							<div class="item" id="验证流程图">
+									<h2>验证流程图</h2>
+									<img class="img" src="https://static.vaptcha.com/assets/img/flow-path.png" alt="VAPTCHA加密验证流程图">
+									<p>*验证单元的Key在人机验证流程中起到加密传输及身份核验的作用， 请妥善保管，如果泄露请及时生成并重新配置代码。</p>
+								</div>
+							<div class="item" id="验证流量图">
+								<h2>验证流量图</h2>
+								<img class="img" src="https://static.vaptcha.com/assets/img/validate.png" alt="VAPTCHA验证流量图">
+
+							</div>
+							<div class="item" id="服务稳定吗">
+								<h2>如何保证验证服务的稳定</h2>
+								<!-- <img src="https://static.vaptcha.com/assets/img/down.png" alt="VAPTCHA宕机模式验证流程"> -->
+								<p>如上图所示，VAPTCHA在请求的各个阶段均预留的充足的服务器资源，一旦某个验证单元被重度攻击（比如DDOS或CC攻击会导致请求飙升，以而耗尽服务器资源为目的），系统会通过网关控制自动对
+										其隔离，从而降低对系统整体的影响。如果更极端的情况发生，比如VAPTCHA服务器群全部宕机，甚至机房失火、发生地震，也不用担心，VAPTCHA独有的宕机模式可以全天候保证接入网站、APP的验
+										证安全，所以请务必配置离线验证模式。</p>
+							</div>
+							<div class="item" id="攻击数大于请求数">
+								<h2>为什么有时攻击数会远远大于验证请求数？</h2>
+								<p>攻击拦截数统计的是所有接口的异常请求，而验证请求数统计的是通过网关初步筛选后向验证服务器请求challenge的数量。比如网站受到DDOS攻击或CC攻击，VAPTCHA的硬防和网关会拦截掉绝大部分攻击
+										请求，这就会导致攻击拦截数远远大于验证请求数。</p>
+							</div>
+							
+              <div class="item" id="什么是离线验证模式">
+									<h2>什么是离线验证模式？</h2>
+									<p>离线验证码是是一种VAPTCHA特有的保护模式，它利用CDN缓存资源通过加密算法即可完成人机验证。离线验证模式完全不依赖中心计算服务器，所以不会因为高强度攻击而停止服务，就算VAPTCHA服
+											务器群因为不可抗力全部宕机，也不会影响接入服务的网站、APP的人机验证安全。</p>
+							 </div>
+							 <div class="item" id="进入离线验证模式条件">
+								 <h2>什么情况下会进入离线验证模式？?</h2>
+								 <ul class="list-style">
+									 <li>接入网站、app可根据需要在任意时候选择强制进入离线验证模式，比如请求超时或者将离线验证模式作为日常验证策略。</li>
+									 <li>VAPTCHA系统性瘫痪时会改写系统状态缓存标记，所有接入服务的网站、APP都会强制进入离线验证模式，直至VAPTCHA恢复正常。</li>
+								 </ul>
+							 </div>
+							 <div class="item down" id="离线验证模式原理">
+									<h2>什么情况下会进入离线验证模式？</h2>
+									<p class="mt10">1. 角色说明：</p>
+									<ul class="">
+										<li class="disc">
+											<p>Cache: 用于存储宕机验证资源，由VAPTCHA内网服务器来管理</p>
+											<p>Client Server: 接入VAPTCHA的网站或APP的后端服务器</p>
+											<p>User: 访问Client的用户</p>
+			                            </li>
+									</ul>
+									<p class="mt10">2. 资源地址：</p>
+									<ul>
+										<li class="disc">
+											<p>http://d.vaptcha.com/config   包含宕机验证要用到的Key 及 宕机状态</p>
+											<p>http://d.vaptcha.com/validatekey  验证结果</p>
+			                            </li>
+									</ul>
+									<p class="mt10">3. 验证流程：</p>
+									<ul>
+										<li class="disc">
+											<p>User访问Client需要人机验证的页面时发起宕机验证请求。</p>
+											<p>Client Server请求http://d.vaptcha.com/config 验证VAPTCHA是否进入宕机模式，如果是则提取出Key。</p>
+											<p>Clinet 生成4位16进制随机数字符串randomstr，然后取key+randomstr的MD5值作为imgkey。</p>
+											<p>生成一个GUID作为本次验证的流水号challenge，并与imgkey以键值对存储。</p>
+											<p>向前端返回本次验证的challenge及imgkey。</p>
+											<p>User识别验证图手势并绘制，前端代码提取用户手势的4个特征点构成一个4位16进制数字符串usercode，将usercode 和challenge提交到Client Server。</p>
+											<p>Client Server检测challenge是否存在，存在则取imgkey+usercode 的MD5值则作为validatekey。</p>
+											<p>请求验证结果链接，如果当前链接存在则验证通过，否则验证失败。 </p>
+			                            </li>
+									</ul>
+									
+									<ul>
+										<li class="item1">
+											<p>宕机模式验证流程</p>
+											<img src="https://static.vaptcha.com/assets/img/down.png" alt="VAPTCHA宕机模式验证流程">
+										</li>
+										<li class="item2">
+											<p>宕机模式示例图</p>
+                      <span>宕机模式下，验证图仍然为手势验证图，并未显著降低用户体验</span>
+											<img src="https://static.vaptcha.com/assets/img/validate-code.png" alt="VAPTCHA宕机模式示例图">
+			                            </li>
+									</ul>
+								</div>
+							<div class="item" id="无感验证" >
+								<h2>什么是无感验证？</h2>
+								<p>无感验证可由用户自行配置，当此配置开启时，允许受信任的用户或客户端当次验证请求发起时通过综合风险模型的安全评估后可以一键完成人机验证，整个过程响应时间在200ms内，大幅提升用户体验。</p>
+								<div class="intelligence">无感验证演示</div>
+							   <img src="https://static.vaptcha.com/assets/img/ai.gif" alt="VAPTCHA无感验证演示">
+							</div>
+               <div class="item" id="域名绑定">
+                 <h2>为什么要绑定域名？</h2>
+                 <p>每个验证单元必须对应一个域名，可以防止验证单元被其他网站盗用，建议填写一级域名，如：VAPTCHA.COM ，这样所有的二级域名均可使用这个验证单元。企业版可以设置不校验域名。.com ,这样所有二级域名均可以正常应用这个验证单元。可通过升级VIP来解除域名绑定数量的限制。</p>
+               </div>
+						   <div class="item" id="短信补贴">
+							   <h2>短信补贴？</h2>
+							   <p>VAPTCHA提供短信接口，并鼓励大家在调用短信接口时进行人机验证，不仅可以防刷同时可以享受远低于市场价的补贴后价格。目前仅支持国内、国际触发短信，不支持营销短信发送。</p>
+							</div>
+						   <div class="item" id="操作演示">
+							   <h2>操作演示</h2>
+							   <div class="faq-eg">
+									<!-- <a id="video-maskbtn" href="javascript:void(0)" class="btn btn-success">
+									<i class="fa fa-play-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;动画介绍</a> -->
+									<div class="eg-item mr-60 ">
+										<div class="img-cont onepass">
+											<img src="https://static.vaptcha.com/assets/img/faq-eg.png">
+											<div class="video-mask">
+												<a id="video-maskbtn" href="javascript:void(0)"><i></i></a>
+											</div>
+										</div>
+                    <div class="validate-title">有箭头手势图</div>
+										<div class="validate-type">按照特定方向绘制，通过验证</div>
+									</div>
+									<div class="eg-item ">
+											<div class="img-cont gesturevalidation">
+												<img src="https://static.vaptcha.com/assets/img/faq-eg.png">
+												<div class="video-mask">
+													<a id="video-maskbtn2" href="javascript:void(0)"><i></i></a>
+												</div>
+											</div>
+                      <div class="validate-title">无箭头手势图</div>
+										<div class="validate-type">任意方向绘制，通过验证</div>
+									</div>
+							   </div>
+						   </div>
+					</div>
+				</div>
+				<div class="right-arrow">
+					<div class="arrow arrow-up" id="arrow-up">∧</div>
+					<div class="arrow-line"></div>
+					<div class="arrow arrow-down" id="arrow-down">∨</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="mask" id="mask">
+			<div class="mask-video" id="mask-video">
+				<video id="media" width="100%" height="100%"  poster="" loop="loop" preload="auto"  src="https://static.vaptcha.com/assets/img/haveto.mp4"
+					controls="controls"></video>
+				<div id="mask-close">
+					<i class="fa fa-close"></i>
+				</div>
+			</div>
+		</div>
+		<div class="mask" id="mask1">
+				<div class="mask-video" id="mask-video1">
+					<video id="media1" width="100%" height="100%"  poster="" loop="loop" preload="auto"  src="https://static.vaptcha.com/assets/img/noto.mp4"
+						controls="controls"></video>
+					<div id="mask-close1">
+						<i class="fa fa-close"></i>
+					</div>
+				</div>
+			</div>
+		<script>
+		  $(document).ready(function(){
+			var config = {
+				vx: 4,
+				vy: 4,
+				height: 2,
+				width: 2,
+				count: 60,
+				color: "34,79,151",
+				stroke: "173,203,251",
+				dist: 6000,
+				e_dist: 20000,
+				max_conn: 10
+			}
+			var titles = ['产品介绍', 'VAPTCHA收费吗', '验证流程图', '验证流量图', '服务稳定吗', '攻击数大于请求数', '什么是离线验证模式', '进入离线验证模式条件',
+					'离线验证模式原理', '无感验证', '域名绑定', '短信补贴', '操作演示']
+			var titleIndex = 0;
+			$('#arrow-up').click(function (e) { 
+				e.preventDefault();
+				var address = window.location.href;
+				var dots = address.split('#')[1]
+				if(dots!= '')
+					titleIndex = titles.indexOf(decodeURI(dots)) - 1
+				else titleIndex = 0
+				if(titleIndex < 0) titleIndex = 0;
+				window.location.href = address.split('#')[0] + "#" + titles[titleIndex];
+				console.log(titles.indexOf(decodeURI(dots)))
+			});
+			$('#arrow-down').click(function (e) { 
+				e.preventDefault();
+				var address = window.location.href;
+				var dots = address.split('#')[1]
+				if(dots!= '')
+					titleIndex = titles.indexOf(decodeURI(dots)) + 1
+				else titleIndex = 0
+				if(titleIndex > titles.length - 1) titleIndex = titles.length -1;
+				window.location.href = address.split('#')[0] + "#" + titles[titleIndex];
+				console.log(titles.indexOf(decodeURI(dots)))
+			});
+			CanvasParticle(config);
+			//title点击
+			$(".main-left-cont .main-left .title").click(function(){
+				$(".main-left-cont .main-left .main-left-one a").removeClass('current');
+				$(".main-left-cont .main-left .main-left-one a:first").addClass('current');
+			})
+			//鼠标滚动，侧边栏跟随
+			function scroll(){
+				var items = $(".main-cont .main-right .con").find(".item");
+				var menu = $(".main-cont .main-left");
+				var currentId = "";
+				items.each(function() {
+					var m = $(this);
+					if (0 > m.position().top - 50) {
+						currentId = "#" + m.attr("id");
+					} else {
+						return false;
+					}
+				});
+				var currentLink = menu.find(".current");
+				if (currentId && currentLink.attr("href") != currentId) {
+					currentLink.removeClass("current");
+					menu.find("[href=" + currentId + "]").addClass("current");
+				}
+				var link = window.location.href;
+				if(link.indexOf('#%E6%93%8D%E4%BD%9C%E6%BC%94%E7%A4%BA') !== -1){
+					$(".main-left-cont .main-left .main-left-one a").removeClass('current');
+				    menu.find("[href='#操作演示']").addClass("current");
+				}
+			}
+			//banner显示隐藏
+			$(".main-cont .main-right").scroll(function() {
+				scroll();
+				var top =$(".main-cont .main-right .con").offset().top;
+				var main = $(".main-cont").css("top");
+				if ( top > 0 ) {
+					if($(".main-cont").css("top") == "50px"){
+						$(".main-cont").animate({"top":"240px"},200);
+						$(".vaptcha .nav").animate({"margin-top":0},200);
+					}
+					}else{
+					if($(".main-cont").css("top") == "240px"){
+						$(".main-cont").animate({"top":"50px"},200);
+						$(".vaptcha .nav").animate({"margin-top":"-189px"},200);
+					}
+
+				}
+			});
+			scroll();
+			// 视频演示
+			$("#mask").css("display", "none");
+			$("#video-maskbtn").on("click", function() {
+				$("#mask-video").css("left", "50%");
+				// $("#mask").attr('src','https://static.vaptcha.com/onepass.mp4');
+				$("#mask").fadeIn();
+				$("#mask-video").fadeIn();
+				$(".vaptcha-index").css("filter", "blur(2px)");
+				$('#media')[0].play();
+				$('#media')[0].currentTime = 0;
+			});
+			$("#mask-close").on("click", function() {
+				$(".vaptcha-index").css("filter", "none");
+				$("#mask-video").css("left", "2000px");
+				$("#mask").fadeOut();
+				$('#media')[0].pause();
+			});
+			$("#video-maskbtn2").on("click", function() {
+				$("#mask-video1").css("left", "50%");
+				// $("#mask").attr('src','https://static.vaptcha.com/gesturevalidation.mp4');
+				$("#mask1").fadeIn();
+				$("#mask-video1").fadeIn();
+				$(".vaptcha-index").css("filter", "blur(2px)");
+				$('#media1')[0].play();
+				$('#media1')[0].currentTime = 0;
+			});
+			$("#mask-close1").on("click", function() {
+				$(".vaptcha-index").css("filter", "none");
+				$("#mask-video1").css("left", "2000px");
+				$("#mask1").fadeOut();
+				$('#media1')[0].pause();
+			});
+	  })
+		</script>
+	</body>
+</html>

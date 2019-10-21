@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="VAPTCHA手势验证码是基于人工智能和大数据的次世代免费人机验证解决方案。独有的验证策略及风控模型组合可彻底杜绝刷票、灌水、垃圾注册等恶意行为。">
+    <meta name="keywords" content="验证码,手势验证码,VAPTCHA,CAPTCHA,人机验证,防灌水,防暴力破解,防垃圾邮件,防注册机,安全验证码,轨迹验证码,免费验证码,智能验证码,防人工打码,">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./static/css/register/index.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/public/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1286185_8cj7wasgvsj.css" >
+    <link rel="stylesheet" href="./static/background/css/style.css">
+    <title>登录</title>
+    <script src="./static/js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="http://www.vaptchatest.com/v2.2.js"></script> -->
+    <script src="https://cdn.vaptcha.com/v2.5.js"></script>
+</head>
+
+<body >
+    <script src='./static/background/js/three.min.js'></script>
+    <script src="./static/background/js/index.min.js"></script>
+    <!-- 注册新账号 -->
+    <div class="content">
+        <div class="nav">
+            <a href="/" title="VAPTCHA">
+                <img class="logo" src="https://static.vaptcha.com/assets/img/index/logo.png" alt="VAPTCHA">
+            </a>
+            <div class="nav-link">
+                <a href="/">首页</a>
+                <a href="/demo/index.html">演示</a>
+                <a href="/login.html" class="index">登录</a>
+                <a href="/register.html" class="get">注册</a>
+            </div>
+        </div>
+        <section class="flex register-box " id="vaptcha-content" >
+            <div class="regiseter-center">
+                    <!-- 登陆 -->
+                    <div class="flex common-size logins">
+                        
+                        <div class=" select-register-size ">
+                            <h1 class="register-size-tit register-mobile register-size-selected">登录VAPTCHA</h1>
+                        </div>
+                        <div class=" login-input-line mar-t25 mar-b20">
+                            <h3 class="item-tit">账户名</h3>
+                            <input class="input-style" type="text" autocomplete="usename" name='ltel' id="ltel"  maxlength="11" minlength="6" placeholder="已注册手机号">
+                        </div>
+                        <div class=" login-input-line">
+                            <div class="flex fl-space-bt">
+                                <h3 class="item-tit">密码</h3> 
+                                <p class="forgot-key"><a href="" class="forgot" id="forgot">忘记密码？</a></p>
+                            </div>
+                            <input class="input-style" autocomplete="off" type="password" name="lpwd" id="lpwd" minlength="6" maxlength="24" placeholder="登录密码">
+                        </div>
+    
+                        <!-- <div class="flex login-input-line mar-t51">
+                            <input class="input-style" autocomplete="off" type="text" name='ltel' id="ltel"  maxlength="11" minlength="6" placeholder="已注册手机号">
+                            <label class="flex input-ico" for="" >
+                                <i class="fa fa-user"></i>
+                            </label>
+                        </div>
+                        
+                        <div class="flex login-input-line mar-t20">
+                            <input class="input-style" autocomplete="off" type="password" name="lpwd" id="lpwd" minlength="6" maxlength="24" placeholder="登录密码">
+                            <label class="flex input-ico" for="">
+                                <i class="fa fa-key" ></i>
+                            </label>
+                        </div> -->
+                        <div class="flex login-input-line mar-t32">
+                            <button class="register-button" id="btn_login">登 录</button>
+                        </div>
+                        <div class="flex  login-input-line mar-t22 center">
+                            <p class="has-account" >尚未注册？<a href="" class="set-new-count" id="newCount">创建新账号>></a></p>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <div class="surperise">
+            <div class="anim">
+            </div>
+            <div id="cat">
+                <img src="https://static.vaptcha.com/assets/img/cat.png" alt="" srcset="">
+            </div>
+            <div class="what" id="video-maskbtn">
+                <span></span>
+                <a>快速了解VAPTCHA</a>
+            </div>
+        </div>
+        <div class="footer">
+            
+            <div class="footer-main">
+                <div>
+                <a href="/document/install.html">开发文档</a>
+                <a href="/document/faq.html">FAQ</a>
+                <a href="/document/contract.html">服务条款</a>
+                <a href="/sitemap.xml">Sitemap</a>
+                <a href="/document/index.html">Git</a>
+                <!-- <a href="/reward">破解VAPTCHA</a> -->
+                <a href="@dzUrl" target="_blank">DZ插件</a>
+                <a href="/document/sms.html" target="_blank">短信补贴</a>
+                <a href="/document/sms.html" target="_blank">团队邮箱</a>
+                </div>
+                <p class="copyright">
+                Copyright © 2017 VAPTCHA All Rights Reserved 
+                <a href="http://www.beian.miit.gov.cn" target="_blank">&nbsp;渝ICP备15001110号-9&nbsp;&nbsp;&nbsp;</a>
+                <img src="https://static.vaptcha.com/assets/img/index/ghs.png" style="vertical-align: middle;"/>
+                    渝公网安备 50010302001060号
+                    <!-- <a href="https://tongji.baidu.com/web/welcome/ico?s=e3da96e182f65086e71c28cfdbb64b10" target="_blank" style="color:#212B39;">百度统计</a> -->
+                </p>
+            </div>
+        </div>
+        <div style="font-size: 12px; color: #000; position: absolute; bottom: 0; z-index: -1;">
+            VAPTCHA是“Variation Analysis based Public Turing Test to Tell Computers and Humans Apart”（基于变量分析来区分人类和计算机的图灵测试程序）的缩写，又称为手势验证码， 一种基于人工智能和大数据的人机验证解决方案 。用户仅需用鼠标绘制指定轨迹即可完成人机验证。与传统验证码相比，VAPTCHA不仅用户体验更好，而且更加安全，是目前最不可能被破解的验证码。VAPTCHA能有效防止暴力破解、论坛灌水、垃圾邮件、撞库、刷投票、人工打码、恶意提交数据等。
+        </div>
+    </div>
+    <div class="masks" id="mask">
+            <div class="mask-video" id="mask-video">
+              <video id="media" width="100%" poster="" loop="loop" preload="auto" height="100%" src="https://static.vaptcha.com/VAPTCHAsxb.mp4" controls="controls"></video>
+              <div id="mask-close"><i></i></div>
+            </div>
+          </div>
+</body>
+<script src="./static/js/index.js"></script>
+</html>

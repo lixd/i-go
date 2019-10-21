@@ -1,0 +1,587 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>短信验证码|短信平台|短信接口，免费接入，价格低至2分/条【VSMS】</title>
+		<meta name="keywords" content="V-SMS，免费短信接口，手机短信，触发短信，短信平台，短信群发，短信验证码">
+		<meta name="description" content="V-SMS是由VAPTCHA官方提供的普惠触发类短信接口。免费接入，傻瓜式调用，价格补贴后低至2分/条。">
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/public/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/public/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../assets/css/public/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/document.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="../../static-pages/css/document.css" /> -->
+		<script src="https://static.vaptcha.com/assets/js/jquery.min.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/vaptcha-language.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/document_left.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/canvas-particle.js"></script>
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				hm.src = "https://hm.baidu.com/hm.js?e3da96e182f65086e71c28cfdbb64b10";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();
+			(function(){
+				var bp = document.createElement('script');
+				var curProtocol = window.location.protocol.split(':')[0];
+				if (curProtocol === 'https') {
+					bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+				}
+				else {
+					bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+				}
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(bp, s);
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="canvas-cont"></div>
+		<div class="vaptcha">
+			<div class="nav">
+				<a class="nav-logo" title="VAPTCHA" href="/">
+					<img alt="VAPTCHA" src="https://static.vaptcha.com/assets/img/index/logo.png"/>
+				</a>
+				<div  class="btn-group dropdown change-language">
+					<a id='btn-down-lang' title="中文" class="btn btn-down" type="button">
+						<img alt="中文" src="https://static.vaptcha.com/assets/img/ch.png">
+					</a>
+				</div>
+				<div class="nav-link">
+					<a href="javascript:;" class="active">文档中心</a>
+					
+					<a href="/demo/index.html">在线体验</a>
+					<a href="/login.html">登录后台</a>
+					<a href="/register.html" class="get">免费注册</a>
+				</div>
+				<div class="canvas-cont">
+					<h1>VAPTCHA文档中心</h1>
+				</div>
+				<div class="bar">
+					<a href="/document/index.html">产品介绍</a>
+					<a href="/document/install.html"  >代码部署</a>
+					<a href="/document/plugin.html" style="display:none">插件</a>
+					<a href="/document/faq.html" >FAQ</a>
+					<a href="/document/sms.html" class="active">V-SMS</a>
+					<a href="/document/contract.html" >服务协议</a>
+				</div>
+			</div>
+			<div class="main-cont">
+				<div class="main-left-cont">
+					<div class="scroll">
+						<ul class="main-left">
+							<li>
+								<a  class="title" href="#V-SMS"><i class="fa fa-envelope-o"></i>V-SMS</a>
+							</li>
+							<ul class="main-left-one">
+								<li>
+									<a class="current" href="#什么是V-SMS">什么是V-SMS</a>
+								</li>
+								<li>
+									<a href="#短信补贴条款">短信补贴条款</a>
+								</li>
+								<li>
+									<a href="#接口引入">接口引入</a>
+								</li>
+								<li>
+									<a href="#代码示例">代码示例</a>
+								</li>
+							</ul>
+						</ul>
+					</div>
+				</div>
+				<div class="main-right">
+						<div class="con">
+							<h1  id="V-SMS"><span></span>V-SMS</h1>
+							<div class="item" id="什么是V-SMS">
+								<h2>什么是V-SMS?</h2>
+								<p>V-SMS是由VAPTCHA官方提供的触发类普惠短信接口。与传统短信接口相比它具备以下优点：</p>
+								<div class="span-title"><span>速度快</span>不需要中转，直接通过运营商网关进行发送，到达率高。</div>
+								<div class="span-title"><span>价格补贴</span>VAPTCHA对全网进行价格补贴，单条国内短信价格低至2分以内，远远低于市场价。</div>
+								<div class="span-title"><span>部署简单</span>不再需要繁琐的接口开发与部署流程，仅仅调用公开方法即可发送。</div>
+								<div class="span-title"><span>短信防刷</span>整合VAPTCHA智能人机验证策略，彻底杜绝短信库存被恶意刷爆的风险。</div>
+							</div>
+							<div class="item" id="短信补贴条款">
+								<h2>短信补贴条款</h2>
+								<div class="ul-title">享受补贴对象</div>
+								<ul class="list-style">
+									<li>所有接入VAPTCHA人机验证服务的网站或APP。</li>
+								</ul>
+								<div class="ul-title">补贴规则</div>
+								<ul class="list-style">
+									<li>注册即送30条测试短信，超过部分先充值后消费，不同的充值金额享受不同的补贴价格，请根据网站需求购买。</li>
+									<li>充值短信为基础短信，国内短信单次消耗1条，国际短信扣除方法：美国单次10条，其他国家和地区单次25条。</li>
+									<li>仅对触发类短信进行补贴，短信模板：【{网站名称}】你当前操作验证码为：{123456}，{10}分钟内有效（"{}"为变量）。</li>
+									<li>调用短信接口必须回传VAPTCHA验证通过的有效token，不传则按正常价格计费，单次加倍扣除基础短信。</li>
+								</ul>
+								<div class="ul-title">其他</div>
+								<ul class="list-style">
+									<li>Smskey用于短信发送，请妥善保管，若泄露请及时重新生成。</li>
+									<li>充值短信无使用期限限制，充值后不可提现，请根据网站需求购买短信条数。</li>
+								</ul>
+							</div>
+							<div class="item" id="接口引入" >
+								<h2>接口引入</h2>
+								<div class="method-title">
+									<div class="interface-method-title active">
+											方式一.网站自己生成验证码
+									</div>
+									<div class="interface-method-title">
+											方式二.V-SMS代为生成验证码
+									</div>
+									<div class="interface-method-title">
+											方式三.自定义短信模板
+									</div>
+									<div class="interface-method-title">
+										    方式四.自定义营销短信模板
+								    </div>
+								</div>
+								<div class="interface-method-content active">
+									<div class="interface-content">
+										<div class="interface-item"><span>接口说明</span>由网站自己生成验证码，V-SMS发送短信，由网站自己验证。</div>
+										<div class="interface-item"><span>短信模板</span>【{变量}】你当前操作验证码为：{变量}，{变量}分钟内有效。</div>
+										<div class="interface-item"><span>调用方法</span>
+											由网站后端发起
+											<div class="interface-content">
+												<div>方法：HttpPost</div>
+												<div>格式：json</div>
+												<div>接口地址：http://smsapi.vaptcha.com/sms/sendcode</div>
+												<div>请求参数
+													<table>
+														<tr>
+															<th>参数</th>
+															<th>说明</th>
+															<th>类型</th>
+														</tr>
+														<tr>
+															<td>vid</td>
+															<td>验证单元Id</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>smskey</td>
+															<td>用户后台V-SMS页面获取的smskey将用于短信发送, 请妥善保管，若泄露请及时重新生成。</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>token</td>
+															<td>由vaptcha验证码验证成功后返回的token（一键通过或绘制图形）</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>label</td>
+															<td>希望显示的验证码来源名称</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>code</td>
+															<td>验证码内容，只能包含数字和大小写英文字母</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>phone</td>
+															<td>要发送的手机号码，只能包含数字，不带国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>countrycode</td>
+															<td>手机国别码，只能包含数字，不包括+号</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>time</td>
+															<td>当前unix时间戳</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>version</td>
+															<td>当前版本（1.0）</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>expiretime</td>
+															<td>验证码过期时间(单位分钟)</td>
+															<td>string</td>
+														</tr>
+													</table>
+											</div>
+										</div>
+										</div>
+										<div class="interface-item"><span>返回码释义:</span>
+											<div class="interface-content">
+													200 成功，其他返回码请到<a href="https://github.com/VAPTCHA/vsms-sample" target="_blank">https://github.com/VAPTCHA/vsms-sample</a>中查看
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="interface-method-content">
+									<div class="interface-content">
+										<div class="interface-item"><span>接口说明</span>由V-SMS生成验证码，V-SMS验证。</div>
+										<div class="interface-item"><span>短信模板</span>【{变量}】你当前操作验证码为：{变量}，十分钟内有效。</div>
+										<div class="interface-item"><span class="step">Step1.请求验证码</span>
+											<div class="interface-content">
+												<div><span>方法：</span>HttpPost</div>
+												<div><span>格式：</span>json</div>
+												<div><span>接口地址：</span>http://smsapi.vaptcha.com/sms/verifycode</div>
+												<div><span>请求参数</span>
+													<table>
+														<tr>
+															<th>参数</th>
+															<th>说明</th>
+															<th>类型</th>
+														</tr>
+														<tr>
+															<td>vid</td>
+															<td>验证单元Id</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>smskey</td>
+															<td>用户后台V-SMS页面获取的smskey将用于短信发送, 请妥善保管，若泄露请及时重新生成。</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>token</td>
+															<td>由vaptcha验证码验证成功后返回的token（一键通过或绘制图形）</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>label</td>
+															<td>希望显示的验证码来源名称</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>phone</td>
+															<td>要发送的手机号码，只能包含数字，不带国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>countrycode</td>
+															<td>国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>time</td>
+															<td>当前unix时间戳</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>version</td>
+															<td>当前版本（1.0）</td>
+															<td>string</td>
+														</tr>
+													</table>
+												</div>
+												<div><span>返回码释义:</span><br />
+													&nbsp;&nbsp;200 成功，其他返回码请到<a href="https://github.com/VAPTCHA/vsms-sample" target="_blank">https://github.com/VAPTCHA/vsms-sample</a>中查看
+												</div>
+											</div>
+										</div>
+										<div class="interface-item"><span class="step">Step2.验证</span>
+											<div class="interface-content">
+												<div><span>方法：</span>HttpPost</div>
+												<div><span>格式：</span>json</div>
+												<div><span>接口地址：</span>http://smsapi.vaptcha.com/sms/verify</div>
+												<div><span>请求参数</span>
+													<table>
+														<tr>
+															<th>参数</th>
+															<th>说明</th>
+															<th>类型</th>
+														</tr>
+														<tr>
+															<td>vid</td>
+															<td>验证单元Id</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>smskey</td>
+															<td>用户后台V-SMS页面获取的smskey将用于短信发送, 请妥善保管，若泄露请及时重新生成。</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>code</td>
+															<td>验证码内容，只能包含数字和大小写英文字母</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>phone</td>
+															<td>要发送的手机号码，只能包含数字，不带国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>countrycode</td>
+															<td>国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>time</td>
+															<td>当前unix时间戳</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>version</td>
+															<td>当前版本（1.0）</td>
+															<td>string</td>
+														</tr>
+													</table>
+												</div>
+												<div><span>返回码释义:</span><br />
+													&nbsp;&nbsp;200 成功，其他返回码请到<a href="https://github.com/VAPTCHA/vsms-sample" target="_blank">https://github.com/VAPTCHA/vsms-sample</a>中查看
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="interface-method-content">
+									<div class="interface-content">
+										<div class="interface-item"><span>接口说明</span>V-SMS自定义短信模板调用方法。</div>
+										<div class="interface-item"><span class="step">请求接口参数</span>
+											<div class="interface-content">
+												<div><span>方法：</span>HttpPost</div>
+												<div><span>格式：</span>json</div>
+												<div><span>接口地址：</span>https://smsapi.vaptcha.com/sms/sendsms</div>
+												<div><span>请求参数</span>
+													<table>
+														<tr>
+															<th>参数</th>
+															<th>说明</th>
+															<th>类型</th>
+														</tr>
+														<tr>
+															<td>vid</td>
+															<td>验证单元Id</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>token</td>
+															<td>由vaptcha验证码验证成功后返回的token（一键通过或绘制图形）</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>smskey</td>
+															<td>短信密钥</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>data</td>
+															<td>数据，按顺序</td>
+															<td>string[]</td>
+														</tr>
+														<tr>
+															<td>countrycode</td>
+															<td>国别码 固定86</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>phone</td>
+															<td>要发送的手机号码，只能包含数字，不带国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>templateid</td>
+															<td>模板id</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>version</td>
+															<td>当前版本（1.0）</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>time</td>
+															<td>unix时间戳</td>
+															<td>long</td>
+														</tr>
+													</table>
+												</div>
+												<div><span>返回码释义:</span><br />
+													&nbsp;&nbsp;200 成功，其他返回码请到<a href="https://github.com/VAPTCHA/vsms-sample" target="_blank">https://github.com/VAPTCHA/vsms-sample</a>中查看
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="interface-method-content">
+									<div class="interface-content">
+										<div class="interface-item"><span>接口说明</span>V-SMS自定义短信模板调用方法。</div>
+										<div class="interface-item"><span class="step">请求接口参数</span>
+											<div class="interface-content">
+												<div><span>方法：</span>HttpPost</div>
+												<div><span>格式：</span>json</div>
+												<div><span>接口地址：</span>https://smsapi.vaptcha.com/sms/sendsms</div>
+												<div><span>请求参数</span>
+													<table>
+														<tr>
+															<th>参数</th>
+															<th>说明</th>
+															<th>类型</th>
+														</tr>
+														<tr>
+															<td>username</td>
+															<td>用户名</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>smskey</td>
+															<td>短信密钥</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>data</td>
+															<td>数据，按顺序</td>
+															<td>string[]</td>
+														</tr>
+														<tr>
+															<td>countrycode</td>
+															<td>国别码 固定86</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>phone</td>
+															<td>要发送的手机号码，只能包含数字，不带国别码</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>templateid</td>
+															<td>模板id</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>version</td>
+															<td>当前版本（1.0）</td>
+															<td>string</td>
+														</tr>
+														<tr>
+															<td>time</td>
+															<td>unix时间戳</td>
+															<td>long</td>
+														</tr>
+													</table>
+												</div>
+												<div><span>返回码释义:</span><br />
+													&nbsp;&nbsp;200 成功，其他返回码请到<a href="https://github.com/VAPTCHA/vsms-sample" target="_blank">https://github.com/VAPTCHA/vsms-sample</a>中查看
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item" id="代码示例">
+								<h2>代码示例</h2>
+								<div class="ul-title">&nbsp;&nbsp;详细Demo请到<a href="https://github.com/VAPTCHA/vsms-sample" target="_blank">https://github.com/VAPTCHA/vsms-sample</a>中查看</div>
+							</div>
+							<div class="sms-footer-bg">
+								<a href="https://v-sms.vaptcha.com/">短信平台</a>
+								<a href="https://v-sms.vaptcha.com/">短信接口</a>
+								<a href="https://v-sms.vaptcha.com/">手机验证码</a>
+								<a href="https://v-sms.vaptcha.com/">短信验证码</a>
+								<a href="https://v-sms.vaptcha.com/">短信群发</a>
+								<a href="https://v-sms.vaptcha.com/">触发短信</a>
+								<a href="https://v-sms.vaptcha.com/">免费短信</a>
+								<a href="https://v-sms.vaptcha.com/">短信免费</a>
+								<a href="https://v-sms.vaptcha.com/">免费短信接口</a>
+								<a href="https://v-sms.vaptcha.com/">短信接入</a>
+								<a href="https://v-sms.vaptcha.com/">短信接口代理</a>
+							</div>
+						</div>
+					</div>
+
+			</div>
+		</div>
+		<div class="mask" id="mask">
+			<div class="mask-video" id="mask-video">
+				<video id="media" width="100%" height="100%"  poster="" loop="loop" preload="auto"  src="https://static.vaptcha.com/VAPTCHAsxb.mp4"
+					controls="controls"></video>
+				<div id="mask-close">
+					<i class="fa fa-close"></i>
+				</div>
+			</div>
+		</div>
+		<script>
+		$('document').ready(function(){
+				 var config = {
+						vx: 4,
+						vy: 4,
+						height: 2,
+						width: 2,
+						count: 60,
+						color: "34,79,151",
+						stroke: "173,203,251",
+						dist: 6000,
+						e_dist: 20000,
+						max_conn: 10
+					}
+					CanvasParticle(config);
+					$("#mask").css("display", "none");
+					$("#video-maskbtn").on("click", function() {
+						$("#mask-video").css("left", "50%");
+						$("#mask").fadeIn();
+						$("#mask-video").fadeIn();
+						$(".vaptcha-index").css("filter", "blur(2px)");
+						$('#media')[0].play();
+						$('#media')[0].currentTime = 0;
+					});
+					$("#mask-close").on("click", function() {
+						$(".vaptcha-index").css("filter", "none");
+						$("#mask-video").css("left", "2000px");
+						$("#mask").fadeOut();
+						$('#media')[0].pause();
+					});
+					$(".main-left-cont .main-left .title").click(function(){
+						$(".main-left-cont .main-left .main-left-one a").removeClass('current');
+						$(".main-left-cont .main-left .main-left-one a:first").addClass('current');
+					})
+					function scroll(){
+						var items = $(".main-cont .main-right .con").find(".item");
+						var menu = $(".main-cont .main-left");
+						var currentId = "";
+						items.each(function() {
+							var m = $(this);
+							if (0 > m.position().top - 50) {
+								currentId = "#" + m.attr("id");
+							} else {
+								return false;
+							}
+						});
+
+						var currentLink = menu.find(".current");
+						if (currentId && currentLink.attr("href") != currentId) {
+							currentLink.removeClass("current");
+							menu.find("[href=" + currentId + "]").addClass("current");
+						}
+					}
+					scroll();
+					$(".main-cont .main-right").scroll(function() {
+					    scroll();
+						var top =$(".main-cont .main-right .con").offset().top;
+						var main = $(".main-cont").css("top");
+						if ( top > 0 ) {
+							if($(".main-cont").css("top") == "50px"){
+								$(".main-cont").animate({"top":"240px"},200);
+								$(".vaptcha .nav").animate({"margin-top":0},200);
+							//	$(".vaptcha .main-left-cont").animate({"top":"270px"},200);
+							}
+						 }else{
+							if($(".main-cont").css("top") == "240px"){
+								$(".main-cont").animate({"top":"50px"},200);
+								$(".vaptcha .nav").animate({"margin-top":"-189px"},200);
+								//$(".vaptcha .main-left-cont").animate({"top":"80px"},200);
+							}
+
+						}
+					});
+                    $(".interface-method-title").click(function(){
+						$(this).addClass("active");
+						$(this).siblings().removeClass("active");
+						var index = $(this).index();
+						$(".interface-method-content").removeClass("active");
+						$(".interface-method-content").eq(index).addClass("active");
+
+					})
+
+			})
+		</script>
+	</body>
+</html>

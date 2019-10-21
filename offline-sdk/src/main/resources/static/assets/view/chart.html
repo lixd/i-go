@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/public/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/public/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/public/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/server/server.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/server/chart.css"/>
+		<link rel="stylesheet" type="text/css" media="all" href="../js/datejs/daterangepicker-bs3.css" />
+	</head>
+	<body>
+		<div class="charts">
+			<!--导航-->
+			<section class="nav">
+				<div class="search fr">
+					<input type="text" class="form-control" placeholder="Site name" accesskey="enter"/>
+					<i class="fa fa-search"></i>
+				</div>
+				<ul>
+					<li>All Sites</li>
+					<li class="active">
+						<i class="fa fa-laptop"></i>
+						WITMES
+					</li>
+				</ul>	
+			</section>
+			
+			<!--request-->
+			<article class="request">
+				<section class="title">
+					<div class="fr">
+						<div class="fr">
+							<div id="requestDate" class="date btn">
+			                  <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+			                  <span></span> <b class="caret"></b>
+			              	</div>
+						</div>
+						<ul class="nav">
+							<li class="active">Today</li>
+							<li>Yesterday</li>
+							<li>Week</li>
+							<li>Month</li>
+						</ul>
+					</div>
+					<h1>Request Reports</h1>
+				</section>
+				
+				<section class="report">
+					<ul>
+						<li>
+							<h1 class="text-blue">34562</h1>
+							<p>Total requests</p>
+						</li>
+						<li>
+							<h1 class="text-red">45%</h1>
+							<p>Passed rate</p>
+						</li>
+						<li>
+							<h1>345</h1>
+							<p>peak/minute</p>
+						</li>
+					</ul>
+				</section>
+				
+				<section class="chart" id="request">
+					
+				</section>
+			</article>
+			
+			<!--attack-->
+			<article class="attack">
+				<section class="title">
+					<div class="fr">
+						<div class="fr">
+							<div id="attackDate" class="date btn">
+			                  <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+			                  <span></span> <b class="caret"></b>
+			              	</div>
+						</div>
+						<ul class="nav">
+							<li class="active">Today</li>
+							<li>Yesterday</li>
+							<li>Week</li>
+							<li>Month</li>
+						</ul>
+					</div>
+					<h1>Attack reports</h1>
+				</section>
+				<h3 class="fr"><i class="fa fa-circle text-red"></i>PEAK Attacks: 34565 happen at 2017/11/11 11:00</h3>
+				
+				<section class="chart" id="attack">
+					
+				</section>
+				
+				<section class="rank">
+					<div class="item">
+						<h3>Distribution diagram</h3>
+						<div class="chart" id="distribution">
+							
+						</div>
+					</div>
+					<div class="item">
+						<h3>TOP10 Attackters</h3>
+						<ul>
+							<li>
+								<span class="fr">53545</span>
+								<p class="font-flow">192.167.111.111(USA)</p>
+							</li>
+						</ul>
+					</div>
+					<div class="item">
+						<h3>Heavy attacked pages</h3>
+						<ul>
+							<li>
+								<span class="fr">53545</span>
+								<p class="font-flow">192.167.111.111(USA)</p>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</article>
+		</div> 
+	</body>
+	
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/echarts.min.js" type="text/javascript" charset="utf-8"></script>	
+	
+	<!--request-->
+	<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var requestChart = echarts.init(document.getElementById('request'));
+
+        // 指定图表的配置项和数据
+        var option1 = {
+		    title: {
+		        text: '',
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['请求量','通过量']
+		    },
+		    toolbox: {
+		    	show:false,
+		        feature: {
+		            saveAsImage: {}
+		        }
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis : [
+		        {
+		            type : 'category',
+		            boundaryGap : false,
+		            data : ['12:00','12:00','12:00','12:00','12:00']
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value'
+		        }
+		    ],
+		    color:['#d48265','#91c7ae'],
+		    series : [
+		        {
+		            name:'请求量',
+		            type:'line',
+		            stack: '总量',
+		            areaStyle: {normal: {}},
+		            data:[120, 132, 101, 134, 90, 230, 210],
+		        },
+		        {
+		            name:'通过量',
+		            type:'line',
+		            stack: '总量',
+		            areaStyle: {normal: {}},
+		            data:[220, 182, 191, 234, 290, 330, 310]
+		        }
+		    ]
+		};
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        requestChart.setOption(option1);
+    </script>
+
+    <!--attack-->
+    <script type="text/javascript">
+		var attackChart = echarts.init(document.getElementById('attack'));
+
+		var option2 = {
+		    title: {
+		        text: '',
+		        subtext: ''
+		    },
+		    tooltip:{
+			        trigger: 'item',
+			        formatter: function (params) {
+			            var data = params.data;
+			            var formaterStr="";
+			            if(params.name==""){
+			            	formaterStr=data[0]+"<br/>"+params.seriesName+"："+data[1];
+			            }
+			            else{
+			            	formaterStr=params.name+"<br/>"+params.seriesName+"："+data;
+			            }
+			            return formaterStr;
+			        },
+			    },
+		    xAxis:  [
+			    {
+			        type: 'category',
+			        boundaryGap: false,
+			    	data:randomX1(),
+			    },
+		    	{
+			        type: 'category',
+			        boundaryGap: false,
+			        axisLine:{
+			        	show:false
+			        },
+			        splitLine:{
+			        	show:false
+			        },
+			         axisTick:{
+			        	show:false
+			        },
+			         axisLabel:{
+			        	show:false
+			        },
+					data:randomX2(),
+			    },
+		    ],
+		    yAxis:{
+			        type: 'value',
+			    }
+		    ,
+		    color:['black'],
+		    series: [
+		        {
+		            name:'攻击次数',
+		            type:'line',
+		            smooth: true,
+		            symbolSize:10,	
+		            clipOverflow:false,
+		        	data:randomY1(),
+				},
+		        {
+		            name: '最大值',
+		            type: 'effectScatter',
+		            xAxisIndex:1,
+		            clipOverflow:false,
+		            data: [
+		            	['12:00',50]
+		            ],
+		            label: {
+		                normal: {
+		                    formatter: '',
+		                    position: 'right',
+		                    show: false
+		                },
+		                emphasis: {
+		                    show: true
+		                }
+		            },
+		            symbolSize: 12,
+		            showEffectOn: 'render',
+		            rippleEffect: {
+		                brushType: 'stroke',
+		                period:'2'
+		            },
+		            hoverAnimation: false,
+		            itemStyle: {
+		                normal: {
+		                    color: '#D90000',
+		                    shadowBlur: 10,
+		                    shadowColor: '#D90000'
+		                }
+		            },
+		            zlevel: 1
+		        }
+		    ]
+		};
+		
+		attackChart.setOption(option2);
+		
+		function randomX1 () {
+			var data=[];
+			for(var i=0;i<25;i++){
+				if(i<10){
+					data.push("0"+i+":00");
+				}
+				else{
+					data.push(i+":00");
+				}
+			}
+			return data;
+		}
+		function randomX2 () {
+			var data=[];
+			for(var i=0;i<25;i++){
+				if(i==24){
+					data.push(i+":00");
+					break;
+				}
+				for(var j=0;j<12;j++){
+					if(i<10){
+						if(j<=1){
+							data.push("0"+i+":0"+j*5);
+						}
+						else{
+							data.push("0"+i+":"+j*5);
+						}
+					}
+					else{
+						if(j<=1){
+							data.push(i+":0"+j*5);
+						}
+						else{
+							data.push(i+":"+j*5);
+						}
+					}
+				}
+			}
+			return data;
+		}
+		function randomY1 () {
+			var data=[];
+			for(var i=0;i<25;i++){
+				data.push(Math.round(20+Math.random()*100));
+			}
+			return data;
+		}
+    </script>
+    
+    <!--distribution-->
+    <script type="text/javascript">
+    	var distributionChart = echarts.init(document.getElementById('distribution'));
+    	var option3 = {
+		    title : {
+		        text: '',
+		        subtext: '',
+		        x:'center'
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		    },
+		    series : [
+		        {
+		            name: '访问来源',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['45%', '50%'],
+		            data:[
+		                {value:335, name:'直接访问'},
+		                {value:310, name:'邮件营销'},
+		                {value:234, name:'联盟广告'},
+		                {value:135, name:'视频广告'},
+		                {value:1548, name:'搜索引擎'}
+		            ],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+		    ]
+		};
+		
+		distributionChart.setOption(option3);
+		window.onresize=function () {
+			requestChart.resize();
+			attackChart.resize();
+			distributionChart.resize();
+			
+		};
+    </script>
+    
+    <!--日历-->
+    <script type="text/javascript" src="../js/datejs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/datejs/moment.min.js"></script>
+    <script type="text/javascript" src="../js/datejs/daterangepicker.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+		   var optionset1={
+	    		opens:'left',
+	    		dateLimit: { days: 30 },
+	      };
+          $('#requestDate span').html(moment().subtract('days', 30).format('YYYY/MM/DD') + ' - ' + moment().format('YYYY/MM/DD'));
+          $('#requestDate').daterangepicker(optionset1,function(start, end, label) {
+            $('#requestDate span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+          });
+          
+          
+          $('#attackDate span').html(moment().subtract('days', 30).format('YYYY/MM/DD') + ' - ' + moment().format('YYYY/MM/DD'));
+          $('#attackDate').daterangepicker(optionset1,function(start, end, label) {
+            $('#attackDate span').html(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+          });
+       });
+    </script>
+</html>

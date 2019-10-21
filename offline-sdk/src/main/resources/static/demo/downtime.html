@@ -1,0 +1,211 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>宕机模式 - 手势验证码（VAPTCHA）</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="VAPTCHA在服务器群全体宕机的极端情况下也能对接入网站进行全天候防护，当前页为效果演示页面。">
+    <meta name="keywords" content="VAPTCHA被攻击,宕机模式,FireMode">
+    <link rel="stylesheet" type="text/css" href="https://r.vaptcha.com/public/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://r.vaptcha.com/public/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/css/public/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://r.vaptcha.com/demo/css/demo.1.0.2.css" />
+
+    <script src="https://r.vaptcha.com/public/js/jquery.min.js"></script>
+    <script src="https://r.vaptcha.com/public/js/vaptcha-language.js"></script> 
+    <script src="js/vaptcha-demo.js"></script>
+    <!--[if !IE]><!-->
+    
+    <script type="text/javascript">
+    $('document').ready(function(){
+        $("#mask").css("display", "none");
+        $("#video-maskbtn").on("click", function() {
+            $("#mask-video").css("left", "50%");
+            $("#mask").fadeIn();
+            $("#mask-video").fadeIn();
+            $(".vaptcha-index").css("filter", "blur(2px)");
+            $('#media')[0].play();
+            $('#media')[0].currentTime = 0;
+        });
+        $("#mask-close").on("click", function() {
+            $(".vaptcha-index").css("filter", "none");
+            $("#mask-video").css("left", "2000px");
+            $("#mask").fadeOut();
+            $('#media')[0].pause();
+        });
+    })
+    </script>
+
+    <!--<![endif]-->
+    <script src="https://cdn.vaptcha.com/v.js"></script>
+    <script>
+        $('document').ready(function () {
+
+            var vaptchaContainer = document.getElementById('downTimeDiv');
+            function initDowntimeValidate(){
+                _vaptcha = null;
+                     var options = {
+                        challenge: "",
+                        container:vaptchaContainer,
+                        type:'embed',
+                        outage:'127.0.0.1:443/dometime',
+                        lang:'zh-CN',
+                        success: function () {
+                            // $(container).parent().find("a").removeAttr("disabled");
+                            $('#vaptchaDownTimeType').removeAttr('disabled');
+                            console.log('success');
+                            _vaptcha.destroy();
+                        }
+                    }
+                     window.vaptcha(options,function(vaptcha_obj){
+                        _vaptcha = vaptcha_obj;
+                        _vaptcha.init();
+                    })
+            }
+            var current = 0;
+            var previousTime;
+            var vpRefresh = document.getElementById('vpRefresh');
+            $('#reset').on("click",function(){
+                initDowntimeValidate();
+                $('#vaptchaDownTimeType')[0].setAttribute("disabled","disabled");
+                 if (!previousTime || new Date().getTime() - previousTime > 500) {
+                        current = current + 180;
+                        vpRefresh.style.transform = 'rotateZ(' + current + 'deg)';
+                        previousTime = new Date().getTime();
+                    }
+
+            })
+            initDowntimeValidate();
+
+        });
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e3da96e182f65086e71c28cfdbb64b10";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <script src='https://static.vaptcha.com/assets/js/three.min.js'></script>
+    <script src="https://static.vaptcha.com/assets/js/index.min.js"></script>
+    <div class="demo-vaptcha">
+        <div class="nav">
+            <a href="/" title="VAPTCHA">
+                <img class="logo" src="https://static.vaptcha.com/assets/img/index/logo.png" alt="VAPTCHA">
+            </a>
+            <div class="nav-link">
+                <a href="/">首页</a>
+                <a href="/demo/index.html" class="index">演示</a>
+                <a href="/login.html">登录</a>
+                <a href="/register.html">注册</a>
+            </div>
+        </div>
+        <div class="vaptcha-main ">
+            <div class="aside">
+                <ul id="aside-btn">
+                    <li><i class="fa fa-laptop"></i></li>
+                    <li class="aside-btn"><a href="/demo/index.html"> 嵌入式</a></li>
+                    <li class="aside-btn"><a href="/demo/popup.html">点击式</a></li>
+                    <!--<li class="aside-btn"><a href="/demo/popup">弹出式</a></li>-->
+                    <li class="aside-btn"><a href="/demo/invisible.html">隐藏式</a></li>
+                    <li><i class="fa fa-mobile"></i></li>
+                    <li class="aside-btn"><a href="/demo/phone.html">弹出式</a></li>
+                    <!-- <li><i class="fa fa-power-off"></i></li>
+                    <li class="aside-btn downtime active"><a href="/demo/downtime">宕机模式</a></li> -->
+                </ul>
+
+            </div>
+
+            <div class="article downtime-demo article-active">
+                <div class="panel" style="display:block">
+                    <div class="title">
+                        示例：<span>VAPTCHA机房着火了</span>
+                        <p id="reset" class="refresh" title="重置">
+                            <i id="vpRefresh"></i>
+                        </p>
+                    </div>
+                    <div class="login-content">
+                        <div class="username"><i class="fa fa-user"></i><input type="text" class="form-control" value="vaptcha@wlinno.com" placeholder="请输入用户名"/></div>
+                        <div class="password"><i class="fa fa-key"></i><input type="password" class="form-control" value="**************" placeholder="请输入密码"/></div>
+                        <div id='downTimeDiv' style="margin-bottom:10px;height:206.5px">
+                            <div class="vaptcha-init-main">
+                                <div class="vaptcha-init-loading">
+                                    <a href="/" target="_blank">
+                                        <img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/>
+                                    </a>
+                                    <span class="vaptcha-text">VAPTCHA启动中...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a id="vaptchaDownTimeType" class="btn-login" disabled>登录</a>
+                    </div>
+                </div>
+            </div>
+            <div class="surperise">
+                <div class="anim">
+                </div>
+                <div id="cat">
+                    <img src="https://static.vaptcha.com/assets/img/cat.png" alt="" srcset="">
+                </div>
+                <div class="what" id="video-maskbtn">
+                    <span></span>
+                    <a>快速了解VAPTCHA</a>
+                </div>
+            </div>
+            <div class="footer">
+            
+                <div class="footer-main">
+                    <div>
+                    <a href="/document/install.html">开发文档</a>
+                    <a href="/document/faq.html">FAQ</a>
+                    <a href="/document/contract.html">服务条款</a>
+                    <a href="/sitemap.xml">Sitemap</a>
+                    <a href="/document/index.html">Git</a>
+                    <!-- <a href="/reward">破解VAPTCHA</a> -->
+                    <a href="@dzUrl" target="_blank">DZ插件</a>
+                    <a href="/document/sms.html" target="_blank">短信补贴</a>
+                    <a href="/document/sms.html" target="_blank">团队邮箱</a>
+                    </div>
+                    <p class="copyright">
+                    Copyright © 2017 VAPTCHA All Rights Reserved 
+                    <a href="http://www.beian.miit.gov.cn" target="_blank">&nbsp;渝ICP备15001110号-9&nbsp;&nbsp;&nbsp;</a>
+                    <img src="https://static.vaptcha.com/assets/img/index/ghs.png" style="vertical-align: middle;"/>
+                        渝公网安备 50010302001060号
+                        <!-- <a href="https://tongji.baidu.com/web/welcome/ico?s=e3da96e182f65086e71c28cfdbb64b10" target="_blank" style="color:#212B39;">百度统计</a> -->
+                    </p>
+                </div>
+            </div>
+            <div style="font-size: 12px; color: #000; position: absolute; bottom: 0; z-index: -1;">
+                VAPTCHA是“Variation Analysis based Public Turing Test to Tell Computers and Humans Apart”（基于变量分析来区分人类和计算机的图灵测试程序）的缩写，又称为手势验证码， 一种基于人工智能和大数据的人机验证解决方案 。用户仅需用鼠标绘制指定轨迹即可完成人机验证。与传统验证码相比，VAPTCHA不仅用户体验更好，而且更加安全，是目前最不可能被破解的验证码。VAPTCHA能有效防止暴力破解、论坛灌水、垃圾邮件、撞库、刷投票、人工打码、恶意提交数据等。
+            </div>
+        </div>
+    </div>
+    <div class="masks" id="mask">
+        <div class="mask-video" id="mask-video">
+          <video id="media" width="100%" poster="" loop="loop" preload="auto" height="100%" src="https://static.vaptcha.com/VAPTCHAsxb.mp4" controls="controls"></video>
+          <div id="mask-close"><i></i></div>
+        </div>
+      </div>
+</body>
+
+</html>

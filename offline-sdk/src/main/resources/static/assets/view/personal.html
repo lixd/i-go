@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/public/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/public/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/public/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/server/server.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/server/personal.css"/>
+		<script src="../js/jquery.min.js"></script>
+		<script>
+//			window.onload=function(){
+//				for(var i=1;i<=6;i++){
+//			        setTimeout((function(a){
+//					//改成立即执行函数
+//			            console.log(a);
+//			        })(i),20000);
+//			    }
+//			}
+		</script>
+		<script type="text/javascript"> 
+		$(function(){ 
+			$('#pass').keyup(function () { 
+				var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g"); 
+				var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g"); 
+				var enoughRegex = new RegExp("(?=.{6,}).*", "g"); 
+			
+				if (false == enoughRegex.test($(this).val())) { 
+					$('#level').removeClass('pw-weak'); 
+					$('#level').removeClass('pw-medium'); 
+					$('#level').removeClass('pw-strong'); 
+					$('#level').addClass(' pw-defule'); 
+					 //密码小于六位的时候，密码强度图片都为灰色 
+				} 
+				else if (strongRegex.test($(this).val())) { 
+					$('#level').removeClass('pw-weak'); 
+					$('#level').removeClass('pw-medium'); 
+					$('#level').removeClass('pw-strong'); 
+					$('#level').addClass(' pw-strong'); 
+					 //密码为八位及以上并且字母数字特殊字符三项都包括,强度最强 
+				} 
+				else if (mediumRegex.test($(this).val())) { 
+					$('#level').removeClass('pw-weak'); 
+					$('#level').removeClass('pw-medium'); 
+					$('#level').removeClass('pw-strong'); 
+					$('#level').addClass(' pw-medium'); 
+					 //密码为七位及以上并且字母、数字、特殊字符三项中有两项，强度是中等 
+				} 
+				else { 
+					$('#level').removeClass('pw-weak'); 
+					$('#level').removeClass('pw-medium'); 
+					$('#level').removeClass('pw-strong'); 
+					$('#level').addClass('pw-weak'); 
+					 //如果密码为6为及以下，就算字母、数字、特殊字符三项都包括，强度也是弱的 
+				} 
+				return true; 
+			}); 
+		}) 
+		</script>
+	</head>
+	<body>
+		
+		
+		<div class="header">
+			<img class="logo" src="../img/logo.fw.png" />
+			<div class="header-right">
+				<span>ID: </span>
+				<span class="user-id" title="用户ID号">345321</span>
+				<a class="fa fa-s ign-out"></a>	
+			</div>
+		</div>
+		<div class="leftpanel">
+			<div class="left-nav">
+				<div class="leftnav-cont">
+					<ul>
+		                <li>
+		                    <a class=""><i class="fa fa-bar-chart "></i><div class="pretty"></div></a>
+		                </li>
+		                <li>
+		                    <a class="" ><i class="fa fa-vaptcha"></i></a>
+		                </li>
+		                <li>
+		                    <a class="" ><i class="fa fa-user"></i></a>
+		                </li>
+		                <li>
+		                    <a class="" ><i class="fa fa-question-circle-o"></i></a>
+		                </li>
+                	</ul>
+				</div>
+			</div>
+		</div>
+		<div class="centerpanel">
+			<div class="main-panel">
+				<ul class="personal">
+					<li>
+						<span class="intro">ID : </span>
+						<div class="cont id-num">345321</div>
+					</li>
+					<li>
+						<span class="intro">Attach to : </span>
+						<ul class="cont attach-to">
+							<li>
+								<i class="fa fa-google"></i>
+								<a class="fa fa-times-circle"></a>
+							</li>
+							<li>
+								<i class="fa fa-facebook"></i>
+								<a class="fa fa-times-circle"></a>
+							</li>
+							<li>
+								<i class="fa fa-twitter"></i>
+								<a class="fa fa-times-circle"></a>
+							</li>
+							<li>
+								<i class="fa fa-weixin"></i>
+								<a class="fa fa-times-circle"></a>
+							</li>
+							<li>
+								<i class="fa fa-qq"></i>
+								<a class="fa fa-times-circle"></a>
+							</li>
+							<li>
+								<i class="fa fa-tencent-weibo"></i>
+								<a class="fa fa-times-circle"></a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<span class="intro">Email : </span>
+						<!--已绑定邮箱-->
+						<div class="cont email">
+							<span>4666662@qq.com</span>
+							<a class="cont-link">Untie</a>
+							<a class="cont-link">Change</a>
+						</div>
+						<!--未绑定邮箱-->
+						<div class="cont ">
+							<a class="cont-link">Add new email</a>
+						</div>
+						<!--添加邮箱-->
+						<div class="cont email add-email">
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="email" name="" id="" value="" />
+								<button class="btn btn-success" value="NEXT">NEXT</button>
+								<a class="cancel"><i></i></a>
+							</div>
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="input code you just reveived" name="" id="" value="" />
+								<button class="btn btn-success" value="Submit">Submit</button>
+								<a class="cancel"><i></i></a>
+							</div>
+						</div>
+						<!--变更邮箱-->
+						<div class="cont email add-email">
+							<span>Safety verification first!</span>
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="Current account’s password" name="" id="" value="" />
+								<button class="btn btn-success" value="NEXT">NEXT</button>
+								<a class="cancel"><i></i></a>
+							</div>
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="New email" name="" id="" value="" />
+								<button class="btn btn-success" value="NEXT">NEXT</button>
+								<a class="cancel"><i></i></a>
+							</div>
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="input code you just reveived" name="" id="" value="" />
+								<button class="btn btn-success" value="Submit">Submit</button>
+								<a class="cancel"><i></i></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<span class="intro">Phone : </span>
+						<div class="cont phone-num">+86 235235235542</div>
+						<!--未绑定邮箱-->
+						<div class="cont ">
+							<a class="cont-link">Add new email</a>
+						</div>
+						
+						<div class="cont phone-num">
+							<div class="validate-group">
+								
+								<div class="area-code btn-group dropdown">
+								    <button class="btn " type="button">
+								    	China  +86
+								    </button>
+								    <button class="btn dropdown-toggle-split dropdown-toggle" type="button">
+								    	<a class="fa fa-angle-down"></a>
+								    </button>
+								    <ul class="dropdown-menu">
+								      <li role="menuitem">
+								      	<a class="dropdown-item" href="#">
+								      		China  +86
+								      	</a>
+								      </li>
+								      <li role="menuitem">
+								      	<a class="dropdown-item" href="#">
+								      		China  +86
+								      	</a>
+								      </li>
+								      <li role="menuitem">
+								      	<a class="dropdown-item" href="#">
+								      		China  +86
+								      	</a>
+								      </li>
+								    </ul>
+								</div>
+								<input autocomplete="on" class="form-control" type="email" name="phonenumber" value="" placeholder="PhoneNumber"/>
+								<a class="cancel"><i></i></a>
+							</div>
+							<img src="../img/gesture.fw.png" />
+						</div>
+						<div class="cont phone-num">
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="Iput verifcation code" name="" id="" value="" />
+								<button class="btn btn-success" value="Send again">Send again</button>
+								<a class="cancel"><i></i></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<span class="intro">Password : </span>
+						<div class="cont password">
+							<span>*************************</span>
+							<a class="cont-link">Reset</a>
+						</div>
+						<!--重置密码-->
+						<div class="cont password ">
+							<div class="validate-group">
+								<input class="form-control" type="text" autocomplete="off" placeholder="Current password" name="" id="" value="" /><br />
+								<div class="password-strength ">
+									<span  class="tbl-txt">
+										<input id="pass" class="form-control input-style" type="password" autocomplete="on" placeholder="Newpassword" size="20" maxlength="20"  name="password" value="" /><br />
+									</span>
+									<div id="level" class="pw-strength">
+										<div class="pw-bar"></div>
+										<div class="pw-bar-on"></div>
+										<div class="pw-txt">
+										<span>Easy</span>
+										<span>Normal</span>
+										<span>Hard</span>
+										</div>
+									</div>
+								</div>
+								<input class="form-control" type="text" autocomplete="off" placeholder="Confirm new password" name="" id="" value="" />
+							</div>
+							<div class="validate-group">
+								<button class="btn btn-success" value="Submit">Submit</button>
+								<a class="cancel"><i></i></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<span class="intro">Last login IP : </span>
+						<div class="cont login-ip">
+							<span>192.168.111.11  USA</span>
+							<span class="login-time">2014/11/11 11:00:00(local time)</span>
+						</div>
+					</li>
+					<li>
+						<span class="intro">Email : </span>
+						<div class="cont id-num">345321</div>
+					</li>
+					<li>
+						<span class="intro">ID:</span>
+						<div class="cont id-num">345321</div>
+					</li>
+				</ul>
+				<div class="upgrade">
+					<div class="title">
+						<span>Free Version</span>
+						<button class="btn btn-success" value="Upgrade">&nbsp;Upgrade</button>
+					</div>
+					<ul class="cont">
+						<li>
+							<span>Maximum requests per hour</span>
+							<b>1000</b>
+						</li>
+						<li>
+							<span>Maximum sites</span>
+							<b>5</b>
+						</li>
+						<li>
+							<span>Attack reports</span>
+							<b>NO</b>
+						</li>
+						<li>
+							<span>Alert email</span>
+							<b>NO</b>
+						</li>
+						<li>
+							<span>Customize backgroud picture</span>
+							<b>NO</b>
+						</li>
+						<li>
+							<span>Global CDN  accelerate</span>
+							<b>NO</b>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

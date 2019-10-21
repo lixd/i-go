@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 服务协议 - 文档中心 - 手势验证码（VAPTCHA）</title>
+		<meta name="keywords" content="文档中心,验证码,手势验证码,VAPTCHA,CAPTCHA,人机验证,防灌水,防暴力破解,防垃圾邮件,防注册机,最安全,轨迹验证码,免费验证码,智能验证码,防人工打码的验证码">
+		<meta name="description" content="VAPTCHA用户注册协议">
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/public/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/public/common.css" />
+		<link rel="stylesheet" type="text/css" href="https://static.vaptcha.com/assets/css/document.css" />
+		<link rel="stylesheet" type="text/css" href="../../assets/css/public/font-awesome.min.css">
+		<script src="https://static.vaptcha.com/assets/js/jquery.min.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/vaptcha-language.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/document_left.js"></script>
+		<script src="https://static.vaptcha.com/assets/js/canvas-particle.js"></script>
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				hm.src = "https://hm.baidu.com/hm.js?e3da96e182f65086e71c28cfdbb64b10";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();
+			(function(){
+				var bp = document.createElement('script');
+				var curProtocol = window.location.protocol.split(':')[0];
+				if (curProtocol === 'https') {
+					bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+				}
+				else {
+					bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+				}
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(bp, s);
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="canvas-cont"></div>
+		<div class="vaptcha">
+			<div class="nav">
+				<a class="nav-logo" title="VAPTCHA" href="/">
+					<img alt="VAPTCHA" src="https://static.vaptcha.com/assets/img/index/logo.png"/>
+				</a>
+				<!-- <div  class="btn-group dropdown change-language">
+					<a id='btn-down-lang' title="中文" class="btn btn-down" type="button">
+						<img alt="中文" src="https://static.vaptcha.com/assets/img/ch.png">
+					</a>
+				</div> -->
+				<div class="nav-link">
+					<a href="javascript:;" class="active">文档中心</a>
+					
+					<a href="/demo/index.html">在线体验</a>
+					<a href="/login.html">登录后台</a>
+					<a href="/register.html" class="get">免费注册</a>
+				</div>
+				<div class="canvas-cont">
+					<h1>VAPTCHA文档中心</h1>
+				</div>
+				<div class="bar">
+					<a href="/document/index.html">产品介绍</a>
+					<a href="/document/install.html"  >代码部署</a>
+					<a href="/document/plugin.html" style="display:none">插件</a>
+					<a href="/document/faq.html" >FAQ</a>
+					<a href="/document/sms.html" >V-SMS</a>
+					<a href="/document/contract.html" class="active">服务协议</a>
+				</div>
+			</div>
+			<div class="main-cont">
+				<div class="main-left-cont">
+					<div class="scroll">
+						<ul class="main-left">
+							<li>
+								<a  class="title" href="#服务协议"><i class="fa fa-file-text-o"></i>服务协议</a>
+							</li>
+							<ul class="main-left-one">
+								<li>
+									<a class="current" href="#信息收集">信息收集</a>
+								</li>
+								<li>
+									<a href="#免责申明">免责申明</a>
+								</li>
+								<li>
+									<a href="#权利保留">权利保留</a>
+								</li>
+							</ul>
+
+						</ul>
+					</div>
+				</div>
+				<div class="main-right">
+					<div class="con">
+							<h1 id="服务协议"><span></span>服务协议</h1>
+							<div class="item" id="信息收集">
+								<h2>我们收集哪些信息</h2>
+                                <p>为了向你提供更好、更安全的验证服务，我们将根据需要收集如下信息： </p>
+                                <table>
+                                    <tr>
+                                        <th>信息</th>
+                                        <th>描述</th>
+                                    </tr>
+                                    <tr>
+                                        <td>用于注册的信息</td>
+                                        <td>
+                                                当你在VAPTCHA创建账户时，你需要向我们提供手机号或邮箱信息（如果是第三方登录账号则是第三方网站授权的信息，如：头像、昵称）。
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>用于人机验证的信息</td>
+                                        <td>
+                                                当你的网站接入VAPTCHA人机验证服务时，我们会收集当前被验证用户所使用设备的相关信息，这些设备信息包括：<br>
+                                                设备属性信息（如设备型号、操作系统版本、设备设置、唯一 设备标识符等软硬件特征信息）；<br>
+                                                设备位置信息（如通过GPS、蓝牙或WIFI信号获得的位置信息）；<br>
+                                                设备连接信息（IP地址、浏览器的类型、电信运营商、使用的语言、访问日期和时间及您需求的网页记录等）；<br>
+                                                同时为了进行人机行为特征判断，我们还会收集用户在验证过程中的鼠标轨迹、加速度、停顿等行为信息以及被验证用户的浏览器Cookie或者类似信息。
+                                        </td>
+                                    </tr>
+                                </table>
+							</div>
+							<div class="item" id="免责申明" >
+								<h2>免责申明</h2>
+								<p>VAPTCHA提供世界上最安全的人机验证服务（远远优于其他人机验证解决方案），我们对VAPTCHA进行了严格的破解测试（暴力破解、撞库测试、算法识别等）、超高并发压力测试、DDOS攻击测试（ 就算VPATCHA验证服务器群全部宕机的情况下，
+                                        VAPTCHA独有的宕机验证策略仍然具有卓越的安全性全天候保护你的网站安全）。在使用VAPTCHA服务过程中，你需要妥善保管好你的账户信息及验证秘钥SecretKey, 如果因为这些信息的遗失导致的网站安全问题，VAPTCHA不承担任何责任。
+                                        用户上传的自定义验证背景图，若上传的验证图涉嫌侵权、违规等，VAPTCHA不承担任何连带责任。</p>
+							</div>
+							<div class="item" id="权利保留">
+								<h2>权利保留</h2>
+								 <p>为了加强VAPTCHA的安全性，我们会在不另行通知的前提下对已有验证算法、方法进行持续升级，以及在不侵犯接入网站或应用安全性的前提下变更用户信息收集策略；
+                                        在检测到接入网站遇到重大安全性挑战时，我们有权利临时性提升验证难度（如对手势匹配率进行提升）或其他安全的验证替代方案，直到当前网站不再受到攻击；
+                                        原则上VAPTCHA是免费的，仅对有定制需求或者对VAPTCHA的服务器及带宽资源占用过大的用户收取相应费用，同时我们保留将验证背景更换成广告图或其他盈利策略的权利；
+                                        根据需要，我们有权对服务条款进行合理修改和调整并不另行通知。
+                                        </p>
+							</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script>
+		$('document').ready(function(){
+				 var config = {
+						vx: 4,
+						vy: 4,
+						height: 2,
+						width: 2,
+						count: 60,
+						color: "34,79,151",
+						stroke: "173,203,251",
+						dist: 6000,
+						e_dist: 20000,
+						max_conn: 10
+					}
+					CanvasParticle(config);
+					$(".main-left-cont .main-left .title").click(function(){
+						$(".main-left-cont .main-left .main-left-one a").removeClass('current');
+						$(".main-left-cont .main-left .main-left-one a:first").addClass('current');
+					})
+					function scroll(){
+						var items = $(".main-cont .main-right .con").find(".item");
+						var menu = $(".main-cont .main-left");
+						var currentId = "";
+						items.each(function() {
+							var m = $(this);
+							if (0 > m.position().top - 50) {
+								currentId = "#" + m.attr("id");
+							} else {
+								return false;
+							}
+						});
+
+						var currentLink = menu.find(".current");
+						if (currentId && currentLink.attr("href") != currentId) {
+							currentLink.removeClass("current");
+							menu.find("[href=" + currentId + "]").addClass("current");
+						}
+					}
+					scroll();
+					$(".main-cont .main-right").scroll(function() {
+					    scroll();
+						var top =$(".main-cont .main-right .con").offset().top;
+						var main = $(".main-cont").css("top");
+						if ( top > 0 ) {
+							if($(".main-cont").css("top") == "50px"){
+								$(".main-cont").animate({"top":"240px"},200);
+								$(".vaptcha .nav").animate({"margin-top":0},200);
+								// $(".vaptcha .main-left-cont").animate({"top":"270px"},200);
+							}
+						 }else{
+							if($(".main-cont").css("top") == "240px"){
+								$(".main-cont").animate({"top":"50px"},200);
+								$(".vaptcha .nav").animate({"margin-top":"-189px"},200);
+								// $(".vaptcha .main-left-cont").animate({"top":"80px"},200);
+							}
+
+						}
+			});
+
+			})
+		</script>
+	</body>
+</html>
