@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/registry"
-	"github.com/micro/go-plugins/registry/etcdv3"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	pb "i-go/go-micro/first/new_micro/pb"
