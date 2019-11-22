@@ -5,16 +5,10 @@ import (
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 	"github.com/prometheus/common/log"
+	"i-go/database/postgresql/constant"
 )
 
 var db *pg.DB
-
-const (
-	User     = "postgres"
-	Password = "root"
-	Addr     = "192.168.0.2:5432"
-	Database = "t"
-)
 
 type Book struct {
 	AuthorId string
@@ -39,21 +33,22 @@ func (p *Params) Sum() int {
 	return p.X + p.Y
 }
 
-func main() {
-	defer db.Close()
-	// ExampleInsert2()
-	// ExampleSelect()
-	// ExampleJoin()
-	//
-	// ExampleColumn()
-	// ExampleInsert()
-	//
-	// ExampleUpdate()
-	// ExampleDelete()
-	// ExampleCustomQuery()
-	// ExampleQuery()
-	ExampleQuery2()
-}
+//
+// func main() {
+// 	defer db.Close()
+// 	// ExampleInsert2()
+// 	// ExampleSelect()
+// 	// ExampleJoin()
+// 	//
+// 	// ExampleColumn()
+// 	// ExampleInsert()
+// 	//
+// 	// ExampleUpdate()
+// 	// ExampleDelete()
+// 	// ExampleCustomQuery()
+// 	// ExampleQuery()
+// 	ExampleQuery2()
+// }
 
 func ExampleQuery2() {
 	var books []Book
@@ -640,10 +635,10 @@ func init() {
 
 func initConn() {
 	db = pg.Connect(&pg.Options{
-		User:     User,
-		Addr:     Addr,
-		Password: Password,
-		Database: Database,
+		User:     constant.UserName,
+		Addr:     constant.Addr,
+		Password: constant.Password,
+		Database: constant.Database,
 	})
 }
 
