@@ -1,9 +1,14 @@
+/*
+relation-belongs to
+*/
 package main
 
 import (
 	"fmt"
 	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 	"i-go/database/postgresql/constant"
+	"i-go/database/postgresql/util"
 )
 
 type Category struct {
@@ -37,26 +42,35 @@ func main() {
 	fmt.Println(Products[0].Id, Products[0].Name, Products[0].Category)
 	fmt.Println(Products[1].Id, Products[1].Name, Products[1].Category)
 	// Output: 2 results
-	// 1 user 1 &{1 en}
-	// 2 user 2 &{2 ru}
+	// 1 product 1 &{0  1}
+	// 2 product 1 &{0  2}
 }
 
 func initTable() {
-	qs := []string{
-		"CREATE TEMP TABLE products (id int, name text)",
-		"CREATE  TEMP TABLE categories (id int, description text,product_id int)",
-		"INSERT INTO products VALUES (1, 'product 1'), (2, 'product 2')",
-		"INSERT INTO categories VALUES (1, 'meat',1), (2, 'fruit',2)",
+	models := []interface{}{
+		(*Product)(nil),
+		(*Category)(nil),
 	}
-	for _, q := range qs {
-		_, err := pgDB2.Exec(q)
-		if err != nil {
-			panic(err)
-		}
+	for _, v := range models {
+		err := pgDB2.CreateTable(v, &orm.CreateTableOptions{
+			IfNotExists:   true,
+			FKConstraints: true,
+			Temp:          true,
+		})
+		util.HandError("CreateTable Category", err)
 	}
 }
 
-func connect() {
+func initData() {
+	p1 := &Product{1, "product 1", nil}
+	p2 := &Product{2, "product 1", nil}
+	_, _ = pgDB2.Model(p1, p2).Insert()
+	c1 := &Category{1, "category 1", 1}
+	c2 := &Category{2, "category 2", 2}
+	_, _ = pgDB2.Model(c1, c2).Insert()
+}
+
+func initConn() {
 	pgDB2 = pg.Connect(&pg.Options{
 		User:     constant.UserName,
 		Addr:     constant.Addr,
@@ -66,6 +80,7 @@ func connect() {
 }
 
 func init() {
-	connect()
+	initConn()
 	initTable()
+	initData()
 }

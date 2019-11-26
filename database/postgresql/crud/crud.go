@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
-	"github.com/prometheus/common/log"
 	"i-go/database/postgresql/constant"
+	"i-go/database/postgresql/util"
 )
 
 var db *pg.DB
@@ -33,22 +33,21 @@ func (p *Params) Sum() int {
 	return p.X + p.Y
 }
 
-//
-// func main() {
-// 	defer db.Close()
-// 	// ExampleInsert2()
-// 	// ExampleSelect()
-// 	// ExampleJoin()
-// 	//
-// 	// ExampleColumn()
-// 	// ExampleInsert()
-// 	//
-// 	// ExampleUpdate()
-// 	// ExampleDelete()
-// 	// ExampleCustomQuery()
-// 	// ExampleQuery()
-// 	ExampleQuery2()
-// }
+func main() {
+	defer db.Close()
+	// ExampleInsert2()
+	// ExampleSelect()
+	// ExampleJoin()
+	//
+	// ExampleColumn()
+	ExampleInsert()
+	//
+	// ExampleUpdate()
+	// ExampleDelete()
+	// ExampleCustomQuery()
+	// ExampleQuery()
+	ExampleQuery2()
+}
 
 func ExampleQuery2() {
 	var books []Book
@@ -65,10 +64,6 @@ func ExampleQuery2() {
 	for _, v := range books {
 		fmt.Println(v)
 	}
-	// fmt.Println(len(books), "results")
-	// fmt.Println(books[0].Id, books[0].AuthorId)
-	// fmt.Println(books[1].Id, books[1].AuthorId)
-	// fmt.Println(books[2].Id, books[2].AuthorId)
 }
 
 func ExampleCustomQuery() {
@@ -84,7 +79,7 @@ func customQuery() {
 	    SELECT count(*)
 	    FROM ?TableName AS ?TableAlias
 	`)
-	handError("custom", err)
+	util.HandError("custom", err)
 }
 
 func customCreateIndex() {
@@ -92,7 +87,7 @@ func customCreateIndex() {
 	    CREATE INDEX CONCURRENTLY books_author_id_idx
 	    ON ?TableName (author_id)
 	`)
-	handError("custom", err)
+	util.HandError("custom", err)
 }
 
 func ExampleDelete() {
@@ -114,7 +109,7 @@ func deleteMultiple() {
 	books = append(books, Book{AuthorId: "12345", Id: 5, Text: "insert test 2", Title: "insert 2"})
 
 	res, err := db.Model(&books).WherePK().Delete()
-	handError("deleteMultiple", err)
+	util.HandError("deleteMultiple", err)
 	fmt.Println(res)
 	// DELETE FROM "books" WHERE id IN (1, 2, 3)
 }
@@ -122,7 +117,7 @@ func deleteMultiple() {
 func deleteByParam() {
 	b := &Book{AuthorId: "12345", Id: 4, Text: "insert test", Title: "insert"}
 	res, err := db.Model(b).Where("title = ?title").Delete()
-	handError("delete", err)
+	util.HandError("delete", err)
 	fmt.Println(res)
 	// DELETE FROM "books" WHERE title = 'my title'
 }
@@ -130,7 +125,7 @@ func deleteByParam() {
 func deleteByPkey2() {
 	b := &Book{AuthorId: "12345", Id: 4, Text: "insert test", Title: "insert"}
 	res, err := db.Model(b).WherePK().Delete()
-	handError("delete", err)
+	util.HandError("delete", err)
 	fmt.Println(res)
 	// DELETE FROM "books" WHERE id = 1
 }
@@ -138,7 +133,7 @@ func deleteByPkey2() {
 func deleteByPkey() {
 	b := &Book{AuthorId: "12345", Id: 4, Text: "insert test", Title: "insert"}
 	err := db.Delete(b)
-	handError("delete", err)
+	util.HandError("delete", err)
 	// DELETE FROM "books" WHERE id = 1
 }
 
@@ -167,7 +162,7 @@ func insertCreate() {
 		OnConflict("(id) DO UPDATE").
 		Set("name = EXCLUDED.name").
 		Insert()
-	handError("insert", err)
+	util.HandError("insert", err)
 	fmt.Println(author)
 
 	// INSERT INTO "books" ("id", "title") VALUES (100, 'my title')
@@ -180,7 +175,7 @@ func insertExisting() {
 		OnConflict("DO NOTHING"). // optional
 		SelectOrInsert()
 
-	handError("insert", err)
+	util.HandError("insert", err)
 	fmt.Println(b)
 	// 1. SELECT * FROM "books" WHERE title = 'my title'
 	// 2. INSERT INTO "books" (title, text) VALUES ('my title', 'my text') RETURNING "id"
@@ -192,7 +187,7 @@ func insertMultiple() {
 	b2 := &Book{AuthorId: "12345", Id: 5, Text: "insert test2", Title: "insert2"}
 
 	result, err := db.Model(b1, b2).Insert()
-	handError("insert", err)
+	util.HandError("insert", err)
 	fmt.Println(result)
 	// INSERT INTO "books" (title, text) VALUES ('title1', 'text2'), ('title2', 'text2') RETURNING *
 }
@@ -200,7 +195,7 @@ func insertMultiple() {
 func insertReturningAll() {
 	b := &Book{AuthorId: "12345", Id: 5, Text: "insert test2", Title: "insert2"}
 	result, err := db.Model(b).Returning("*").Insert()
-	handError("insert", err)
+	util.HandError("insert", err)
 	fmt.Println(result)
 	// INSERT INTO "books" (title, text) VALUES ('my title', 'my text') RETURNING *
 }
@@ -209,7 +204,7 @@ func insertReturningDefault() {
 	b := &Book{AuthorId: "12345", Id: 4, Text: "insert test", Title: "insert"}
 	// 默认返回ID
 	err := db.Insert(b)
-	handError("insert", err)
+	util.HandError("insert", err)
 	fmt.Println(b)
 	// INSERT INTO "books" (title, text) VALUES ('my title', 'my text') RETURNING "id"
 }
@@ -239,7 +234,7 @@ func ExampleColumn() {
 func columnRelation4() {
 	b := new(Book)
 	err := db.Model(b).Column("_").Relation("Author").Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("Relation", b)
 
 	// SELECT "author"."id" AS "author__id", "author"."name" AS "author__name"
@@ -251,7 +246,7 @@ func columnRelation4() {
 func columnRelation3() {
 	b := new(Book)
 	err := db.Model(b).Relation("Author._").Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("Relation", b)
 
 	// SELECT "book"."id"
@@ -263,7 +258,7 @@ func columnRelation3() {
 func columnRelation2() {
 	b := new(Book)
 	err := db.Model(b).Column("book.id").Relation("Author.id").Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("Relation", b)
 
 	// SELECT "book"."id", "author"."id" AS "author__id"
@@ -275,7 +270,7 @@ func columnRelation2() {
 func columnRelation() {
 	b := new(Book)
 	err := db.Model(b).Relation("Author").Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("Relation", b)
 
 	// SELECT
@@ -300,7 +295,7 @@ func mCTEsubQueries() {
 	b := new(Book)
 	authorBooks := db.Model((*Book)(nil)).Where("author_id = ?", 1)
 	err := db.Model(nil).TableExpr("(?)", authorBooks).Select(b)
-	handError("wrapWith", err)
+	util.HandError("wrapWith", err)
 	fmt.Println(b)
 	// SELECT * FROM (
 	//   SELECT "book"."id", "book"."title", "book"."text"
@@ -315,7 +310,7 @@ func mCTEwrapWith() {
 		WrapWith("author_books").
 		Table("author_books").
 		Select(b)
-	handError("wrapWith", err)
+	util.HandError("wrapWith", err)
 	fmt.Println(b)
 	// WITH "author_books" AS (
 	//   SELECT "book"."id", "book"."title", "book"."text"
@@ -331,7 +326,7 @@ func mCTEwith() {
 		With("author_books", authorBooks).
 		Table("author_books").
 		Select(&b)
-	handError(" CTE with", err)
+	util.HandError(" CTE with", err)
 	fmt.Println(b)
 	// WITH "author_books" AS (
 	//   SELECT "book"."id", "book"."title", "book"."text"
@@ -352,7 +347,7 @@ func joinManually() {
 		ColumnExpr("a.id AS author__id, a.name AS author__name").
 		Join("JOIN authors AS a ON a.id = book.author_id").
 		First()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", b)
 	// SELECT book.*, a.id AS author__id, a.name AS author__name
 	// FROM books
@@ -399,7 +394,7 @@ func selectForUpdate() {
 		Where("id = ?", 1).
 		For("UPDATE").
 		Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", ids)
 	// SELECT * FROM books WHERE id  = 1 FOR UPDATE
 }
@@ -409,7 +404,7 @@ func selectIn() {
 	err := db.Model((*Book)(nil)).
 		Where("id in (?)", pg.In(ids)).
 		Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", ids)
 	// SELECT * FROM books WHERE id IN (1, 2, 3)
 }
@@ -418,7 +413,7 @@ func selectIn() {
 func selectLimitCountAll() {
 	b := new(Book)
 	count, err := db.Model(b).Limit(20).SelectAndCount()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("count", count)
 	fmt.Println("select", b)
 	// SELECT "book"."id", "book"."title", "book"."text"
@@ -429,7 +424,7 @@ func selectLimitCountAll() {
 
 func selectCount() {
 	count, err := db.Model((*Book)(nil)).Count()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("count", count)
 	// SELECT count(*) FROM "books"
 }
@@ -437,7 +432,7 @@ func selectCount() {
 func selectOrderLimit() {
 	var books []Book
 	err := db.Model(&books).Order("id ASC").Limit(20).Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", books)
 	// SELECT "book"."id", "book"."title", "book"."text"
 	// FROM "books"
@@ -455,7 +450,7 @@ func selectWhereAndOr() {
 		}).
 		Limit(1).
 		Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", b)
 	// SELECT "book"."id", "book"."title", "book"."text"
 	// FROM "books"
@@ -470,7 +465,7 @@ func selectWhereOr() {
 		WhereOr("title LIKE ?", "f%").
 		Limit(1).
 		Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", b)
 	// SELECT "book"."id", "book"."title", "book"."text"
 	// FROM "books"
@@ -484,7 +479,7 @@ func select2Var() {
 		Column("title", "text").
 		Where("id = ?", 1).
 		Select(&title, &text)
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", title, text)
 	// SELECT "title", "text"
 	// FROM "books" WHERE id = 1
@@ -493,7 +488,7 @@ func select2Var() {
 func selectField() {
 	b := new(Book)
 	err := db.Model(b).Column("title", "text").Where("id = ?", 1).Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", *b)
 	// SELECT "title", "text"
 	// FROM "books" WHERE id = 1
@@ -502,7 +497,7 @@ func selectField() {
 func selectByParam() {
 	b := new(Book)
 	err := db.Model(b).Where("id = ?", 1).Select()
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", *b)
 	// SELECT "book"."id", "book"."title", "book"."text"
 	// FROM "books" WHERE id = 1
@@ -512,7 +507,7 @@ func selectByParam() {
 func selectByPkey() {
 	b := &Book{Id: 1}
 	err := db.Select(b)
-	handError("select", err)
+	util.HandError("select", err)
 	fmt.Println("select", *b)
 	// SELECT "book"."id", "book"."title", "book"."text"
 	// FROM "books" WHERE id = 1
@@ -539,7 +534,7 @@ func updateMultiple() {
 	b1 := &Book{AuthorId: "12345", Id: 5, Text: "insert test2", Title: "insert2"}
 	b2 := &Book{AuthorId: "123455", Id: 6, Text: "insert test22", Title: "insert22"}
 	result, err := db.Model(b1, b2).Update()
-	handError("updateMultiple ", err)
+	util.HandError("updateMultiple ", err)
 	fmt.Println(result)
 	// UPDATE books AS book SET title = _data.title, text = _data.text
 	// FROM (VALUES (1, 'title1', 'text1'), (2, 'title2', 'text2')) AS _data (id, title, text)
@@ -555,7 +550,7 @@ func updateUpper() {
 		Where("id = ?", 1).
 		Returning("title").
 		Update(&title)
-	handError("update", err)
+	util.HandError("update", err)
 	fmt.Println(title)
 
 	// UPDATE books SET title = upper(title) WHERE id = 1 RETURNING title
@@ -566,14 +561,14 @@ func updateOnly2() {
 	//  WherePK()=Where("id = ?id")
 	res, err := db.Model(b).Column("title").WherePK().Update()
 	// UPDATE books SET title = 'my title' WHERE id = 1
-	handError("update", err)
+	util.HandError("update", err)
 	fmt.Println(res)
 	// UPDATE books SET title = 'my title' WHERE id = 1
 }
 func updateOnly() {
 	b := &Book{AuthorId: "12345", Id: 5, Text: "insert test2", Title: "insert2"}
 	res, err := db.Model(b).Set("title = ?title").Where("id = ?id").Update()
-	handError("update", err)
+	util.HandError("update", err)
 	fmt.Println(res)
 	// UPDATE books SET title = 'my title' WHERE id = 1
 }
@@ -581,7 +576,7 @@ func updateOnly() {
 func updateExceptPkey() {
 	b := &Book{AuthorId: "12345", Id: 5, Text: "insert test2", Title: "insert2"}
 	err := db.Update(b)
-	handError("update", err)
+	util.HandError("update", err)
 	// UPDATE books SET title = 'my title', text = 'my text' WHERE id = 1
 }
 
@@ -655,13 +650,7 @@ func initTable() {
 	})
 	insertBook()
 
-	handError("initTable", err)
-}
-
-func handError(msg string, err error) {
-	if err != nil {
-		log.Error(msg, err)
-	}
+	util.HandError("initTable", err)
 }
 
 func insertBook() {
@@ -669,7 +658,7 @@ func insertBook() {
 	for i := 0; i < 10; i++ {
 		b := &Book{Id: i + 1, Title: "first book", Text: "desc", AuthorId: "123", Author: author}
 		_, err := db.Model(b).Insert()
-		handError("insert", err)
+		util.HandError("insert", err)
 	}
 	// INSERT INTO "books" ("id", "title") VALUES (100, 'my title')
 	// ON CONFLICT (id) DO UPDATE SET title = 'title version #1'
@@ -679,7 +668,7 @@ func insertAuthor() {
 	for i := 80; i < 80; i++ {
 		author := &Author{Id: i + 1, Name: "author1", BookId: 5}
 		_, err := db.Model(author).Insert()
-		handError("insert", err)
+		util.HandError("insert", err)
 	}
 	// INSERT INTO "books" ("id", "title") VALUES (100, 'my title')
 	// ON CONFLICT (id) DO UPDATE SET title = 'title version #1'
