@@ -8,20 +8,9 @@ import (
 )
 
 const (
-<<<<<<< HEAD
-	localhost   = "127.0.0.1:2379"
-	remotehost  = "192.168.1.9:2379"
-	remotehost2 = "192.168.0.2:2379"
-	clusterhost = "192.168.1.9:32773"
-	remote      = "192.168.0.2:2379,192.168.0.2:3379,192.168.0.2:4379"
-=======
-	localhost    = "127.0.0.1:2379"
-	remotehost   = "192.168.1.9:2379"
-	remotehost2  = "192.168.0.2:2379"
 	clusterhost1 = "192.168.1.9:32769"
 	clusterhost2 = "192.168.1.9:32771"
 	clusterhost3 = "192.168.1.9:32773"
->>>>>>> 168ab2dcfe5c9b257c062fbb1b39db36d5369a09
 )
 
 func main() {
@@ -37,11 +26,7 @@ func main() {
 
 	// 配置客户端
 	config = clientv3.Config{
-<<<<<<< HEAD
-		Endpoints:   []string{remote},
-=======
 		Endpoints:   []string{clusterhost1, clusterhost2, clusterhost3},
->>>>>>> 168ab2dcfe5c9b257c062fbb1b39db36d5369a09
 		DialTimeout: 5 * time.Second,
 	}
 
