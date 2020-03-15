@@ -1,6 +1,7 @@
 package main
 
 import (
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	pro "i-go/grpc/proto"
@@ -16,7 +17,7 @@ type serverStream struct {
 
 var ServerStream = &serverStream{}
 
-func (server *serverStream) ServerStream(data *pro.ServerStreamReq, res pro.MyStreamServer_ServerStreamServer) error {
+func (server *serverStream) ServerStream(data *pro.ServerStreamReq, res pro.ServerStreamServer_ServerStreamServer) error {
 
 	for i := 0; i < 20; i++ {
 		itoa := strconv.Itoa(i)
@@ -37,7 +38,16 @@ func main() {
 	if err != nil {
 		return
 	}
-	newServer := grpc.NewServer()
-	pro.RegisterMyStreamServerServer(newServer, &serverStream{})
-	newServer.Serve(lis)
+	s := grpc.NewServer(grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(GenerateInterceptor)))
+	pro.RegisterServerStreamServerServer(s, &serverStream{})
+	s.Serve(lis)
+}
+
+func GenerateInterceptor(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
+	log.Printf("gRPC method: %s", info.FullMethod)
+	err := handler(srv, ss)
+	if err != nil {
+		log.Printf("gRPC err:  %v", err)
+	}
+	return err
 }

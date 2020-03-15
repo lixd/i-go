@@ -21,7 +21,7 @@ func main() {
 	// 我这里用的etcd 做为服务发现
 	reg := etcdv3.NewRegistry(func(op *registry.Options) {
 		op.Addrs = []string{
-			"http://192.168.1.9:2379", "http://192.168.1.9:32772", "http://192.168.1.9:32773", "http://192.168.1.9:32769",
+			"http://192.168.0.2:32779", "http://192.168.0.2:32775", "http://192.168.0.2:32771",
 		}
 	})
 
@@ -43,10 +43,17 @@ func main() {
 	client := pb.NewHelloService("go.micro.srv.hello", service.Client())
 
 	// Call the greeter
-	rsp, err := client.SayHello(context.TODO(), &pb.User{Name: defaultName})
-	if err != nil {
-		logrus.Error(err)
+	for i := 0; i < 10; i++ {
+		go func() {
+			ctx, _ := context.WithTimeout(context.Background(), time.Second*3)
+			rsp, err := client.SayHello(ctx, &pb.User{Name: defaultName})
+			if err != nil {
+				logrus.Error(err)
+			}
+			// Print response
+			fmt.Println(rsp)
+		}()
 	}
-	// Print response
-	fmt.Println(rsp)
+	fmt.Println("send req 10")
+	time.Sleep(time.Second * 10)
 }

@@ -8,6 +8,10 @@ import (
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	pb "i-go/go-micro/second/pb"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 const (
@@ -28,7 +32,7 @@ func main() {
 	// github.com/micro/go-micro/registry
 	reg := etcdv3.NewRegistry(func(op *registry.Options) {
 		op.Addrs = []string{
-			"http://192.168.1.9:2379", "http://192.168.1.9:32772", "http://192.168.1.9:32773", "http://192.168.1.9:32769",
+			"http://192.168.0.2:32779", "http://192.168.0.2:32775", "http://192.168.0.2:32771",
 		}
 	})
 
@@ -42,7 +46,15 @@ func main() {
 	)
 
 	// Init方法会解析命令行flags
-	service.Init()
+	service.Init(
+		micro.AfterStart(func() error {
+			logrus.Info("server img start...")
+			return nil
+		}),
+		micro.AfterStop(func() error {
+			logrus.Info("server img stop...")
+			return nil
+		}))
 
 	err := pb.RegisterHelloHandler(service.Server(), &helloServerNew{})
 	if err != nil {
@@ -51,4 +63,14 @@ func main() {
 	if err := service.Run(); err != nil {
 		logrus.Error(err)
 	}
+
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+	<-signalChan
+	services, err := reg.GetService("go.micro.srv.hello")
+	if err == nil && len(services) != 0 {
+		s := services[0]
+		_ = reg.Deregister(s)
+	}
+	time.Sleep(time.Second * 5)
 }

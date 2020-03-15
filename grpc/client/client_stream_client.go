@@ -12,7 +12,7 @@ import (
 const ClientStreamAddress = "localhost:50054"
 
 func main() {
-	conn, err := grpc.Dial(ClientStreamAddress, grpc.WithInsecure())
+	conn, err := grpc.Dial(ClientStreamAddress, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Error(err.Error())
 		return
