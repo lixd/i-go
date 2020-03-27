@@ -67,6 +67,7 @@ require (
 	golang.org/x/mod v0.1.0 // indirect
 	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
+	gonum.org/v1/plot v0.7.0
 	google.golang.org/grpc v1.25.1
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
