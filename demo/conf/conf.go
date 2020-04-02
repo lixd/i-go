@@ -37,10 +37,9 @@ func (c *Config) initConfig() error {
 		viper.AddConfigPath(".")
 		viper.SetConfigName("config") // 如果没有指定配置文件，则解析默认的配置文件
 	}
-	viper.SetConfigType("json") //  设置配置文件格式为json
-	viper.AutomaticEnv()        // 读取匹配的环境变量
-
-	viper.SetEnvPrefix("vaptcha") // 读取环境变量的前缀为APISERVER
+	viper.SetConfigType("json")    //  设置配置文件格式为json
+	viper.AutomaticEnv()           // 读取匹配的环境变量
+	viper.SetEnvPrefix("illusory") // 读取环境变量的前缀为APISERVER
 	replacer := strings.NewReplacer(".", "-")
 	viper.SetEnvKeyReplacer(replacer)
 	if err := viper.ReadInConfig(); err != nil { // viper解析配置文件

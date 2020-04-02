@@ -16,7 +16,7 @@
     "username": "test",
     "password": "123456",
     "maxPoolSize": 10,
-    "dbName": "vaptcha",
+    "dbName": "illusory",
     "authMechanism": ""
   }
 }
