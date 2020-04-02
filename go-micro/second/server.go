@@ -8,9 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	pb "i-go/go-micro/second/pb"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 )
 
@@ -64,13 +61,16 @@ func main() {
 		logrus.Error(err)
 	}
 
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
-	<-signalChan
-	services, err := reg.GetService("go.micro.srv.hello")
-	if err == nil && len(services) != 0 {
-		s := services[0]
-		_ = reg.Deregister(s)
-	}
+	/*
+		// 这里没必要了 内部已经做了这些工作
+		signalChan := make(chan os.Signal, 1)
+		signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+		<-signalChan
+		services, err := reg.GetService("go.micro.srv.hello")
+		if err == nil && len(services) != 0 {
+			s := services[0]
+			_ = reg.Deregister(s)
+		}*/
+	// 实在不放心在加个延时即可
 	time.Sleep(time.Second * 5)
 }
