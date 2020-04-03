@@ -21,12 +21,15 @@ type Conf struct {
 	AuthMechanism string `json:"authMechanism"`
 }
 
+var (
+	mongodb *mongo.Database
+)
+
 func InitMongoDB() (*mongo.Database, error) {
 	err := conf.Init("demo/conf/config.json")
 	if err != nil {
 		fmt.Printf("viper err=%v \n", err)
 	}
-	// username:password@hostname/dbname
 	var c Conf
 	// 读取配置文件 config.json
 	if err := viper.UnmarshalKey("mongo", &c); err != nil {
@@ -54,8 +57,8 @@ func InitMongoDB() (*mongo.Database, error) {
 	if errP != nil {
 		fmt.Print(errP)
 	}
-	database := client.Database(c.DBName)
-	return database, err
+	mongodb = client.Database(c.DBName)
+	return mongodb, err
 }
 
 // 每个 Model 实现该方法 使用不同的collection

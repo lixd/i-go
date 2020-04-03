@@ -1,7 +1,7 @@
 
 {
   "redis" : {
-    "addr" : "192.168.0.138:6379",
+    "addr" : "192.168.0.2:6379",
     "db": 0,
     "MaxRetries": 3,
     "PoolSize": 10,
@@ -12,7 +12,7 @@
     "IdleCheckFrequency": 1
   },
   "mongo": {
-    "appUrl": "192.168.0.138:27017",
+    "appUrl": "192.168.0.2:27017",
     "username": "test",
     "password": "123456",
     "maxPoolSize": 10,

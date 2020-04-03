@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/go-redis/redis"
+	"i-go/db/redisdb"
 	"time"
 )
 
@@ -14,23 +15,12 @@ const (
 
 //Redis 增删改查
 func main() {
-	fmt.Println("main start")
-	//连接 Redis
-	client := ConnRedis(RedisHost, RedisPassword, RedisDbIndex)
-	if client != nil {
-		fmt.Printf("Redis 连接成功 Client= %v \n", client)
-	} else {
-		fmt.Printf("Redis 连接失败 Client= %v \n", client)
-		return
-	}
-
-	RedisString(client)
-	RedisHash(client)
-	RedisList(client)
-	RedisSet(client)
-	RedisZSet(client)
-	//RedisOthers(client)
-	fmt.Println("main stop")
+	RedisString(redisdb.RedisClient)
+	RedisHash(redisdb.RedisClient)
+	RedisList(redisdb.RedisClient.RedisClientient)
+	RedisSet(redisdb.RedisClient)
+	RedisZSet(redisdb.RedisClient)
+	//RedisOthers(redisdb.RedisClient)
 }
 
 func RedisOthers(client *redis.Client) {
@@ -189,13 +179,4 @@ func RedisString(client *redis.Client) {
 	fmt.Printf("client.GetSet('name','new Name') oldName= %v \n", oldName)
 	i2, err := client.IncrBy("age", 2).Result()
 	fmt.Printf("client.IncrBy('age',2) age= %v \n", i2)
-}
-
-// 连接 Redis
-func ConnRedis(addr string, pwd string, db int) *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: pwd,
-		DB:       db})
-	return client
 }

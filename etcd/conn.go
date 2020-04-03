@@ -9,7 +9,7 @@ import (
 )
 
 /*
-	当前etcd v3包有下面俩个
+	当前etcd v3包有下面俩个manager
 	"github.com/coreos/etcd/clientv3"
 	"go.etcd.io/etcd/clientv3"
 	推荐使用	"github.com/coreos/etcd/clientv3" 这个
