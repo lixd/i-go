@@ -3,27 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/coreos/etcd/clientv3"
 	"github.com/sirupsen/logrus"
-	"go.etcd.io/etcd/clientv3"
+	"i-go/etcd"
 	"time"
 )
 
-const (
-	remote1 = "192.168.0.2:2379"
-	remote2 = "192.168.0.2:3379"
-	remote3 = "192.168.0.2:4379"
-)
-
 func main() {
-	// 1.配置
-	config := clientv3.Config{
-		Endpoints:   []string{remote1, remote2, remote3},
-		DialTimeout: 5 * time.Second}
-	// 2.建立连接
-	client, err := clientv3.New(config)
-	if err != nil {
-		panic(err)
-	}
+	client := etcd.New("etcd-local")
 	// 3.获取kv对象
 	// kv接口包含了etcd所有基本操作
 	// 	与client.KV相比clientv3.NewKV(client) 多个自动重连功能 所以一般用这个
