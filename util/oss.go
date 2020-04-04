@@ -21,7 +21,7 @@ type ossConf struct {
 var OssConf = &ossConf{}
 
 func init() {
-	path := "E:/Work/Project/vaptcha-go/conf/config_lxd.json"
+	path := "conf/config.json"
 	if err := conf.Init(path); err != nil {
 		logrus.Panic(err)
 	}
@@ -66,7 +66,7 @@ func main() {
 	defer fd.Close()
 
 	// 上传文件流。
-	err = bucket.PutObject("vaptcha/123.jpg", fd)
+	err = bucket.PutObject("123.jpg", fd)
 	if err != nil {
 		fmt.Println("Error:", err)
 		os.Exit(-1)

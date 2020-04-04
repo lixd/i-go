@@ -3,19 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"go.etcd.io/etcd/clientv3"
+	"github.com/coreos/etcd/clientv3"
+	"i-go/etcd"
 	"time"
-)
-
-const (
-	clusterhost1 = "192.168.1.9:32769"
-	clusterhost2 = "192.168.1.9:32771"
-	clusterhost3 = "192.168.1.9:32773"
 )
 
 func main() {
 	var (
-		config                clientv3.Config
 		client                *clientv3.Client
 		err                   error
 		putResp               *clientv3.PutResponse
@@ -23,18 +17,7 @@ func main() {
 		delResp               *clientv3.DeleteResponse
 		leaseResp, leaseResp1 *clientv3.LeaseGrantResponse
 	)
-
-	// 配置客户端
-	config = clientv3.Config{
-		Endpoints:   []string{clusterhost1, clusterhost2, clusterhost3},
-		DialTimeout: 5 * time.Second,
-	}
-
-	// 建立连接
-	if client, err = clientv3.New(config); err != nil {
-		fmt.Println(err.Error())
-		return
-	}
+	client = etcd.New("etcd-local")
 
 	if putResp, err = client.Put(context.TODO(), "maxProcess", "3"); err != nil {
 		fmt.Println(err)

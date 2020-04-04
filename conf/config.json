@@ -1,0 +1,25 @@
+
+{
+  "redis" : {
+    "addr" : "192.168.0.2:6379",
+    "db": 0,
+    "MaxRetries": 3,
+    "PoolSize": 10,
+    "MinIdleConns": 10,
+    "MaxConnAge": 10,
+    "PoolTimeout": 10,
+    "IdleTimeout": 10,
+    "IdleCheckFrequency": 1
+  },
+  "mongo": {
+    "appUrl": "192.168.0.2:27017",
+    "username": "test",
+    "password": "123456",
+    "maxPoolSize": 10,
+    "dbs": {
+      "test": "test",
+      "job": "ijob"
+    },
+    "authMechanism": ""
+  }
+}

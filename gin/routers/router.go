@@ -9,8 +9,8 @@ func RegisterRoutes(router *gin.Engine) {
 
 	v1Controller := &user.V1Controller{}
 	// 加载静态资源
-	// router.LoadHTMLFiles("E:/illusory/MyProject/i-go/gin/templates/index.html")
-	// router.LoadHTMLGlob("../templates/*")
+	router.LoadHTMLFiles("D:/lillusory/projects/i-go/gin/templates/advert.tmpl")
+	//router.LoadHTMLGlob("../templates/*")
 	// 设定请求url不存在的返回值
 	router.NoRoute(v1Controller.NoResponse)
 	// 重定向
@@ -89,6 +89,13 @@ func RegisterRoutes(router *gin.Engine) {
 	v5 := router.Group("/v5")
 	{
 		v5.GET("/register", v5Controller.Register)
+	}
+	//https://www.vaptcha.com/document/tbadvert.html
+	v6Controller := user.Simple{}
+	v6 := router.Group("/v6")
+	{
+		v6.GET("", v6Controller.ReturnHTML)
+		v6.GET("transform", v6Controller.ReturnHTMLTransform)
 	}
 
 }
