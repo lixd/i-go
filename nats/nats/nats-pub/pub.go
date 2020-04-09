@@ -15,7 +15,7 @@ const (
 var (
 	nc      *nats.Conn
 	err     error
-	errTime int32 //失败次数
+	errTime int32 // 失败次数
 )
 
 func init() {
@@ -25,6 +25,7 @@ func init() {
 	}
 	go reConn()
 }
+
 func PublishMsg(subject string, msg []byte) {
 	err := nc.Publish(subject, msg)
 	if err != nil {
@@ -45,5 +46,10 @@ func reConn() {
 		}
 		// 重连成功归零失败次数
 		atomic.AddInt32(&errTime, -errTime)
+	}
+}
+func Release() {
+	if nc != nil {
+		nc.Close()
 	}
 }

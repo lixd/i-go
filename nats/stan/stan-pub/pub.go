@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"i-go/nats/constant"
 	"i-go/nats/stan/conn"
+	"i-go/nats/stan/msghandler"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -19,11 +20,13 @@ var (
 	nc      *nats.Conn
 	sc      stan.Conn
 	err     error
-	errTime int32 //失败次数
+	errTime int32 // 失败次数
+	config  conn.NATSConfig
 )
 
 func init() {
-	if nc, sc, err := conn.NewConn(); err != nil {
+	config = conn.NewQueueNATSConfig(constant.DefaultSubject, constant.DefaultQueue, msghandler.Simple)
+	if nc, sc, err = conn.NewConn(config); err != nil {
 		panic(err)
 	}
 	go reConn()
@@ -32,7 +35,7 @@ func init() {
 // PublishMsg
 func PublishMsg(subject string, msg []byte) {
 	var (
-		GUID  string //消息发送时返回的序列号
+		GUID  string // 消息发送时返回的序列号
 		gLock sync.Mutex
 	)
 	// ack 回调
@@ -65,11 +68,20 @@ func reConn() {
 		if errTime < ErrTimeLimit {
 			continue
 		}
-		if err := newConn(); err != nil {
+		if nc, sc, err = conn.NewConn(config); err != nil {
 			logrus.WithField("scene", "nats reconn").Error(err)
 			continue
 		}
 		// 重连成功归零失败次数
 		atomic.AddInt32(&errTime, -errTime)
+	}
+}
+
+func Release() {
+	if sc != nil {
+		_ = sc.Close()
+	}
+	if nc != nil {
+		nc.Close()
 	}
 }

@@ -12,7 +12,7 @@ func NewConn() (*nats.Conn, error) {
 	totalWait := 3 * time.Minute
 	reconnectDelay := time.Second
 	nc, err := nats.Connect(
-		constant.DefaultNatsURL,
+		StanURL(),
 		nats.ReconnectWait(reconnectDelay),
 		nats.MaxReconnects(int(totalWait/reconnectDelay)),
 		nats.DisconnectErrHandler(func(nc *nats.Conn, err error) {

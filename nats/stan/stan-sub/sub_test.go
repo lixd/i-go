@@ -2,7 +2,7 @@ package stan_sub
 
 import (
 	"i-go/nats/constant"
-	"i-go/nats/msghandler"
+	"i-go/nats/stan/msghandler"
 	"os"
 	"os/signal"
 	"syscall"

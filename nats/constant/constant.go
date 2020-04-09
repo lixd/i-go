@@ -4,11 +4,11 @@ import "time"
 
 // pub/sub
 const (
-	ClusterID      = "lixd"
-	DurableId      = "durable-lixd"
+	ClusterID      = "TestCluster"
+	DurableId      = "durable-test"
 	MaxInflight    = 1000
 	AckWait        = time.Second * 3
-	DefaultNatsURL = "nats://127.0.0.1:4222"
+	DefaultNatsURL = "nats://192.168.1.6:4222"
 	DefaultSubject = "defaultSubject"
 	DefaultQueue   = "defaultQueue"
 	DefaultId      = "client_testId"
