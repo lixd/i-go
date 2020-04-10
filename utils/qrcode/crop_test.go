@@ -33,6 +33,6 @@ func BenchmarkClaCoordinate(b *testing.B) {
 	}
 	all, err := ioutil.ReadAll(file2)
 	for i := 0; i < b.N; i++ {
-		_ = cropCode(all, ImgTypeWeChatMiniProgram)
+		_ = cropCode(all, ImgTypeWeChat)
 	}
 }

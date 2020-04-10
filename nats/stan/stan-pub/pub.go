@@ -17,15 +17,16 @@ const (
 )
 
 var (
-	nc      *nats.Conn
-	sc      stan.Conn
-	err     error
 	errTime int32 // 失败次数
 	config  conn.NATSConfig
+
+	nc  *nats.Conn
+	sc  stan.Conn
+	err error
 )
 
 func init() {
-	config = conn.NewQueueNATSConfig(constant.DefaultSubject, constant.DefaultQueue, msghandler.Simple)
+	config := conn.NewQueueNATSConfig(constant.DefaultSubject, constant.DefaultQueue, msghandler.Simple)
 	if nc, sc, err = conn.NewConn(config); err != nil {
 		panic(err)
 	}

@@ -10,6 +10,19 @@ import (
 	"time"
 )
 
+const (
+	ErrTimeLimit = 10
+)
+
+var (
+	errTime int32 // 失败次数
+	config  NATSConfig
+
+	err error
+	Nc  *nats.Conn
+	Sc  stan.Conn
+)
+
 type NATSConfig struct {
 	ClusterId   string           // 集群id
 	ClientId    string           // 客户端id
@@ -37,7 +50,6 @@ func NewQueueNATSConfig(subject, queue string, msgHandler func(msg []byte)) NATS
 		MsgHandler:  msgHandler,
 	}
 }
-
 func NewConn(nsc NATSConfig) (nc *nats.Conn, sc stan.Conn, err error) {
 	// nats基础连接
 	nc, err = nats.Connect(constant.DefaultNatsURL, nil)
@@ -46,8 +58,8 @@ func NewConn(nsc NATSConfig) (nc *nats.Conn, sc stan.Conn, err error) {
 		return nil, nil, err
 	}
 	sc, err = stan.Connect(
-		"-",
-		"-",
+		nsc.ClusterId,
+		nsc.ClientId,
 		stan.NatsConn(nc), // 设置基础nats连接后 关闭streaming后基础的nats连接也可以继续使用 如果没有同时使用streaming和nats则不用设置
 		stan.NatsURL(nsc.StanUrl),
 		stan.SetConnectionLostHandler(func(_ stan.Conn, reason error) {

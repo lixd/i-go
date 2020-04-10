@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.41.0 // indirect
-	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
+	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a // indirect
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
 	github.com/antchfx/htmlquery v1.0.0 // indirect
@@ -49,6 +49,7 @@ require (
 	github.com/nats-io/nats-streaming-server v0.17.0 // indirect
 	github.com/nats-io/nats.go v1.9.1
 	github.com/nats-io/stan.go v0.6.0
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/olivere/elastic v6.2.29+incompatible
 	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0 // indirect
@@ -76,6 +77,7 @@ require (
 	golang.org/x/mod v0.1.0 // indirect
 	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
+	gonum.org/v1/netlib v0.0.0-20200317120129-c5a04cffd98a // indirect
 	gonum.org/v1/plot v0.7.0
 	google.golang.org/grpc v1.25.1
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

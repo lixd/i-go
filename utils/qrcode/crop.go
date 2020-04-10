@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/Comdex/imgo"
 	"github.com/sirupsen/logrus"
 	"image"
 	"image/gif"
@@ -15,17 +14,18 @@ import (
 	"strings"
 )
 
-// 二维码裁剪工具包 根据截图把二维码裁剪出来
-// 笨办法 根据像素点查找的 需要清晰一点的
+// 二维码裁剪工具包
 const (
-	QrCode     = "res/qrcode_wechat.jpg"
-	QrCodeSave = "res/qrcode_crop.jpg"
+	QrCode     = "./qrcode_wechat.jpg"
+	QrCodeSave = "./qrcode_crop2.jpg"
 	// 图片类型 小程序1 微信2
 	ImgTypeWeChatMiniProgram = 1
 	ImgTypeWeChat            = 2
 )
 
 func main() {
+	//cropCodeLocal(QrCode,QrCodeSave,ImgTypeWeChat)
+
 	imgBytes := load2Bytes()
 	imgCropBytes := cropCode(imgBytes, ImgTypeWeChat)
 	saveFile(imgCropBytes, QrCodeSave)
@@ -51,15 +51,15 @@ func saveFile(code []byte, path string) {
 
 // cropCode 图片裁剪
 //Benchmark 171541200 ns/op
-func cropCode(data []byte, imgType int) []byte {
+func cropCode(imgData []byte, imgType int) []byte {
 	// 0.加载图片
-	origin, err := loadImageFromBytes(data)
+	origin, err := loadImageFromBytes(imgData)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"scene": "解析图片"}).Error(err)
 		return nil
 	}
 	// 1. 定位小程序码位置
-	w, h, dx := positionDetectionNew(imgType)
+	w, h, dx := positionDetectionFull(imgData)
 	// 2.计算裁剪坐标
 	x0, y0, l := ClaCoordinate(w, h, dx, imgType)
 	// 3. 裁剪
@@ -76,6 +76,44 @@ func cropCode(data []byte, imgType int) []byte {
 	return buf.Bytes()
 }
 
+// positionDetectionFull 三点定位二维码位置
+/*
+找出所有合适的点 取距离最大的 兼容性提升的同时效率大幅降低 图片分辨率越高越慢
+主要根据二维码三个定位点相对位置(左上 左下 右上)和大致距离才确定二维码位置
+返回值1 H坐标2W坐标3偏移距离(主要用来判断二维码大小)
+Benchmark
+467*538 174ms
+720*1280 460ms
+1080*2340 2060ms
+*/
+func positionDetectionFull(imgData []byte) (int, int, int) {
+
+	var (
+		tempW, tempH, maxI int
+	)
+	img := MustRead(imgData)
+	//img = imgo.Binaryzation(img, 127) 	// 二值化处理
+	for h, ws := range img {
+		for w, _ := range ws {
+			if isBlack(img, h, w) {
+				for i := 1; i < len(img[h])-1; i++ {
+					nh, nw := transform(h, w, i, img)
+					if isBlack(img, nh, w) && isBlack(img, h, nw) {
+						// 会有多个满足条件的点 找距离最大的
+						if i > maxI {
+							//fmt.Printf("待选点 h:%v w:%v i:%v \n", h, w, i)
+							tempH = h
+							tempW = w
+							maxI = i
+						}
+					}
+				}
+			}
+		}
+	}
+	return tempH, tempW, maxI
+}
+
 func loadImageFromBytes(data []byte) (image.Image, error) {
 	reader := bytes.NewReader(data)
 	origin, _, err := image.Decode(reader)
@@ -84,11 +122,12 @@ func loadImageFromBytes(data []byte) (image.Image, error) {
 
 // cropCodeLocal 测试用
 // benchmark 178517983 ns/op
-func cropCodeLocal(imgType int, path string) {
+func cropCodeLocal(loadPath, savePath string, imgType int) {
 	// 0.加载图片
-	origin := loadImageFromFile(path)
+	origin := loadImageFromFile(loadPath)
+	imgData := loadFile(loadPath)
 	// 1. 定位小程序码位置
-	w, h, dx := positionDetectionNew(imgType)
+	w, h, dx := positionDetectionFull(imgData)
 	// 2. 计算裁剪坐标
 	x0, y0, l := ClaCoordinate(w, h, dx, imgType)
 	// 3. 裁剪
@@ -97,7 +136,7 @@ func cropCodeLocal(imgType int, path string) {
 		logrus.WithFields(logrus.Fields{"scene": "裁剪图片"}).Error(err)
 	}
 	// 4. 保存
-	err = saveImage("D:/wlinno/qrcode_new.png", imageCopy)
+	err = saveImage(savePath, imageCopy)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"scene": "保存图片"}).Error(err)
 	}
@@ -107,24 +146,27 @@ func cropCodeLocal(imgType int, path string) {
 func ClaCoordinate(w, h, dx, imgType int) (int, int, int) {
 	var (
 		hr, wr, lr float64
+		transform  int
 	)
 	// 根据不同类型 选择不同裁剪位置
 
 	switch imgType {
 	case ImgTypeWeChatMiniProgram:
+		// 小程序码还是需要按比例裁剪才行
+		transform = 1
 		hr = 0.4
 		wr = 0.35
 		lr = 1.8
 	case ImgTypeWeChat:
-		hr = 0.1
-		wr = 0.1
-		lr = 1.4
+		// 微信则不需要 周围设置一定空隙即可
+		lr = 1
+		transform = 5
 	}
 
-	x := h - int(float64(dx)*hr)
-	y := w - int(float64(dx)*wr)
-	l := int(float64(dx) * lr)
-	fmt.Printf("x:%v y:%v l:%v \n", x, y, l)
+	x := h - int(float64(dx)*hr) - transform
+	y := w - int(float64(dx)*wr) - transform
+	l := int(float64(dx)*lr) + transform*2
+	fmt.Printf("x坐标:%v y坐标:%v 边长:%v \n", x, y, l)
 	return x, y, l
 }
 
@@ -139,6 +181,19 @@ func loadImageFromFile(path string) image.Image {
 		logrus.WithFields(logrus.Fields{"scene": "解析图片"}).Error(err)
 	}
 	return origin
+}
+
+// loadImageFromFile 从文件加载图片
+func loadFile(path string) []byte {
+	file2, err := os.Open(path)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"scene": "加载图片"}).Error(err)
+	}
+	data, err := ioutil.ReadAll(file2)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"scene": "加载图片"}).Error(err)
+	}
+	return data
 }
 
 // clip 图片裁剪 x y 为起点坐标 w h 为裁剪长宽
@@ -195,70 +250,15 @@ func isBlack(img [][][]uint8, h, w int) bool {
 	return false
 }
 
-// positionDetection 查找二维码位置
-/*
-主要根据二维码三个定位点相对位置(左上 左下 右上)和大致距离才确定二维码位置
-返回值1 H坐标2W坐标3偏移距离(主要用来判断二维码大小)
-*/
-func positionDetectionNew(imgType int) (int, int, int) {
-	//如果读取出错会panic,返回图像矩阵img
-	//img[height][width][4],height为图像高度,width为图像宽度
-	//img[height][width][4]为第height行第width列上像素点的RGBA数值数组，值范围为0-255
-	//如img[150][20][0]是150行20列处像素的红色值,img[150][20][1]是150行20列处像素的绿
-	//色值，img[150][20][2]是150行20列处像素的蓝色值,img[150][20][3]是150行20列处像素
-	//的alpha数值,一般用作不透明度参数,如果一个像素的alpha通道数值为0%，那它就是完全透明的.
-	// 纯黑为000 纯白为255 255 255 绿色0 255 0
-	var (
-		minH, minW int
-	)
-
-	img := imgo.MustRead(QrCode)
-	switch imgType {
-	case ImgTypeWeChatMiniProgram:
-		// 小程序码
-		minH = int(float64(len(img)) * 0.5)
-		minW = int(float64(len(img[0])) * 0.1)
-	case ImgTypeWeChat:
-		// 微信二维码
-		minH = int(float64(len(img)) * 0.4)
-		minW = int(float64(len(img[0])) * 0.5)
-	default:
-		logrus.WithFields(logrus.Fields{"scene": "裁剪图片-类型错误"}).Error()
-		return 0, 0, 0
+// transform 平移指定距离
+func transform(h int, w int, dis int, img [][][]uint8) (int, int) {
+	nh := h + dis
+	nw := w + dis
+	if nh > len(img)-1 {
+		nh = len(img) - 1
 	}
-
-	for h, ws := range img {
-		// 二维码肯定是在一半以下
-		if h < minH {
-			continue
-		}
-		for w, _ := range ws {
-			if isBlack(img, h, w) {
-				for i := 1; i < len(img[h])-1; i++ {
-
-					// 微信二维码宽度是在图片十分之一左右
-					if i < minW {
-						continue
-					}
-
-					nh := h + i
-					nw := w + i
-					if nh > len(img)-1 {
-						nh = len(img) - 1
-					}
-					if nw > len(img[h])-1 {
-						nw = len(img[h]) - 1
-					}
-
-					if (img[nh][w][0] == 0 && img[nh][w][1] == 0 && img[nh][w][2] == 0) &&
-						(img[h][nw][0] == 0 && img[h][nw][1] == 0 && img[h][nw][2] == 0) {
-						// 会有多个满足条件的点 随便选一个都可以
-						fmt.Printf("待选点 h:%v w:%v i:%v \n", h, w, i)
-						return h, w, i
-					}
-				}
-			}
-		}
+	if nw > len(img[h])-1 {
+		nw = len(img[h]) - 1
 	}
-	return 0, 0, 0
+	return nh, nw
 }
