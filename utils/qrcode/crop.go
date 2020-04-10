@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"github.com/nfnt/resize"
 	"github.com/sirupsen/logrus"
 	"image"
 	"image/gif"
@@ -16,23 +17,25 @@ import (
 
 // 二维码裁剪工具包
 const (
-	QrCode     = "./qrcode_wechat.jpg"
+	QrCode     = "./qrcode_wechat.png"
 	QrCodeSave = "./qrcode_crop2.jpg"
 	// 图片类型 小程序1 微信2
 	ImgTypeWeChatMiniProgram = 1
 	ImgTypeWeChat            = 2
+	WidthLimit               = 480 //图片缩放宽度
 )
 
 func main() {
-	//cropCodeLocal(QrCode,QrCodeSave,ImgTypeWeChat)
+	//cropCodeLocal(QrCode, QrCodeSave, ImgTypeWeChatMiniProgram)
 
-	imgBytes := load2Bytes()
+	imgBytes := load2Bytes(QrCode)
+	//imgBytes = iResize(imgBytes)
 	imgCropBytes := cropCode(imgBytes, ImgTypeWeChat)
 	saveFile(imgCropBytes, QrCodeSave)
 }
 
-func load2Bytes() []byte {
-	file2, err := os.Open(QrCode)
+func load2Bytes(path string) []byte {
+	file2, err := os.Open(path)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"scene": "加载图片"}).Error(err)
 	}
@@ -52,14 +55,24 @@ func saveFile(code []byte, path string) {
 // cropCode 图片裁剪
 //Benchmark 171541200 ns/op
 func cropCode(imgData []byte, imgType int) []byte {
+	//// 0.大图片缩放处理
+	imgDataNew := iResize(imgData, imgType)
 	// 0.加载图片
-	origin, err := loadImageFromBytes(imgData)
+	origin, err := loadImageFromBytes(imgDataNew)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"scene": "解析图片"}).Error(err)
 		return nil
 	}
+	var (
+		w, h, dx int
+	)
 	// 1. 定位小程序码位置
-	w, h, dx := positionDetectionFull(imgData)
+	switch imgType {
+	case ImgTypeWeChatMiniProgram:
+		w, h, dx = positionDetectionMiniProgram(imgDataNew)
+	case ImgTypeWeChat:
+		w, h, dx = positionDetectionQrCode(imgDataNew)
+	}
 	// 2.计算裁剪坐标
 	x0, y0, l := ClaCoordinate(w, h, dx, imgType)
 	// 3. 裁剪
@@ -76,7 +89,7 @@ func cropCode(imgData []byte, imgType int) []byte {
 	return buf.Bytes()
 }
 
-// positionDetectionFull 三点定位二维码位置
+// positionDetectionQrCode 三点定位二维码位置
 /*
 找出所有合适的点 取距离最大的 兼容性提升的同时效率大幅降低 图片分辨率越高越慢
 主要根据二维码三个定位点相对位置(左上 左下 右上)和大致距离才确定二维码位置
@@ -85,8 +98,9 @@ Benchmark
 467*538 174ms
 720*1280 460ms
 1080*2340 2060ms
+增加缩放后 200ms左右
 */
-func positionDetectionFull(imgData []byte) (int, int, int) {
+func positionDetectionQrCode(imgData []byte) (int, int, int) {
 
 	var (
 		tempW, tempH, maxI int
@@ -98,10 +112,41 @@ func positionDetectionFull(imgData []byte) (int, int, int) {
 			if isBlack(img, h, w) {
 				for i := 1; i < len(img[h])-1; i++ {
 					nh, nw := transform(h, w, i, img)
-					if isBlack(img, nh, w) && isBlack(img, h, nw) {
+					//和小程序码区别是这里有三个条件 要判断右下角
+					if isBlack(img, nh, w) && isBlack(img, h, nw) && isBlack(img, nh, nw) {
 						// 会有多个满足条件的点 找距离最大的
 						if i > maxI {
 							//fmt.Printf("待选点 h:%v w:%v i:%v \n", h, w, i)
+							tempH = h
+							tempW = w
+							maxI = i
+						}
+					}
+				}
+			}
+		}
+	}
+	return tempH, tempW, maxI
+}
+
+// positionDetectionMiniProgram 小程序码定位
+func positionDetectionMiniProgram(imgData []byte) (int, int, int) {
+
+	var (
+		tempW, tempH, maxI int
+	)
+	img := MustRead(imgData)
+	//img = imgo.Binaryzation(img, 127) 	// 二值化处理
+	for h, ws := range img {
+		for w, _ := range ws {
+			if isBlack(img, h, w) {
+				for i := 1; i < len(img[h])-1; i++ {
+					nh, nw := transform(h, w, i, img)
+					//和微信二维码区别是这里只有两个条件 不判断右下角
+					if isBlack(img, nh, w) && isBlack(img, h, nw) {
+						// 会有多个满足条件的点 找距离最大的
+						if i > maxI {
+							fmt.Printf("待选点 h:%v w:%v i:%v \n", h, w, i)
 							tempH = h
 							tempW = w
 							maxI = i
@@ -126,8 +171,18 @@ func cropCodeLocal(loadPath, savePath string, imgType int) {
 	// 0.加载图片
 	origin := loadImageFromFile(loadPath)
 	imgData := loadFile(loadPath)
+	//// 0.大图片缩放
+	//imgDataResize := iResize(imgData)
+	var (
+		w, h, dx int
+	)
 	// 1. 定位小程序码位置
-	w, h, dx := positionDetectionFull(imgData)
+	switch imgType {
+	case ImgTypeWeChatMiniProgram:
+		w, h, dx = positionDetectionMiniProgram(imgData)
+	case ImgTypeWeChat:
+		w, h, dx = positionDetectionQrCode(imgData)
+	}
 	// 2. 计算裁剪坐标
 	x0, y0, l := ClaCoordinate(w, h, dx, imgType)
 	// 3. 裁剪
@@ -140,6 +195,29 @@ func cropCodeLocal(loadPath, savePath string, imgType int) {
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"scene": "保存图片"}).Error(err)
 	}
+}
+
+// 图片缩放 输入输出都为[]byte
+func iResize(imgData []byte, imgType int) []byte {
+	// 小程序码不缩放
+	if imgType == ImgTypeWeChatMiniProgram {
+		return imgData
+	}
+
+	reader := bytes.NewReader(imgData)
+	img, _, _ := image.Decode(reader)
+	reader2 := bytes.NewReader(imgData)
+	conf, _, _ := image.DecodeConfig(reader2)
+	// 超过指定大小则缩放
+	if conf.Width > WidthLimit {
+		rate := float64(conf.Height) / float64(conf.Width)
+		img = ImageResize(img, WidthLimit, int(WidthLimit*rate))
+		//saveImage(QrCodeSave, img)
+	}
+	buffer := new(bytes.Buffer)
+	_ = jpeg.Encode(buffer, img, nil)
+	imgData = buffer.Bytes()
+	return imgData
 }
 
 // ClaCoordinate 根据小程序码位置计算裁剪坐标和宽度
@@ -250,6 +328,14 @@ func isBlack(img [][][]uint8, h, w int) bool {
 	return false
 }
 
+// isBlack 当前像素点RGB值是都为0 即黑色
+func isGreen(img [][][]uint8, h, w int) bool {
+	if img[h][w][0] == 0 && img[h][w][1] == 255 && img[h][w][2] == 0 {
+		return true
+	}
+	return false
+}
+
 // transform 平移指定距离
 func transform(h int, w int, dis int, img [][][]uint8) (int, int) {
 	nh := h + dis
@@ -261,4 +347,9 @@ func transform(h int, w int, dis int, img [][][]uint8) (int, int) {
 		nw = len(img[h]) - 1
 	}
 	return nh, nw
+}
+
+// ImageResize 缩放 w,h 为缩放后图片宽高
+func ImageResize(src image.Image, w, h int) image.Image {
+	return resize.Resize(uint(w), uint(h), src, resize.Lanczos3)
 }
