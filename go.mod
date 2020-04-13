@@ -23,6 +23,7 @@ require (
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
+	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.3.2
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
