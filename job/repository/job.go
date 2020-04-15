@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"i-go/db/mongodb"
+	"i-go/core/db/mongodb"
 	"i-go/job/constant"
 	"i-go/job/model"
 	"time"

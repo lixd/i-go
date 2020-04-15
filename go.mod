@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.41.0 // indirect
-	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a // indirect
+	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
 	github.com/antchfx/htmlquery v1.0.0 // indirect
@@ -38,9 +38,11 @@ require (
 	github.com/hashicorp/serf v0.8.3 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/json-iterator/go v1.1.8
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
+	github.com/lixd/gozxing v0.0.0-20200414031819-d1b00bc5e2d4
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/micro/go-micro v1.18.0

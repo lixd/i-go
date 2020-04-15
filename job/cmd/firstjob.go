@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/sirupsen/logrus"
-	"i-go/db/mongodb"
-	"i-go/db/redisdb"
+	"i-go/core/db/mongodb"
+	"i-go/core/db/redisdb"
 	"i-go/job/core"
 	"i-go/job/logic"
 	"i-go/job/manager"

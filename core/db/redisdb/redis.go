@@ -27,11 +27,26 @@ type redisConf struct {
 func init() {
 	defer utils.InitLog("redis")()
 
+	c := readConf()
+	RedisClient = newConn(c)
+	fmt.Println(RedisClient)
+}
+
+func NewConn() *redis.Client {
+	c := readConf()
+	return newConn(c)
+}
+
+func readConf() redisConf {
 	var c redisConf
 	if err := viper.UnmarshalKey("redis", &c); err != nil {
 		panic(err)
 	}
-	RedisClient = redis.NewClient(&redis.Options{
+	return c
+}
+
+func newConn(c redisConf) *redis.Client {
+	return redis.NewClient(&redis.Options{
 		Addr:               c.Addr,
 		Password:           c.Password,
 		DB:                 c.DB,
@@ -43,8 +58,6 @@ func init() {
 		IdleTimeout:        c.IdleTimeout * time.Second,
 		IdleCheckFrequency: c.IdleCheckFrequency * time.Minute,
 	})
-
-	fmt.Println(RedisClient)
 }
 
 func Release() {

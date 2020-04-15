@@ -5,7 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"i-go/db/mongodb"
+	"i-go/core/db/mongodb"
 	jobstatus "i-go/job/constant"
 	"i-go/job/core"
 	"i-go/job/model"
