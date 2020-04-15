@@ -6,21 +6,176 @@ import (
 	"i-go/core/db/redisdb"
 	"time"
 
-	"fmt"
 	"github.com/go-redis/redis"
 )
 
 var rc = redisdb.RedisClient
 
-//Redis 增删改查
+// Redis 增删改查
 func main() {
-	//RedisString()
-	RedisHash()
-	//RedisList()
-	//RedisSet()
-	//RedisZSet()
-	//RedisOthers()
+	// RedisString()
+	// RedisHash()
+	// RedisList()
+	// RedisSet()
+	// RedisZSet()
+	// RedisOthers()
+	// RedisKey()
+	RedisHyperLogLog()
 }
+func RedisHyperLogLog() {
+	for i := 0; i < 10; i++ {
+		rc.PFAdd("blackNum", i)
+	}
+	// 判定当前元素是否存在
+	// 1.计算count
+	// 2.把元素添加进去
+	// 3.在计算一次count
+	// 4.如果count增加了则说明元素之前是不存在的
+	// 10
+	pfCountBefore := rc.PFCount("blackNum")
+	rc.PFAdd("blackNum", 11)
+	// 11
+	pfCountAfter := rc.PFCount("blackNum")
+	logrus.Infof("before:%v after:%v", pfCountBefore, pfCountAfter)
+}
+
+func RedisKey() {
+	rc.Del("firstkey")
+	rc.Exists("firstKey")
+	rc.Expire("firstKey", time.Second)
+	rc.TTL("firstKey")
+	// 	移除过期时间
+	rc.Persist("firstKey")
+	// 查询出所有以frist开头的key
+	rc.Keys("first*")
+
+	rc.RandomKey()
+	// 当secondKey不存在时将firstKey名字修改为secondKey
+	rc.RenameNX("firstKey", "secondKey")
+
+	rc.Type("secondKey")
+
+}
+
+func RedisOthers() {
+	size := rc.DBSize()
+	logrus.Infof("DBSize:%v", size)
+
+	info := rc.Info()
+	logrus.Infof("Info:%v", info)
+}
+
+func RedisZSet() {
+
+	zAdd := rc.ZAdd("language", redis.Z{22.2, "Java"}, redis.Z{33.5, "Golang"},
+		redis.Z{44.5, "Python"}, redis.Z{55.5, "JavaScript"})
+	logrus.Infof("ZAdd:%v", zAdd)
+	zCount := rc.ZCount("language", "10", "30")
+	logrus.Infof("ZCount:%v", zCount)
+	rc.ZIncrBy("language", 10, "Java")
+	// J开头的成员
+	zLexCount := rc.ZLexCount("language", "[J", "(K")
+	logrus.Infof("ZLexCount:%v", zLexCount)
+
+	zRange := rc.ZRange("language", 0, 1)
+	logrus.Infof("ZRange:%v", zRange)
+	/*	// ZRangeByLex必须要所有成员分数相同时才准确
+		rc.ZAdd("language", redis.Z{22.2, "Java"}, redis.Z{22.2, "Golang"},
+			redis.Z{22.2, "Python"}, redis.Z{22.2, "JavaScript"})
+		zRangeByLex := rc.ZRangeByLex("language", redis.ZRangeBy{Min: "[J", Max: "[K"})
+		logrus.Infof("ZRangeByLex:%v", zRangeByLex)*/
+
+	zRangeByScore := rc.ZRangeByScore("language", redis.ZRangeBy{Min: "30", Max: "40"})
+	logrus.Infof("ZRangeByScore:%v", zRangeByScore)
+
+	zRank := rc.ZRank("language", "Golang")
+	logrus.Infof("ZRank:%v", zRank)
+
+	/*	rc.ZRem("language", "Golang")
+		// 移除指定得分区间的成员
+		rc.ZRemRangeByScore("language", "30", "33")
+		// 通过名字移除
+		rc.ZRemRangeByLex("language", "[G", "(H")
+		// 通过排名索引移除 移除倒数第一名和倒数第二名
+		rc.ZRemRangeByRank("language", 0, 1)*/
+
+	// 和不带Rev的相同 只是排序方式换了 默认是得分从小到达 这个是从打大到小
+	rc.ZRevRank("language", "Golang")
+	rc.ZRevRange("language", 0, 1)
+	zRevRangeByLex := rc.ZRevRangeByLex("language", redis.ZRangeBy{Min: "[J", Max: "[K"})
+	logrus.Infof("ZRevRangeByLex:%v", zRevRangeByLex)
+
+}
+
+func RedisSet() {
+	// SAdd 将一个或多个 member 元素加入到集合 key 当中，已经存在于集合的 member 元素将被忽略
+	sAdd := rc.SAdd("golang", "etcd", "gin", "nats")
+	logrus.Infof("SAdd:%v", sAdd)
+	rc.SAdd("Java", "spring", "mybatis", "tomcat")
+	sCard := rc.SCard("golang")
+	logrus.Infof("SCard:%v", sCard)
+
+	rc.SRem("golang", "nats")
+	// 差集
+	sDiff := rc.SDiff("golang", "Java")
+	logrus.Infof("SDiff:%v", sDiff)
+	rc.SDiffStore("diff", "golang", "Java")
+
+	rc.SAdd("golang", "tomcat")
+	// 交集
+	rc.SInterStore("inter", "golang", "Java")
+	// 并集
+	rc.SUnionStore("union", "golang", "Java")
+	isMember := rc.SIsMember("inter", "etcd")
+	logrus.Infof("SIsMember:%v", isMember)
+	sMembers := rc.SMembers("union")
+	logrus.Infof("SMembers:%v", sMembers)
+	// 随机移除
+	sPop := rc.SPop("union")
+	logrus.Infof("SPop:%v", sPop)
+
+	sPopN := rc.SPopN("union", 2)
+	logrus.Infof("SPopN:%v", sPopN)
+
+	randMember := rc.SRandMember("union")
+	logrus.Infof("SRandMember:%v", randMember)
+
+}
+
+func RedisList() {
+	// 表不存在则新建
+	lPush := rc.LPush("first", "1", "2")
+	logrus.Infof("LPush:%v", lPush)
+	// 表不存在则不插入
+	lPushX := rc.LPushX("first", "3")
+	logrus.Infof("LPushX:%v", lPushX)
+
+	rPush := rc.RPush("second", "11", "22")
+	logrus.Infof("RPush:%v", rPush)
+	rPushX := rc.RPushX("num", "33")
+	logrus.Infof("RPushX:%v", rPushX)
+
+	rc.LPop("second")
+	rc.RPop("second")
+
+	// rc.BLPop(time.Second, "first", "second")
+	// rc.BRPop(time.Second, "first", "second")
+
+	rc.RPopLPush("first", "second")
+	rc.BRPopLPush("first", "second", time.Second)
+
+	lIndex := rc.LIndex("first", 0)
+	logrus.Infof("LIndex:%v", lIndex)
+	rc.LInsert("first", "before", "3", "33")
+	rc.LInsert("first", "after", "3", "23")
+
+	lLen := rc.LLen("first")
+	logrus.Infof("LLen:%v", lLen)
+
+	lRange := rc.LRange("first", 0, 2)
+	logrus.Infof("LRange:%v", lRange)
+}
+
 func RedisHash() {
 	// hash
 	rc.HSet("illusory", "name", "illusory")
@@ -84,84 +239,4 @@ func RedisString() {
 	rc.Exists("name")
 	dump := rc.Dump("age")
 	logrus.Infof("dump:%v", dump)
-}
-
-func RedisOthers() {
-	size := rc.DBSize()
-	fmt.Printf("rc.DBSize()  %v \n", size)
-
-	info := rc.Info()
-	fmt.Printf("rc Info  %v \n", info.Val())
-}
-
-func RedisZSet() {
-	// ZSet
-	fmt.Println("-----------ZSet-------------")
-	i17, err := rc.ZAdd("score", redis.Z{22.2, "Java"}, redis.Z{33.5, "Golang"}, redis.Z{44.5, "Python"}, redis.Z{55.5, "JavaScript"}).Result()
-	if err != nil {
-		fmt.Printf("rc ZAdd error= %v \n", err)
-	}
-	fmt.Printf("rc ZAdd result= %v \n", i17)
-	score := rc.ZScore("score", "Java")
-	fmt.Printf("rc ZScore result= %v \n", score)
-	i18, err := rc.ZRank("score", "Java").Result()
-	fmt.Printf("rc ZAdd result= %v \n", i18)
-	i19, err := rc.ZRem("score", "Java").Result()
-	fmt.Printf("rc ZAdd result= %v \n", i19)
-	fmt.Println("-------------------------")
-}
-
-func RedisSet() {
-	// set
-	fmt.Println("--------------Set-----------------")
-	// SAdd 将一个或多个 member 元素加入到集合 key 当中，已经存在于集合的 member 元素将被忽略
-	i10, err := rc.SAdd("job", "Go Modules", "Redis", "MongoDB").Result()
-	if err != nil {
-		fmt.Printf("rc SAdd error= %v \n", err)
-	}
-	i11, err := rc.SAdd("todo", "Go Modules", "MongoDB").Result()
-	fmt.Printf("rc LPop result= %v \n", i10)
-	fmt.Printf("rc LPop result= %v \n", i11)
-	// SPop 移除并返回集合中的一个随机元素
-	i12, err := rc.SPop("job").Result()
-	fmt.Printf("rc LPop result= %v \n", i12)
-	i13, err := rc.SInter("job", "todo").Result()
-	for _, value := range i13 {
-		fmt.Printf("job todo的交集 value=%v \n", value)
-	}
-	i14, err := rc.SUnion("job", "todo").Result()
-	for _, value := range i14 {
-		fmt.Printf("job todo的并集 value=%v \n", value)
-	}
-	i15, err := rc.SDiff("job", "todo").Result()
-	for _, value := range i15 {
-		fmt.Printf("job todo的差集 value=%v \n", value)
-	}
-	i16, err := rc.SMembers("job").Result()
-	for _, value := range i16 {
-		fmt.Printf("job所有元素 value=%v \n", value)
-	}
-}
-
-func RedisList() {
-	//List
-	fmt.Println("--------------List-----------------")
-	// Lpush left将一个或多个值插入到列表头部
-	i6, err := rc.LPush("msg", "l-hello", "l-world", "l-golang", "l-redis").Result()
-	if err != nil {
-		fmt.Printf("rc LPush error= %v \n", err)
-	}
-	fmt.Printf("rc LPush result= %v \n", i6)
-	// Rpush right 将一个或多个值插入到列表尾部
-	i7, err := rc.RPush("msg", "r-hello", "r-world", "r-golang", "r-redis").Result()
-	fmt.Printf("rc RPush result= %v \n", i7)
-	// LPop 移除并获取列表的第一个元素
-	i8, err := rc.LPop("msg").Result()
-	fmt.Printf("rc LPop result= %v \n", i8)
-	// RPop 移除并获取列表的倒数第一个元素
-	i9, err := rc.RPop("msg").Result()
-	fmt.Printf("rc LPop result= %v \n", i9)
-	// LRange 返回列表 key 中指定区间内的元素，区间以偏移量 start 和 stop 指定。
-	strings, err := rc.LRange("msg", 1, 2).Result()
-	fmt.Printf("rc LRange result= %v \n", strings)
 }

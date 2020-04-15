@@ -12,6 +12,7 @@ require (
 	github.com/antchfx/xpath v0.0.0-20190319080838-ce1d48779e67 // indirect
 	github.com/armon/circbuf v0.0.0-20190214190532-5111143e8da2 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
+	github.com/axiomhq/hyperloglog v0.0.0-20191112132149-a4c4c47bc57f
 	github.com/coreos/etcd v3.3.17+incompatible
 	github.com/eclipse/paho.mqtt.golang v1.2.0
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect

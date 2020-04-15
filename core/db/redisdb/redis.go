@@ -26,15 +26,9 @@ type redisConf struct {
 
 func init() {
 	defer utils.InitLog("redis")()
-
 	c := readConf()
 	RedisClient = newConn(c)
 	fmt.Println(RedisClient)
-}
-
-func NewConn() *redis.Client {
-	c := readConf()
-	return newConn(c)
 }
 
 func readConf() redisConf {

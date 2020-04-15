@@ -44,7 +44,6 @@ func main() {
 		ok <- true
 	}()
 
-	// 让主线程卡在这里 如果两个 goroutine 都结束了 则结束主线程
 	for i := 0; i < 2; i++ {
 		<-ok
 	}
