@@ -15,28 +15,22 @@ var rc = redisdb.RedisClient
 func main() {
 	// RedisString()
 	// RedisHash()
-	// RedisList()
+	RedisList()
 	// RedisSet()
 	// RedisZSet()
 	// RedisOthers()
 	// RedisKey()
-	RedisHyperLogLog()
+	//RedisHyperLogLog()
 }
 func RedisHyperLogLog() {
 	for i := 0; i < 10; i++ {
 		rc.PFAdd("blackNum", i)
 	}
 	// 判定当前元素是否存在
-	// 1.计算count
-	// 2.把元素添加进去
-	// 3.在计算一次count
-	// 4.如果count增加了则说明元素之前是不存在的
-	// 10
-	pfCountBefore := rc.PFCount("blackNum")
-	rc.PFAdd("blackNum", 11)
-	// 11
-	pfCountAfter := rc.PFCount("blackNum")
-	logrus.Infof("before:%v after:%v", pfCountBefore, pfCountAfter)
+	// PFAdd添加后对基数值产生影响则返回1 否则返回0
+	pfAdd := rc.PFAdd("blackNum", 11)
+	logrus.Infof("PFAdd:%v", pfAdd)
+
 }
 
 func RedisKey() {

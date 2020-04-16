@@ -21,8 +21,8 @@ import (
 
 // 二维码裁剪工具包
 const (
-	QrCode = "D:/wlinno/qrcode_crop/qrcode_wechat7.png"
-	//QrCode     = "D:/wlinno/qrcode_crop/qrcode_jd11.png"
+	//QrCode = "D:/wlinno/qrcode_crop/qrcode_wechat7.png"
+	QrCode     = "D:/wlinno/qrcode_crop/qrcode_jd11.png"
 	QrCodeSave = "D:/wlinno/qrcode_crop/qrcode_crop2.jpg"
 	// 图片类型 小程序1 微信2
 	ImgTypeWeChatMiniProgram = 1
@@ -37,7 +37,7 @@ func main() {
 
 	imgBytes := load2Bytes(QrCode)
 	//imgBytes = iResize(imgBytes, ImgTypeWeChatMiniProgram)
-	imgCropBytes := cropCode(imgBytes, ImgTypeWeChat)
+	imgCropBytes := cropCode(imgBytes, ImgTypeWeChatMiniProgram)
 	saveFile(imgCropBytes, QrCodeSave)
 }
 
@@ -82,9 +82,7 @@ func cropCode(imgData []byte, imgType int) []byte {
 	var (
 		w, h, dx int
 	)
-	/*
-		<script type="text/javascript">var jd_union_unid="1002590618",jd_ad_ids="508:6",jd_union_pid="CP669ouXLhCao4neAxoAIOL665YLKgA=";var jd_width=0;var jd_height=0;var jd_union_euid="";var p="ABMGVB9cEQAQA2VEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfIgAJRRIVdUgHNxIPS0NyZiV9IEtASmdZF2sXAxMGURxeEwUaN1UaWhYGGgZSG1IlMk1DCEZrXmwTNwpfBkgyEgNcHF0QBRoOXRNfETITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>
-	*/
+
 	// 1. 定位小程序码位置
 	switch imgType {
 	case ImgTypeWeChatMiniProgram:
