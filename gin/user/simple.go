@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
@@ -29,6 +30,13 @@ func (Simple *Simple) ReturnHTMLTransform(c *gin.Context) {
 	}
 	_, _ = io.Copy(c.Writer, resp.Body)
 	resp.Body.Close()
+}
+
+// ReturnHTMLTransform 从旧服务器转发到新的这边来
+func (Simple *Simple) Static(c *gin.Context) {
+	redirect := c.Query("redirect")
+	fmt.Println("请求次数+1", redirect)
+	c.Redirect(http.StatusMovedPermanently, redirect)
 }
 
 const code = `<script type="text/javascript">var jd_union_unid="1002590618",jd_ad_ids="508:6",jd_union_pid="CILlifqTLhCao4neAxoAII2r5JYLKgA=";var jd_width=0;var jd_height=0;var jd_union_euid="";var p="ABMGVB9cEQAQA2VEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfImMjHRxlAhNUNhpYYAZzZAlgGEZ1cFFZF2sXAxMGURxeEwUaN1UaWhYGGgZSG1IlMk1DCEZrXmwTNwpfBkgyEgNcH1MUBxEDVR9YEjITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>`
