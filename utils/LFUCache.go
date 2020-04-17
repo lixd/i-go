@@ -114,7 +114,8 @@ func (l *LFUCache) triggerVisit(node *Node) {
 
 // Get 获取数据
 /*
-存在则
+存在则增加访问频率并返回
+不存在返回-1
 */
 func (l *LFUCache) Get(key int) int {
 	if node, exist := l.cacheMap[key]; exist {
