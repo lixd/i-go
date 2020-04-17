@@ -37,6 +37,7 @@ func RedisHyperLogLog() {
 	// 11
 	pfCountAfter := rc.PFCount("blackNum")
 	logrus.Infof("before:%v after:%v", pfCountBefore, pfCountAfter)
+
 }
 
 func RedisKey() {
