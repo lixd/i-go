@@ -4,6 +4,7 @@ import (
 	"github.com/sirupsen/logrus"
 	_ "i-go/core/conf"
 	"i-go/core/db/redisdb"
+	"i-go/utils"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -20,8 +21,33 @@ func main() {
 	// RedisZSet()
 	// RedisOthers()
 	// RedisKey()
-	RedisHyperLogLog()
+	// RedisHyperLogLog()
+	RedisPipeline()
 }
+func RedisPipeline() {
+	defer utils.Trace("redis simple exec")()
+	simple()
+	pipeline()
+}
+
+func pipeline() {
+	cmders, e := rc.Pipelined(func(pipeliner redis.Pipeliner) error {
+		for i := 0; i < 100; i++ {
+			pipeliner.Set("simple", i, 0)
+			pipeliner.Get("simple")
+		}
+		return nil
+	})
+	logrus.Infof("cmders:%v,err:%v", cmders, e)
+}
+
+func simple() {
+	for i := 0; i < 100; i++ {
+		rc.Set("simple", i, 0)
+		rc.Get("simple")
+	}
+}
+
 func RedisHyperLogLog() {
 	for i := 0; i < 10; i++ {
 		rc.PFAdd("blackNum", i)

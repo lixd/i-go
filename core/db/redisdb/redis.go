@@ -39,6 +39,11 @@ func readConf() redisConf {
 	return c
 }
 
+// NewConn 对外提供一个获取连接的方法
+func NewConn() *redis.Client {
+	return newConn(readConf())
+}
+
 func newConn(c redisConf) *redis.Client {
 	return redis.NewClient(&redis.Options{
 		Addr:               c.Addr,
