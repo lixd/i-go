@@ -2,13 +2,15 @@ package utils
 
 /*
 原理
-使用链表 每次get/sett时将key移动到表头
-这样最后在表尾的元素就是最近未使用的
+	使用链表 每次get/set时将key移动到表头
+	这样最后在表尾的元素就是最近未使用的
 实现
-一个简单的node节点 用map存放数据
+	一个简单的链表用于按使用顺序存储key
+	用map存放数据
+	int存在缓存容量
 */
 
-// 双向链表结构
+// LinkNode 双向链表节点
 type LinkNode struct {
 	key   int
 	value int
@@ -16,12 +18,18 @@ type LinkNode struct {
 	next  *LinkNode
 }
 
+// LinkList 双向链表
+type LinkList struct {
+	head *LinkNode
+	tail *LinkNode
+	len  int
+}
+
 // LRU结构
 type LRUCache struct {
 	m    map[int]*LinkNode
 	cap  int
-	head *LinkNode
-	tail *LinkNode
+	list *LinkList
 }
 
 // NewLURCache 对外提供构造方法
@@ -31,7 +39,9 @@ func NewLRUCache(capacity int) LRUCache {
 	tail := &LinkNode{0, 0, nil, nil}
 	head.next = tail
 	tail.pre = head
-	return LRUCache{make(map[int]*LinkNode, capacity), capacity, head, tail}
+	list := &LinkList{head: head, tail: tail}
+	//return LRUCache{make(map[int]*LinkNode, capacity), capacity, head, tail}
+	return LRUCache{make(map[int]*LinkNode, capacity), capacity, list}
 }
 
 // moveToHead 先删除再添加到表头
@@ -44,15 +54,17 @@ func (l *LRUCache) moveToHead(node *LinkNode) {
 func (l *LRUCache) remove(node *LinkNode) {
 	node.pre.next = node.next
 	node.next.pre = node.pre
+	l.list.len--
 }
 
 // add 在表头后新增节点
 func (l *LRUCache) add(node *LinkNode) {
-	head := l.head
+	head := l.list.head
 	node.next = head.next
 	node.next.pre = node
 	node.pre = head
 	head.next = node
+	l.list.len++
 }
 
 // Get 查询
@@ -71,7 +83,7 @@ func (l *LRUCache) Get(key int) int {
 /*如果元素存在，将其移动到最前面，并更新值
 如果元素不存在，插入到最前面，放入map（判断容量）*/
 func (l *LRUCache) Set(key int, value int) {
-	tail := l.tail
+	tail := l.list.tail
 	cache := l.m
 	if v, exist := cache[key]; exist {
 		v.value = value

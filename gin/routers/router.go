@@ -96,6 +96,7 @@ func RegisterRoutes(router *gin.Engine) {
 	{
 		v6.GET("", v6Controller.ReturnHTML)
 		v6.GET("transform", v6Controller.ReturnHTMLTransform)
+		v6.GET("static", v6Controller.Static)
 	}
 
 }
