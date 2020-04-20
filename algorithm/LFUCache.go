@@ -1,4 +1,4 @@
-package utils
+package algorithm
 
 // LRU: Least Recently Used，缓存满的时候，删除缓存里最久未使用的数据，然后放入新元素
 // LFU: Least Frequently Used，缓存满的时候，删除缓存里使用次数最少的元素，然后放入新元素，如果使用频率一样，删除缓存最久的元素

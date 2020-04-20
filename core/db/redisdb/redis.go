@@ -1,11 +1,9 @@
 package redisdb
 
 import (
-	"fmt"
 	"github.com/go-redis/redis"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"i-go/utils"
 	"time"
 )
 
@@ -24,17 +22,20 @@ type redisConf struct {
 	IdleCheckFrequency time.Duration `json:"IdleCheckFrequency"`
 }
 
-func init() {
-	defer utils.InitLog("redis")()
-	c := readConf()
-	RedisClient = newConn(c)
-	fmt.Println(RedisClient)
-}
+//func init() {
+//	defer utils.InitLog("redis")()
+//	c := readConf()
+//	RedisClient = newConn(c)
+//	fmt.Println(RedisClient)
+//}
 
 func readConf() redisConf {
 	var c redisConf
 	if err := viper.UnmarshalKey("redis", &c); err != nil {
 		panic(err)
+	}
+	if c.Addr == "" {
+		panic("load conf error")
 	}
 	return c
 }

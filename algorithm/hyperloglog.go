@@ -1,4 +1,4 @@
-package util
+package algorithm
 
 import (
 	"github.com/axiomhq/hyperloglog"
@@ -13,7 +13,9 @@ type hyper struct {
 	once sync.Once
 }
 
-var HyperLL = &hyper{hll: hyperloglog.New16()}
+func NewHyperLL() *hyper {
+	return &hyper{hll: hyperloglog.New16()}
+}
 
 func (h *hyper) PFAdd(key string) bool {
 	h.once.Do(func() {
@@ -21,9 +23,11 @@ func (h *hyper) PFAdd(key string) bool {
 	})
 	return h.hll.Insert([]byte(key))
 }
+
 func (h *hyper) PFCount() int {
 	return int(h.hll.Estimate())
 }
+
 func (h *hyper) expire() {
 	for {
 		time.Sleep(time.Hour)

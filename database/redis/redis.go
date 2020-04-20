@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	_ "i-go/core/conf"
+	"i-go/core/conf"
 	"i-go/core/db/redisdb"
+
+	"github.com/sirupsen/logrus"
 	"i-go/utils"
 	"time"
 
@@ -12,19 +13,42 @@ import (
 
 var rc = redisdb.RedisClient
 
+func Init(path string) {
+	err := conf.Init(path)
+	if err != nil {
+		panic(err)
+	}
+	rc = redisdb.NewConn()
+}
+
 // Redis 增删改查
 func main() {
+	Init("conf/config.json")
+
 	// RedisString()
 	// RedisHash()
-	RedisList()
+	//RedisList()
 	// RedisSet()
 	// RedisZSet()
 	// RedisOthers()
 	// RedisKey()
-	//RedisHyperLogLog()
-	// RedisHyperLogLog()
-	RedisPipeline()
+	RedisHyperLogLog()
+	//RedisPipeline()
+	//BloomFilter()
 }
+func BloomFilter() {
+	defer utils.Trace("BloomFilter")()
+	var (
+		key  = "firstKey"
+		data = []byte("bloomFilter")
+	)
+	rc := redisdb.NewConn()
+	bf := NewBloomFilter(1000*20, 3, rc)
+	bf.Set(key, data)
+	isContains := bf.isContains(key, []byte("newData"))
+	logrus.Infof("res:%v", isContains)
+}
+
 func RedisPipeline() {
 	defer utils.Trace("redis simple exec")()
 	simple()
@@ -32,10 +56,10 @@ func RedisPipeline() {
 }
 
 func pipeline() {
-	cmders, e := rc.Pipelined(func(pipeliner redis.Pipeliner) error {
+	cmders, e := rc.Pipelined(func(pipeLiner redis.Pipeliner) error {
 		for i := 0; i < 100; i++ {
-			pipeliner.Set("simple", i, 0)
-			pipeliner.Get("simple")
+			pipeLiner.Set("simple", i, 0)
+			pipeLiner.Get("simple")
 		}
 		return nil
 	})
@@ -50,14 +74,27 @@ func simple() {
 }
 
 func RedisHyperLogLog() {
-	for i := 0; i < 10; i++ {
-		rc.PFAdd("blackNum", i)
+	var (
+		key    = "clickStatics"
+		userId = 10010
+	)
+	// 删除旧测试数据
+	rc.Del(key)
+	for i := 10000; i < 10010; i++ {
+		rc.PFAdd(key, i)
 	}
 	// 判定当前元素是否存在
 	// PFAdd添加后对基数值产生影响则返回1 否则返回0
-	pfAdd := rc.PFAdd("blackNum", 11)
-	logrus.Infof("PFAdd:%v", pfAdd)
-
+	res := rc.PFAdd(key, userId)
+	if err := res.Err(); err != nil {
+		logrus.Errorf("err :%v")
+		return
+	}
+	if res.Val() != 1 {
+		logrus.Println("该用户已统计")
+	} else {
+		logrus.Println("该用户未统计")
+	}
 }
 
 func RedisKey() {

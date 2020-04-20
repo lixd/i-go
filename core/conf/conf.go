@@ -1,3 +1,4 @@
+//conf 加载配置文件
 package conf
 
 import (
@@ -11,13 +12,7 @@ type Config struct {
 	Name string
 }
 
-func init() {
-	path := "conf/config.json"
-	if err := Init(path); err != nil {
-		panic(err)
-	}
-}
-
+// Init
 func Init(cfg string) error {
 	c := Config{
 		Name: cfg,

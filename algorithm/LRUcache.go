@@ -1,4 +1,4 @@
-package utils
+package algorithm
 
 /*
 原理
