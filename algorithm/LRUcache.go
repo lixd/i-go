@@ -1,3 +1,4 @@
+// LRU: Least Recently Used，缓存满的时候，删除缓存里最久未使用的数据，然后放入新元素
 package algorithm
 
 /*
