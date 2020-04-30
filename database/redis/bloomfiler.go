@@ -55,6 +55,7 @@ func (rbf *redisBloomFilter) isContains(key string, data []byte) bool {
 	logrus.Infof("pipeLine GetBit res:%v", cmders)
 	for _, v := range cmders {
 		// 这里需要转成对应类型
+		// 只有有一个位上不为1则表示该值肯定不在数组中
 		if v.(*redis.IntCmd).Val() != 1 {
 			return false
 		}
