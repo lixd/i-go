@@ -87,7 +87,7 @@ func RedisHyperLogLog() {
 	// PFAdd添加后对基数值产生影响则返回1 否则返回0
 	res := rc.PFAdd(key, userId)
 	if err := res.Err(); err != nil {
-		logrus.Errorf("err :%v")
+		logrus.Errorf("err :%v", err)
 		return
 	}
 	if res.Val() != 1 {
