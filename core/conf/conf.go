@@ -1,4 +1,4 @@
-//conf 加载配置文件
+// conf 加载配置文件
 package conf
 
 import (

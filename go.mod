@@ -39,7 +39,6 @@ require (
 	github.com/hashicorp/serf v0.8.3 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
-	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.8
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible

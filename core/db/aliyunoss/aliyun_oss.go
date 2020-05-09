@@ -20,15 +20,16 @@ const (
 	Release = "release"
 )
 
-var OssConf = &ossConf{}
-var OssClient = &oss.Client{}
+var (
+	OssClient *oss.Client
+)
 
 func init() {
 	defer utils.InitLog("aliyun-oss")()
 	// 获取配置文件
-	OssConf = initOssConf()
-
-	OssClient = newOssClient()
+	ossConf := initOssConf()
+	// 初始化client
+	OssClient = newOssClient(ossConf)
 }
 
 func initOssConf() *ossConf {
@@ -51,7 +52,7 @@ func getRunMode() string {
 	return viper.Get("run-mode").(string)
 }
 
-func newOssClient() *oss.Client {
+func newOssClient(conf *ossConf) *oss.Client {
 	var (
 		endpoint string
 		mode     string
@@ -62,11 +63,11 @@ func newOssClient() *oss.Client {
 
 	// 生产环境使用 oss 内网
 	if mode == Release {
-		endpoint = OssConf.EndPointInternal
+		endpoint = conf.EndPointInternal
 	} else {
-		endpoint = OssConf.EndPoint
+		endpoint = conf.EndPoint
 	}
-	client, err := oss.New(endpoint, OssConf.AccessKeyID, OssConf.AccessKeySecret)
+	client, err := oss.New(endpoint, conf.AccessKeyID, conf.AccessKeySecret)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "创建OSSClient实例"}).Error(err)
 		return nil
