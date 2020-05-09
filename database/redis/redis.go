@@ -18,13 +18,13 @@ func Init(path string) {
 	if err != nil {
 		panic(err)
 	}
-	rc = redisdb.NewConn()
+	rc = redisdb.RedisClient
 }
 
 // Redis 增删改查
 func main() {
 	Init("conf/config.json")
-
+	Inc()
 	// RedisString()
 	// RedisHash()
 	//RedisList()
@@ -32,9 +32,22 @@ func main() {
 	// RedisZSet()
 	// RedisOthers()
 	// RedisKey()
-	RedisHyperLogLog()
+	//RedisHyperLogLog()
 	//RedisPipeline()
 	//BloomFilter()
+}
+
+const (
+	DefaultNum = 10000
+)
+
+func Inc() {
+	num, err := rc.IncrBy("p-questionNum", 1).Result()
+	if err != nil {
+		logrus.Error(err)
+	}
+	num += DefaultNum
+	logrus.Info(num)
 }
 func BloomFilter() {
 	defer utils.Trace("BloomFilter")()
@@ -42,7 +55,7 @@ func BloomFilter() {
 		key  = "firstKey"
 		data = []byte("bloomFilter")
 	)
-	rc := redisdb.NewConn()
+	rc := redisdb.RedisClient
 	bf := NewBloomFilter(1000*20, 3, rc)
 	bf.Set(key, data)
 	isContains := bf.isContains(key, []byte("newData"))

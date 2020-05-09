@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
-	"i-go/database/postgresql/constant"
+	"i-go/core/conf"
+	"i-go/core/db/pgsqldb"
 	"i-go/database/postgresql/util"
 )
 
@@ -33,20 +34,54 @@ func (p *Params) Sum() int {
 	return p.X + p.Y
 }
 
+func init() {
+	initConn()
+	initTable()
+}
+
+func initConn() {
+	db = pgsqldb.PostgresDB
+}
+
+func Init(path string) {
+	err := conf.Init(path)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
-	defer db.Close()
+	Init("conf/config.json")
+
+	defer pgsqldb.Release()
+	ModelTest()
 	// ExampleInsert2()
 	// ExampleSelect()
 	// ExampleJoin()
 	//
 	// ExampleColumn()
-	ExampleInsert()
+	//ExampleInsert()
 	//
 	// ExampleUpdate()
 	// ExampleDelete()
 	// ExampleCustomQuery()
 	// ExampleQuery()
-	ExampleQuery2()
+	//ExampleQuery2()
+}
+
+type User struct {
+	Id   int    `pg:"pk"`
+	Name string `pg:"notnull"`
+}
+
+func ModelTest() {
+	err := db.CreateTable(User{}, &orm.CreateTableOptions{
+		IfNotExists:   true,
+		FKConstraints: true,
+	})
+	if err != nil {
+		panic(err)
+	}
 }
 
 func ExampleQuery2() {
@@ -621,20 +656,6 @@ func ExampleQuery() {
 	fmt.Println("table name:", tableName)
 	fmt.Println("table alias:", tableAlias)
 	fmt.Println("columns:", columns)
-}
-
-func init() {
-	initConn()
-	initTable()
-}
-
-func initConn() {
-	db = pg.Connect(&pg.Options{
-		User:     constant.UserName,
-		Addr:     constant.Addr,
-		Password: constant.Password,
-		Database: constant.Database,
-	})
 }
 
 func initTable() {

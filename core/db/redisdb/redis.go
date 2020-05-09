@@ -4,6 +4,7 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"i-go/utils"
 	"time"
 )
 
@@ -22,12 +23,11 @@ type redisConf struct {
 	IdleCheckFrequency time.Duration `json:"IdleCheckFrequency"`
 }
 
-//func init() {
-//	defer utils.InitLog("redis")()
-//	c := readConf()
-//	RedisClient = newConn(c)
-//	fmt.Println(RedisClient)
-//}
+func init() {
+	defer utils.InitLog("redis init")()
+	c := readConf()
+	newConn(c)
+}
 
 func readConf() redisConf {
 	var c redisConf
@@ -40,13 +40,8 @@ func readConf() redisConf {
 	return c
 }
 
-// NewConn 对外提供一个获取连接的方法
-func NewConn() *redis.Client {
-	return newConn(readConf())
-}
-
-func newConn(c redisConf) *redis.Client {
-	return redis.NewClient(&redis.Options{
+func newConn(c redisConf) {
+	RedisClient = redis.NewClient(&redis.Options{
 		Addr:               c.Addr,
 		Password:           c.Password,
 		DB:                 c.DB,

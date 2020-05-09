@@ -21,5 +21,21 @@
       "job": "ijob"
     },
     "authMechanism": ""
+  },
+  "pgsql": {
+    "username": "postgres",
+    "password": "123456",
+    "host": "192.168.100.111",
+    "port": 5432,
+    "database": "sampdb",
+    "poolSize": 10
+  },
+  "mysql": {
+    "username": "root",
+    "password": "123456",
+    "host": "192.168.100.111",
+    "port": 3306,
+    "database": "sampdb",
+    "timeout": "10s"
   }
 }
