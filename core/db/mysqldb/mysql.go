@@ -51,6 +51,8 @@ func newConn(c *mysqlConf) {
 	if err != nil {
 		panic(err)
 	}
+	// 启用Logger，显示详细日志
+	MySQL.LogMode(true)
 	// 修改默认表名 统一增加前缀
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return c.TableNamePrefix + defaultTableName
