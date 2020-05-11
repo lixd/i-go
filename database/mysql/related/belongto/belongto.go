@@ -1,4 +1,4 @@
-package main
+package belongto
 
 import (
 	"fmt"
@@ -8,18 +8,20 @@ import (
 
 var mysqlDB = mysqldb.MySQL
 
-/*// `User`属于`Profile`, `ProfileID`为外键
+/*
 // 默认外键名为 表名+主键名(tbl_name+PK)
 // 默认关联的外键为PK
 type User struct {
-	gorm.Model
-	Profile   Profile
-	ProfileID int
+  gorm.Model
+  Name string
 }
 
+// `Profile` 属于 `User`， 外键是`UserID`
 type Profile struct {
-	gorm.Model
-	Name string
+  gorm.Model
+  UserID int
+  User   User
+  Name   string
 }
 */
 
@@ -27,19 +29,20 @@ type Profile struct {
 // 外键列名就不用满足上面的规范了表名+主键名(tbl_name+PK)
 // 关联的外键还是默认为主键
 type User struct {
-	gorm.Model
-	Profile      Profile `gorm:"ForeignKey:ProfileRefer"` // 使用ProfileRefer作为外键
-	ProfileRefer int
+  gorm.Model
+  Name string
 }
 
 type Profile struct {
-	gorm.Model
-	Name string
+  gorm.Model
+  Name      string
+  User      User `gorm:"foreignkey:UserRefer"` // 将 UserRefer 作为外键
+  UserRefer uint
 }*/
 
 // 指定外键和关联外键
 // 则二者都不需要满足默认规范了
-type Profile struct {
+/*type Profile struct {
 	gorm.Model
 	Refer string
 	Name  string
@@ -49,6 +52,19 @@ type User struct {
 	gorm.Model
 	Profile   Profile `gorm:"ForeignKey:ProfileID;AssociationForeignKey:Refer"`
 	ProfileID int
+}*/
+type User struct {
+	gorm.Model
+	Refer string
+	Name  string
+}
+
+type Profile struct {
+	gorm.Model
+	Name string
+	//User      User `gorm:"association_foreignkey:Refer"` // 将 Refer 作为关联外键
+	User      User `gorm:"ForeignKey:UserRefer;AssociationForeignKey:Refer"` // 将 Refer 作为关联外键
+	UserRefer string
 }
 
 func main() {
@@ -57,10 +73,10 @@ func main() {
 	mysqlDB.AutoMigrate(&User{})
 	mysqlDB.AutoMigrate(&Profile{})
 	var p = Profile{Name: "p1"}
-	mysqlDB.Create(&User{Profile: p})
+	mysqlDB.Create(&User{})
 	mysqlDB.Create(&p)
 	var User = User{}
-	mysqlDB.Model(&User).Related(&User.Profile, "ProfileID").Create(User)
+	mysqlDB.Model(&User).Related(&User, "ProfileID").Create(User)
 	fmt.Println("user: ", User)
 
 }

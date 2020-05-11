@@ -1,5 +1,6 @@
 package main
 
+// gorm crud demo
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"

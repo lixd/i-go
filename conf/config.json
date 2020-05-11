@@ -33,7 +33,7 @@
   "mysql": {
     "username": "root",
     "password": "123456",
-    "host": "192.168.1.111",
+    "host": "192.168.100.111",
     "port": 3306,
     "database": "sampdb",
     "timeout": "10s",
