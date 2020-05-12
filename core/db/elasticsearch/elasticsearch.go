@@ -28,7 +28,7 @@ func init() {
 		panic(err)
 	}
 	var host = fmt.Sprintf("http://%s:%s", c.Addr, c.Port)
-	//errorLog := log.New(os.Stdout, "APP", log.LstdFlags)
+	// errorLog := log.New(os.Stdout, "APP", log.LstdFlags)
 	logger := logrus.New()
 	ESClient, err := elastic.NewClient(
 		/*	Sniff开启时会使客户端去嗅探整个集群的状态，把集群中其它机器的ip地址加到客户端中。这样做的好处是，一般你不用手动设置集群里所有集群的ip到连接客户端，

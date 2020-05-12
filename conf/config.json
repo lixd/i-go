@@ -38,5 +38,11 @@
     "database": "sampdb",
     "timeout": "10s",
     "tableNamePrefix": "x_"
+  },
+  "rabbitmq": {
+    "username": "guest",
+    "password": "guest",
+    "host": "192.168.1.111",
+    "port": 5672
   }
 }

@@ -44,7 +44,7 @@ func init() {
 				SetAuth(options.Credential{
 					Username: c.Username,
 					Password: c.Password,
-					//AuthMechanism: c.AuthMechanism0,
+					// AuthMechanism: c.AuthMechanism0,
 					AuthSource: name}).
 				SetMaxPoolSize(c.MaxPoolSize),
 		)

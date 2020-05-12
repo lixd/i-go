@@ -46,7 +46,7 @@ func newConn(c *mysqlConf) {
 	// eg: root:123456@tcp(192.168.100.111:3306)/sampdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local&timeout=%s",
 		c.Username, c.Password, c.Host, c.Port, c.Database, c.Timeout)
-	fmt.Println(dsn)
+	logrus.Info("mysql dsn:", dsn)
 	MySQL, err = gorm.Open("mysql", dsn)
 	if err != nil {
 		panic(err)
