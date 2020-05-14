@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"i-go/core/conf"
 	"i-go/utils"
 	"time"
 )
@@ -28,6 +29,8 @@ type Conf struct {
 
 func init() {
 	defer utils.InitLog("mongodb")()
+	// 一般是单独调用这个 不放在数据库初始化这边
+	conf.Init("conf/config.json")
 
 	var c Conf
 

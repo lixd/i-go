@@ -12,7 +12,7 @@
     "IdleCheckFrequency": 1
   },
   "mongo": {
-    "appUrl": "192.168.0.2:27017",
+    "appUrl": "192.168.1.111:27017",
     "username": "test",
     "password": "123456",
     "maxPoolSize": 10,
