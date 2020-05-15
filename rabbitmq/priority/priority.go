@@ -34,7 +34,7 @@ func main() {
 	// 定义交换器 一个用作业务一个用作死信
 	err = ch.ExchangeDeclare(ExChange, amqp.ExchangeFanout, false, false, false, false, nil)
 	// 声明队列
-	var args = make(amqp.Table, 0)
+	var args = make(amqp.Table)
 	// x-max-priority 指定队列最大优先级
 	args["x-max-priority"] = 5
 	qNormal, err := ch.QueueDeclare(QueueDLX, false, false, false, false, args)

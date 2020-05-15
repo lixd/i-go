@@ -36,7 +36,7 @@ func main() {
 	// exclusive: 设置了排外为true的队列只可以在本次的连接中被访问，也就是说在当前连接创建多少个channel访问都没有关系，但是如果是一个新的连接来访问，对不起，不可以
 	// x-expires 设置队列有效期 过期后将删除队列(但不保证能及时删除)
 	// x-message-ttl 给进入队列的消息设置有效期
-	var args = make(amqp.Table, 0)
+	var args = make(amqp.Table)
 	args["x-expires"] = 1800000
 	args["x-message-ttl"] = 6000
 	// x-dead-letter-exchange 指定queue的死信队列为`ExChangeDLX`

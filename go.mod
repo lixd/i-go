@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.41.0 // indirect
+	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
@@ -69,6 +70,7 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.4.0
+	github.com/tealeg/xlsx v1.0.5
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
 	github.com/tidwall/pretty v1.0.1 // indirect
@@ -85,6 +87,7 @@ require (
 	golang.org/x/mod v0.1.0 // indirect
 	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
+	golang.org/x/tools v0.0.0-20191029190741-b9c20aec41a5 // indirect
 	gonum.org/v1/netlib v0.0.0-20200317120129-c5a04cffd98a // indirect
 	gonum.org/v1/plot v0.7.0
 	google.golang.org/grpc v1.25.1
