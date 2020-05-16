@@ -44,5 +44,18 @@
     "password": "guest",
     "host": "192.168.1.111",
     "port": 5672
+  },
+  "etcd": {
+    "endpoints": [
+      "http://192.168.1.111:12379",
+      "http://192.168.1.111:22379",
+      "http://192.168.1.111:32379"
+    ],
+    "DialTimeout": 5,
+    "username": "",
+    "password": "",
+    "CertFile": "",
+    "KeyFile": "",
+    "TrustedCAFile": ""
   }
 }

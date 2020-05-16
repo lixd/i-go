@@ -5,12 +5,16 @@ import (
 	"fmt"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/sirupsen/logrus"
-	"i-go/etcd"
+	"i-go/core/etcd"
 	"time"
 )
 
+var (
+	client = etcd.Cli
+)
+
 func main() {
-	client := etcd.New("etcd-local")
+	fmt.Printf("%#v \n", client)
 	// 3.获取kv对象
 	// kv接口包含了etcd所有基本操作
 	// 	与client.KV相比clientv3.NewKV(client) 多个自动重连功能 所以一般用这个

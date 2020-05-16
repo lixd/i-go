@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vaptcha</title>
+    <style>
+        .vaptcha-init-main {
+            display: table;
+            width: 100%;
+            height: 100%;
+            background-color: #EEEEEE;
+        }
+
+        .vaptcha-init-loading {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center
+        }
+
+        .vaptcha-init-loading > a {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: none;
+        }
+
+        .vaptcha-init-loading > a image {
+            vertical-align: middle
+        }
+
+        .vaptcha-init-loading .vaptcha-text {
+            font-family: sans-serif;
+            font-size: 12px;
+            color: #CCCCCC;
+            vertical-align: middle
+        }
+    </style>
+
+</head>
+<body>
+<!-- 点击式按钮建议高度介于36px与46px  -->
+<!-- 嵌入式仅需设置宽度，高度根据宽度自适应，最小宽度为200px -->
+<div id="vaptchaContainer" style="width: 300px;height: 36px;">
+    <!--vaptcha-container是用来引入VAPTCHA的容器，下面代码为预加载动画，仅供参考-->
+    <div class="vaptcha-init-main">
+        <div class="vaptcha-init-loading">
+            <a href="/" target="_blank">
+                <img src="https://cdn.vaptcha.com/vaptcha-loading.gif" alt="loading"/>
+            </a>
+            <span class="vaptcha-text">Vaptcha启动中...</span>
+        </div>
+    </div>
+</div>
+
+<script src="https://v.vaptcha.net/v3.js"></script>
+<script src="https:r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
+<script>
+    vaptcha({
+        vid: '5e4b559fad980a8810052f9a', // 必填
+        type: 'click', // 必填 显示类型 点击式
+        container: '#vaptchaContainer', // 嵌入式、点击式必填 容器，可为Element 或者 selector
+        offline_server: 'http://localhost:8080/vaptcha/offline', //离线模式服务端地址
+        mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
+        scene: 0, //不填默认为0
+        //可选参数
+        //lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
+        //https: false, // 使用https 默认false
+        //style: 'dark' //按钮样式 默认dark，可选值 dark,light
+        //color: '#57ABFF' //按钮颜色 默认值#57ABFF
+    }).then(function (vaptchaObj) {
+        obj = vaptchaObj;//将VAPTCHA验证实例保存到局部变量中
+        vaptchaObj.render();// 调用验证实例 vaptchaObj 的 render 方法加载验证按钮
+
+        //获取token的方式一:
+        //vaptchaObj.renderTokenInput('.login-form')//以form的方式提交数据时，使用此函数向表单添加token值
+
+        //获取token的方式二:
+        vaptchaObj.listen('pass', function () {
+            // 验证成功进行后续操作
+            // 登录注册并二次验证
+            var data = {
+                //表单数据
+                token: vaptchaObj.getToken(),
+                username: "admin",
+                password: "root",
+            };
+            console.log("token: " + data.token);
+            // 登录
+            $.post('http://localhost:8080/vaptcha/login', data, function (r) {
+                console.log("login:", r)
+                if (r.code !== 200) {
+                    alert("二次验证失败")
+                    obj.reset() // 重置验证码
+                } else {
+                    alert("二次验证成功")
+                }
+            });
+        });
+
+        //关闭验证弹窗时触发
+        vaptchaObj.listen('close', function () {
+            //验证弹窗关闭触发
+        })
+    })
+</script>
+</body>
+</html>

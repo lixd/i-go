@@ -4,20 +4,19 @@ import (
 	"context"
 	"fmt"
 	"github.com/coreos/etcd/clientv3"
-	"i-go/etcd"
+	"i-go/core/etcd"
 	"time"
 )
 
 func main() {
 	var (
-		client                *clientv3.Client
+		client                = etcd.Cli
 		err                   error
 		putResp               *clientv3.PutResponse
 		getResp               *clientv3.GetResponse
 		delResp               *clientv3.DeleteResponse
 		leaseResp, leaseResp1 *clientv3.LeaseGrantResponse
 	)
-	client = etcd.New("etcd-local")
 
 	if putResp, err = client.Put(context.TODO(), "maxProcess", "3"); err != nil {
 		fmt.Println(err)

@@ -53,8 +53,8 @@ func main() {
 		ch.ExchangeBind("exDest", "bindingKey", "exSrc",false,nil)*/
 
 	// 消费消息
-	for i := 0; i < 4; i++ {
-		time.Sleep(time.Second * 1)
+	for i := 0; i < 20; i++ {
+		time.Sleep(time.Millisecond * 1)
 		go consumer(ch)
 	}
 	/*	// 拉模式消费者
@@ -66,7 +66,7 @@ func main() {
 	*/
 
 	// 生产消息 routingKey
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 6; i++ {
 		go publish(ch)
 	}
 
@@ -81,7 +81,7 @@ func consumer(ch *amqp.Channel) {
 	}
 	go func() {
 		for msg := range msgs {
-			logrus.Printf("Received a message: %s", msg.Body)
+			// logrus.Printf("Received a message: %s", msg.Body)
 			// multiple为true则会把同一channel上之前接收的消息都Aack或者Nack掉。
 			// requeue 表示是否需要把这条消息重新插入队列 再次投递
 			msg.Ack(false)
@@ -92,7 +92,8 @@ func consumer(ch *amqp.Channel) {
 }
 
 func publish(ch *amqp.Channel) {
-	for i := 0; i < 99999; i++ {
+	for {
+		time.Sleep(time.Microsecond * 1)
 		// params exchange(交换器名称) key(RoutingKey) mandatory(不可达时是否回退给发送者) immediate(无消费者时是否路由到队列) msg(具体的消息)
 		// mandatory(golang客户端这个参数好像没用？):为true时 如果交换器无法根据自身类型和路由键找到一个符合条件的队列 那么会将消息返回给生产者 为false则会丢弃消息
 		// immediate(3.0后已取消该参数):为true时 交换器在路由时发现该队列上没有任何消费者，那么将不会把消息存入对列,如果符合条件的队列都没有消费者那么会把消息返回给生产者。
@@ -111,7 +112,7 @@ func publish(ch *amqp.Channel) {
 		if err != nil {
 			fmt.Println("send error: ", err)
 		} else {
-			fmt.Println("send success ", i)
+			fmt.Println("send success ")
 		}
 	}
 }

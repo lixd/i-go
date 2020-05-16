@@ -19,13 +19,13 @@ const (
 
 var ch = rabbitmq.Channel
 
-//死信队列
+// 延迟队列
 /*
-定义两个交换器，一个用于业务一个做死信交换器(**两个都是普通交换器**)。
+在定义queue的时候可以通过`x-message-ttl`参数指定进入该队列的消息设置有TTL。
 
-定义一个正常业务队列,定义的时候需要指定一个交换器作为该队列的死信交换器，同时还还可以指定死信消息重新发到死信交换器后需不需要改变routingKey之类的。
+同时在对这个queue添加一个死信交换器和死信队列。这样ttl到了消息就会进入对应的死信队列。
 
-然后在定义一个普通队列做为死信队列，绑定到死信交换器上。
+最后消费者订阅死信队列即可达到延迟队列的效果。
 */
 func main() {
 	// 定义交换器 一个用作业务交换器 一个用作死信交换器
@@ -55,10 +55,11 @@ func main() {
 	// 将队列绑定到交换器上
 	err = ch.QueueBind(qNormal.Name, RoutingKey, ExChange, false, nil)
 	err = ch.QueueBind(qDxl.Name, RoutingKeyDLX, ExChangeDLX, false, nil)
+
 	// 消费消息
-	//推模式
+	// 推模式
 	// params name(队列名) consumer(消费者名称或标记) autoAck(是否自动ack) exclusive(是否排他队列) noLocal(暂不支持该参数 只是为了完整性加的) noWait(同时)
-	msgs, err := ch.Consume(Queue, strconv.FormatInt(time.Now().UnixNano(), 10), false, false, false, false, nil)
+	msgs, err := ch.Consume(QueueDLX, strconv.FormatInt(time.Now().UnixNano(), 10), false, false, false, false, nil)
 	go func() {
 		for msg := range msgs {
 			logrus.Printf("Received a message: %s", msg.Body)
@@ -70,13 +71,12 @@ func main() {
 	for i := 0; i < 11; i++ {
 		body := "Hello World33!"
 		err = ch.Publish(ExChange, RoutingKey, false, false, amqp.Publishing{
-			DeliveryMode: amqp.Persistent,
+			DeliveryMode: amqp.Transient,
 			ContentType:  "text/plain",
 			UserId:       "guest",
 			AppId:        "go",
 			Timestamp:    time.Now(),
 			Body:         []byte(body),
-			Expiration:   "1000", // 消息有效期？
 		})
 	}
 

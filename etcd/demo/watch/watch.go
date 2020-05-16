@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/coreos/etcd/clientv3"
-	"i-go/etcd"
+	etcd2 "i-go/core/etcd"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 		putResp *clientv3.PutResponse
 	)
 	// 0.建立连接
-	client = etcd.New("etcd-local")
+	client = etcd2.New("etcd-local")
 
 	if putResp, err = client.Put(context.TODO(), "maxProcess", "3"); err != nil {
 		fmt.Println(err)
