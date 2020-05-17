@@ -30,7 +30,7 @@ func init() {
 
 func readConf() *rabbitMQConf {
 	var c rabbitMQConf
-	if err := viper.UnmarshalKey("mysql", &c); err != nil {
+	if err := viper.UnmarshalKey("rabbitmq", &c); err != nil {
 		panic(err)
 	}
 	if c.Host == "" {
@@ -42,21 +42,16 @@ func newConn(c *rabbitMQConf) {
 	var err error
 
 	// 1.建立连接
-	conn, err := amqp.Dial("amqp://guest:guest@192.168.1.111:5672/")
-	if err != nil {
-		panic(err)
-	}
-	// 1.建立连接
 	// DSN (Data Source Name)格式: schema://username:password@host:port
 	// eg: amqp://guest:guest@192.168.1.111:5672
 	dsn := fmt.Sprintf("amqp://%s:%s@%s:%v", c.Username, c.Password, c.Host, c.Port)
 	logrus.Info("rabbitmq dsn:", dsn)
-	Conn, err = amqp.Dial("amqp://guest:guest@192.168.1.111:5672/")
+	Conn, err = amqp.Dial(dsn)
 	if err != nil {
 		panic(err)
 	}
 	// 2.打开通道 信道(基于TCP连接的虚拟连接)
-	Channel, err = conn.Channel()
+	Channel, err = Conn.Channel()
 	if err != nil {
 		panic(err)
 	}

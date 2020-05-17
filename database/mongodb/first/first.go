@@ -18,7 +18,7 @@ func insert() {
 		ID:       "5ebd4fe4d8c4278a887c4539",
 		UserName: "First",
 		Password: "First",
-		Age:      133,
+		Age:      1323,
 		Phone:    "13452340416",
 	}
 	err := repository.UserInfo.Upsert(&req)

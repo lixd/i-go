@@ -1,12 +1,14 @@
 package etcd
 
 import (
+	"fmt"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/pkg/transport"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"i-go/core/conf"
 	"i-go/utils"
+	"os"
 	"time"
 )
 
@@ -17,7 +19,7 @@ import (
 	推荐使用	"github.com/coreos/etcd/clientv3" 这个
 */
 var (
-	Cli *clientv3.Client
+	CliV3 *clientv3.Client
 )
 
 type etcdConf struct {
@@ -34,10 +36,12 @@ type etcdConf struct {
 
 func init() {
 	defer utils.InitLog("Etcd")()
-	conf.Init("conf/config.json")
+	fmt.Println(os.Getwd())
+	// conf.Init("conf/config.json")
+	conf.Init("../../conf/config.json")
 
 	c := readConf()
-	Cli = newConn(c)
+	CliV3 = newConn(c)
 }
 
 func readConf() *etcdConf {
@@ -83,7 +87,7 @@ func newConn(c *etcdConf) *clientv3.Client {
 }
 
 func Release() {
-	if Cli != nil {
-		_ = Cli.Close()
+	if CliV3 != nil {
+		_ = CliV3.Close()
 	}
 }

@@ -1,6 +1,6 @@
 {
   "redis": {
-    "addr": "123.57.236.125:6379",
+    "addr": "192.168.100.111:6379",
     "password": "123456",
     "db": 0,
     "MaxRetries": 3,
@@ -12,7 +12,7 @@
     "IdleCheckFrequency": 1
   },
   "mongo": {
-    "appUrl": "123.57.236.125:27017",
+    "appUrl": "192.168.1.111:27017",
     "username": "test",
     "password": "123456",
     "maxPoolSize": 10,
@@ -25,7 +25,7 @@
   "pgsql": {
     "username": "postgres",
     "password": "123456",
-    "host": "123.57.236.125",
+    "host": "192.168.100.111",
     "port": 5432,
     "database": "sampdb",
     "poolSize": 10
@@ -33,7 +33,7 @@
   "mysql": {
     "username": "root",
     "password": "123456",
-    "host": "123.57.236.125",
+    "host": "192.168.100.111",
     "port": 3306,
     "database": "sampdb",
     "timeout": "10s",
@@ -42,14 +42,14 @@
   "rabbitmq": {
     "username": "guest",
     "password": "guest",
-    "host": "123.57.236.125",
+    "host": "192.168.1.111",
     "port": 5672
   },
   "etcd": {
     "endpoints": [
-      "http://123.57.236.125:12379",
-      "http://123.57.236.125:22379",
-      "http://123.57.236.125:32379"
+      "http://192.168.1.111:12379",
+      "http://192.168.1.111:22379",
+      "http://192.168.1.111:32379"
     ],
     "DialTimeout": 5,
     "username": "",

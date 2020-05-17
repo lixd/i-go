@@ -78,7 +78,7 @@ require (
 	github.com/willf/bloom v2.0.3+incompatible
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
-	go.etcd.io/etcd v3.3.13+incompatible // indirect
+	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.0.4
 	go.uber.org/zap v1.12.0
 	golang.org/x/exp v0.0.0-20190627132806-fd42eb6b336f // indirect
