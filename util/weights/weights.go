@@ -1,39 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
 
-func main() {
-	start := time.Now()
-	//初始化全局Seed
-	var count = 10000000
-	var staticMap = make(map[string]int)
-	// 初始化xxx对象
-	var weights = NewWeight()
-	allWeights := weights.getAllWeights()
-	weights.AllWeight = allWeights
-
-	//	添加初始化值
-	weights.add("A", 10)
-	weights.add("B", 20)
-	weights.add("C", 30)
-	weights.add("D", 30)
-	weights.add("E", 10)
-
-	for i := 0; i < count; i++ {
-		//	进行随机
-		random := weights.random()
-		//	定位item
-		data := weights.locationData(random)
-		staticMap[data.Data] += 1
-	}
-	fmt.Printf("统计结果%#v \n", staticMap)
-	fmt.Printf("花费时间%v \n", time.Now().Sub(start))
-}
-
+// 权重随机算法 简单实现
 type Weights struct {
 	Data       []WeightsItem // 数据
 	UseWeights int           // 已分配权重
@@ -47,11 +19,11 @@ type WeightsItem struct {
 }
 
 // getAllWeights 计算总权重 当前默认为100
-func (w *Weights) getAllWeights() int {
+func (w *Weights) GetAllWeights() int {
 	return 100
 }
 
-// getAllWeights 计算总权重 当前默认为100
+// NewWeight
 func NewWeight() *Weights {
 	var weights = &Weights{
 		Data:       nil,
@@ -63,7 +35,7 @@ func NewWeight() *Weights {
 }
 
 // add 添加item
-func (w *Weights) add(data string, weights int) {
+func (w *Weights) Add(data string, weights int) {
 	item := WeightsItem{
 		Data:          data,
 		UseWeights:    w.UseWeights,
@@ -74,13 +46,13 @@ func (w *Weights) add(data string, weights int) {
 }
 
 // random 根据总权重进行随机
-func (w *Weights) random() int {
+func (w *Weights) Random() int {
 	// 这里需要+1 因为可能会随机到0 如果权重为0肯定是不会被选到的 需要处理一下
 	return w.Rand.Intn(w.AllWeight) + 1
 }
 
 // locationData 根据随机值 定位具体的item
-func (w *Weights) locationData(rand int) *WeightsItem {
+func (w *Weights) LocationData(rand int) *WeightsItem {
 	for _, v := range w.Data {
 		if rand > v.UseWeights && rand <= v.UseWeights+v.CurrentWeight {
 			return &v

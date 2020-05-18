@@ -8,6 +8,7 @@ type UserInfo struct {
 	Password   string             `bson:"Password"`
 	Age        int                `bson:"Age"`
 	Phone      string             `bson:"Phone"`
+	Hobby      []string           `bson:"Hobby"`
 	CreateTime int64              `bson:"CreateTime"`
 	UpdateTime int64              `bson:"UpdateTime"`
 }
@@ -17,9 +18,10 @@ func (*UserInfo) GetCollectionName() string {
 }
 
 type UserInfoReq struct {
-	ID       string `bson:"_id"`
-	UserName string `bson:"UserName"`
-	Password string `bson:"Password"`
-	Age      int    `bson:"Age"`
-	Phone    string `bson:"Phone"`
+	ID       string   `bson:"_id"`
+	UserName string   `bson:"UserName"`
+	Password string   `bson:"Password"`
+	Age      int      `bson:"Age"`
+	Phone    string   `bson:"Phone"`
+	Hobby    []string `bson:"Hobby"`
 }
