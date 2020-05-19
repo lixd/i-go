@@ -104,6 +104,7 @@ func excelizeExcel(path string) {
 				CreateTime:    -1,
 				UpdateTime:    -1,
 			}
+			fmt.Println(item.ProductId, "\t")
 			list = append(list, item)
 
 			fmt.Println(item, "\t")

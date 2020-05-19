@@ -16,7 +16,7 @@ var (
 
 /*
 etcd分布式锁
-在etcd事务中查询key的revision是否为0，等于0则创建key和value，表示抢锁成功；
+在etcd事务中查询key的Createrevision是否为0，等于0则创建key和value，表示抢锁成功；
 不等于0则for循环watch 一直阻塞到delete事件触发 然后在创建key并返回。
 如果需要提前返回只能手动传context来控制超时
 */

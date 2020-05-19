@@ -27,8 +27,8 @@ func main() {
 	// put()
 	// get()
 	// delete()
-	leaseFunc()
-	// txn()
+	//leaseFunc()
+	txn()
 	// watch机制
 	// go putForWatch()
 	// go watch()
@@ -63,21 +63,26 @@ func watch() {
 }
 
 func txn() {
+	kv.Put(context.Background(), Prefix+Suffix, "f")
 	// 开启事务
 	txn := kv.Txn(context.Background())
+	getOwner := clientv3.OpGet(Prefix+Suffix, clientv3.WithFirstCreate()...)
 	// 如果/illusory/cloud的值为hello则获取/illusory/cloud的值 否则获取/illusory/wind的值
 	txnResp, err := txn.If(clientv3.Compare(clientv3.Value(Prefix+Suffix), "=", "hello")).
-		Then(clientv3.OpGet(Prefix + "/equal")).
-		Else(clientv3.OpGet(Prefix + "/unequal")).
+		Then(clientv3.OpGet(Prefix+"/equal"), getOwner).
+		Else(clientv3.OpGet(Prefix+"/unequal"), getOwner).
 		Commit()
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"Scenes": "etcd put"}).Error(err)
+		return
 	}
+	fmt.Printf("事务%#v \n", txnResp)
 	if txnResp.Succeeded { // If = true
 		fmt.Println("true", txnResp.Responses[0].GetResponseRange().Kvs)
 	} else { // If =false
 		fmt.Println("false", txnResp.Responses[0].GetResponseRange().Kvs)
 	}
+	kv.Delete(context.Background(), Prefix+Suffix)
 }
 
 func put() {

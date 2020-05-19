@@ -37,8 +37,8 @@ type etcdConf struct {
 func init() {
 	defer utils.InitLog("Etcd")()
 	fmt.Println(os.Getwd())
-	// conf.Init("conf/config.json")
-	conf.Init("../../conf/config.json")
+	conf.Init("conf/config.json")
+	//conf.Init("../../conf/config.json")
 
 	c := readConf()
 	CliV3 = newConn(c)
