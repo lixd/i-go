@@ -16,7 +16,7 @@ func main() {
 	// 开启一个链接
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		panic(err)
 	}
 	defer conn.Close()
 	// 用conn new一个client

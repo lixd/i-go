@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package helloworld;
-// 定义一个服务
+
 service UserService {
     rpc Create (UserReq) returns (UserResp) {
     }
@@ -10,6 +10,7 @@ message UserReq {
     string name = 1;
     string age = 2;
 }
+
 message UserResp {
     string message = 1;
 }

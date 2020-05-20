@@ -3,41 +3,53 @@ package main
 import (
 	"context"
 	"fmt"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	pro "i-go/grpc/proto"
-	"time"
+	"i-go/utils"
+	"io"
 )
 
 const ServerStreamAddress = "localhost:50053"
 
+/*
+1. 建立连接 获取client
+2. 组装req参数并调用方法获取stream
+3. for循环中通过stream.Recv()获取服务端推送的消息
+4. err==io.EOF则表示服务端关闭stream了 退出
+*/
 func main() {
+	// 1.建立连接
 	conn, err := grpc.Dial(ServerStreamAddress, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Error(err.Error())
-		return
+		panic(err)
 	}
 	defer conn.Close()
-	// 通过conn new 一个 client
+	// 1.获取client
 	client := pro.NewServerStreamServerClient(conn)
-
+	// 2.组装req参数
 	data := &pro.ServerStreamReq{Data: "1"}
-	// 这里获取到的 res 是一个stream
-	res, err := client.ServerStream(context.Background(), data)
+	// 2.调用获取stream
+	stream, err := client.ServerStream(context.Background(), data)
 	if err != nil {
-		log.Error(err.Error())
+		logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "ClientStream Recv error"}).Error(err)
 		return
 	}
 
-	start := time.Now().Unix()
+	// 3. for循环获取服务端推送的消息
 	for {
-		// 通过 Recv() 不断获取服务端send()推送的消息
-		data, err := res.Recv()
+		// 3.通过 Recv() 不断获取服务端send()推送的消息
+		// 内部也是调用RecvMsg
+		data, err := stream.Recv()
 		if err != nil {
-			log.Println(err)
-			break
+			// 4. err==io.EOF则表示服务端关闭stream了 退出
+			if err == io.EOF {
+				fmt.Println("server closed")
+				break
+			}
+			logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "ClientStream Recv error"}).Error(err)
+			continue
 		}
-		fmt.Println(data)
+		fmt.Printf("Recv Data:%v \n", data)
 	}
-	fmt.Printf("take time :%v", time.Now().Unix()-start)
 }

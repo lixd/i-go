@@ -2,22 +2,24 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	pb "i-go/grpc/proto"
-	"log"
+	"i-go/utils"
 )
 
 func main() {
 	// grpc.Dial 创建连接 grpc.WithInsecure() 禁用传输安全性
 	conn, err := grpc.Dial("localhost:50052", grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		panic(err)
 	}
 	defer conn.Close()
 	client := pb.NewUserServiceClient(conn)
 	resp, err := client.Create(context.Background(), &pb.UserReq{Name: "illusory", Age: "23"})
 	if err != nil {
-		log.Fatalf("could not Create: %v", err)
+		logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "create user  error"}).Error(err)
 	}
-	log.Printf("Create Resp: %s", resp.Message)
+	fmt.Printf("Create User Resp: %v \n", resp.Message)
 }
