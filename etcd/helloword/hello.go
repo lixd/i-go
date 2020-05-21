@@ -29,11 +29,19 @@ func main() {
 	// delete()
 	//leaseFunc()
 	txn()
-	// watch机制
+	watch()
 	// go putForWatch()
 	// go watch()
 	// select {}
+	//compact()
 }
+func compact() {
+	var rev int64 = 10
+	// rev:会压缩指定版本之前的记录
+	// clientv3.WithCompactPhysical(): RPC 将会等待直 压缩物理性地应用到数据库，之后被压缩的项将完全从后端数据库中移除
+	kv.Compact(context.Background(), rev, clientv3.WithCompactPhysical())
+}
+
 func putForWatch() {
 	for i := 0; i < 9; i++ {
 		_, err := kv.Put(context.Background(), Prefix+Suffix, strconv.Itoa(i))
@@ -48,12 +56,21 @@ func putForWatch() {
 	}
 }
 func watch() {
-	watchChan := client.Watch(context.Background(), Prefix+Suffix)
+	// In order to prevent a watch stream being stuck in a partitioned node,
+	// make sure to wrap context with "WithRequireLeader".
+	// 为了保证请求不卡在分区节点上 请一定是要WithRequireLeader来包装ctx
+	parentCtx, cancel := context.WithCancel(context.Background())
+	ctx := clientv3.WithRequireLeader(parentCtx)
+	watchChan := client.Watch(ctx, "mykey")
 	for wr := range watchChan {
 		for _, e := range wr.Events {
 			switch e.Type {
 			case clientv3.EventTypePut:
 				fmt.Printf("watch event put-current: %#v \n", string(e.Kv.Value))
+				// 不再watch后记得cancel掉 ctx 否则etcd资源得不到释放
+				if string(e.Kv.Value) == "release" {
+					cancel()
+				}
 			case clientv3.EventTypeDelete:
 				fmt.Printf("watch event delete-current: %#v \n", string(e.Kv.Value))
 			default:
@@ -86,6 +103,10 @@ func txn() {
 }
 
 func put() {
+	// hello到hello12的key
+	kv.Get(context.Background(), "hello", clientv3.WithRange("hello12"))
+	// hello前缀的所有key
+	kv.Get(context.Background(), "hello", clientv3.WithPrefix())
 	response, err := kv.Put(context.Background(), Prefix+Suffix, "hello")
 	response, err = kv.Put(context.Background(), Prefix+"/equal", "equal")
 	response, err = kv.Put(context.Background(), Prefix+"/unequal", "unequal")

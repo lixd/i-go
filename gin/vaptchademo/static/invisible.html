@@ -29,16 +29,17 @@
 <div class="password"><i class="fa fa-key"></i><input type="password" class="form-control" value="**************"
                                                       placeholder="请输入密码"/></div>
 <button id="login-button">登录</button>
+<button id="btn_reset">重置</button>
 
 <script src="https://v.vaptcha.net/v3.js"></script>
 <script src="https:r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
 
 <script>
     vaptcha({
-        vid: '5e4b559fad980a8810052f9a', // 必填
+        vid: '5dba48a598bb11d350b45728', // 必填
         type: 'invisible', // 必填 显示类型 隐藏式
         offline_server: 'http://localhost:8080/vaptcha/offline', //离线模式服务端地址
-        mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
+        // mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
         scene: 1 // 场景值 默认0
         //可选参数
         //lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
@@ -81,6 +82,10 @@
     $('#login-button').on('click', function () {
         console.log("登录");
         obj.validate();
+    })
+    // 重置
+    $('#btn_reset').on('click', function () {
+        obj.reset();
     })
 </script>
 </body>

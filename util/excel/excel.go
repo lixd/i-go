@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	path := "D:/wlinno/document/test.xlsx"
+	path := "D:/wlinno/document/test2.xlsx"
 	excelizeExcel(path)
 	//xlxs(path)
 }
