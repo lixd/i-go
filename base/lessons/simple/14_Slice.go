@@ -1,6 +1,8 @@
 package simple
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 声明切片1 未初始化时为nil
 var s1 []int
@@ -90,4 +92,14 @@ func slice1() {
 }
 func printMsg(s []int) {
 	fmt.Printf("len=%d cap=%d slice=%v \n", len(s), cap(s), s)
+}
+func sliceCopy() {
+	d := []int{1, 2, 3}
+	e := make([]int, 3, 3)
+	// copy方法将会连底层数组也重新复制一份
+	copy(e, d)
+	fmt.Println(d, e)
+	// 所以只后修改src并不会影响到dst
+	d[2] = 1
+	fmt.Println(d, e)
 }
