@@ -7,17 +7,24 @@ import (
 	"io"
 	"net/http"
 	"testing"
+	"time"
 )
 
 func BenchmarkSpecial(b *testing.B) {
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 100; i++ {
 		go testOffline()
 	}
 	select {}
 }
 
+const (
+	vaptchaURL = "http://www.lixueduan.com:8080/vaptcha/offline?offline_action=get&vid=5e4b559fad980a8810052f9a&callback=VaptchaJsonp1589679108778"
+	lixdURL    = "https://www.lixueduan.com"
+)
+
 func testOffline() {
-	resp, err := http.Get("http://123.57.236.125:8080/vaptcha/offline?offline_action=get&vid=5e4b559fad980a8810052f9a&callback=VaptchaJsonp1589679108778")
+	start := time.Now()
+	resp, err := http.Get(lixdURL)
 	if err != nil {
 		logrus.Error(err)
 	}
@@ -33,5 +40,6 @@ func testOffline() {
 			panic(err)
 		}
 	}
-	fmt.Printf("%v \n", result.String())
+	// fmt.Printf("%v \n", result.String())
+	fmt.Printf("time:%v \n", time.Now().Sub(start))
 }
