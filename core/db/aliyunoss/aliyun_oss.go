@@ -1,10 +1,11 @@
 package aliyunoss
 
 import (
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
+	"errors"
 	"i-go/utils"
+
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"github.com/spf13/viper"
 )
 
 type ossConf struct {
@@ -24,35 +25,37 @@ var (
 	OssClient *oss.Client
 )
 
-func init() {
-	defer utils.InitLog("aliyun-oss")()
-	// 获取配置文件
-	ossConf := initOssConf()
-	// 初始化client
-	OssClient = newOssClient(ossConf)
-}
+// Init 建议显示地调用初始化方法
+func Init() {
+	defer utils.InitLog("AliyunOSS")()
 
-func initOssConf() *ossConf {
-	var c ossConf
-	if err := viper.UnmarshalKey("aliyunoss", &c); err != nil {
+	ossConf, err := parseConf()
+	if err != nil {
 		panic(err)
 	}
-	return &ossConf{
-		EndPoint:            c.EndPoint,
-		EndPointInternal:    c.EndPointInternal,
-		AccessKeyID:         c.AccessKeyID,
-		AccessKeySecret:     c.AccessKeySecret,
-		BucketITest:         c.BucketITest,
-		BucketITestInternal: c.BucketITestInternal,
+	OssClient, err = newOssClient(ossConf)
+	if err != nil {
+		panic(err)
 	}
+}
+
+func parseConf() (*ossConf, error) {
+	var c ossConf
+	if err := viper.UnmarshalKey("aliyunoss", &c); err != nil {
+		return &ossConf{}, err
+	}
+	if c.AccessKeyID == "" {
+		return &ossConf{}, errors.New("aliyunoss conf nil")
+	}
+	return &c, nil
 }
 
 // getRunMode 获取运行模式 release/debug
 func getRunMode() string {
-	return viper.Get("run-mode").(string)
+	return viper.GetString("run-mode")
 }
 
-func newOssClient(conf *ossConf) *oss.Client {
+func newOssClient(conf *ossConf) (*oss.Client, error) {
 	var (
 		endpoint string
 		mode     string
@@ -69,8 +72,7 @@ func newOssClient(conf *ossConf) *oss.Client {
 	}
 	client, err := oss.New(endpoint, conf.AccessKeyID, conf.AccessKeySecret)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "创建OSSClient实例"}).Error(err)
-		return nil
+		return &oss.Client{}, err
 	}
-	return client
+	return client, nil
 }

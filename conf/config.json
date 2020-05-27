@@ -11,7 +11,7 @@
     "IdleTimeout": 10,
     "IdleCheckFrequency": 1
   },
-  "mongo": {
+  "mongodb": {
     "appUrl": "123.57.236.125:27017",
     "username": "test",
     "password": "123456",
@@ -51,11 +51,11 @@
       "http://123.57.236.125:22379",
       "http://123.57.236.125:32379"
     ],
-    "DialTimeout": 5,
+    "dialTimeout": "5s",
     "username": "",
     "password": "",
-    "CertFile": "",
-    "KeyFile": "",
-    "TrustedCAFile": ""
+    "certFile": "",
+    "keyFile": "",
+    "trustedCAFile": ""
   }
 }

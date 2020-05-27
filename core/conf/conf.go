@@ -2,17 +2,18 @@
 package conf
 
 import (
-	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
 	"log"
 	"strings"
+
+	"github.com/fsnotify/fsnotify"
+	"github.com/spf13/viper"
 )
 
 type Config struct {
 	Name string
 }
 
-// Init
+// Init 手动调用加载配置文件
 func Init(cfg string) error {
 	c := Config{
 		Name: cfg,
@@ -29,7 +30,7 @@ func Init(cfg string) error {
 	return nil
 }
 
-// 配置文件初始化func
+// initConfig 配置文件初始化
 func (c *Config) initConfig() error {
 	if c.Name != "" {
 		viper.SetConfigFile(c.Name) // 如果指定了配置文件，则解析指定的配置文件
@@ -37,8 +38,9 @@ func (c *Config) initConfig() error {
 		viper.AddConfigPath("../conf") // 如果没有指定配置文件，则解析默认的配置文件
 		viper.SetConfigName("config")
 	}
-	viper.SetConfigType("json") //  设置配置文件格式为json
-	viper.AutomaticEnv()        // 读取匹配的环境变量
+	//viper.SetConfigType("json") //  设置配置文件格式为json
+	viper.SetConfigType("yml") //  设置配置文件格式为json
+	viper.AutomaticEnv()       // 读取匹配的环境变量
 
 	viper.SetEnvPrefix("TESTSERVER") // 读取环境变量的前缀为APISERVER
 	replacer := strings.NewReplacer(".", "-")
@@ -50,7 +52,7 @@ func (c *Config) initConfig() error {
 	return nil
 }
 
-// 监控配置文件变化并热加载程序
+// watchConfig 监控配置文件变化并热加载程序
 func (c *Config) watchConfig() {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {

@@ -1,33 +1,59 @@
 package elasticsearch
 
 import (
+	"errors"
 	"fmt"
+	"i-go/utils"
+
 	"github.com/olivere/elastic"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"i-go/utils"
 )
 
 var ESClient *elastic.Client
 
-type Conf struct {
+type ESConf struct {
 	Addr     string `json:"addr"`
 	Port     string `json:"port"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
-func init() {
-	defer utils.InitLog("elasticsearch")()
+func Init() {
+	defer utils.InitLog("ElasticSearch")()
 
-	var (
-		c Conf
-	)
-	// 0.读取配置文件
-	if err := viper.UnmarshalKey("elasticsearch", &c); err != nil {
+	c, err := parseConf()
+	if err != nil {
 		panic(err)
 	}
-	var host = fmt.Sprintf("http://%s:%s", c.Addr, c.Port)
+	ESClient, err = newClient(c)
+	if err != nil {
+		panic(err)
+	}
+
+	host := fmt.Sprintf("http://%s:%s", c.Addr, c.Port)
+	version, err := ESClient.ElasticsearchVersion(host)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Elasticsearch version %s\n", version)
+
+	ESClient.CreateIndex("title_index").BodyString("")
+}
+
+func parseConf() (*ESConf, error) {
+	var c ESConf
+	if err := viper.UnmarshalKey("elasticsearch", &c); err != nil {
+		return &ESConf{}, err
+	}
+	if c.Addr == "" {
+		return &ESConf{}, errors.New("elasticsearch conf nil")
+	}
+	return &c, nil
+}
+
+func newClient(c *ESConf) (*elastic.Client, error) {
+	host := fmt.Sprintf("http://%s:%s", c.Addr, c.Port)
 	// errorLog := log.New(os.Stdout, "APP", log.LstdFlags)
 	logger := logrus.New()
 	ESClient, err := elastic.NewClient(
@@ -40,15 +66,8 @@ func init() {
 		elastic.SetErrorLog(logger), // 指定用什么来打印日志
 		elastic.SetURL(host),
 		elastic.SetBasicAuth(c.Username, c.Password))
-
 	if err != nil {
-		panic(err)
+		return &elastic.Client{}, err
 	}
-	version, err := ESClient.ElasticsearchVersion(host)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("Elasticsearch version %s\n", version)
-
-	ESClient.CreateIndex("title_index").BodyString("")
+	return ESClient, nil
 }

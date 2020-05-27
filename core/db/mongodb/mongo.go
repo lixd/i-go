@@ -2,14 +2,16 @@ package mongodb
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"i-go/utils"
+	"time"
+
 	"github.com/sirupsen/logrus"
+
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"i-go/core/conf"
-	"i-go/utils"
-	"time"
 )
 
 var TestDB *mongo.Database
@@ -27,18 +29,18 @@ type Conf struct {
 	AuthMechanism string            `json:"authMechanism"`
 }
 
-func init() {
-	defer utils.InitLog("mongodb")()
-	// 一般是单独调用这个 不放在数据库初始化这边
-	conf.Init("conf/config.json")
+func Init() {
+	defer utils.InitLog("MongoDB")()
 
-	var c Conf
-
-	// 0.读取配置文件
-	if err := viper.UnmarshalKey("mongo", &c); err != nil {
+	c, err := parseConf()
+	if err != nil {
 		panic(err)
 	}
-	// 通过这个一次初始化多个连接
+	// 一次初始化多个连接
+	newClient(c)
+}
+
+func newClient(c *Conf) {
 	for key, name := range c.DBS {
 		appUrl := fmt.Sprintf("mongodb://%s", c.AppUrl)
 		// 1. 获取客户端连接
@@ -52,11 +54,15 @@ func init() {
 				SetMaxPoolSize(c.MaxPoolSize),
 		)
 		if err != nil {
-			panic("conn mongodb error")
+			panic(err)
 		}
 		// 2.初始化客户端
 		ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 		err = MongoClient.Connect(ctx)
+		if err != nil {
+			logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "conn mongodb"}).Error(err)
+			panic(err)
+		}
 		switch key {
 		case "test":
 			TestDB = MongoClient.Database(name)
@@ -72,18 +78,16 @@ func init() {
 	}
 }
 
-type MongoCollection interface {
-	GetCollectionName() string
+func parseConf() (*Conf, error) {
+	var c Conf
+	if err := viper.UnmarshalKey("mongodb", &c); err != nil {
+		return &Conf{}, err
+	}
+	if c.AppUrl == "" {
+		return &Conf{}, errors.New("mongodb conf nil")
+	}
+	return &c, nil
 }
-
-func GetTestCollection(c MongoCollection) *mongo.Collection {
-	return TestDB.Collection(c.GetCollectionName())
-}
-func GetJobCollection(c MongoCollection) *mongo.Collection {
-	return JobDB.Collection(c.GetCollectionName())
-}
-
-const timeout = time.Second * 3
 
 func Release() {
 	if TestClient != nil {
@@ -96,3 +100,16 @@ func Release() {
 	}
 	logrus.Info("mongodb is closed")
 }
+
+type MongoCollection interface {
+	GetCollectionName() string
+}
+
+func GetTestCollection(c MongoCollection) *mongo.Collection {
+	return TestDB.Collection(c.GetCollectionName())
+}
+func GetJobCollection(c MongoCollection) *mongo.Collection {
+	return JobDB.Collection(c.GetCollectionName())
+}
+
+const timeout = time.Second * 3

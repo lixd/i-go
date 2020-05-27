@@ -1,15 +1,13 @@
 package etcd
 
 import (
-	"fmt"
+	"errors"
+	"i-go/utils"
+	"time"
+
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/pkg/transport"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"i-go/core/conf"
-	"i-go/utils"
-	"os"
-	"time"
 )
 
 /*
@@ -34,28 +32,32 @@ type etcdConf struct {
 	TrustedCAFile string `json:"trustedCAFile"` // "/tmp/test-certs/trusted-ca.pem"
 }
 
-func init() {
+func Init() {
 	defer utils.InitLog("Etcd")()
-	fmt.Println(os.Getwd())
-	conf.Init("conf/config.json")
-	//conf.Init("../../conf/config.json")
 
-	c := readConf()
-	CliV3 = newConn(c)
-}
-
-func readConf() *etcdConf {
-	var c etcdConf
-	if err := viper.UnmarshalKey("etcd", &c); err != nil {
+	c, err := parseConf()
+	if err != nil {
 		panic(err)
 	}
-	if len(c.Endpoints) == 0 {
-		panic("etcd conf nil")
+	CliV3, err = newClient(c)
+	if err != nil {
+		panic(err)
 	}
-	return &c
 }
 
-func newConn(c *etcdConf) *clientv3.Client {
+func parseConf() (*etcdConf, error) {
+	var c etcdConf
+	if err := viper.UnmarshalKey("etcd", &c); err != nil {
+		return &etcdConf{}, err
+	}
+	// 默认单位为纳秒
+	if len(c.Endpoints) == 0 {
+		return &etcdConf{}, errors.New("etcd conf nil")
+	}
+	return &c, nil
+}
+
+func newClient(c *etcdConf) (*clientv3.Client, error) {
 	var etctConfig clientv3.Config
 	// 有TLS配置就设置
 	if c.CertFile != "" {
@@ -66,10 +68,9 @@ func newConn(c *etcdConf) *clientv3.Client {
 		}
 		tlsConfig, err := tlsInfo.ClientConfig()
 		if err != nil {
-			logrus.WithFields(logrus.Fields{"Scenes": "etcd tls conf error"}).Error(err)
-		} else {
-			etctConfig.TLS = tlsConfig
+			return &clientv3.Client{}, err
 		}
+		etctConfig.TLS = tlsConfig
 	}
 	if c.Username != "" {
 		etctConfig.Username = c.Username
@@ -80,10 +81,9 @@ func newConn(c *etcdConf) *clientv3.Client {
 
 	client, err := clientv3.New(etctConfig)
 	if err != nil {
-		panic(err)
-		return nil
+		return &clientv3.Client{}, err
 	}
-	return client
+	return client, nil
 }
 
 func Release() {

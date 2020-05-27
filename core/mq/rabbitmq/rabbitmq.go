@@ -1,12 +1,13 @@
 package rabbitmq
 
 import (
+	"errors"
 	"fmt"
+	"i-go/utils"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
-	"i-go/core/conf"
-	"i-go/utils"
 )
 
 var (
@@ -21,24 +22,30 @@ type rabbitMQConf struct {
 	Port     int    `json:"port"`
 }
 
-func init() {
+func Init() {
 	defer utils.InitLog("RabbitMQ")()
-	conf.Init("conf/config.json")
-	c := readConf()
-	newConn(c)
-}
-
-func readConf() *rabbitMQConf {
-	var c rabbitMQConf
-	if err := viper.UnmarshalKey("rabbitmq", &c); err != nil {
+	c, err := parseConf()
+	if err != nil {
 		panic(err)
 	}
-	if c.Host == "" {
-		panic("rabbitmq conf nil")
+	Conn, Channel, err = newConn(c)
+	if err != nil {
+		panic(err)
 	}
-	return &c
 }
-func newConn(c *rabbitMQConf) {
+
+func parseConf() (*rabbitMQConf, error) {
+	var c rabbitMQConf
+	if err := viper.UnmarshalKey("rabbitmq", &c); err != nil {
+		return nil, err
+	}
+	if c.Host == "" {
+		return nil, errors.New("rabbitmq conf nil")
+	}
+	return &c, nil
+}
+
+func newConn(c *rabbitMQConf) (*amqp.Connection, *amqp.Channel, error) {
 	var err error
 
 	// 1.建立连接
@@ -46,15 +53,16 @@ func newConn(c *rabbitMQConf) {
 	// eg: amqp://guest:guest@192.168.1.111:5672
 	dsn := fmt.Sprintf("amqp://%s:%s@%s:%v", c.Username, c.Password, c.Host, c.Port)
 	logrus.Info("rabbitmq dsn:", dsn)
-	Conn, err = amqp.Dial(dsn)
+	conn, err := amqp.Dial(dsn)
 	if err != nil {
-		panic(err)
+		return &amqp.Connection{}, &amqp.Channel{}, err
 	}
 	// 2.打开通道 信道(基于TCP连接的虚拟连接)
-	Channel, err = Conn.Channel()
+	channel, err := Conn.Channel()
 	if err != nil {
-		panic(err)
+		return &amqp.Connection{}, &amqp.Channel{}, err
 	}
+	return conn, channel, nil
 }
 
 func Release() {

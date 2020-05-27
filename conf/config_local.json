@@ -11,7 +11,7 @@
     "IdleTimeout": 10,
     "IdleCheckFrequency": 1
   },
-  "mongo": {
+  "mongodb": {
     "appUrl": "192.168.1.111:27017",
     "username": "test",
     "password": "123456",

@@ -1,0 +1,57 @@
+redis:
+  addr: "123.57.236.125:6379"
+  password: "123456"
+  db: 0
+  MaxRetries: 3
+  PoolSize: 10
+  MinIdleConns: 10
+  MaxConnAge: "30s"
+  PoolTimeout: "10s"
+  IdleTimeout: "10s"
+  IdleCheckFrequency: "10s"
+
+mongodb:
+  appUrl: "123.57.236.125:27017"
+  username: "test"
+  password: "123456"
+  maxPoolSize: 10
+  dbs:
+    test: "test"
+    job: "job"
+  authMechanism: ""
+
+pgsql:
+  username: "postgres"
+  password: "123456"
+  host: "123.57.236.125"
+  port: 5432
+  database: "sampdb"
+  poolSize: 10
+
+mysql:
+  username: "root"
+  password: "123456"
+  host: "123.57.236.125"
+  port: 3306
+  database:  "sampdb"
+  timeout: "10s"
+  tableNamePrefix: "x_"
+
+rabbitmq:
+  username: "guest"
+  password: "guest"
+  host: "123.57.236.125"
+  port: 5672
+
+etcd:
+  endpoints:
+    - "http://123.57.236.125:12379"
+    - "http://123.57.236.125:22379"
+    - "http://123.57.236.125:32379"
+  dialTimeout: "5s"
+  username: ""
+  password: ""
+  # TLS相关
+  certFile: ""
+  keyFile: ""
+  trustedCAFile: ""

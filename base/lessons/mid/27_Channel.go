@@ -1,3 +1,5 @@
+//+build ignore
+
 package main
 
 import (
@@ -5,6 +7,8 @@ import (
 )
 
 func main() {
+	// xxx
+
 	// 1.声明管道
 	var intChan chan int
 	var intChant chan int
@@ -86,6 +90,7 @@ lable:
 		}
 	}
 }
+
 func writeData(intChan chan int) {
 	for i := 1; i <= 50; i++ {
 		intChan <- i

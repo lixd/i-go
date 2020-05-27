@@ -2,11 +2,11 @@ package pgsqldb
 
 import (
 	"fmt"
+	"i-go/utils"
+
 	"github.com/go-pg/pg"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"i-go/core/conf"
-	"i-go/utils"
 )
 
 var PostgresDB *pg.DB
@@ -20,15 +20,11 @@ type PgConf struct {
 	PoolSize int    `json:"poolSize"`
 }
 
-// 需要先手动加载配置文件
-func init() {
+func Init() {
 	defer utils.InitLog("PostgresSQL")()
-	err := conf.Init("conf/config.json")
-	if err != nil {
-		panic(err)
-	}
+
 	// 0.读取配置文件
-	c := readConf()
+	c := parseConf()
 	// 1.建立连接
 	PostgresDB = newConn(c)
 }
@@ -44,7 +40,7 @@ func newConn(c *PgConf) *pg.DB {
 	})
 }
 
-func readConf() *PgConf {
+func parseConf() *PgConf {
 	var c PgConf
 	// 0.读取配置文件
 	if err := viper.UnmarshalKey("pgsql", &c); err != nil {

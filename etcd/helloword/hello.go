@@ -3,23 +3,34 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/coreos/etcd/clientv3"
-	"github.com/sirupsen/logrus"
+	"i-go/core/conf"
 	"i-go/core/etcd"
 	"strconv"
 	"time"
+
+	"github.com/coreos/etcd/clientv3"
+	"github.com/sirupsen/logrus"
 )
 
 var (
-	client = etcd.CliV3
-	kv     = clientv3.NewKV(client)
-	lease  = clientv3.NewLease(client)
+	client *clientv3.Client
+	kv     clientv3.KV
+	lease  clientv3.Lease
 )
 
 const (
 	Prefix = "/hello"
 	Suffix = "/2"
 )
+
+func init() {
+	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	etcd.Init()
+
+	client = etcd.CliV3
+	kv = clientv3.NewKV(client)
+	lease = clientv3.NewLease(client)
+}
 
 func main() {
 	defer etcd.Release()
