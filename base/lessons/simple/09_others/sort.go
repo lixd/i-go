@@ -10,9 +10,9 @@ func main() {
 
 	arr := [11]int{1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 23}
 	fmt.Println("--------------------------")
-	binarySerach(&arr, 0, len(arr)-1, 23)
-
+	binarySearch(&arr, 0, len(arr)-1, 23)
 }
+
 func bubbleSort(arr []int) {
 	//定义标记 判断本轮循环是否有两两换位，如果没有则说明排序正常可以跳出循环
 	flag := true
@@ -31,16 +31,16 @@ func bubbleSort(arr []int) {
 }
 
 //二分查找
-func binarySerach(arr *[11]int, min int, max int, value int) {
+func binarySearch(arr *[11]int, min int, max int, value int) {
 	if min > max {
 		fmt.Println("不存在")
 		return
 	}
 	mid := (min + max) / 2
 	if (*arr)[mid] > value {
-		binarySerach(arr, min, mid-1, value)
+		binarySearch(arr, min, mid-1, value)
 	} else if (*arr)[mid] < value {
-		binarySerach(arr, mid+1, max, value)
+		binarySearch(arr, mid+1, max, value)
 	} else {
 		fmt.Printf("找到了 下标为 %d \n", mid)
 	}

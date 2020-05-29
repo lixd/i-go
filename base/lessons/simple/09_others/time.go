@@ -5,7 +5,18 @@ import (
 	"time"
 )
 
+func t() {
+	add := time.Now().Add(time.Hour * 24)
+	date := time.Now().AddDate(0, 0, 1)
+	fmt.Println(add, date)
+}
+
 func main() {
+	t()
+	//simple()
+}
+
+func simple() {
 	// 1.获取当前时间
 	now := time.Now()
 	fmt.Println(now)
@@ -27,11 +38,14 @@ func main() {
 	fmt.Println(dataStr)
 	// 方式二 time.Format()
 	// 其中2006/01/02 15:04:05是固定的 类似于 yyyy-mm-dd hh:mm:ss 只能写这个 可以组合
-	fmt.Printf(now.Format("2006/01/02 15:04:05")) // 2019/05/19 13:53:27
+	fmt.Printf(now.Format("2006/01/02 15:04:05"))
+	// 2019/05/19 13:53:27
 	fmt.Println()
-	fmt.Printf(now.Format("2006/01/02")) // 2019/05/19
+	fmt.Printf(now.Format("2006/01/02"))
+	// 2019/05/19
 	fmt.Println()
-	fmt.Printf(now.Format("15:04:05")) // 13:55:02
+	fmt.Printf(now.Format("15:04:05"))
+	// 13:55:02
 	fmt.Println()
 	// 5.休眠
 	// 需求1：每秒打印一个数 100时退出

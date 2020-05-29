@@ -1,4 +1,4 @@
-package algorithm
+package redis
 
 import (
 	"github.com/axiomhq/hyperloglog"

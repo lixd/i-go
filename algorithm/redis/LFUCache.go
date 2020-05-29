@@ -1,5 +1,5 @@
 // LFU: Least Frequently Used，缓存满的时候，删除缓存里使用次数最少的元素，然后放入新元素，如果使用频率一样，删除缓存最久的元素
-package algorithm
+package redis
 
 /*
 基于 如果一个数据在最近一段时间内使用次数很少，那么在将来一段时间内被使用的可能性也很小

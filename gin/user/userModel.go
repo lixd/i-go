@@ -13,6 +13,3 @@ type Class struct {
 	Id     string `json:"id" form:"id"`
 	Number int    `json:"number" form:"number"`
 }
-type myForm struct {
-	Colors []string `form:"colors[]"`
-}

@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-var locker = new(sync.Mutex)
-var cond = sync.NewCond(locker)
+var locker sync.Mutex
+var cond = sync.NewCond(&locker)
 
 func main() {
 	for i := 0; i < 40; i++ {
@@ -21,10 +21,9 @@ func main() {
 	for i := 0; i < 30; i++ {
 		// 每过300毫秒唤醒一个goroutine
 		cond.Signal()
-		time.Sleep(time.Millisecond * 300)
+		time.Sleep(time.Millisecond * 50)
 	}
 	// 剩下10个goroutine一起唤醒
 	cond.Broadcast()
 	fmt.Println("Broadcast...")
-	time.Sleep(time.Second * 60)
 }

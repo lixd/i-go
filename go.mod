@@ -18,8 +18,9 @@ require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
-	github.com/gin-gonic/gin v1.4.0
+	github.com/gin-gonic/gin v1.6.3
 	github.com/go-pg/pg v8.0.6+incompatible
+	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
@@ -39,7 +40,6 @@ require (
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lixd/gozxing v0.0.0-20200414031819-d1b00bc5e2d4
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/micro/go-micro/v2 v2.7.1-0.20200520130338-6a661fd08cba
 	github.com/miekg/dns v1.1.29 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible
@@ -79,8 +79,8 @@ require (
 	golang.org/x/tools v0.0.0-20200526224456-8b020aee10d2 // indirect
 	gonum.org/v1/netlib v0.0.0-20200317120129-c5a04cffd98a // indirect
 	gonum.org/v1/plot v0.7.0
-	google.golang.org/genproto v0.0.0-20200521103424-e9a78aa275b7 // indirect
 	google.golang.org/grpc v1.29.1
+	google.golang.org/protobuf v1.24.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	honnef.co/go/tools v0.0.1-2020.1.4 // indirect

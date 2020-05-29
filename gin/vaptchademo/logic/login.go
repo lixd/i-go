@@ -26,6 +26,7 @@ type LoginModel struct {
 // Login 用户登录
 // VAPTCHA 演示二次验证配置逻辑
 func (*vaptchaDemo) Login(c *gin.Context) {
+	fmt.Printf("host:%v url:%v method:%v \n", c.Request.Host, c.Request.URL, c.Request.Method)
 	var req LoginModel
 	if err := c.ShouldBind(&req); err != nil {
 		c.JSON(http.StatusOK, ResCode{
