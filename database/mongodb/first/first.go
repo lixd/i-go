@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"i-go/core/conf"
 	"i-go/core/db/mongodb"
 	"i-go/database/mongodb/model"
 	"i-go/database/mongodb/repository"
@@ -10,7 +11,13 @@ import (
 
 var tdb = mongodb.TestDB
 
+// 5ed46396 1c7490 0ec8 482006
+//
+
 func main() {
+	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	mongodb.Init()
+
 	upsert()
 	//query()
 	aggregate()
@@ -39,6 +46,7 @@ func query() {
 	}
 	fmt.Println(infos)
 }
+
 func aggregate() {
 	infos, err := repository.UserInfo.QueryCount("First")
 	if err != nil {

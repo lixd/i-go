@@ -44,7 +44,6 @@ func (ui *userInfo) Upsert(req *model.UserInfoReq) (string, error) {
 
 	update := bson.M{
 		"$setOnInsert": bson.M{"CreateTime": time.Now().Unix()},
-		//"$setOnInsert": setOnInsert,
 		"$set": bson.M{
 			"UserName":   req.UserName,
 			"Password":   req.Password,
