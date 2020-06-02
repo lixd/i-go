@@ -1,4 +1,4 @@
-package linkedlist
+package main
 
 /*
 面试题 02.04. 分割链表

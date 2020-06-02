@@ -22,6 +22,11 @@ func main() {
 	s := "acv"
 	fmt.Println(canPermutePalindrome(s))
 }
+
+/*
+回文串中出现次数为奇数的字符只能有一个
+如果出现2个及以上 就不可能是回文串
+*/
 func canPermutePalindrome(s string) bool {
 	var (
 		m     = make(map[byte]int)

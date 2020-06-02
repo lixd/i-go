@@ -1,4 +1,4 @@
-package linkedlist
+package main
 
 func main() {
 
