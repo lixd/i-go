@@ -12,6 +12,7 @@ type ResCode struct {
 	Data interface{} `json:"data"`
 	Msg  string      `json:"msg"`
 }
+
 type vaptchaDemo struct {
 }
 
@@ -51,7 +52,6 @@ func (*vaptchaDemo) Login(c *gin.Context) {
 	verify := v.Verify(req.Token, c.ClientIP())
 	if verify.Success == vaptchasdk.VerifySuccess {
 		// 二次验证成功了 再去执行真正的登录逻辑
-		// 无效请求虽然也会对服务器增加压力 但是由于不会通过二次验证 所以并不需要真正执行业务逻辑 不会消耗服务器太多资源
 		login := doLogin(req.UserName, req.Password)
 		c.JSON(http.StatusOK, ResCode{
 			Code: http.StatusOK,
@@ -60,7 +60,11 @@ func (*vaptchaDemo) Login(c *gin.Context) {
 		})
 		return
 	}
-	c.Data(http.StatusOK, "application/json", []byte(""))
+	c.JSON(http.StatusOK, ResCode{
+		Code: http.StatusOK,
+		Data: verify,
+		Msg:  "登录失败",
+	})
 }
 
 // doLogin 真正的登录逻辑

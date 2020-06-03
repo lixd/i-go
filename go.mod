@@ -70,7 +70,7 @@ require (
 	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.0.4
 	go.uber.org/zap v1.15.0
-	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
+	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
