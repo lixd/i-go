@@ -1,4 +1,4 @@
-package zap
+package izap
 
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
@@ -77,7 +77,7 @@ func getWriter(logPath string) io.Writer {
 	fullLogPath := strings.Replace(logPath, ".log", "", -1) + "-%Y-%m-%d-%H.log"
 	writer, err := rotatelogs.New(
 		fullLogPath,
-		rotatelogs.WithLinkName(fullLogPath), // 生成软链,指向最新日志文件
+		rotatelogs.WithLinkName(logPath+"latest.log"), // 生成软链,指向最新日志文件
 		// WithMaxAge和WithRotationCount 只能同时指定一个 否则会panic
 		rotatelogs.WithMaxAge(time.Hour*24*7), // 日志最大保存时间
 		// rotatelogs.WithRotationCount(10),       // 日志文件最大保存数

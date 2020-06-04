@@ -37,3 +37,8 @@ GET http://{{host}}{{baseUrl}}order/list?page=1&size=20
 Content-Type: application/json
 
 ### xxx
+### 列表查询订单
+GET http://{{host}}{{baseUrl}}order/all
+Content-Type: application/json
+
+### xxx

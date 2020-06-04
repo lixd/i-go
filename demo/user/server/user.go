@@ -37,7 +37,8 @@ func (u *user) Insert(req *dto.UserReq) *ret.Result {
 		RegisterIP: req.RegisterIP,
 		LoginIP:    req.LoginIP,
 	}
-	err := u.Dao.Insert(&user)
+	//err := u.Dao.Insert(&user)
+	err := u.Dao.InsertCustom(&user)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "新增用户"}).Error(err)
 		return ret.Fail("", "db error")
@@ -86,7 +87,7 @@ func (u *user) FindById(req *dto.UserReq) *ret.Result {
 	return ret.Success(&user)
 }
 
-func (u *user) Find(req *dto.PageModel) *ret.Result {
+func (u *user) Find(req *cmodel.PageModel) *ret.Result {
 	res, err := u.Dao.Find(req)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
