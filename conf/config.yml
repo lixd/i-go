@@ -1,4 +1,4 @@
-logPath: "/var/log/x/"
+logPath: "D:/lillusory/projects/i-go"
 redis:
   addr: "123.57.236.125:6379"
   password: "123456"

@@ -17,7 +17,6 @@ func RegisterRouter(e *gin.Engine) {
 	baseURL := e.Group("/api/v1")
 	user := baseURL.Group("/user")
 	userController := controller.NewUser(server.NewUser(repository.NewUser(mysqldb.MySQL)))
-	baseURL.POST("/post", userController.Test)
 	// 用户
 	{
 		user.PUT("", userController.Insert)

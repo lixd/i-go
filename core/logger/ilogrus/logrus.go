@@ -1,4 +1,4 @@
-package logrus
+package ilogrus
 
 import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
@@ -45,12 +45,12 @@ func InitLogger(path ...string) {
 func newLfsHook(logPath string, maxAge time.Duration, rotationTime time.Duration, formatter logrus.Formatter) logrus.Hook {
 	// 不同等级日志分别配置切割参数
 	infoWriter, err := rotatelogs.New(
-		logPath+"/info_%Y-%m-%d-%hh.log",
+		logPath+"/info_%Y-%m-%d-%H.log",
 		rotatelogs.WithMaxAge(maxAge),             // 文件最大保存时间
 		rotatelogs.WithRotationTime(rotationTime), // 日志切割时间间隔
 	)
 	errWriter, err := rotatelogs.New(
-		logPath+"/error_%Y-%m-%d-%hh.log",
+		logPath+"/error_%Y-%m-%d-%H.log",
 		rotatelogs.WithMaxAge(maxAge),             // 文件最大保存时间
 		rotatelogs.WithRotationTime(rotationTime), // 日志切割时间间隔
 	)

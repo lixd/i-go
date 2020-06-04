@@ -11,7 +11,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-var MySQL *gorm.DB
+var (
+	MySQL *gorm.DB
+)
 
 type mysqlConf struct {
 	Username        string `json:"username"`
@@ -30,6 +32,7 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+
 	MySQL, err = newConn(c)
 	if err != nil {
 		panic(err)
@@ -37,10 +40,12 @@ func Init() {
 
 	// 启用Logger，显示详细日志
 	MySQL.LogMode(true)
-	// 修改默认表名 统一增加前缀
-	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
-		return c.TableNamePrefix + defaultTableName
-	}
+
+	/*	// 修改默认表名 统一增加前缀
+		gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+			return c.TableNamePrefix + defaultTableName
+		}*/
+
 }
 
 func parseConf() (*mysqlConf, error) {

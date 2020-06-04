@@ -5,9 +5,9 @@ PUT http://{{host}}{{baseUrl}}/user
 Content-Type: application/json
 
 {
-  "name": "second",
+  "name": "secodn",
   "age": 23,
-  "pwd": "654321"
+  "pwd": "123456"
 }
 
 ### 删除用户
@@ -23,13 +23,13 @@ POST http://{{host}}{{baseUrl}}user
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 8,
   "name": "first-new",
   "pwd": "123456"
 }
 
 ### 查询用户
-GET http://{{host}}{{baseUrl}}user?id=2
+GET http://{{host}}{{baseUrl}}user?id=9
 Content-Type: application/json
 
 

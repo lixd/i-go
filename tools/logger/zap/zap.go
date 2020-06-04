@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	LoggerZ *zap.SugaredLogger
+	Logger *zap.SugaredLogger
 )
 
 const (
@@ -56,18 +56,17 @@ func InitLogger(path ...string) {
 	)
 	// 传入 zap.AddCaller()显示打日志点的文件名和行数
 	logger := zap.New(core, zap.AddCaller())
-	LoggerZ = logger.Sugar()
+	Logger = logger.Sugar()
 }
 
 func getEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
 	// ISO8601 UTC 时间格式
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	// ISO8601 UTC 时间格式
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	return zapcore.NewJSONEncoder(encoderConfig)
 	// 可选普通Encoder
-	// return zapcore.NewConsoleEncoder(encoderConfig)
+	//return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
 // getWriter 传入日志文件存储地址 返回一个writer
@@ -77,7 +76,7 @@ func getWriter(logPath string) io.Writer {
 	fullLogPath := strings.Replace(logPath, ".log", "", -1) + "-%Y-%m-%d-%H.log"
 	writer, err := rotatelogs.New(
 		fullLogPath,
-		rotatelogs.WithLinkName(fullLogPath), // 生成软链,指向最新日志文件
+		rotatelogs.WithLinkName(logPath+"latest.log"), // 生成软链,指向最新日志文件
 		// WithMaxAge和WithRotationCount 只能同时指定一个 否则会panic
 		rotatelogs.WithMaxAge(time.Hour*24*7), // 日志最大保存时间
 		// rotatelogs.WithRotationCount(10),       // 日志文件最大保存数
