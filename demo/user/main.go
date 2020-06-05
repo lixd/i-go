@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
+	"i-go/core/logger/ilogrus"
 	"i-go/demo/user/model"
 	"i-go/demo/user/router"
 )

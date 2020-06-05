@@ -6,6 +6,7 @@ import (
 	"i-go/demo/account/dto"
 	"i-go/demo/account/model"
 	"i-go/demo/cmodel"
+	umodel "i-go/demo/user/model"
 )
 
 type IAccount interface {
@@ -29,24 +30,17 @@ func (a *account) Insert(req *model.Account) error {
 	return a.DB.Transaction(func(tx *gorm.DB) error {
 
 		// 检查金额
-		var account model.Account
-		cmd := tx.Where("user_id = ?", req.UserId).Find(&account)
-		if err := cmd.Error; err != nil && err != gorm.ErrRecordNotFound {
-			return err
-		}
-		if account.Amount < req.Amount {
-			return errors.New("账户金额不足")
-		}
-
-		// 增加订单
-		if err := tx.Create(req).Error; err != nil {
-			return err
-		}
-
-		// 扣除金额
-		cmd = tx.Model(model.Account{}).Where("user_id = ?", req.UserId).
-			Update("amount", gorm.Expr("amount - ?", req.Amount))
+		var user umodel.User
+		cmd := tx.Where("user_id = ?", req.UserId).Find(&user)
 		if err := cmd.Error; err != nil {
+			if err == gorm.ErrRecordNotFound {
+				return errors.New("用户不存在")
+			}
+			return err
+		}
+
+		// 创建账户
+		if err := tx.Create(req).Error; err != nil {
 			return err
 		}
 

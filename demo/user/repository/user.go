@@ -11,7 +11,6 @@ import (
 
 type IUser interface {
 	Insert(req *model.User) error
-	InsertCustom(req *model.User) error
 	DeleteById(id uint) error
 	UpdateById(req *model.User) error
 	FindById(id uint) (*model.User, error)
@@ -26,7 +25,7 @@ func NewUser(db *gorm.DB) IUser {
 	return &user{DB: db}
 }
 
-// Insert
+// Insert 自动处理事务
 func (u *user) Insert(req *model.User) error {
 	return u.DB.Transaction(func(tx *gorm.DB) error {
 		// 1.创建 用户
@@ -54,7 +53,7 @@ func (u *user) Insert(req *model.User) error {
 	})
 }
 
-// Insert
+// InsertCustom 手动处理事务
 func (u *user) InsertCustom(req *model.User) error {
 	tx := u.DB.Begin()
 	var err error
@@ -74,6 +73,7 @@ func (u *user) InsertCustom(req *model.User) error {
 		tx.Rollback()
 		return err
 	}
+
 	user, ok := cmd.Value.(*model.User)
 	if !ok {
 		fmt.Println("断言失败: ", cmd.Value)
