@@ -14,7 +14,7 @@ require (
 	github.com/coreos/etcd v3.3.22+incompatible
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
-	github.com/eclipse/paho.mqtt.golang v1.2.0
+	github.com/eclipse/paho.mqtt.golang v1.2.0 // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
@@ -38,6 +38,7 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
+	github.com/lixd/gotbk v0.0.0-20200609091234-a5db564dc744
 	github.com/lixd/gozxing v0.0.0-20200414031819-d1b00bc5e2d4
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/micro/go-micro/v2 v2.7.1-0.20200520130338-6a661fd08cba
@@ -47,6 +48,7 @@ require (
 	github.com/nats-io/nats.go v1.10.0
 	github.com/nats-io/stan.go v0.6.0
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/nilorg/go-opentaobao v0.0.0-20200504080456-93067397da1c // indirect
 	github.com/olivere/elastic v6.2.29+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/common v0.7.0
@@ -67,7 +69,7 @@ require (
 	github.com/willf/bloom v2.0.3+incompatible
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
-	github.com/zserge/webview v0.0.0-20200516134046-4caf698fad53
+	github.com/zserge/webview v0.0.0-20200516134046-4caf698fad53 // indirect
 	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.0.4
 	go.uber.org/zap v1.15.0
