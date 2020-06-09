@@ -3,10 +3,9 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
-	"i-go/core/db/mysqldb"
 	"i-go/core/logger/ilogrus"
-	"i-go/demo/user/model"
-	"i-go/demo/user/router"
+	"i-go/core/tbk"
+	"i-go/demo/tbk/router"
 )
 
 func main() {
@@ -26,8 +25,9 @@ func main() {
 */
 func Init() {
 	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
-	mysqldb.Init()
-	mysqldb.MySQL.AutoMigrate(&model.User{})
-
+	_, err := tbk.ParseConf()
+	if err != nil {
+		panic(err)
+	}
 	ilogrus.InitLogger()
 }

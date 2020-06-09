@@ -56,3 +56,10 @@ etcd:
   certFile: ""
   keyFile: ""
   trustedCAFile: ""
+
+tbk:
+  appKey: ""
+  appSecret: ""
+  router: "http://gw.api.taobao.com/router/rest"
+  session: ""
+  timeout: "3s"

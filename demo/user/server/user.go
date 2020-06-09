@@ -37,8 +37,8 @@ func (u *user) Insert(req *dto.UserReq) *ret.Result {
 		RegisterIP: req.RegisterIP,
 		LoginIP:    req.LoginIP,
 	}
-	//err := u.Dao.Insert(&user)
-	err := u.Dao.InsertCustom(&user)
+	err := u.Dao.Insert(&user)
+	//err := u.Dao.InsertCustom(&user)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "新增用户"}).Error(err)
 		return ret.Fail("", "db error")

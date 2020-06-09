@@ -22,7 +22,7 @@ POST http://{{host}}{{baseUrl}}account
 Content-Type: application/json
 
 {
-  "userId": 8,
+  "userId": 9,
   "amount": 12.345
 }
 
