@@ -12,8 +12,52 @@ func t() {
 }
 
 func main() {
-	t()
+	//t()
 	//simple()
+
+	//timeA()
+	//timeB()
+	timeC()
+	//timeD()
+}
+
+func timeA() {
+	// ticker 会多次触发
+	ticker := time.NewTicker(time.Second * 1)
+	for {
+		<-ticker.C
+		fmt.Println(time.Now().Unix())
+	}
+}
+func timeB() {
+	// timer 则只会触发一次
+	timer := time.NewTimer(time.Second * 1)
+	for {
+		<-timer.C
+		fmt.Println(time.Now().Unix())
+	}
+}
+
+func timeC() {
+	// time.After 内部也是调用的 NewTimer()
+	for {
+		select {
+		case <-time.After(time.Second * 1):
+			fmt.Println(time.Now().Unix())
+		}
+	}
+}
+
+func timeD() {
+	// AfterFunc 则可以指定触发后执行的动作 f()
+	for {
+		select {
+		case <-time.AfterFunc(time.Second*1, func() {
+			fmt.Println(time.Now().Unix())
+		}).C:
+
+		}
+	}
 }
 
 func simple() {

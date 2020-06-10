@@ -32,7 +32,7 @@ func main() {
 			wg.Done()
 		}()
 	}
-	wg.Wait() // 等待是有协程运行完成
+	wg.Wait()
 }
 
 /*
