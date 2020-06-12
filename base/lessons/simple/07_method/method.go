@@ -16,7 +16,7 @@ type Person struct {
 	Age  int
 }
 
-//给Personm绑定一个方法
+//给Person绑定一个方法
 func (p Person) run() {
 	fmt.Printf("%s running....\n", p.Name)
 }
