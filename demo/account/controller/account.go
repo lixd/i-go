@@ -7,13 +7,14 @@ import (
 	"i-go/demo/cmodel"
 	"i-go/demo/ret"
 	"net/http"
+	"strconv"
 )
 
 type IAccount interface {
 	Insert(c *gin.Context)
-	Delete(c *gin.Context)
+	DeleteByUserId(c *gin.Context)
 	Update(c *gin.Context)
-	Find(c *gin.Context)
+	FindByUserId(c *gin.Context)
 	FindList(c *gin.Context)
 }
 
@@ -27,7 +28,7 @@ func NewAccount(ser server.IAccount) IAccount {
 
 // Insert
 func (a *account) Insert(c *gin.Context) {
-	var m dto.AccountReq
+	var m dto.AccountInsertReq
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
@@ -37,13 +38,13 @@ func (a *account) Insert(c *gin.Context) {
 }
 
 // Delete
-func (a *account) Delete(c *gin.Context) {
+func (a *account) DeleteByUserId(c *gin.Context) {
 	var m dto.AccountReq
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	result := a.Server.DeleteByUserId(&m)
+	result := a.Server.DeleteByUserId(m.UserID)
 	c.JSON(http.StatusOK, result)
 }
 
@@ -54,18 +55,20 @@ func (a *account) Update(c *gin.Context) {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	result := a.Server.UpdateById(&m)
+	result := a.Server.Update(&m)
 	c.JSON(http.StatusOK, result)
 }
 
-// Find
-func (a *account) Find(c *gin.Context) {
-	var m dto.AccountReq
-	if err := c.ShouldBindQuery(&m); err != nil {
+// FindByUserId
+func (a *account) FindByUserId(c *gin.Context) {
+	strUserId := c.Param("userId")
+	userId, err := strconv.Atoi(strUserId)
+	if err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	res := a.Server.FindByUserId(&m)
+
+	res := a.Server.FindByUserId(uint(userId))
 	c.JSON(http.StatusOK, res)
 }
 
@@ -76,6 +79,6 @@ func (a *account) FindList(c *gin.Context) {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	res := a.Server.Find(&m)
+	res := a.Server.FindList(&m)
 	c.JSON(http.StatusOK, res)
 }

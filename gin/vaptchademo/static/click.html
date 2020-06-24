@@ -59,11 +59,14 @@
 </div>
 
 <script src="https://v.vaptcha.net/test/v3.js"></script>
-<!--
 <script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
--->
+<!--
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+-->
 <script>
+    let lang = navigator.language || navigator.userLanguage;//获取浏览器默认语言。
+    console.log('lang: ',lang);
+
     vaptcha({
         vid: '5dba48a598bb11d350b45728', // 必填
         type: 'click', // 必填 显示类型 点击式
@@ -72,7 +75,7 @@
         // mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
         scene: 0, //不填默认为0
         //可选参数
-        //lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
+        lang: 'auto', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
         //https: false, // 使用https 默认false
         style: 'light' //按钮样式 默认dark，可选值 dark,light
         //color: '#57ABFF' //按钮颜色 默认值#57ABFF

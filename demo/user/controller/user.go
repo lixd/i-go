@@ -7,6 +7,7 @@ import (
 	"i-go/demo/user/dto"
 	"i-go/demo/user/server"
 	"net/http"
+	"strconv"
 )
 
 type IUser interface {
@@ -62,12 +63,18 @@ func (u *user) Update(c *gin.Context) {
 
 // Find
 func (u *user) Find(c *gin.Context) {
-	var m dto.UserReq
-	if err := c.ShouldBindQuery(&m); err != nil {
+	strId := c.Param("id")
+	id, err := strconv.Atoi(strId)
+	if err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	res := u.Server.FindById(&m)
+	/*	var m dto.UserReq
+		if err := c.ShouldBindQuery(&m); err != nil {
+			c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+			return
+		}*/
+	res := u.Server.FindById(id)
 	c.JSON(http.StatusOK, res)
 }
 

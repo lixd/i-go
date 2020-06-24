@@ -15,14 +15,14 @@ func RegisterRouter(e *gin.Engine) {
 	})
 
 	baseURL := e.Group("/api/v1")
-	account := baseURL.Group("/account")
+	account := baseURL.Group("/accounts")
 	accountController := controller.NewAccount(server.NewAccount(repository.NewAccount(mysqldb.MySQL)))
 	// 订单
 	{
-		account.PUT("", accountController.Insert)
-		account.DELETE("", accountController.Delete)
-		account.POST("", accountController.Update)
-		account.GET("", accountController.Find)
-		account.GET("/list", accountController.FindList)
+		account.POST("", accountController.Insert)
+		account.DELETE("", accountController.DeleteByUserId)
+		account.PUT("", accountController.Update)
+		account.GET("/:userId", accountController.FindByUserId)
+		account.GET("", accountController.FindList)
 	}
 }

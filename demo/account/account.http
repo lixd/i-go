@@ -1,7 +1,7 @@
 ### 简单使用教程 https://www.freesion.com/article/7155384974/
 
 ### 新建账户
-PUT http://{{host}}{{baseUrl}}/account
+POST http://{{host}}{{baseUrl}}/accounts
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### 删除账户
-DELETE http://{{host}}{{baseUrl}}account
+DELETE http://{{host}}{{baseUrl}}accounts
 Content-Type: application/json
 
 {
@@ -18,21 +18,21 @@ Content-Type: application/json
 }
 
 ### 更新账户
-POST http://{{host}}{{baseUrl}}account
+PUT http://{{host}}{{baseUrl}}accounts
 Content-Type: application/json
 
 {
-  "userId": 9,
-  "amount": 12.345
+  "userId": 8,
+  "amount": 12.3456
 }
 
 ### 查询账户
-GET http://{{host}}{{baseUrl}}account?userId=8
+GET http://{{host}}{{baseUrl}}accounts/8
 Content-Type: application/json
 
 
 ### 列表查询账户
-GET http://{{host}}{{baseUrl}}account/list?page=1&size=20
+GET http://{{host}}{{baseUrl}}accounts?page=1&size=20
 Content-Type: application/json
 
 ###

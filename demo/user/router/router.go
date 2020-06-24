@@ -22,7 +22,7 @@ func RegisterRouter(e *gin.Engine) {
 		user.PUT("", userController.Insert)
 		user.DELETE("", userController.Delete)
 		user.POST("", userController.Update)
-		user.GET("", userController.Find)
+		user.GET("/:id", userController.Find)
 		user.GET("/list", userController.FindList)
 	}
 }

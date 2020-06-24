@@ -15,7 +15,7 @@ type IUser interface {
 	Insert(req *dto.UserReq) *ret.Result
 	DeleteById(req *dto.UserReq) *ret.Result
 	UpdateById(req *dto.UserReq) *ret.Result
-	FindById(req *dto.UserReq) *ret.Result
+	FindById(id int) *ret.Result
 	Find(req *cmodel.PageModel) *ret.Result
 }
 
@@ -71,8 +71,8 @@ func (u *user) UpdateById(req *dto.UserReq) *ret.Result {
 	return ret.Success("")
 }
 
-func (u *user) FindById(req *dto.UserReq) *ret.Result {
-	res, err := u.Dao.FindById(req.ID)
+func (u *user) FindById(id int) *ret.Result {
+	res, err := u.Dao.FindById(uint(id))
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
 		return ret.Fail("", "db error")
@@ -80,7 +80,7 @@ func (u *user) FindById(req *dto.UserReq) *ret.Result {
 	user := dto.UserResp{
 		ID:    res.ID,
 		Name:  res.Name,
-		Phone: req.Phone,
+		Phone: res.Phone,
 		Pwd:   res.Pwd,
 		Age:   res.Age,
 	}
