@@ -15,14 +15,14 @@ func RegisterRouter(e *gin.Engine) {
 	})
 
 	baseURL := e.Group("/api/v1")
-	user := baseURL.Group("/user")
+	user := baseURL.Group("/users")
 	userController := controller.NewUser(server.NewUser(repository.NewUser(mysqldb.MySQL)))
 	// 用户
 	{
-		user.PUT("", userController.Insert)
+		user.POST("", userController.Insert)
 		user.DELETE("", userController.Delete)
-		user.POST("", userController.Update)
+		user.PUT("", userController.Update)
+		user.GET("/:id", userController.FindById)
 		user.GET("", userController.Find)
-		user.GET("/list", userController.FindList)
 	}
 }

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
+	"i-go/utils"
 	"strconv"
 	"strings"
 	"unicode/utf8"
@@ -11,6 +13,41 @@ var str string = "illusory cloud 幻境云图"
 
 // 字符串
 func main() {
+	//stringB()
+	//forRange()
+	reader()
+}
+
+func reader() {
+	r := strings.NewReader(str)
+	fmt.Printf("len:%v size:%v \n", r.Len(), r.Size())
+	b := make([]byte, 8)
+	n, err := r.Read(b)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller()}).Error(err)
+	}
+	fmt.Printf("readCount:%v str:%v \n", n, string(b))
+	// 读取后 len 变了 说明 len 返回的是未读取的长度
+	fmt.Printf("len:%v size:%v \n", r.Len(), r.Size())
+
+}
+
+func stringB() {
+	str := "Go爱好者"
+	fmt.Printf("The string: %q\n", str)
+	fmt.Printf("  => runes(char): %q\n", []rune(str))
+	fmt.Printf("  => runes(hex): %x\n", []rune(str))
+	fmt.Printf("  => bytes(hex): [% x]\n", []byte(str))
+}
+
+func forRange() {
+	str := "Go爱好者"
+	for i, c := range str {
+		fmt.Printf("%d: %q [% x]\n", i, c, []byte(string(c)))
+	}
+}
+
+func stringA() {
 	// 1.len
 	fmt.Printf("字符串长度 len(str)：%d \n", len(str))
 	fmt.Printf("字符串个数 ：%d \n", utf8.RuneCountInString(str))
@@ -84,5 +121,4 @@ func main() {
 	// 21.判断字符串是否以指定的字符串结束
 	suffix := strings.HasSuffix("hello go", "go")
 	fmt.Printf("hello go 是否以go结束 %t \n", suffix)
-
 }

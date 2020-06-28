@@ -16,10 +16,10 @@ type User struct {
   Name string
 }
 
-// `Profile` 属于 `User`， 外键是`UserID`
+// `Profile` 属于 `User`， 外键是`UserId`
 type Profile struct {
   gorm.Model
-  UserID int
+  UserId int
   User   User
   Name   string
 }

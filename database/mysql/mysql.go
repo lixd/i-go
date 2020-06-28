@@ -67,7 +67,7 @@ func softDelete() {
 	mysqlDB.Find(&sfs)
 	fmt.Println("普通查询", sfs)
 	// 软删除
-	mysqlDB.Where("ID = ?", 3).Delete(SoftDelete{})
+	mysqlDB.Where("Id = ?", 3).Delete(SoftDelete{})
 	// 普通查询
 	mysqlDB.Find(&sfs)
 	fmt.Println("普通查询2", sfs)
@@ -76,7 +76,7 @@ func softDelete() {
 	fmt.Println("Unscoped", sfs)
 
 	// 	物理删除
-	mysqlDB.Where("ID = ?", 3).Unscoped().Delete(SoftDelete{})
+	mysqlDB.Where("Id = ?", 3).Unscoped().Delete(SoftDelete{})
 	// 再次查询 真的删掉了
 	mysqlDB.Unscoped().Find(&sfs)
 	fmt.Println("Delete Unscoped", sfs)
@@ -115,16 +115,16 @@ func Update() {
 	// 	update
 	var a1 = Animal{Age: 1, Name: "NewNameByUpdate"}
 	// where条件必须写在update前面
-	// mysqlDB.Model(&a1).Where("ID=?", 12).Update("name", "2NewNameByUpdate")
+	// mysqlDB.Model(&a1).Where("Id=?", 12).Update("name", "2NewNameByUpdate")
 
 	// struct或map更新多个字段 当使用 struct 更新时，GORM只会更新那些非零值的字段
-	// mysqlDB.Model(&a1).Where("ID=?", 12).Updates(Animal{Age: 1, Name: "xxx"})
+	// mysqlDB.Model(&a1).Where("Id=?", 12).Updates(Animal{Age: 1, Name: "xxx"})
 
 	// Select或Omit 指定需要更新的字段
 	// 只会更新age
-	mysqlDB.Model(&a1).Where("ID=?", 12).Select("age").Updates(map[string]interface{}{"age": 3, "name": "zzz"})
+	mysqlDB.Model(&a1).Where("Id=?", 12).Select("age").Updates(map[string]interface{}{"age": 3, "name": "zzz"})
 	// 除了age都更新(只会更新updates中指定了的)
-	mysqlDB.Model(&a1).Where("ID=?", 12).Omit("age").Updates(map[string]interface{}{"age": 3, "name": "ccc"})
+	mysqlDB.Model(&a1).Where("Id=?", 12).Omit("age").Updates(map[string]interface{}{"age": 3, "name": "ccc"})
 
 }
 
@@ -134,15 +134,15 @@ func Create() {
 	var animal = Animal{Age: id}
 	mysqlDB.Create(&animal)
 	// INSERT INTO animals("age") values('99');
-	// SELECT name from animals WHERE ID=111; // 返回主键为 111
+	// SELECT name from animals WHERE Id=111; // 返回主键为 111
 	// animal.Name => 'galeone'
 	out := &Animal{}
 	outs := make([]Animal, 0)
-	// mysqlDB.Find(out, "ID= ? ", id, )
-	// mysqlDB.Where("ID= ? ", id).Find(out)
-	mysqlDB.Where("ID!= ? ", id).Or("ID!= ? ", 1).Find(&outs)
+	// mysqlDB.Find(out, "Id= ? ", id, )
+	// mysqlDB.Where("Id= ? ", id).Find(out)
+	mysqlDB.Where("Id!= ? ", id).Or("Id!= ? ", 1).Find(&outs)
 	mysqlDB.Where("age = ? ", id).Attrs(animal).FirstOrCreate(&animal)
-	// mysqlDB.Not("ID= ? ", id).Find(&outs)
+	// mysqlDB.Not("Id= ? ", id).Find(&outs)
 	fmt.Println("name: ", out.Name)
 	fmt.Println(outs)
 }

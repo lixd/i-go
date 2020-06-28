@@ -9,7 +9,7 @@ func main() {
 	g := gin.Default()
 	gin.SetMode(gin.ReleaseMode)
 	router.RegisterRoutes(g)
-	if err := g.Run(":8081"); err != nil {
+	if err := g.Run(":8080"); err != nil {
 		panic(err)
 	}
 }

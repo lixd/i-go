@@ -13,11 +13,11 @@ import (
 )
 
 type IAccount interface {
-	Insert(req *dto.AccountReq) *ret.Result
-	DeleteByUserId(req *dto.AccountReq) *ret.Result
-	UpdateById(req *dto.AccountReq) *ret.Result
-	FindByUserId(req *dto.AccountReq) *ret.Result
-	Find(req *cmodel.PageModel) *ret.Result
+	Insert(req *dto.AccountInsertReq) *ret.Result
+	DeleteByUserId(userId uint) *ret.Result
+	Update(req *dto.AccountReq) *ret.Result
+	FindByUserId(userId uint) *ret.Result
+	FindList(req *cmodel.Page) *ret.Result
 }
 
 type account struct {
@@ -28,22 +28,29 @@ func NewAccount(dao repository.IAccount) IAccount {
 	return &account{Dao: dao}
 }
 
-func (a *account) Insert(req *dto.AccountReq) *ret.Result {
-	user := model.Account{
-		Model:  gorm.Model{ID: req.ID},
-		UserId: uint(1),
-		Amount: 12.11,
+// Insert
+func (a *account) Insert(req *dto.AccountInsertReq) *ret.Result {
+	account := model.Account{
+		Model:  gorm.Model{ID: req.Id},
+		UserId: req.UserId,
+		Amount: req.Amount,
 	}
-	err := a.Dao.Insert(&user)
+	err := a.Dao.Insert(&account)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "新增用户"}).Error(err)
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "create account"}).Error(err)
 		return ret.Fail("", "db error")
 	}
-	return ret.Success("")
+	// response the item which created by request
+	res := dto.AccountResp{
+		Id:     req.Id,
+		UserId: req.UserId,
+		Amount: req.Amount,
+	}
+	return ret.Success(&res)
 }
 
-func (a *account) DeleteByUserId(req *dto.AccountReq) *ret.Result {
-	err := a.Dao.DeleteByUserId(req.UserID)
+func (a *account) DeleteByUserId(userId uint) *ret.Result {
+	err := a.Dao.DeleteByUserId(userId)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "删除用户"}).Error(err)
 		return ret.Fail("", "db error")
@@ -51,49 +58,61 @@ func (a *account) DeleteByUserId(req *dto.AccountReq) *ret.Result {
 	return ret.Success("")
 }
 
-func (a *account) UpdateById(req *dto.AccountReq) *ret.Result {
-	user := model.Account{
-		Model:  gorm.Model{ID: req.ID},
-		UserId: req.UserID,
+func (a *account) Update(req *dto.AccountReq) *ret.Result {
+	account := model.Account{
+		Model:  gorm.Model{ID: req.Id},
+		UserId: req.UserId,
 		Amount: req.Amount,
 	}
-	err := a.Dao.UpdateByUserId(&user)
+	err := a.Dao.Update(&account)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
-	}
-	return ret.Success("")
-}
-
-func (a *account) Find(req *cmodel.PageModel) *ret.Result {
-	res, err := a.Dao.Find(req)
-	if err != nil {
-		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
-	}
-	users := make([]dto.AccountResp, 0, len(res))
-	var user dto.AccountResp
-	for _, v := range res {
-		user = dto.AccountResp{
-			ID:     v.ID,
-			UserID: v.UserId,
-			Amount: v.Amount,
+		if err == gorm.ErrRecordNotFound {
+			return ret.Fail(err.Error())
 		}
-		users = append(users, user)
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新账户"}).Error(err)
+		return ret.Fail("")
 	}
-	return ret.Success(&users)
+	res := dto.AccountResp{
+		Id:     req.Id,
+		UserId: req.UserId,
+		Amount: req.Amount,
+	}
+	return ret.Success(&res)
 }
 
-func (a *account) FindByUserId(req *dto.AccountReq) *ret.Result {
-	res, err := a.Dao.FindByUserId(req)
+func (a *account) FindByUserId(userId uint) *ret.Result {
+	res, err := a.Dao.FindByUserId(userId)
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller()}).Error(err)
 		return ret.Fail("", "db error")
 	}
 	account := dto.AccountResp{
-		ID:     res.ID,
-		UserID: res.UserId,
+		Id:     res.ID,
+		UserId: res.UserId,
 		Amount: res.Amount,
 	}
 	return ret.Success(&account)
+}
+
+func (a *account) FindList(req *cmodel.Page) *ret.Result {
+	var resp dto.AccountList
+
+	res, err := a.Dao.FindList(req)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
+		return ret.Fail("", "db error")
+	}
+	accounts := make([]dto.AccountResp, 0, len(res))
+	var account dto.AccountResp
+	for _, v := range res {
+		account = dto.AccountResp{
+			Id:     v.ID,
+			UserId: v.UserId,
+			Amount: v.Amount,
+		}
+		accounts = append(accounts, account)
+	}
+	resp.Data = accounts
+	resp.Page = *req
+	return ret.Success(&resp)
 }

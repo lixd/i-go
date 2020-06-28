@@ -15,14 +15,14 @@ func RegisterRouter(e *gin.Engine) {
 	})
 
 	baseURL := e.Group("/api/v1")
-	order := baseURL.Group("/order")
+	order := baseURL.Group("/orders")
 	orderController := controller.NewOrder(server.NewOrder(repository.NewOrder(mysqldb.MySQL)))
 	// 订单
 	{
-		order.PUT("", orderController.Insert)
+		order.POST("", orderController.Insert)
 		order.DELETE("", orderController.Delete)
-		order.POST("", orderController.Update)
+		order.PUT("", orderController.Update)
+		order.GET("/:id", orderController.FindById)
 		order.GET("", orderController.Find)
-		order.GET("/list", orderController.FindList)
 	}
 }

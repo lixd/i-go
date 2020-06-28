@@ -7,14 +7,15 @@ import (
 	"i-go/demo/user/dto"
 	"i-go/demo/user/server"
 	"net/http"
+	"strconv"
 )
 
 type IUser interface {
 	Insert(c *gin.Context)
 	Delete(c *gin.Context)
 	Update(c *gin.Context)
+	FindById(c *gin.Context)
 	Find(c *gin.Context)
-	FindList(c *gin.Context)
 }
 
 type user struct {
@@ -61,19 +62,20 @@ func (u *user) Update(c *gin.Context) {
 }
 
 // Find
-func (u *user) Find(c *gin.Context) {
-	var m dto.UserReq
-	if err := c.ShouldBindQuery(&m); err != nil {
+func (u *user) FindById(c *gin.Context) {
+	strId := c.Param("id")
+	id, err := strconv.Atoi(strId)
+	if err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	res := u.Server.FindById(&m)
+	res := u.Server.FindById(uint(id))
 	c.JSON(http.StatusOK, res)
 }
 
 // Find
-func (u *user) FindList(c *gin.Context) {
-	var m cmodel.PageModel
+func (u *user) Find(c *gin.Context) {
+	var m cmodel.Page
 	if err := c.ShouldBindQuery(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return

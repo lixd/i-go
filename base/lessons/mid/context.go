@@ -4,39 +4,14 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
-	"sync"
 	"time"
 )
 
 func main() {
-	//TestWaitGroup()
 	//TestChan()
-	//TestWithTimeOut()
 	//TestWithCancel()
 	//TestWithTimeout()
-	TestWithValue()
-}
-
-func TestWithTimeOut() {
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*9)
-	res := 0
-	for i := 0; i < 10; i++ {
-		res = inc(res)
-		select {
-		case <-ctx.Done():
-			fmt.Println("timeout exit")
-			return
-		default:
-		}
-	}
-}
-
-func inc(i int) int {
-	res := i + 1                // 虽然我只做了一次简单的 +1 的运算,
-	time.Sleep(1 * time.Second) // 但是由于我的机器指令集中没有这条指令,
-	// 所以在我执行了 1000000000 条机器指令, 续了 1s 之后, 我才终于得到结果。B)
-	fmt.Printf("res= %d \n", res)
-	return res
+	//TestWithValue()
 }
 
 func TestChan() {
@@ -59,23 +34,6 @@ func TestChan() {
 	time.Sleep(5 * time.Second)
 }
 
-func TestWaitGroup() {
-	// 类似 Java 中的 CyclicBarrier ？
-	var wg sync.WaitGroup
-	wg.Add(2)
-	go func() {
-		time.Sleep(2 * time.Second)
-		fmt.Println("1号完成")
-		wg.Done()
-	}()
-	go func() {
-		time.Sleep(2 * time.Second)
-		fmt.Println("2号完成")
-		wg.Done()
-	}()
-	wg.Wait()
-	fmt.Println("好了，大家都干完了，放工")
-}
 func TestWithCancel() {
 	ctx, cancel := context.WithCancel(context.Background())
 	add := CountAddCancel(ctx)
@@ -132,6 +90,9 @@ func CountAddTimeOut(ctx context.Context) {
 }
 func TestWithValue() {
 	ctx := context.WithValue(context.Background(), "id", "123456")
+	ctxName := context.WithValue(ctx, "name", "17x")
 	id := ctx.Value("id")
-	fmt.Printf("id= %v \n", id)
+	// ctxName 中没有 id 值 所以会往父节点查找 取 ctx 中的 id 值
+	id2 := ctxName.Value("id")
+	fmt.Printf("id= %v id2= %v \n", id, id2)
 }

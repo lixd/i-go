@@ -40,7 +40,7 @@
     </style>
 
 </head>
-<body>
+<body >
 <!-- 点击式按钮建议高度介于36px与46px  -->
 <!-- 嵌入式仅需设置宽度，高度根据宽度自适应，最小宽度为200px -->
 <div id="vaptchaContainer" style="width: 300px;height: 36px;">
@@ -58,9 +58,15 @@
     <button id="btn_reset">重置</button>
 </div>
 
-<script src="https://v.vaptcha.net/v3.js"></script>
+<script src="https://v.vaptcha.net/test/v3.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--
 <script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
+-->
 <script>
+    let lang = navigator.language || navigator.userLanguage;//获取浏览器默认语言。
+    console.log('lang: ',lang);
+
     vaptcha({
         vid: '5dba48a598bb11d350b45728', // 必填
         type: 'click', // 必填 显示类型 点击式
@@ -69,9 +75,9 @@
         // mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
         scene: 0, //不填默认为0
         //可选参数
-        //lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
+        // lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW,auto
         //https: false, // 使用https 默认false
-        //style: 'dark' //按钮样式 默认dark，可选值 dark,light
+        style: 'light' //按钮样式 默认dark，可选值 dark,light
         //color: '#57ABFF' //按钮颜色 默认值#57ABFF
     }).then(function (vaptchaObj) {
         obj = vaptchaObj;//将VAPTCHA验证实例保存到局部变量中
@@ -82,7 +88,7 @@
 
         //获取token的方式二:
         vaptchaObj.listen('pass', function () {
-            // 验证成功进行后续操作
+            /*// 验证成功进行后续操作
             // 登录注册并二次验证
             var data = {
                 //表单数据
@@ -100,7 +106,7 @@
                 } else {
                     alert("二次验证成功")
                 }
-            });
+            });*/
         });
 
         //关闭验证弹窗时触发

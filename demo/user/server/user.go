@@ -15,8 +15,8 @@ type IUser interface {
 	Insert(req *dto.UserReq) *ret.Result
 	DeleteById(req *dto.UserReq) *ret.Result
 	UpdateById(req *dto.UserReq) *ret.Result
-	FindById(req *dto.UserReq) *ret.Result
-	Find(req *cmodel.PageModel) *ret.Result
+	FindById(id uint) *ret.Result
+	Find(req *cmodel.Page) *ret.Result
 }
 
 type user struct {
@@ -65,14 +65,17 @@ func (u *user) UpdateById(req *dto.UserReq) *ret.Result {
 	}
 	err := u.Dao.UpdateById(&user)
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return ret.Fail(err.Error())
+		}
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
 		return ret.Fail("", "db error")
 	}
 	return ret.Success("")
 }
 
-func (u *user) FindById(req *dto.UserReq) *ret.Result {
-	res, err := u.Dao.FindById(req.ID)
+func (u *user) FindById(id uint) *ret.Result {
+	res, err := u.Dao.FindById(id)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
 		return ret.Fail("", "db error")
@@ -80,14 +83,15 @@ func (u *user) FindById(req *dto.UserReq) *ret.Result {
 	user := dto.UserResp{
 		ID:    res.ID,
 		Name:  res.Name,
-		Phone: req.Phone,
+		Phone: res.Phone,
 		Pwd:   res.Pwd,
 		Age:   res.Age,
 	}
 	return ret.Success(&user)
 }
 
-func (u *user) Find(req *cmodel.PageModel) *ret.Result {
+func (u *user) Find(req *cmodel.Page) *ret.Result {
+	var resp dto.UserList
 	res, err := u.Dao.Find(req)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
@@ -105,5 +109,7 @@ func (u *user) Find(req *cmodel.PageModel) *ret.Result {
 		}
 		users = append(users, user)
 	}
-	return ret.Success(&users)
+	resp.Data = users
+	resp.Page = *req
+	return ret.Success(&resp)
 }

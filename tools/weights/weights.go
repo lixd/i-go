@@ -47,6 +47,9 @@ func (w *Weights) Add(data string, weights int) {
 
 // random 根据总权重进行随机
 func (w *Weights) Random() int {
+	if w.AllWeight == 0 {
+		return 1
+	}
 	// 这里需要+1 因为可能会随机到0 如果权重为0肯定是不会被选到的 需要处理一下
 	return w.Rand.Intn(w.AllWeight) + 1
 }

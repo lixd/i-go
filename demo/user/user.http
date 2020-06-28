@@ -1,7 +1,7 @@
 ### 简单使用教程 https://www.freesion.com/article/7155384974/
 
 ### 新建用户
-PUT http://{{host}}{{baseUrl}}/user
+POST http://{{host}}{{baseUrl}}/users
 Content-Type: application/json
 
 {
@@ -11,30 +11,31 @@ Content-Type: application/json
 }
 
 ### 删除用户
-DELETE http://{{host}}{{baseUrl}}user
+DELETE http://{{host}}{{baseUrl}}users
 Content-Type: application/json
 
 {
-  "id": 10
+  "id": 11
 }
 
 ### 更新用户
-POST http://{{host}}{{baseUrl}}user
+PUT http://{{host}}{{baseUrl}}users
 Content-Type: application/json
 
 {
-  "id": 10,
-  "name": "first-new",
+  "id": 8,
+  "name": "first-new2",
+  "phone": "10086",
   "pwd": "123456"
 }
 
 ### 查询用户
-GET http://{{host}}{{baseUrl}}user?id=10
+GET http://{{host}}{{baseUrl}}users/8
 Content-Type: application/json
 
 
 ### 列表查询
-GET http://{{host}}{{baseUrl}}user/list?page=1&size=20
+GET http://{{host}}{{baseUrl}}users?page=1&size=20
 Content-Type: application/json
 
 ### xxx
