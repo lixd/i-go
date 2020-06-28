@@ -3,9 +3,11 @@ package repository
 import (
 	"errors"
 	"github.com/jinzhu/gorm"
+	"github.com/sirupsen/logrus"
 	"i-go/demo/account/model"
 	"i-go/demo/cmodel"
 	umodel "i-go/demo/user/model"
+	"i-go/utils"
 )
 
 type IAccount interface {
@@ -13,7 +15,7 @@ type IAccount interface {
 	DeleteByUserId(userId uint) error
 	Update(req *model.Account) error
 	FindByUserId(userId uint) (model.Account, error)
-	FindList(page *cmodel.PageModel) ([]model.Account, error)
+	FindList(page *cmodel.Page) ([]model.Account, error)
 }
 
 type account struct {
@@ -29,7 +31,7 @@ func (a *account) Insert(req *model.Account) error {
 	return a.DB.Transaction(func(tx *gorm.DB) error {
 		// check user is exist
 		var user umodel.User
-		cmd := tx.Where("user_id = ?", req.UserId).Find(&user)
+		cmd := tx.Model(&user).Where("id = ?", req.UserId).Find(&user)
 		if err := cmd.Error; err != nil {
 			if err == gorm.ErrRecordNotFound {
 				return errors.New("invalid user")
@@ -46,23 +48,31 @@ func (a *account) Insert(req *model.Account) error {
 	})
 }
 
-// Delete
+// DeleteByUserId
 func (a *account) DeleteByUserId(userId uint) error {
-	return a.DB.Delete(model.Account{}, "user_id = ? ", userId).Error
-	//return a.DB.Where("user_id = ? ", userId).Delete(model.Account{}).Error
+	//return a.DB.Delete(model.Account{}, "user_id = ? ", userId).Error
+	return a.DB.Where("user_id = ? ", userId).Delete(model.Account{}).Error
 }
 
-// UpdateById
+// Update
 func (a *account) Update(account *model.Account) error {
-	return a.DB.Model(&model.Account{}).Where("user_id = ? ", account.UserId).
-		Update("amount", account.Amount).Error
+	cmd := a.DB.Model(&model.Account{}).Where("user_id = ? ", account.UserId).
+		Update("amount", account.Amount)
+
+	if err := cmd.Error; err != nil {
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新账户"}).Error(err)
+		return err
+	}
+	if cmd.RowsAffected <= 0 {
+		return gorm.ErrRecordNotFound
+	}
+	return nil
 }
 
 // FindByUserId
 func (a *account) FindByUserId(userId uint) (model.Account, error) {
 	var account model.Account
-	err := a.DB.Model(&model.Account{}).Where("user_id = ?", userId).Find(&account).Error
-
+	err := a.DB.Model(&account).Where("user_id = ?", userId).Find(&account).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return account, nil
@@ -73,9 +83,14 @@ func (a *account) FindByUserId(userId uint) (model.Account, error) {
 }
 
 // FindList
-func (a *account) FindList(page *cmodel.PageModel) ([]model.Account, error) {
+func (a *account) FindList(page *cmodel.Page) ([]model.Account, error) {
 	users := make([]model.Account, 0, page.Size)
-	err := a.DB.Model(&model.Account{}).Offset((page.Page - 1) * page.Size).Limit(page.Size).Find(&users).Error
+	// 查询总记录数并存储到 page 中
+	err := a.DB.Model(&model.Account{}).Count(&page.Total).Error
+	if err != nil {
+		return users, err
+	}
+	err = a.DB.Model(&model.Account{}).Offset(page.Skip()).Limit(page.Size).Find(&users).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return users, nil

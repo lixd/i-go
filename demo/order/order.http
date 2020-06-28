@@ -1,16 +1,16 @@
 ### 简单使用教程 https://www.freesion.com/article/7155384974/
 
 ### 新建订单
-PUT http://{{host}}{{baseUrl}}/order
+POST http://{{host}}{{baseUrl}}/orders
 Content-Type: application/json
 
 {
-  "userId": 2,
-  "amount": 12.34
+  "userId": 9,
+  "amount": 1.234
 }
 
 ### 删除订单
-DELETE http://{{host}}{{baseUrl}}order
+DELETE http://{{host}}{{baseUrl}}orders
 Content-Type: application/json
 
 {
@@ -18,27 +18,27 @@ Content-Type: application/json
 }
 
 ### 更新订单
-POST http://{{host}}{{baseUrl}}order
+PUT http://{{host}}{{baseUrl}}orders
 Content-Type: application/json
 
 {
-  "id": 2,
-  "userId": 2,
-  "amount": 12.345
+  "id": 1,
+  "userId": 9,
+  "amount": 1.23456
 }
 
 ### 查询订单
-GET http://{{host}}{{baseUrl}}order?id=2
+GET http://{{host}}{{baseUrl}}orders/1
 Content-Type: application/json
 
 
 ### 列表查询订单
-GET http://{{host}}{{baseUrl}}order/list?page=1&size=20
+GET http://{{host}}{{baseUrl}}orders?userId=9&page=1&size=20
 Content-Type: application/json
 
 ### xxx
 ### 列表查询订单
-GET http://{{host}}{{baseUrl}}order/all
+GET http://{{host}}{{baseUrl}}orders
 Content-Type: application/json
 
 ### xxx

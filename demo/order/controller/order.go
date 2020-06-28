@@ -2,19 +2,19 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"i-go/demo/cmodel"
 	"i-go/demo/order/dto"
 	"i-go/demo/order/server"
 	"i-go/demo/ret"
 	"net/http"
+	"strconv"
 )
 
 type IOrder interface {
 	Insert(c *gin.Context)
 	Delete(c *gin.Context)
 	Update(c *gin.Context)
+	FindById(c *gin.Context)
 	Find(c *gin.Context)
-	FindList(c *gin.Context)
 	FindOrderAndUser(c *gin.Context)
 }
 
@@ -27,62 +27,63 @@ func NewOrder(ser server.IOrder) IOrder {
 }
 
 // Insert
-func (u *order) Insert(c *gin.Context) {
+func (o *order) Insert(c *gin.Context) {
 	var m dto.OrderReq
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	result := u.Server.Insert(&m)
+	result := o.Server.Insert(&m)
 	c.JSON(http.StatusOK, result)
 }
 
 // Delete
-func (u *order) Delete(c *gin.Context) {
+func (o *order) Delete(c *gin.Context) {
 	var m dto.OrderReq
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	result := u.Server.DeleteById(&m)
+	result := o.Server.Delete(&m)
 	c.JSON(http.StatusOK, result)
 }
 
 // Update
-func (u *order) Update(c *gin.Context) {
+func (o *order) Update(c *gin.Context) {
 	var m dto.OrderReq
 	if err := c.ShouldBindJSON(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	result := u.Server.UpdateById(&m)
+	result := o.Server.Update(&m)
 	c.JSON(http.StatusOK, result)
 }
 
+// FindById
+func (o *order) FindById(c *gin.Context) {
+	strId := c.Param("id")
+	id, err := strconv.Atoi(strId)
+	if err != nil {
+		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+		return
+	}
+	res := o.Server.FindById(uint(id))
+	c.JSON(http.StatusOK, res)
+}
+
 // Find
-func (u *order) Find(c *gin.Context) {
+func (o *order) Find(c *gin.Context) {
 	var m dto.OrderReq
 	if err := c.ShouldBindQuery(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	res := u.Server.FindById(&m)
+	res := o.Server.Find(&m)
 	c.JSON(http.StatusOK, res)
 }
 
 // Find
-func (u *order) FindList(c *gin.Context) {
-	var m cmodel.PageModel
-	if err := c.ShouldBindQuery(&m); err != nil {
-		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
-		return
-	}
-	res := u.Server.Find(&m)
-	c.JSON(http.StatusOK, res)
-}
-
-// Find
-func (u *order) FindOrderAndUser(c *gin.Context) {
-	res := u.Server.FindOrderAndUser()
+func (o *order) FindOrderAndUser(c *gin.Context) {
+	res := o.Server.FindOrderAndUser()
 	c.JSON(http.StatusOK, res)
 }

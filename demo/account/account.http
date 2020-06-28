@@ -5,7 +5,7 @@ POST http://{{host}}{{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "userId": 2,
+  "userId": 8,
   "amount": 12.34
 }
 
@@ -14,7 +14,7 @@ DELETE http://{{host}}{{baseUrl}}accounts
 Content-Type: application/json
 
 {
-  "userId": 7
+  "userId": 8
 }
 
 ### 更新账户
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "userId": 8,
-  "amount": 12.3456
+  "amount": 12.34567
 }
 
 ### 查询账户

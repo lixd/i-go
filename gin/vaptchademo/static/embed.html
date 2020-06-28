@@ -58,11 +58,11 @@
     <button id="btn_reset">重置</button>
 </div>
 
-<script src="https://v.vaptcha.net/v3.js"></script>
+<script src="https://v.vaptcha.net/test/v3.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--
 <script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
 -->
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 
 <script>
     vaptcha({
@@ -73,7 +73,7 @@
         offline_server: 'http://localhost:8080/offline', //离线模式服务端地址 必填
         // mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
         //可选参数
-        //lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
+        lang: 'auto', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
         //https: false, // 使用https 默认false
         //style: 'dark' //按钮样式 默认dark，可选值 dark,light
         //color: '#57ABFF' //按钮颜色 默认值#57ABFF

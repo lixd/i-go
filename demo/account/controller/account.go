@@ -44,7 +44,7 @@ func (a *account) DeleteByUserId(c *gin.Context) {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return
 	}
-	result := a.Server.DeleteByUserId(m.UserID)
+	result := a.Server.DeleteByUserId(m.UserId)
 	c.JSON(http.StatusOK, result)
 }
 
@@ -74,7 +74,7 @@ func (a *account) FindByUserId(c *gin.Context) {
 
 // Find
 func (a *account) FindList(c *gin.Context) {
-	var m cmodel.PageModel
+	var m cmodel.Page
 	if err := c.ShouldBindQuery(&m); err != nil {
 		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
 		return

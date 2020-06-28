@@ -59,9 +59,9 @@
 </div>
 
 <script src="https://v.vaptcha.net/test/v3.js"></script>
-<script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
 -->
 <script>
     let lang = navigator.language || navigator.userLanguage;//获取浏览器默认语言。
@@ -75,7 +75,7 @@
         // mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
         scene: 0, //不填默认为0
         //可选参数
-        lang: 'auto', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
+        // lang: 'zh-CN', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW,auto
         //https: false, // 使用https 默认false
         style: 'light' //按钮样式 默认dark，可选值 dark,light
         //color: '#57ABFF' //按钮颜色 默认值#57ABFF
@@ -88,7 +88,7 @@
 
         //获取token的方式二:
         vaptchaObj.listen('pass', function () {
-            // 验证成功进行后续操作
+            /*// 验证成功进行后续操作
             // 登录注册并二次验证
             var data = {
                 //表单数据
@@ -106,7 +106,7 @@
                 } else {
                     alert("二次验证成功")
                 }
-            });
+            });*/
         });
 
         //关闭验证弹窗时触发

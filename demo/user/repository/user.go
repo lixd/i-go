@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
+	"github.com/sirupsen/logrus"
 	amodel "i-go/demo/account/model"
 	"i-go/demo/cmodel"
 	"i-go/demo/user/model"
+	"i-go/utils"
 )
 
 type IUser interface {
@@ -14,7 +16,7 @@ type IUser interface {
 	DeleteById(id uint) error
 	UpdateById(req *model.User) error
 	FindById(id uint) (*model.User, error)
-	Find(page *cmodel.PageModel) ([]model.User, error)
+	Find(page *cmodel.Page) ([]model.User, error)
 }
 
 type user struct {
@@ -123,9 +125,17 @@ func (u *user) DeleteById(userId uint) error {
 
 // UpdateById
 func (u *user) UpdateById(user *model.User) error {
-	return u.DB.Model(&model.User{}).Where("id = ? ", user.ID).Update(user).Error
-	//return u.DB.Model(&model.User{}).Where("id = ? ", user.ID).Update("name",user.Name,"age",user.Age).Error
-	//return u.DB.Model(&model.User{}).Where("id = ? ", user.ID).Update(map[string]interface{}{"name":user.Name,"age":user.Age}).Error
+	cmd := u.DB.Model(&model.User{}).Where("id = ? ", user.ID).Update(user)
+	if err := cmd.Error; err != nil {
+		logrus.WithFields(logrus.Fields{"caller": utils.Caller()}).Error(err)
+		return err
+	}
+	if cmd.RowsAffected <= 0 {
+		return gorm.ErrRecordNotFound
+	}
+	return nil
+	//return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update("name",user.Name,"age",user.Age).Error
+	//return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update(map[string]interface{}{"name":user.Name,"age":user.Age}).Error
 }
 
 // FindById
@@ -134,17 +144,22 @@ func (u *user) FindById(id uint) (*model.User, error) {
 	err := u.DB.Where("id = ? ", id).Find(&user).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return &model.User{}, nil
+			return &user, nil
 		}
-		return &model.User{}, err
+		return &user, err
 	}
 	return &user, nil
 }
 
 // Find
-func (u *user) Find(page *cmodel.PageModel) ([]model.User, error) {
+func (u *user) Find(page *cmodel.Page) ([]model.User, error) {
 	users := make([]model.User, 0, page.Size)
-	err := u.DB.Model(&model.User{}).Offset((page.Page - 1) * page.Size).Limit(page.Size).Find(&users).Error
+
+	err := u.DB.Model(&model.User{}).Count(&page.Total).Error
+	if err != nil {
+		return users, err
+	}
+	err = u.DB.Model(&model.User{}).Offset(page.Skip()).Limit(page.Size).Find(&users).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return users, nil
