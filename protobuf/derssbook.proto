@@ -1,5 +1,7 @@
 syntax = "proto3";
 package go_protoc;
+// 新版插件中 必须 配置 option go_package = "xxx";
+option go_package = "/pb";
 
 message Person {
   string name = 1;
