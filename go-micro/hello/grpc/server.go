@@ -29,7 +29,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 
-	// 在我们的gRPC服务器上注册微服务，这会将我们的代码和*.pb.go中
+	// 在我们的gRPC服务器上注册服务，这会将我们的代码和*.pb.go中
 	// 的各种interface对应起来
 	// 和http的路由差不多 用一个map结构来存储的 key就是服务名字 value是内部拼装起来的server
 	proto.RegisterGreeterServer(s, &helloServer{})

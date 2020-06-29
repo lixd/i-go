@@ -42,7 +42,7 @@ func main() {
 			micro.Version("latest"),
 		)*/
 	srv := micro.NewService(
-		// 名字需要注意 微服务是通过名字调用的 所以客户端调用时也要用同样的名字
+		// 名字需要注意 客户端是通过名字调用的
 		micro.Name(Hello),
 		micro.Version("v1"),
 		micro.Registry(reg),
