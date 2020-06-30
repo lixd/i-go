@@ -1,1 +1,2 @@
-echo:
+build:
+    go build -v .

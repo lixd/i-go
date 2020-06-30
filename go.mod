@@ -17,6 +17,8 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.2.0 // indirect
+	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200623144321-26ee26eb5407
+	github.com/elastic/go-elasticsearch/v8 v8.0.0-20200625154855-2c4ce25bd45c // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
@@ -67,6 +69,7 @@ require (
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
 	github.com/tidwall/pretty v1.0.1 // indirect
 	github.com/uber-go/ratelimit v0.1.0 // indirect
+	github.com/unrolled/secure v1.0.8
 	github.com/willf/bitset v1.1.10 // indirect
 	github.com/willf/bloom v2.0.3+incompatible
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
@@ -86,7 +89,7 @@ require (
 	gonum.org/v1/netlib v0.0.0-20200317120129-c5a04cffd98a // indirect
 	gonum.org/v1/plot v0.7.0
 	google.golang.org/grpc v1.29.1
-	google.golang.org/protobuf v1.24.0 // indirect
+	google.golang.org/protobuf v1.24.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	honnef.co/go/tools v0.0.1-2020.1.4 // indirect

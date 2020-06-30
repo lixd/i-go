@@ -10,6 +10,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+/*
+github.com/olivere/elastic 与官方库的差异 or 推荐使用情况
+https://github.com/olivere/elastic/issues/1240
+*/
 var ESClient *elastic.Client
 
 type ESConf struct {
