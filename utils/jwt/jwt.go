@@ -38,7 +38,7 @@ func ParseToken(tokenString string) (userId int64, err error) {
 		return
 	}
 	if value, ok := claim["userId"]; ok {
-		// 存到 map 之后 变成了 float64...
+		// 默认会处理成 float64
 		userId = int64(value.(float64))
 	}
 	return
