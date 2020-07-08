@@ -19,7 +19,23 @@ mongodb:
   dbs:
     test: "test"
     job: "job"
-  authMechanism: ""
+    x: "17x"
+  # 默认 认证机制
+  authMechanism: "SCRAM-SHA-1"
+
+# https://cloud.mongodb.com/ 创建的 free cluster
+mongodbCluster:
+  appUrl: "mongodb+srv://<username>:<password>@clusterfree.p7rd5.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  username: "17x"
+  password: "mongodb12345"
+  maxPoolSize: 10
+  dbs:
+    test: "test"
+    job: "job"
+    x: "17x"
+  # 默认 认证机制
+  authMechanism: "SCRAM-SHA-1"
+
 
 pgsql:
   username: "postgres"

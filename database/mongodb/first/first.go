@@ -20,7 +20,7 @@ func main() {
 
 	upsert()
 	//query()
-	aggregate()
+	//aggregate()
 }
 
 func upsert() {

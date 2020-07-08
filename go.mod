@@ -16,9 +16,7 @@ require (
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dustin/go-humanize v1.0.0 // indirect
-	github.com/eclipse/paho.mqtt.golang v1.2.0 // indirect
 	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200623144321-26ee26eb5407
-	github.com/elastic/go-elasticsearch/v8 v8.0.0-20200625154855-2c4ce25bd45c // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
@@ -26,11 +24,12 @@ require (
 	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/go-redis/redis v6.15.2+incompatible
+	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
+	github.com/gogf/gf v1.13.1
 	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.4.2
 	github.com/golang/snappy v0.0.1 // indirect
-	github.com/golangci/golangci-lint v1.27.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
@@ -46,13 +45,15 @@ require (
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/micro/go-micro/v2 v2.7.1-0.20200520130338-6a661fd08cba
 	github.com/miekg/dns v1.1.29 // indirect
+	github.com/mitchellh/mapstructure v1.1.2
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/nats-io/nats-streaming-server v0.17.0 // indirect
 	github.com/nats-io/nats.go v1.10.0
 	github.com/nats-io/stan.go v0.6.0
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
-	github.com/nilorg/go-opentaobao v0.0.0-20200504080456-93067397da1c // indirect
 	github.com/olivere/elastic v6.2.29+incompatible
+	github.com/onsi/ginkgo v1.12.0 // indirect
+	github.com/onsi/gomega v1.9.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/common v0.7.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
@@ -61,6 +62,7 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
+	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.6.3
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.5.1
@@ -68,13 +70,11 @@ require (
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
 	github.com/tidwall/pretty v1.0.1 // indirect
-	github.com/uber-go/ratelimit v0.1.0 // indirect
 	github.com/unrolled/secure v1.0.8
 	github.com/willf/bitset v1.1.10 // indirect
 	github.com/willf/bloom v2.0.3+incompatible
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
-	github.com/zserge/webview v0.0.0-20200516134046-4caf698fad53 // indirect
 	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.0.4
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277

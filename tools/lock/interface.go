@@ -1,6 +1,6 @@
 package lock
 
 type ILock interface {
-	getLock(randomValue string)
-	releaseLock(randomValue string)
+	Lock(key int) bool
+	UnLock(key int) bool
 }

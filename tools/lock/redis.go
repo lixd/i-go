@@ -1,18 +1,37 @@
 package lock
 
 import (
-	"i-go/core/db/redisdb"
+	"github.com/go-redis/redis"
+	"sync"
 	"time"
 )
 
+var (
+	once      sync.Once
+	RedisLock *redisLock
+)
+
 type redisLock struct {
+	RedisCli *redis.Client
 }
 
-var RedisLock = &redisLock{}
+type Lock interface {
+	Lock(key int) bool
+	UnLock(key int) bool
+}
+
+func NewRedisLock(cli *redis.Client) *redisLock {
+	once.Do(func() {
+		RedisLock = &redisLock{
+			RedisCli: cli,
+		}
+	})
+	return RedisLock
+}
 
 const (
 	// lua脚本保证原子性
-	ReleaseLockLua = `
+	unLockLua = `
 				if redis.call("get",KEYS[1]) == ARGV[1] then
 					return redis.call("del",KEYS[1])
 				else
@@ -21,15 +40,14 @@ const (
 `
 )
 
-var rc = redisdb.RedisClient
-
-// GetLock 获取锁 增加随机值防止误释放锁
-func (redisLock) GetLock(lockName, randomValue string, expire time.Duration) bool {
-	nx := rc.SetNX(lockName, randomValue, expire)
+// Lock 获取锁 增加随机值防止误释放锁（只有值相同时才能释放锁）
+func (r *redisLock) Lock(key string, value interface{}, expire time.Duration) bool {
+	nx := r.RedisCli.SetNX(key, value, expire)
 	return nx.Val()
 }
 
-// ReleaseLock 释放锁 释放时要检测和获取时是相同的随机值才能释放锁
-func (redisLock) ReleaseLock(lockName, randomValue string) {
-	_ = rc.Eval(ReleaseLockLua, []string{lockName}, []string{randomValue})
+// UnLock 释放锁 释放时要检测和获取时是相同的值才能释放锁
+func (r *redisLock) UnLock(key string, value interface{}) error {
+	err := r.RedisCli.Eval(unLockLua, []string{key}, []interface{}{value}).Err()
+	return err
 }
