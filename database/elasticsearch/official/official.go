@@ -42,7 +42,6 @@ func main() {
 			b.WriteString(`{"title" : "`)
 			b.WriteString(title)
 			b.WriteString(`"}`)
-
 			// Set up the request object.
 			req := esapi.IndexRequest{
 				Index:      "test",
@@ -50,7 +49,6 @@ func main() {
 				Body:       strings.NewReader(b.String()),
 				Refresh:    "true",
 			}
-
 			// Perform the request with the client.
 			res, err := req.Do(context.Background(), es)
 			if err != nil {
