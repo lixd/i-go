@@ -1,5 +1,0 @@
-package demo
-
-func LoadData() {
-
-}
