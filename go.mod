@@ -40,8 +40,6 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
-	github.com/lixd/gotbk v0.0.0-20200609091234-a5db564dc744
-	github.com/lixd/gozxing v0.0.0-20200414031819-d1b00bc5e2d4
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/micro/go-micro/v2 v2.7.1-0.20200520130338-6a661fd08cba
 	github.com/miekg/dns v1.1.29 // indirect

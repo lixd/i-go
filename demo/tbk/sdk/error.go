@@ -1,9 +1,9 @@
-package sdk
+package gotbk
 
 import "errors"
 
 var (
-	AppKeyNil    = errors.New("AppKey 不能为空")
-	AppSecretNil = errors.New("AppSecret 不能为空")
-	RouterNil    = errors.New("Router 不能为空")
+	AppKeyNil    = errors.New("appKey 不能为空")
+	AppSecretNil = errors.New("appSecret 不能为空")
+	RouterNil    = errors.New("router 不能为空")
 )

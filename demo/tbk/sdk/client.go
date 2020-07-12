@@ -1,4 +1,4 @@
-package sdk
+package gotbk
 
 import (
 	"fmt"
@@ -54,7 +54,7 @@ func (tbk *TBK) Execute(method string, p Parameter) ([]byte, error) {
 
 // execute
 func (tbk *TBK) execute(p Parameter) ([]byte, error) {
-	err := tbk.checkConfig()
+	err := tbk.check()
 	if err != nil {
 		return nil, err
 	}
