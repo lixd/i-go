@@ -20,6 +20,7 @@ require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
+	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
@@ -43,7 +44,9 @@ require (
 	github.com/lixd/gotbk v0.0.0-20200609091234-a5db564dc744
 	github.com/lixd/gozxing v0.0.0-20200414031819-d1b00bc5e2d4
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/micro/go-micro/v2 v2.7.1-0.20200520130338-6a661fd08cba
+	github.com/micro/go-micro v1.18.0 // indirect
+	github.com/micro/go-micro/v2 v2.9.1
+	github.com/micro/micro/v2 v2.9.3 // indirect
 	github.com/miekg/dns v1.1.29 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/natefinch/lumberjack v2.0.0+incompatible
