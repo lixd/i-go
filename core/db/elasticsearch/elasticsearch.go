@@ -18,7 +18,6 @@ var ESClient *elastic.Client
 
 type ESConf struct {
 	Addr     string `json:"addr"`
-	Port     string `json:"port"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
@@ -35,8 +34,7 @@ func Init() {
 		panic(err)
 	}
 
-	host := fmt.Sprintf("http://%s:%s", c.Addr, c.Port)
-	version, err := ESClient.ElasticsearchVersion(host)
+	version, err := ESClient.ElasticsearchVersion(c.Addr)
 	if err != nil {
 		panic(err)
 	}
@@ -57,7 +55,6 @@ func parseConf() (*ESConf, error) {
 }
 
 func newClient(c *ESConf) (*elastic.Client, error) {
-	host := fmt.Sprintf("http://%s:%s", c.Addr, c.Port)
 	// errorLog := log.New(os.Stdout, "APP", log.LstdFlags)
 	logger := logrus.New()
 	ESClient, err := elastic.NewClient(
@@ -68,7 +65,7 @@ func newClient(c *ESConf) (*elastic.Client, error) {
 		*/
 		elastic.SetSniff(false),     // 关闭客户端嗅探
 		elastic.SetErrorLog(logger), // 指定用什么来打印日志
-		elastic.SetURL(host),
+		elastic.SetURL(c.Addr),
 		elastic.SetBasicAuth(c.Username, c.Password))
 	if err != nil {
 		return &elastic.Client{}, err

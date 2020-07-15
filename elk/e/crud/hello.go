@@ -1,4 +1,4 @@
-package crud
+package main
 
 import (
 	"context"
@@ -6,24 +6,46 @@ import (
 	"github.com/sirupsen/logrus"
 	"i-go/utils"
 	"reflect"
+	"sync"
 )
 
 type IHello interface {
+	MatchPrefix(keyword string, count int) ([]string, error)
+	Upsert(id, keyword string) error
+	Delete(id string) error
 }
 
 type hello struct {
 	Index string `json:"index"`
 	Type  string `json:"type"` // 7.0 后只有一个 type _doc
-	ESCli *elastic.Client
+	Cli   *elastic.Client
 }
+
 type HelloItem struct {
+	Id   string `json:"id"`
 	Name string `json:"name"`
+}
+
+var (
+	once     sync.Once
+	HelloCli *hello
+)
+
+func NewHelloCli(index, _type string, cli *elastic.Client) *hello {
+	once.Do(func() {
+		HelloCli = &hello{
+			Index: index,
+			Type:  _type,
+			Cli:   cli,
+		}
+	})
+	return HelloCli
 }
 
 // MatchPrefix 前缀匹配分类
 func (s *hello) MatchPrefix(keyword string, count int) ([]string, error) {
 	query := elastic.NewMatchPhrasePrefixQuery("name", keyword)
-	res, err := s.ESCli.Search().
+	res, err := s.Cli.Search().
 		Index(s.Index).
 		Type(s.Type).
 		Query(query).
@@ -42,44 +64,31 @@ func (s *hello) MatchPrefix(keyword string, count int) ([]string, error) {
 	return list, err
 }
 
-// Insert 添加到 ES，已经存在就不添加了 创建、更新问题时记得更新
-func (s *hello) Insert(keyword string) {
-	// 查询是否存在 完全匹配
-	where := elastic.NewTermQuery("name.keyword", keyword)
-	docId, err := s.ESCli.Search().
-		Index(s.Index).
-		Type(s.Type).
-		Query(where).
-		Do(context.Background())
-	if err != nil {
-		logrus.WithFields(logrus.Fields{"CallerName": utils.Caller(), "Scenes": "ES 标签查询"}).Error(err)
-		return
-	}
-	// 数量为不为 0 就直接返回
-	total := docId.Hits.TotalHits
-	if total != 0 {
-		return
-	}
-	// 否则写入
+// Upsert
+func (s *hello) Upsert(id, keyword string) error {
 	body := HelloItem{Name: keyword}
-	_, err = s.ESCli.Index().
+	_, err := s.Cli.Update().
 		Index(s.Index).
 		Type(s.Type).
-		BodyJson(body).
+		Id(id).
+		Doc(&body).
+		// ES 检测到 文档无变化则不执行任何操作
+		DetectNoop(true).
+		// 文档不存在则创建
+		DocAsUpsert(true).
 		Do(context.Background())
 	if err != nil {
-		logrus.WithFields(logrus.Fields{"CallerName": utils.Caller(), "Scenes": "标签写入 ES"}).Error(err)
+		logrus.WithFields(logrus.Fields{"CallerName": utils.Caller(), "Scenes": "ES:Index"}).Error(err)
 	}
-	return
+	return err
 }
 
 // Delete
-func (s *hello) Delete(keyword string) error {
-	where := elastic.NewTermQuery("name.keyword", keyword)
-	_, err := s.ESCli.DeleteByQuery().
+func (s *hello) Delete(id string) error {
+	_, err := s.Cli.Delete().
 		Index(s.Index).
 		Type(s.Type).
-		Query(where).
+		Id(id).
 		Do(context.Background())
 	return err
 }

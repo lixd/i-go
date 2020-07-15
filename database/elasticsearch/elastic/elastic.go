@@ -1,17 +1,45 @@
 package main
 
 import (
+	"context"
+	"fmt"
+	"github.com/olivere/elastic"
+	"github.com/sirupsen/logrus"
 	"i-go/core/conf"
 	"i-go/core/db/elasticsearch"
+	"os"
 )
 
-var es = elasticsearch.ESClient
+var es *elastic.Client
 
 func Init() {
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	dir, _ := os.Getwd()
+	fmt.Println("pwd: ", dir)
+	err := conf.Init("conf/config.yml")
+	if err != nil {
+		panic(err)
+	}
 	elasticsearch.Init()
+	es = elasticsearch.ESClient
 }
 
 func main() {
 	Init()
+	demoIndex := "twitter"
+	exists, err := es.IndexExists(demoIndex).Do(context.Background())
+	if err != nil {
+		// Handle error
+		logrus.Error(err)
+	}
+	if !exists {
+		result, err := es.CreateIndex(demoIndex).Do(context.Background())
+		if err != nil {
+			// Handle error
+			logrus.Error(err)
+		}
+		fmt.Println("CreateIndex ", result)
+	} else {
+		fmt.Println("index  exists")
+	}
+	es.IsRunning()
 }

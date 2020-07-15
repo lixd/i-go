@@ -1,4 +1,4 @@
-package sdk
+package gotbk
 
 import (
 	"bytes"
@@ -32,7 +32,7 @@ func (tbk *TBK) initCommonParams(p Parameter) {
 	p["sign"] = tbk.signTopRequest(p)
 }
 
-// encodeParams encode为url参数
+// encodeParams encode 为 url 参数
 func (tbk *TBK) encodeParams(p Parameter) string {
 	args := url.Values{}
 	for k, v := range p {
@@ -63,8 +63,8 @@ func (tbk *TBK) signTopRequest(p Parameter) string {
 	return strings.ToUpper(hex.EncodeToString(h.Sum(nil)))
 }
 
-// checkConfig 检查配置
-func (tbk *TBK) checkConfig() error {
+// check 检查配置
+func (tbk *TBK) check() error {
 	if tbk.AppKey == "" {
 		return AppKeyNil
 	}

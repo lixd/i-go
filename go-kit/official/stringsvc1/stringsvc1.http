@@ -1,0 +1,17 @@
+### uppercase
+GET http://localhost:8080/uppercase
+Content-Type: application/json
+
+{
+ "s": "hello, 17x"
+}
+
+### count
+GET http://localhost:8080/count
+Content-Type: application/json
+
+{
+  "s": "hello, 17x"
+}
+
+###

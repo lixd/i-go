@@ -73,7 +73,7 @@ etcd:
   keyFile: ""
   trustedCAFile: ""
 
-# elasticsearch official sdk
+# ElasticSearch official sdk
 elasticsearch-official:
   address:
     - "http://47.93.123.142:9201"
@@ -85,10 +85,9 @@ elasticsearch-official:
   certFile: ""
   # 响应超时
   timeout: "10s"
-# elasticsearch 第三方 sdk
+# ElasticSearch 第三方 sdk
 elasticsearch:
-  addr: "47.93.123.142"
-  port: 9200
+  addr: "http://192.168.1.120:9200"
   username: ""
   password: ""
 
