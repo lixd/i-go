@@ -53,3 +53,28 @@ func maxArea2(height []int) int {
 	}
 	return max
 }
+
+func maxArea3(height []int) int {
+	if len(height) < 2 {
+		return 0
+	}
+
+	var (
+		l    = 0
+		r    = len(height) - 1
+		max  int
+		area int
+	)
+	for l < r {
+		area = min(height[l], height[r]) * (r - l)
+		if area > max {
+			max = area
+		}
+		if height[l] < height[r] {
+			l++
+		} else {
+			r--
+		}
+	}
+	return max
+}

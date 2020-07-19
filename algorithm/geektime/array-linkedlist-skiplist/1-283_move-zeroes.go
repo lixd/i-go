@@ -25,3 +25,14 @@ func moveZeroes2(nums []int) {
 		}
 	}
 }
+
+// moveZeroes 遍历数组 当前位置是 0 则不处理，否则将当前位置和 第一个 0 的位置互换
+func moveZeroes3(nums []int) {
+	var zero int
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != 0 {
+			nums[i], nums[zero] = nums[zero], nums[i]
+			zero++
+		}
+	}
+}
