@@ -1,0 +1,17 @@
+version: '3'
+services:
+  redis:
+    hostname: redis
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    command: redis-server /etc/redis.conf
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data:/data
+      - ./conf/redis.conf:/etc/redis/redis.conf
+    ports:
+      - "6379:6379"

@@ -62,7 +62,7 @@ func (l *LRUCache) remove(node *LinkNode) {
 func (l *LRUCache) add(node *LinkNode) {
 	head := l.list.head
 	node.next = head.next
-	node.next.pre = node
+	head.next.pre = node
 	node.pre = head
 	head.next = node
 	l.list.len++
