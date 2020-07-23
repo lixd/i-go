@@ -6,6 +6,7 @@ require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
+	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
 	github.com/antchfx/htmlquery v1.0.0 // indirect
 	github.com/antchfx/xmlquery v1.0.0 // indirect
@@ -23,8 +24,11 @@ require (
 	github.com/gin-contrib/pprof v1.3.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-kit/kit v0.10.0
+	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-pg/pg v8.0.6+incompatible
-	github.com/go-playground/validator/v10 v10.3.0 // indirect
+	github.com/go-playground/locales v0.13.0
+	github.com/go-playground/universal-translator v0.17.0
+	github.com/go-playground/validator/v10 v10.3.0
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
@@ -41,10 +45,9 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
+	github.com/lixd/gozxing v0.0.0-20200414065239-6be69a426dd6
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/micro/go-micro v1.18.0 // indirect
 	github.com/micro/go-micro/v2 v2.9.1
-	github.com/micro/micro/v2 v2.9.3 // indirect
 	github.com/miekg/dns v1.1.29 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/natefinch/lumberjack v2.0.0+incompatible
@@ -52,6 +55,7 @@ require (
 	github.com/nats-io/nats.go v1.10.0
 	github.com/nats-io/stan.go v0.6.0
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/olekukonko/tablewriter v0.0.4 // indirect
 	github.com/olivere/elastic v6.2.29+incompatible
 	github.com/onsi/ginkgo v1.12.0 // indirect
 	github.com/onsi/gomega v1.9.0 // indirect
@@ -62,6 +66,7 @@ require (
 	github.com/robfig/cron v1.1.0
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/satori/go.uuid v1.2.0
+	github.com/shirou/gopsutil v2.20.6+incompatible
 	github.com/sirupsen/logrus v1.4.2
 	github.com/sony/gobreaker v0.4.1
 	github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
@@ -86,7 +91,6 @@ require (
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
-	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	golang.org/x/tools v0.0.0-20200526224456-8b020aee10d2 // indirect
 	gonum.org/v1/netlib v0.0.0-20200317120129-c5a04cffd98a // indirect

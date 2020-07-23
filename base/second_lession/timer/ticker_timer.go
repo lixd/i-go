@@ -15,9 +15,33 @@ func main() {
 
 	//go tickerBad()
 	//go tickerGood()
-	go timerBad()
+	//go timerBad()
+	Load()
 	go timerGood()
 	select {}
+}
+
+type ts struct {
+	Host   string
+	Status int
+}
+
+func Load() {
+	res := make(map[string]*ts)
+	ts1 := &ts{
+		Host:   "127.0.0.1",
+		Status: 1,
+	}
+	res["127.0.0.1"] = ts1
+	for _, v := range res {
+		fmt.Println(v)
+	}
+	ts1.Status = 2
+	fmt.Println("xxxxxxxxxx")
+	for _, v := range res {
+		fmt.Println(v)
+	}
+
 }
 
 func tickerBad() {
@@ -69,9 +93,9 @@ func timerGood() {
 	// timer 复用
 	timer := time.NewTimer(time.Second)
 	for {
-		timer.Reset(time.Second)
 		select {
 		case <-timer.C:
+			timer.Reset(time.Second)
 			println("time out, and end")
 		case <-ch:
 		}

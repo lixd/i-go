@@ -1,9 +1,11 @@
 package main
 
 import (
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
+	"i-go/core/logger/ilogrus"
 	"i-go/core/logger/izap"
 	amodel "i-go/demo/account/model"
 	arouter "i-go/demo/account/router"
@@ -21,6 +23,8 @@ func main() {
 	urouter.RegisterRouter(engine)
 	arouter.RegisterRouter(engine)
 	orouter.RegisterRouter(engine)
+	// pprof
+	pprof.Register(engine, "debug/pprof")
 	if err := engine.Run(":8080"); err != nil {
 		panic(err)
 	}

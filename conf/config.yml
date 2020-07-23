@@ -87,7 +87,7 @@ elasticsearch-official:
   timeout: "10s"
 # ElasticSearch 第三方 sdk
 elasticsearch:
-  addr: "http://192.168.1.120:9200"
+  addr: "http://47.93.123.142:9201"
   username: ""
   password: ""
 
