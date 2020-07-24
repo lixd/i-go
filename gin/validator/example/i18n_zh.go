@@ -37,6 +37,14 @@ func InitTrans(locale string) (err error) {
 		if err != nil {
 			return err
 		}
+		// 注册自定义字段翻译器
+		err = v.RegisterTranslation("checkDate",
+			trans,
+			registerTranslator("checkDate", "{0}必须要晚于当前日期"),
+			translate)
+		if err != nil {
+			return err
+		}
 		return
 	}
 	return
