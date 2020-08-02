@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/go-playground/validator/v10"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,4 +42,27 @@ func main() {
 	})
 
 	_ = r.Run(":8999")
+}
+
+// https://github.com/go-playground/validator/issues/633#issuecomment-654382345
+/*
+FROM
+ {
+  "User.Email": "Email must be a valid email address",
+  "User.FirstName": "FirstName is a required field"
+}
+TO
+{
+  "Email": "Email must be a valid email address",
+  "FirstName": "FirstName is a required field"
+}
+*/
+// removeTopStruct 移除结构体名
+// from struct.field to field e.g.: from User.Email to Email
+func removeTopStruct(fields map[string]string) map[string]string {
+	res := map[string]string{}
+	for field, err := range fields {
+		res[field[strings.Index(field, ".")+1:]] = err
+	}
+	return res
 }

@@ -1,51 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin/binding"
+	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	"reflect"
 	"strings"
 	"time"
 )
 
-// https://github.com/go-playground/validator/issues/633#issuecomment-654382345
-/*
-FROM
- {
-  "User.Email": "Email must be a valid email address",
-  "User.FirstName": "FirstName is a required field"
-}
-TO
-{
-  "Email": "Email must be a valid email address",
-  "FirstName": "FirstName is a required field"
-}
-*/
-// removeTopStruct 移除结构体名
-// from struct.field to field e.g.: from User.Email to Email
-func removeTopStruct(fields map[string]string) map[string]string {
-	res := map[string]string{}
-	for field, err := range fields {
-		res[field[strings.Index(field, ".")+1:]] = err
-	}
-	return res
-}
-
-// 自定义错误提示信息的字段名
-func Register() {
-	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
-		v.RegisterTagNameFunc(JsonTag)
-		v.RegisterStructValidation(SignUpParamStructLevelValidation, &SignUpParam{})
-		if err := v.RegisterValidation("checkDate", customFunc); err != nil {
-			fmt.Println(err)
-		}
-	}
-}
-
 // JsonTag
 func JsonTag(field reflect.StructField) string {
-	return field.Tag.Get("json")
+	name := strings.SplitN(field.Tag.Get("json"), ",", 2)[0]
+	if name == "-" {
+		return ""
+	}
+	return name
 }
 
 // SignUpParamStructLevelValidation 自定义SignUpParam结构体校验函数
@@ -67,4 +36,17 @@ func customFunc(fl validator.FieldLevel) bool {
 		return false
 	}
 	return true
+}
+
+// registerTranslator 为自定义字段添加翻译功能
+func registerTranslator(key string, text string) validator.RegisterTranslationsFunc {
+	return func(trans ut.Translator) error {
+		return trans.Add(key, text, false)
+	}
+}
+
+// translate 自定义字段的翻译方法
+func translate(trans ut.Translator, fe validator.FieldError) string {
+	msg, _ := trans.T(fe.Tag(), fe.Field())
+	return msg
 }
