@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-const Number = 24
+const Number = 30
 
 func TestLevel1(t *testing.T) {
 	for i := 0; i < Number; i++ {
@@ -28,22 +28,20 @@ func TestLevel4(t *testing.T) {
 	}
 }
 
-//  39611 ns/op
 func BenchmarkLevel1(b *testing.B) {
-	for i := 0; i < 1; i++ {
+	for i := 0; i < b.N; i++ {
 		Level1(Number)
 	}
 }
 
-// 11.1 ns/op
 func BenchmarkLevel2(b *testing.B) {
-	for i := 0; i < 1; i++ {
+	for i := 0; i < b.N; i++ {
 		Level2(Number)
 	}
 }
 
 func BenchmarkLevel3(b *testing.B) {
-	for i := 0; i < 1; i++ {
+	for i := 0; i < b.N; i++ {
 		Level3(Number)
 	}
 }
