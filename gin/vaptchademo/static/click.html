@@ -38,85 +38,72 @@
             vertical-align: middle
         }
     </style>
-
 </head>
 <body>
-<!-- 点击式按钮建议高度介于36px与46px  -->
-<!-- 嵌入式仅需设置宽度，高度根据宽度自适应，最小宽度为200px -->
+<!-- The recommended height of the click button is between 36px and 46px  -->
 <div id="vaptchaContainer" style="width: 300px;height: 36px;">
-    <!--vaptcha-container是用来引入VAPTCHA的容器，下面代码为预加载动画，仅供参考-->
+    <!--container for loading vaptcha-->
     <div class="vaptcha-init-main">
+        <!--Preload animation-->
         <div class="vaptcha-init-loading">
             <a href="/" target="_blank">
                 <img src="https://cdn.vaptcha.com/vaptcha-loading.gif" alt="loading"/>
             </a>
-            <span class="vaptcha-text">Vaptcha启动中...</span>
+            <span class="vaptcha-text">Vaptcha Initializing...</span>
         </div>
     </div>
 </div>
 <div>
-    <button id="btn_reset">重置</button>
+    <button id="btn_reset">Reset</button>
 </div>
 
 <script src="https://v.vaptcha.net/v3.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--
-<script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
--->
 <script>
-    let lang = navigator.language || navigator.userLanguage;//获取浏览器默认语言。
-    console.log('lang: ', lang);
-
     vaptcha({
-        vid: '5f2cd29bb35472b0acab1b52', // 必填
-        type: 'click', // 必填 显示类型 点击式
-        container: '#vaptchaContainer', // 嵌入式、点击式必填 容器，可为Element 或者 selector
-        offline_server: 'http://localhost:8080/vaptcha/offline', //离线模式服务端地址
-        mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
-        scene: 0, //不填默认为0
-        //可选参数
-        lang: 'auto', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW,auto
-        //https: false, // 使用https 默认false
-        style: 'light' //按钮样式 默认dark，可选值 dark,light
-        //color: '#57ABFF' //按钮颜色 默认值#57ABFF
+        // Required
+        vid: '5f2cd29bb35472b0acab1b52', // vid
+        type: 'click', // vaptcha type
+        container: '#vaptchaContainer', // Container for storage vaptcha,Element or selector
+        // Recommend
+        offline_server: 'http://localhost:8080/vaptcha/offline', // offline server url
+        scene: 0, // sceneNumber(default 0) config scene for distinguish different origin
+        // Optional
+        lang: 'auto', // language (default zh-CN),list zh-CN,en,zh-TW,auto(will use your browser default language)
+        style: 'light', // button style （default dark）list:dark,light
+        color: '#00BFFF', // button color 默认值#57ABFF
+        // Only for test
+        mode: 'offline', // this config will switch to offline mode, only used for the test, remove before release
     }).then(function (vaptchaObj) {
-        obj = vaptchaObj;//将VAPTCHA验证实例保存到局部变量中
-        vaptchaObj.render();// 调用验证实例 vaptchaObj 的 render 方法加载验证按钮
+        obj = vaptchaObj; // storage to local variable
+        vaptchaObj.render();// render vaptcha
 
-        //获取token的方式一:
-        //vaptchaObj.renderTokenInput('.login-form')//以form的方式提交数据时，使用此函数向表单添加token值
-
-        //获取token的方式二:
         vaptchaObj.listen('pass', function () {
-            console.log("pass emit")
-
-            // 验证成功进行后续操作
-            // 登录注册并二次验证
-            var data = {
-                //表单数据
+            // watch pass event which will emit when fronted verify pass
+            let data = {
+                // build your data
                 token: vaptchaObj.getToken(),
                 username: "admin",
                 password: "root",
             };
             console.log("token: " + data.token);
-            // 登录
+            // login example should config backend verify in your server
             $.post('http://localhost:8080/vaptcha/login', data, function (r) {
-                console.log("login:", r)
                 if (r.code !== 200) {
-                    alert("二次验证失败")
-                    obj.reset() // 重置验证码
+                    alert("backend verify fail");
+                    obj.reset() // reset vaptcha when verify fail
                 } else {
-                    alert("二次验证成功")
+                    alert("backend verify success")
                 }
             });
-            //验证弹窗关闭触发
         });
 
-        //关闭验证弹窗时触发
+        // watch close event
         vaptchaObj.listen('close', function () {
             console.log("close emit")
-        })
-        // 重置
+        });
+        // reset vaptcha this button only for demo.
+        // you should emit this operation at the right time such as verify fail
         $('#btn_reset').on('click', function () {
             obj.reset();
         })

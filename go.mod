@@ -45,6 +45,7 @@ require (
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lixd/gozxing v0.0.0-20200414065239-6be69a426dd6
+	github.com/lixd/vaptcha-sdk-go v0.0.0-20200807142511-321965aeafed
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/micro/go-micro/v2 v2.9.1
 	github.com/miekg/dns v1.1.29 // indirect
