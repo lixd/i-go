@@ -14,11 +14,26 @@ func t() {
 func main() {
 	//t()
 	//simple()
-
 	//timeA()
 	//timeB()
-	timeC()
+	//timeC()
 	//timeD()
+	localTime()
+}
+
+func localTime() {
+	now := time.Now()
+	year, mon, day := now.UTC().Date()
+	hour, min, sec := now.UTC().Clock()
+	zone, _ := now.UTC().Zone()
+	fmt.Printf("UTC 时间是 %d-%d-%d %02d:%02d:%02d %s\n",
+		year, mon, day, hour, min, sec, zone)
+
+	year, mon, day = now.Date()
+	hour, min, sec = now.Clock()
+	zone, _ = now.Zone()
+	fmt.Printf("本地时间是 %d-%d-%d %02d:%02d:%02d %s\n",
+		year, mon, day, hour, min, sec, zone)
 }
 
 func timeA() {

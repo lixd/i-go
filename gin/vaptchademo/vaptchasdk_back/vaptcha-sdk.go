@@ -1,4 +1,4 @@
-package vaptchasdk
+package vaptchasdk_back
 
 import (
 	"crypto/md5"
@@ -29,12 +29,13 @@ const (
 	VerifySuccess   = 1
 	SecondVerifyUrl = "http://0.wlinno.com/verify"
 	// 验证单元信息 自行替换
-	SecretKey = "9bcdceb40e274dbb808df70b9d24d652" // 验证单元key
+	SecretKey = "035b20d63ead49269a5e1644976a6a2e" // 验证单元key
 	Vid       = "5dba48a598bb11d350b45728"         // 验证单元id
 	Scene     = "0"                                // 场景值
 )
 
 var (
+	once    sync.Once
 	Vaptcha *vaptcha
 	mem     sync.Map
 )
@@ -49,13 +50,13 @@ type vaptcha struct {
 }
 
 func New(vid, secretKey, scene string) *vaptcha {
-	if Vaptcha == nil {
-		return &vaptcha{
+	once.Do(func() {
+		Vaptcha = &vaptcha{
 			baseUrl:   baseUrl,
 			Vid:       vid,
 			SecretKey: secretKey,
 			Scene:     scene}
-	}
+	})
 	return Vaptcha
 }
 
@@ -158,10 +159,12 @@ func (v *vaptcha) getImage(vid string) string {
 		m["msg"] = "离线key获取失败"
 		return v.mapToJson(m)
 	}
-	str := key + v.getRandomStr()
+	randStr := v.getRandomStr()
+	str := key + randStr
 	imgId := v.md5Encode(str)
-	randStr := uuid.NewV4().String()
-	knock := strings.ReplaceAll(randStr, "-", "")
+	fmt.Printf("key:%v randStr:%v imgId:%v \n", key, randStr, imgId)
+	randKnock := uuid.NewV4().String()
+	knock := strings.ReplaceAll(randKnock, "-", "")
 	// key:knock value:unix(10)+imgId(32)
 	v.cache.Set(knock, fmt.Sprintf("%v%s", time.Now().Unix(), imgId))
 	m["code"] = Success

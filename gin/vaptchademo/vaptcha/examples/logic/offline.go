@@ -2,7 +2,9 @@ package logic
 
 import (
 	"github.com/gin-gonic/gin"
-	"i-go/gin/vaptchademo/vaptchasdk"
+	"i-go/gin/vaptchademo/constant"
+	"i-go/gin/vaptchademo/vaptcha"
+	"i-go/gin/vaptchademo/vaptcha/model"
 	"net/http"
 )
 
@@ -33,10 +35,21 @@ func (*vaptchaDemo) Offline(c *gin.Context) {
 		})
 		return
 	}
-	// 直接调用sdk中提供的方法 用户需要做的就是获取到前端传来的参数
-	v := vaptchasdk.New(vaptchasdk.Vid, vaptchasdk.SecretKey, vaptchasdk.Scene)
+	option := func(options *vaptcha.Options) {
+		options.Vid = constant.Vid
+		//options.Vid = "offline"
+		options.SecretKey = constant.SecretKey
+		options.Scene = constant.Scene
+	}
+	v := vaptcha.NewVaptcha(option)
 	// 如果是测试离线模式 则vid直接传offline即可
 	req.Vid = "offline"
-	result := v.Offline(req.Action, req.CallBack, req.Vid, req.Knock, req.UserCode)
+	request := model.Offline{
+		Action:   req.Action,
+		Callback: req.CallBack,
+		Knock:    req.Knock,
+		UserCode: req.UserCode,
+	}
+	result := v.Offline(request)
 	c.String(http.StatusOK, result)
 }

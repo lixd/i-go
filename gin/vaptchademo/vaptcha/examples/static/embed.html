@@ -43,7 +43,7 @@
 <body>
 <!-- 点击式按钮建议高度介于36px与46px  -->
 <!-- 嵌入式仅需设置宽度，高度根据宽度自适应，最小宽度为200px -->
-<div id="vaptchaContainer" style="width: 300px;height: 36px;">
+<div id="vaptchaContainer" style="width: 300px;height: 200px;">
     <!--vaptcha-container是用来引入VAPTCHA的容器，下面代码为预加载动画，仅供参考-->
     <div class="vaptcha-init-main">
         <div class="vaptcha-init-loading">
@@ -58,26 +58,24 @@
     <button id="btn_reset">重置</button>
 </div>
 
-<script src="https://v.vaptcha.net/v3.js"></script>
+<script src="https://v.vaptcha.net/test/v3.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--
 <script src="https://r.vaptcha.net/public/js/jquery-3.2.1.min.js"></script>
 -->
-<script>
-    let lang = navigator.language || navigator.userLanguage;//获取浏览器默认语言。
-    console.log('lang: ', lang);
 
+<script>
     vaptcha({
-        vid: '5dba48a598bb11d350b45728', // 必填
-        type: 'click', // 必填 显示类型 点击式
+        vid: '5f2cd29bb35472b0acab1b52', // 必填
+        type: 'embed', // 必填 显示类型 嵌入式
         container: '#vaptchaContainer', // 嵌入式、点击式必填 容器，可为Element 或者 selector
-        offline_server: 'http://localhost:8080/vaptcha/offline', //离线模式服务端地址
+        scene: 0, // 场景值 默认0
+        offline_server: 'http://localhost:8080/offline', //离线模式服务端地址 必填
         // mode: 'offline', // 加入此参数直接进入离线模式，用于调试，上线请删除
-        scene: 0, //不填默认为0
         //可选参数
-        lang: 'auto', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW,auto
+        lang: 'auto', // 语言 默认zh-CN,可选值zh-CN,en,zh-TW
         //https: false, // 使用https 默认false
-        style: 'light' //按钮样式 默认dark，可选值 dark,light
+        //style: 'dark' //按钮样式 默认dark，可选值 dark,light
         //color: '#57ABFF' //按钮颜色 默认值#57ABFF
     }).then(function (vaptchaObj) {
         obj = vaptchaObj;//将VAPTCHA验证实例保存到局部变量中
@@ -88,9 +86,7 @@
 
         //获取token的方式二:
         vaptchaObj.listen('pass', function () {
-            console.log("pass emit")
-
-            /*// 验证成功进行后续操作
+            // 验证成功进行后续操作
             // 登录注册并二次验证
             var data = {
                 //表单数据
@@ -108,18 +104,12 @@
                 } else {
                     alert("二次验证成功")
                 }
-            });*/
-            //验证弹窗关闭触发
-        });
-
-        //关闭验证弹窗时触发
-        vaptchaObj.listen('close', function () {
-            console.log("close emit")
+            });
         })
-        // 重置
-        $('#btn_reset').on('click', function () {
-            obj.reset();
-        })
+    });
+    // 重置
+    $('#btn_reset').on('click', function () {
+        obj.reset();
     })
 </script>
 </body>

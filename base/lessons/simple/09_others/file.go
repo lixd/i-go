@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -85,28 +84,6 @@ func main() {
 		fmt.Printf("index:%d value:%v \n", i, value)
 	}
 
-	// flag 解析命令行参数
-	// 定义几个变量 用于接收命令行参数
-
-	var user string
-	var pwd string
-	var host string
-	var port int
-	// 参数一: &user 用来接收用户命令行中输入的参数的值
-	// 参数二："u" 就是 -u  指定是这个参数
-	// 参数三："" 默认值 这里为空字符串
-	// 参数四："用户名默认为空" 说明文字
-	flag.StringVar(&user, "u", "", "用户名默认为空")
-	flag.StringVar(&pwd, "p", "", "密码默认为空")
-	flag.StringVar(&host, "h", "localhost", "主机名默认为localhost")
-	flag.IntVar(&port, "P", 3306, "端口号默认为3306")
-	// 这里有个非常重要的操作 Parse 必须调用该方法
-	// 从arguments中解析注册的flag。必须在所有flag都注册好而未访问其值时执行。
-	// 未注册却使用flag -help时，会返回ErrHelp。
-	flag.Parse()
-
-	fmt.Printf("user:%v,pwd:%v,host:%v,port:%v", user, pwd, host, port)
-
 }
 
 func CopyFile(src string, dst string) (written int64, err error) {
@@ -125,4 +102,93 @@ func CopyFile(src string, dst string) (written int64, err error) {
 	writer := bufio.NewWriter(dstFile)
 
 	return io.Copy(writer, reader)
+}
+
+// lineByLine 逐行读取
+func lineByLine(file string) error {
+	var err error
+	f, err := os.Open(file)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	r := bufio.NewReader(f)
+	for {
+		line, err := r.ReadString('\n')
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			fmt.Printf("error reading file %s", err)
+			break
+		}
+		fmt.Printf(line)
+	}
+	return nil
+}
+
+// write 写入文件的几种方法
+func write() {
+	writeOne()
+
+}
+func writeOne() {
+	s := []byte("Data to write\n")
+
+	f1, err := os.Create("f1.txt")
+	if err != nil {
+		fmt.Println("Cannot create file", err)
+		return
+	}
+	defer f1.Close()
+	fmt.Fprintf(f1, string(s))
+}
+
+func writeTwo() {
+	s := []byte("Data to write\n")
+	f2, err := os.Create("f2.txt")
+	if err != nil {
+		fmt.Println("Cannot create file", err)
+		return
+	}
+	defer f2.Close()
+	n, err := f2.WriteString(string(s))
+	fmt.Printf("wrote %d bytes\n", n)
+}
+func writeThree() {
+	s := []byte("Data to write\n")
+	f3, err := os.Create("f3.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 和 writeTwo 一样的 只是这个你带缓冲的
+	w := bufio.NewWriter(f3)
+	n, err := w.WriteString(string(s))
+	fmt.Printf("wrote %d bytes\n", n)
+	w.Flush()
+}
+func writeFour() {
+	s := []byte("Data to write\n")
+	f4 := "f4.txt"
+	// 这个只是把创建文件和写入数据封装了一下
+	err := ioutil.WriteFile(f4, s, 0644)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+func writeFive() {
+	s := []byte("Data to write\n")
+	f5, err := os.Create("f5.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	n, err := io.WriteString(f5, string(s))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("wrote %d bytes\n", n)
 }

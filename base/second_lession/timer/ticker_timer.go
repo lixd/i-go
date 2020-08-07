@@ -14,7 +14,7 @@ func main() {
 	fmt.Println("first", first, "second", second)
 
 	//go tickerBad()
-	//go tickerGood()
+	go tickerGood()
 	//go timerBad()
 	Load()
 	go timerGood()

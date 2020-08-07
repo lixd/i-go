@@ -3,7 +3,8 @@ package logic
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"i-go/gin/vaptchademo/vaptchasdk"
+	"i-go/gin/vaptchademo/constant"
+	"i-go/gin/vaptchademo/vaptcha"
 	"net/http"
 )
 
@@ -47,10 +48,16 @@ func (*vaptchaDemo) Login(c *gin.Context) {
 		c.Data(http.StatusOK, "application/json", []byte("params error"))
 		return
 	}
-	v := vaptchasdk.New(vaptchasdk.Vid, vaptchasdk.SecretKey, vaptchasdk.Scene)
+	option := func(options *vaptcha.Options) {
+		options.Vid = constant.Vid
+		//options.Vid = "offline" // test offline mode
+		options.SecretKey = constant.SecretKey
+		options.Scene = constant.Scene
+	}
+	v := vaptcha.NewVaptcha(option)
 	// 二次验证
 	verify := v.Verify(req.Token, c.ClientIP())
-	if verify.Success == vaptchasdk.VerifySuccess {
+	if verify.Success == 1 {
 		// 二次验证成功了 再去执行真正的登录逻辑
 		login := doLogin(req.UserName, req.Password)
 		c.JSON(http.StatusOK, ResCode{
