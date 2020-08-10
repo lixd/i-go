@@ -2,8 +2,8 @@ package logic
 
 import (
 	"github.com/lixd/vaptcha-sdk-go"
-	"github.com/lixd/vaptcha-sdk-go/examples/constant"
 	"github.com/lixd/vaptcha-sdk-go/model"
+	"i-go/gin/vaptchademo/native/constant"
 	"net/http"
 )
 

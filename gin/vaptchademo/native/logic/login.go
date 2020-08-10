@@ -3,7 +3,7 @@ package logic
 import (
 	"encoding/json"
 	"github.com/lixd/vaptcha-sdk-go"
-	"github.com/lixd/vaptcha-sdk-go/examples/constant"
+	"i-go/gin/vaptchademo/native/constant"
 	"net/http"
 )
 
