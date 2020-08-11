@@ -51,8 +51,8 @@ type SoftDelete struct {
 }
 
 func main() {
-	// Create()
-	Query()
+	Create()
+	//Query()
 	// Update()
 	// Delete()
 	// softDelete()

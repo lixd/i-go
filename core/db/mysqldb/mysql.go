@@ -45,16 +45,15 @@ func Init() {
 		gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 			return c.TableNamePrefix + defaultTableName
 		}*/
-
 }
 
 func parseConf() (*mysqlConf, error) {
 	var c mysqlConf
 	if err := viper.UnmarshalKey("mysql", &c); err != nil {
-		return &mysqlConf{}, err
+		return nil, err
 	}
 	if c.Host == "" {
-		return &mysqlConf{}, errors.New("mysql conf nil")
+		return nil, errors.New("mysql conf nil")
 	}
 	return &c, nil
 }
@@ -68,9 +67,8 @@ func newConn(c *mysqlConf) (*gorm.DB, error) {
 	logrus.Info("mysql dsn:", dsn)
 	db, err := gorm.Open("mysql", dsn)
 	if err != nil {
-		return &gorm.DB{}, err
+		return nil, err
 	}
-
 	return db, nil
 }
 
