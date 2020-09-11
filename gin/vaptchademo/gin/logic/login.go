@@ -16,7 +16,7 @@ func Login(c *gin.Context) {
 	}
 	option := func(options *vaptcha.Options) {
 		options.Vid = constant.Vid
-		// options.Vid = "offline" // test offline mode
+		//options.Vid = "offline" // test offline mode
 		options.SecretKey = constant.SecretKey
 		options.Scene = constant.Scene
 	}

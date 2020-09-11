@@ -6,7 +6,7 @@ import (
 )
 
 func TestGenerateToken(t *testing.T) {
-	token, err := GenerateToken(int64(1))
+	token, err := GenerateToken(int64(10086))
 	if err != nil {
 		fmt.Printf("err: %v \n", err.Error())
 		return
@@ -14,7 +14,7 @@ func TestGenerateToken(t *testing.T) {
 	fmt.Println(token)
 }
 func TestParseToken(t *testing.T) {
-	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMzQ1fQ.vpZ2CycFtkbE63lSLyjG3y8mwtASRInPjynTh2be4Ks"
+	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwMDg2fQ.H2FuEzQ7_Fp7G-6i0-Sl6vBjr-yHcsk7RoC5Qk_rVgY"
 	userId, err := ParseToken(tokenString)
 	if err != nil {
 		fmt.Printf("err: %v \n", err.Error())

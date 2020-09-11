@@ -17,7 +17,7 @@ func Offline(c *gin.Context) {
 	}
 	option := func(options *vaptcha.Options) {
 		options.Vid = constant.Vid
-		// options.Vid = "offline" // 如果是测试离线模式 则vid直接传offline即可
+		//options.Vid = "offline" // 如果是测试离线模式 则vid直接传offline即可
 		options.SecretKey = constant.SecretKey
 		options.Scene = constant.Scene
 	}

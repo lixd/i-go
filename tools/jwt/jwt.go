@@ -23,7 +23,7 @@ func GenerateToken(userId int64) (string, error) {
 
 // ParseToken
 func ParseToken(tokenString string) (userId int64, err error) {
-	token, err := jwt.ParseWithClaims(tokenString, &jwt.MapClaims{}, secret())
+	token, err := jwt.ParseWithClaims(tokenString, jwt.MapClaims{}, secret())
 	if err != nil {
 		return
 	}
