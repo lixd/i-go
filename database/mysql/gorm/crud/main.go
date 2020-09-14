@@ -15,26 +15,30 @@ func Init() {
 	conf.Init(path)
 	mysqldb.Init()
 	db = mysqldb.MySQL
-	//db.DropTableIfExists(&User{})
-	//db.CreateTable(&User{})
+	db.DropTableIfExists(&User{})
+	db.CreateTable(&User{})
 }
 
 func main() {
 	Init()
-	//create()
-	//query()
-	update()
+	create()
+	query()
+	//update()
 }
 
 type User struct {
+	//ID        uint       `gorm:"primary_key"`
+	//CreatedAt time.Time  `gorm:"type:timestamp;"`
+	//UpdatedAt time.Time  `gorm:"type:timestamp;"`
+	//DeletedAt *time.Time `gorm:"type:timestamp;index:idx_del"`
 	gorm.Model
 	Name         string    `gorm:"type:varchar(20);unique_index:idx_name;NOT NULL;default:'guest'"`
 	Phone        string    `gorm:"type:varchar(20);unique_index;NOT NULL"`
 	Password     string    `gorm:"type:varchar(32);NOT NULL;default:'123456'"`
 	LoginIp      string    `gorm:"type:varchar(64);NOT NULL"`                // 登陆ip
-	LoginTime    time.Time `gorm:"type:datetime;NOT NULL"`                   // 上次登陆时间
+	LoginTime    time.Time `gorm:"type:timestamp;NOT NULL"`                  // 上次登陆时间
 	RegisterIp   string    `gorm:"type:varchar(64);NOT NULL"`                // 注册ip
-	RegisterTime time.Time `gorm:"type:datetime;NOT NULL"`                   // unix
+	RegisterTime time.Time `gorm:"type:timestamp;NOT NULL"`                  // unix
 	Status       int       `gorm:"type:tinyint UNSIGNED;NOT NULL;default:1"` // 状态
 	Sex          int       `gorm:"type:tinyint UNSIGNED;NOT NULL"`
 	Remark       string    `gorm:"type:varchar(64)"` // 备注
@@ -42,7 +46,6 @@ type User struct {
 
 func create() {
 	/*	user := User{
-		Model:        gorm.Model{},
 		Name:         "root",
 		Phone:        "13452340416",
 		Password:     "123456",
@@ -55,7 +58,6 @@ func create() {
 		Remark:       "first user",
 	}	*/
 	user := User{
-		Model:        gorm.Model{},
 		Name:         "admin",
 		Phone:        "13452340417",
 		Password:     "root",
