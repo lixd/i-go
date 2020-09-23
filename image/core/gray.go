@@ -1,41 +1,11 @@
-package main
+package core
 
 import (
-	"bytes"
-	"errors"
 	"github.com/Comdex/imgo"
+	"i-go/image/util"
 	"image"
-	"image/color"
-	"image/png"
 	"io"
-	"os"
 )
-
-const (
-	path = "D:\\usr\\img\\origin.png"
-	save = "D:\\usr\\img\\gray.png"
-)
-
-func main() {
-	local()
-}
-func local() {
-	// 1.读取数据
-	file, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	// 2.灰度化
-	grays := RGB2Gray(file)
-	// 3.保存
-	create, err := os.Create(save)
-	if err != nil {
-		panic(err)
-	}
-	defer create.Close()
-	create.Write(grays)
-}
 
 // RBGGray 图像灰度处理-基于人眼感知算法
 func RGB2Gray(file io.Reader) (gray []byte) {
@@ -51,12 +21,14 @@ func RGB2Gray(file io.Reader) (gray []byte) {
 	// 2.灰度化
 	rgb2Gray := doRGB2Gray(imgMatrix)
 	// 3.矩阵转为[]byte
-	gray, err = matrix2Bytes(rgb2Gray)
+	gray, err = util.Matrix2Bytes(rgb2Gray)
 	if err != nil {
 		panic(err)
 	}
 	return
 }
+
+// doRGB2Gray
 func doRGB2Gray(src [][][]uint8) [][][]uint8 {
 	height := len(src)
 	width := len(src[0])
@@ -70,7 +42,8 @@ func doRGB2Gray(src [][][]uint8) [][][]uint8 {
 				green = imgMatrix[i][j][1]
 				blue  = imgMatrix[i][j][2]
 			)
-
+			// 计算灰度值
+			// RGB3通道值一致时 图片就是灰色
 			gray := uint8(float64(red)*0.3 + float64(green)*0.59 + float64(blue)*0.11)
 			imgMatrix[i][j][0] = gray
 			imgMatrix[i][j][1] = gray
@@ -78,31 +51,6 @@ func doRGB2Gray(src [][][]uint8) [][][]uint8 {
 		}
 	}
 	return imgMatrix
-}
-
-// matrix2Bytes 矩阵转成[]byte
-func matrix2Bytes(imgMatrix [][][]uint8) ([]byte, error) {
-	height := len(imgMatrix)
-	width := len(imgMatrix[0])
-
-	if height == 0 || width == 0 {
-		return nil, errors.New("the input of matrix is illegal")
-	}
-
-	nrgba := image.NewNRGBA(image.Rect(0, 0, width, height))
-
-	for i := 0; i < height; i++ {
-		for j := 0; j < width; j++ {
-			nrgba.SetNRGBA(j, i, color.NRGBA{R: imgMatrix[i][j][0], G: imgMatrix[i][j][1], B: imgMatrix[i][j][2], A: imgMatrix[i][j][3]})
-		}
-	}
-	buf := new(bytes.Buffer)
-	err := png.Encode(buf, nrgba)
-	if err != nil {
-		return nil, err
-	}
-
-	return buf.Bytes(), nil
 }
 
 // RGB2GrayDemo 灰度化具体算法
