@@ -21,10 +21,13 @@ func numIslands(grid [][]byte) int {
 }
 
 func dfsNum(x, y int, grid [][]byte) {
+	// terminator
 	if x < 0 || y < 0 || x >= len(grid) || y >= len(grid[0]) || grid[x][y] == '0' {
 		return
 	}
+	// process
 	grid[x][y] = '0'
+	// drill down
 	dfsNum(x-1, y, grid)
 	dfsNum(x+1, y, grid)
 	dfsNum(x, y-1, grid)
