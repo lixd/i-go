@@ -38,7 +38,7 @@ type User struct {
 	LoginIp      string    `gorm:"type:varchar(64);NOT NULL"`                // 登陆ip
 	LoginTime    time.Time `gorm:"type:timestamp;NOT NULL"`                  // 上次登陆时间
 	RegisterIp   string    `gorm:"type:varchar(64);NOT NULL"`                // 注册ip
-	RegisterTime time.Time `gorm:"type:timestamp;NOT NULL"`                  // unix
+	RegisterTime time.Time `gorm:"type:timestamp;NOT NULL"`                  // time
 	Status       int       `gorm:"type:tinyint UNSIGNED;NOT NULL;default:1"` // 状态
 	Sex          int       `gorm:"type:tinyint UNSIGNED;NOT NULL"`
 	Remark       string    `gorm:"type:varchar(64)"` // 备注

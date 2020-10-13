@@ -4,7 +4,7 @@ redis:
   password: "123456"
   db: 0
   MaxRetries: 3
-  PoolSize: 10
+  PoolSize: 1000
   MinIdleConns: 10
   MaxConnAge: "30s"
   PoolTimeout: "10s"

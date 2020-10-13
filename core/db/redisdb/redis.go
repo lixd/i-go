@@ -31,6 +31,13 @@ func Init() {
 	RedisClient = newClient(c)
 }
 
+func Client() *redis.Client {
+	if RedisClient == nil {
+		Init()
+	}
+	return RedisClient
+}
+
 func parseConf() *redisConf {
 	var c redisConf
 	if err := viper.UnmarshalKey("redis", &c); err != nil {

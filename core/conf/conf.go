@@ -39,7 +39,7 @@ func (c *Config) initConfig() error {
 		viper.SetConfigName("config")
 	}
 	//viper.SetConfigType("json") //  设置配置文件格式为json
-	viper.SetConfigType("yml") //  设置配置文件格式为json
+	viper.SetConfigType("yml") //  设置配置文件格式为yml
 	viper.AutomaticEnv()       // 读取匹配的环境变量
 
 	viper.SetEnvPrefix("TESTSERVER") // 读取环境变量的前缀为APISERVER

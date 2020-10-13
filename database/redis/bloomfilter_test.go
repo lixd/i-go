@@ -26,11 +26,12 @@ func BenchmarkBloomFilter(b *testing.B) {
 		data = []byte("bloomFilter")
 	)
 	for i := 0; i < b.N; i++ {
-		bf := NewBloomFilter(1000*20, 3, rc)
+		bf := NewBloomFilter(1000*20, 3, redisdb.Client())
 		bf.Set(key, data)
 		_ = bf.isContains(key, data)
 	}
 }
+
 func BenchmarkBloomFilter2(b *testing.B) {
 	Init("D:/lillusory/projects/i-go/conf/config.json")
 	rc := redisdb.RedisClient
