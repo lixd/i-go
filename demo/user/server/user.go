@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 	"i-go/demo/cmodel"
-	"i-go/demo/ret"
+	"i-go/demo/common/ret"
 	"i-go/demo/user/dto"
 	"i-go/demo/user/model"
 	"i-go/demo/user/repository"

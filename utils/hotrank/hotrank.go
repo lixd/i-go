@@ -1,4 +1,4 @@
-package hotrange
+package hotrank
 
 import (
 	"math"

@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"i-go/demo/ret"
+	"i-go/demo/common/ret"
 	"i-go/demo/tbk/dto"
 	"i-go/demo/tbk/server"
 	"net/http"
