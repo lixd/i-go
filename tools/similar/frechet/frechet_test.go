@@ -16,7 +16,7 @@ func Test_freChet_ClaDiscreteFrechet(t *testing.T) {
 	}
 
 	frechet := FreChet.ClaDiscreteFrechet(cord1, cord2)
-	//frechet := FreChet.ClaDiscreteFrechet(reverse(cord1), cord2)
+	// frechet := FreChet.ClaDiscreteFrechet(reverse(cord1), cord2)
 	fmt.Println("frechet: ", frechet)
 	// 具体FreChetDistance与相似度关系需要根据需求调整
 	// 例如轨迹最大宽高为400 相似度最大100 那么400=>100 大概相差1降低0.25相似度

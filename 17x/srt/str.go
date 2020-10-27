@@ -25,7 +25,7 @@ func IsValidIp(ip string) bool {
 	}
 	return true
 }
-func CheckIpIfValid(ip string) bool {
+func golCheckIpIfValid(ip string) bool {
 	if len(ip) == 0 {
 		return false
 	}

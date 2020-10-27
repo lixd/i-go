@@ -50,32 +50,27 @@ func (f *freChet) InitFrechetMatrix() {
 
 // claDFD
 func (f *freChet) claDFD(i, j int) float64 {
-	var (
-		matrix = f.Matrix
-		one    = f.Cord1
-		two    = f.Cord2
-	)
 	// if the value has already been solved
-	if matrix[i][j] > -1 {
-		return matrix[i][j]
+	if f.Matrix[i][j] > -1 {
+		return f.Matrix[i][j]
 	} else if i == 0 && j == 0 {
 		// if top left column, just compute the distance
-		matrix[i][j] = euclideanDistance(one[i], two[j])
+		f.Matrix[i][j] = euclideanDistance(f.Cord1[i], f.Cord2[j])
 	} else if i > 0 && j == 0 {
 		// can either be the actual distance or distance pulled from above
-		matrix[i][j] = max(f.claDFD(i-1, 0), euclideanDistance(one[i], two[j]))
+		f.Matrix[i][j] = max(f.claDFD(i-1, 0), euclideanDistance(f.Cord1[i], f.Cord2[j]))
 	} else if i == 0 && j > 0 {
 		// can either be the distance pulled from the left or the actual
 		// distance
-		matrix[i][j] = max(f.claDFD(0, j-1), euclideanDistance(one[i], two[j]))
+		f.Matrix[i][j] = max(f.claDFD(0, j-1), euclideanDistance(f.Cord1[i], f.Cord2[j]))
 	} else if i > 0 && j > 0 {
 		// can be the actual distance, or distance from above or from the left
-		matrix[i][j] = max(min(f.claDFD(i-1, j), f.claDFD(i-1, j-1), f.claDFD(i, j-1)), euclideanDistance(one[i], two[j]))
+		f.Matrix[i][j] = max(min(f.claDFD(i-1, j), f.claDFD(i-1, j-1), f.claDFD(i, j-1)), euclideanDistance(f.Cord1[i], f.Cord2[j]))
 	} else {
 		// infinite
-		matrix[i][j] = math.MaxInt64
+		f.Matrix[i][j] = math.MaxInt64
 	}
-	return matrix[i][j]
+	return f.Matrix[i][j]
 }
 
 func min(list ...float64) (min float64) {
@@ -110,3 +105,14 @@ func euclideanDistance(a, b Coordinate) float64 {
 	d := math.Sqrt(x2 + y2)
 	return d
 }
+
+/*
+String SDS
+Hash Hash表 压缩列表
+Set Hash表 整数数组
+SortedSet 跳表 压缩列表
+List 双向链表 压缩列表
+*/
+/*
+sonar-scanner.bat -D"sonar.projectKey=Vaptcha" -D"sonar.sources=." -D"sonar.host.url=http://47.93.123.142:9000" -D"sonar.login=9c1a1c41dea972439ac3b5348e08244d4261adb1"
+*/
