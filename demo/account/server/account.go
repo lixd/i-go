@@ -7,7 +7,7 @@ import (
 	"i-go/demo/account/model"
 	"i-go/demo/account/repository"
 	"i-go/demo/cmodel"
-	"i-go/demo/ret"
+	"i-go/demo/common/ret"
 
 	"i-go/utils"
 )

@@ -1,9 +1,7 @@
-package ret
+// Server层返回值
+package srv
 
-import (
-	"i-go/demo/constant/retcode"
-	"i-go/demo/constant/retmsg"
-)
+import "i-go/demo/common/ret"
 
 type Result struct {
 	Code int         `json:"code"`
@@ -11,22 +9,39 @@ type Result struct {
 	Msg  string      `json:"msg"`
 }
 
+// Unauthorized 未授权
 func Unauthorized() *Result {
 	return &Result{
-		Code: retcode.Unauthorized,
-		Msg:  retmsg.Unauthorized,
+		Code: ret.Unauthorized,
+		Msg:  ret.UnauthorizedMsg,
+	}
+}
+
+// BadRequest 请求体语法错误，参数错误
+func BadRequest() *Result {
+	return &Result{
+		Code: ret.Fail,
+		Msg:  ret.BadRequest,
+	}
+}
+
+// Forbidden 禁止访问 封禁
+func Forbidden() *Result {
+	return &Result{
+		Code: ret.Forbidden,
+		Msg:  ret.ForbiddenMsg,
 	}
 }
 
 func Success(data interface{}, msg ...string) *Result {
 	var message string
 	if len(msg) == 0 {
-		message = retmsg.Success
+		message = ret.SuccessMsg
 	} else {
 		message = msg[0]
 	}
 	return &Result{
-		Code: retcode.Success,
+		Code: ret.Success,
 		Data: data,
 		Msg:  message,
 	}
@@ -35,12 +50,12 @@ func Success(data interface{}, msg ...string) *Result {
 func Fail(data interface{}, msg ...string) *Result {
 	var message string
 	if len(msg) == 0 {
-		message = retmsg.Fail
+		message = ret.FailMsg
 	} else {
 		message = msg[0]
 	}
 	return &Result{
-		Code: retcode.Fail,
+		Code: ret.Fail,
 		Data: data,
 		Msg:  message,
 	}

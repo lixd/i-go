@@ -53,7 +53,7 @@
         style: 'light', // button style （default dark）list:dark,light
         color: '#00BFFF', // button color (default #57ABFF)
         // Only for test
-        mode: 'offline', // this config will switch to offline mode, only used for the test, remove before release
+        // mode: 'offline', // this config will switch to offline mode, only used for the test, remove before release
     }).then(function (vaptchaObj) {
         obj = vaptchaObj;  // storage to local variable
 
@@ -66,7 +66,7 @@
                 password: "root",
             };
             console.log("token: " + data.token);
-            // login example should config backend verify in your server
+            // login example should config backend verify in your se    rver
             $.post('http://localhost:8080/vaptcha/login', data, function (r) {
                 if (r.code !== 200) {
                     alert("backend verify fail");
@@ -80,6 +80,7 @@
         // watch close event
         vaptchaObj.listen('close', function () {
             console.log("close emit")
+            vaptchaObj.reset();
         });
     });
 
