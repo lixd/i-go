@@ -1,0 +1,21 @@
+{
+  "apps": [
+    {
+      "name": "puug-pc",
+      "max_memory_restart": "1G",
+      "script": "server/index.js",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 3000,
+        "HOST": "localhost"
+      },
+      "instances": 0,
+      "exec_mode": "cluster",
+      "autorestart": true,
+      "watch": true,
+      "error_file":"./logs/error.log",
+      "out_file":"./logs/out.log",
+      "pid_file": "./.pm2/pid/app-pm_id.pid"
+    }
+  ]
+}
