@@ -10,35 +10,28 @@ func main() {
 	var (
 		locker sync.Mutex
 		cond   = sync.NewCond(&locker)
+		wg     sync.WaitGroup
 	)
-	fmt.Printf("%#v \n", cond)
-	Print(cond)
-	// helloCond()
-}
-func Print(c *sync.Cond) {
-	fmt.Printf("%#v \n", c)
-}
-func helloCond() {
-	var (
-		locker sync.Mutex
-		cond   = sync.NewCond(&locker)
-	)
-	for i := 0; i < 40; i++ {
-		go func(x int) {
+
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func(number int) {
 			// wait()方法内部是先释放锁 然后在加锁 所以这里需要先 Lock()
 			cond.L.Lock()
 			defer cond.L.Unlock()
 			cond.Wait() // 等待通知,阻塞当前 goroutine
-			fmt.Println(x)
+			fmt.Printf("g %v ok~ \n", number)
+			wg.Done()
 		}(i)
 	}
-	for i := 0; i < 30; i++ {
-		// 每过50毫秒唤醒一个goroutine
+	for i := 0; i < 5; i++ {
+		// 每过 50毫秒 唤醒一个 goroutine
 		cond.Signal()
 		time.Sleep(time.Millisecond * 50)
 	}
-	// 剩下10个goroutine一起唤醒
+	time.Sleep(time.Millisecond * 50)
+	// 剩下5个 goroutine 一起唤醒
 	cond.Broadcast()
 	fmt.Println("Broadcast...")
-	time.Sleep(time.Second)
+	wg.Wait()
 }
