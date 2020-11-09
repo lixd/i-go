@@ -14,7 +14,7 @@ func Jaeger() gin.HandlerFunc {
 		var parentSpan opentracing.Span
 		tracer, closer := config.NewTracer("gin-demo")
 		defer closer.Close()
-
+		// 直接从 c.Request.Header 中提取 span,如果没有就新建一个
 		spCtx, err := opentracing.GlobalTracer().Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(c.Request.Header))
 		if err != nil {
 			parentSpan = tracer.StartSpan(c.Request.URL.Path)
