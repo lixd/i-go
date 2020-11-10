@@ -43,7 +43,7 @@ func ClientInterceptor(tracer opentracing.Tracer) grpc.UnaryClientInterceptor {
 }
 
 // metadata
-//为 了做载体，必须要实现 `opentracing.TextMapWriter` `opentracing.TextMapReader` 这两个接口。
+// 为了做载体 carrier，必须要实现 `opentracing.TextMapWriter` `opentracing.TextMapReader` 这两个接口。
 type MDReaderWriter struct {
 	metadata.MD
 }

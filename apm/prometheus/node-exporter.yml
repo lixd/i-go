@@ -1,0 +1,14 @@
+version: '3.2'
+services:
+  # node-exporter 服务器状态监控
+  node-exporter:
+    image: prom/node-exporter
+    restart: always
+    container_name: node-exporter
+    ports:
+      - 9101:9100
+
+networks:
+  default:
+    external:
+      name: prometheus

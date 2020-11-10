@@ -1,8 +1,8 @@
 package main
 
 import (
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	"golang.org/x/net/context"
+	"context"
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"google.golang.org/grpc"
 	"i-go/apm/trace/config"
 	"i-go/apm/trace/grpc/interceptor"
@@ -26,7 +26,7 @@ func main() {
 	defer closer.Close()
 	// UnaryInterceptor
 	s := grpc.NewServer(grpc.UnaryInterceptor(
-		grpc_middleware.ChainUnaryServer(
+		grpcMiddleware.ChainUnaryServer(
 			interceptor.ServerInterceptor(tracer),
 		),
 	))

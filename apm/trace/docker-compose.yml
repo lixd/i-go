@@ -4,8 +4,9 @@ services:
   db:
     image: jaegertracing/all-in-one
     restart: always
-    environment:
-      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+    command:
+      # 暴露Metrics端口号 默认14269
+      - --admin-http-port=14269
     ports:
       - 5775:5775/udp
       - 6831:6831/udp
@@ -13,4 +14,4 @@ services:
       - 5778:5778
       - 16686:16686
       - 14268:14268
-      - 9411:9411
+      - 14269:14269

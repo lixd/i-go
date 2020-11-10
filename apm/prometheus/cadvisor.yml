@@ -1,0 +1,18 @@
+version: '3.2'
+services:
+  # cadvisor 容器状态监控
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8090:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+networks:
+  default:
+    external:
+      name: prometheus

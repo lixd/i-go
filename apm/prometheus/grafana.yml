@@ -1,0 +1,14 @@
+version: '3.2'
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+networks:
+  default:
+    external:
+      name: prometheus
+
+# 默认账号密码都为admin
