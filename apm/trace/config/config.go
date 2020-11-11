@@ -10,13 +10,16 @@ import (
 )
 
 const (
-	CollectorEndpoint = "http://123.57.236.125:14268/api/traces"
+	CollectorEndpoint   = "http://123.57.236.125:14268/api/traces"
+	CollectorEndpoint2  = "http://47.93.123.142:14268/api/traces"
+	LocalAgentHostPort  = "47.93.123.142:6831"
+	LocalAgentHostPort2 = "localhost:6831"
 )
 
 // NewTracer
 func NewTracer(service string) (opentracing.Tracer, io.Closer) {
-	config := parseConfig()
-	return newTracer(service, config.CollectorEndpoint)
+	// config := parseConfig()
+	return newTracer(service, "")
 }
 
 // newTracer
@@ -30,13 +33,14 @@ func newTracer(service, collectorEndpoint string) (opentracing.Tracer, io.Closer
 			Param: 1,
 		},
 		Reporter: &jaegerConfig.ReporterConfig{
-			LogSpans:          true,
-			CollectorEndpoint: collectorEndpoint, // 将span发往jaeger-collector的服务地址
+			LogSpans: true,
+			// CollectorEndpoint:  CollectorEndpoint2, // 将span发往jaeger-collector的服务地址
+			LocalAgentHostPort: LocalAgentHostPort2,
 		},
 	}
 	// 不传递 logger 就不会打印日志
-	// tracer, closer, err := cfg.NewTracer(jaegerConfig.Logger(jaeger.StdLogger))
-	tracer, closer, err := cfg.NewTracer()
+	tracer, closer, err := cfg.NewTracer(jaegerConfig.Logger(jaeger.StdLogger))
+	// tracer, closer, err := cfg.NewTracer()
 	if err != nil {
 		panic(fmt.Sprintf("ERROR: cannot init Jaeger: %v\n", err))
 	}

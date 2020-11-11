@@ -1,12 +1,10 @@
-# jaeger
-version: '3.1'
+# jaeger all-in-one
+version: '3.2'
 services:
   db:
     image: jaegertracing/all-in-one
+    container_name: jaeger-all-in-one
     restart: always
-    command:
-      # 暴露Metrics端口号 默认14269
-      - --admin-http-port=14269
     ports:
       - 5775:5775/udp
       - 6831:6831/udp

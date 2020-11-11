@@ -25,7 +25,10 @@ func main() {
 	defer span.Finish()
 
 	helloTo := os.Args[1]
-	helloStr := formatString(span, helloTo)
+	var helloStr string
+	for i := 0; i < 100; i++ {
+		helloStr = formatString(span, helloTo)
+	}
 	// 3.通过tag、log记录注释信息
 	// LogFields 和 LogKV底层是调用的同一个方法
 	span.SetTag("hello-to", helloTo)
@@ -34,7 +37,9 @@ func main() {
 		log.String("value", helloStr),
 	)
 	span.LogKV("event", "println")
-	printHello(span, helloStr)
+	for i := 0; i < 100; i++ {
+		printHello(span, helloStr)
+	}
 }
 
 func formatString(span opentracing.Span, helloTo string) string {

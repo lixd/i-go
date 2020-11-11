@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  # jaeger-agent 单独部署到各个需要采集的机器上
+  jaeger-agent:
+    image: jaegertracing/jaeger-agent
+    container_name: jaeger-agent
+    environment:
+      - REPORTER_GRPC_HOST_PORT=jaeger-collector:14250
+      - LOG_LEVEL=debug
+    ports:
+      - 5775:5775/udp
+      - 5778:5778
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 14271:14271
+
+networks:
+  default:
+    external:
+      name: jaeger
+

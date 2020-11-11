@@ -1,4 +1,9 @@
 logPath: "D:/lillusory/projects/i-go"
+
+jaeger:
+  collectorEndpoint: "http://localhost:14268/api/traces"
+  localAgentHostPort: "localhost:6831"
+
 redis:
   addr: "123.57.236.125:6379"
   password: "123456"
