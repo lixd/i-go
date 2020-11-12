@@ -30,15 +30,18 @@ require (
 	github.com/go-playground/universal-translator v0.17.0
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/go-redis/redis v6.15.2+incompatible
-	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gocolly/colly v1.2.0
 	github.com/gogf/gf v1.13.1
 	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.4.2
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/gonum/floats v0.0.0-20181209220543-c233463c7e82 // indirect
+	github.com/gonum/internal v0.0.0-20181124074243-f884aa714029 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
+	github.com/james-bowman/nlp v0.0.0-20200417075118-1e2772e0e1e5
+	github.com/james-bowman/sparse v0.0.0-20201020094531-30083ba795ab // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.10
@@ -71,7 +74,6 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/sony/gobreaker v0.4.1
 	github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
-	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.6.1
@@ -86,6 +88,7 @@ require (
 	github.com/willf/bloom v2.0.3+incompatible
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
+	github.com/yanyiwu/gojieba v1.1.2
 	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.0.4
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
@@ -97,12 +100,12 @@ require (
 	golang.org/x/sys v0.0.0-20201024232916-9f70ab9862d5 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	golang.org/x/tools v0.0.0-20201023174141-c8cfbd0f21e6 // indirect
+	gonum.org/v1/gonum v0.7.0
 	gonum.org/v1/netlib v0.0.0-20200317120129-c5a04cffd98a // indirect
 	gonum.org/v1/plot v0.7.0
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.24.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
-	gopkg.in/yaml.v2 v2.3.0 // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
 
