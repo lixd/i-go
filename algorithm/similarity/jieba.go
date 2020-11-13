@@ -1,10 +1,10 @@
 package main
 
 import (
-	"strings"
+	"fmt"
 	"github.com/yanyiwu/gojieba"
-	)
-
+	"strings"
+)
 
 func main() {
 	var s string
