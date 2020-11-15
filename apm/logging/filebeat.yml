@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  # filebeat 从文件中读取日志并发送给 Logstash
+  filebeat:
+  # 容器名称
+  image: elastic/filebeat:7.8.0
+  container_name: filebeat
+  restart: always
+  volumes:
+    - ./filebeat-conf.yml:/usr/share/filebeat/filebeat.yml
+    - ./logs:/usr/share/filebeat/logs
+    - ./data:/usr/share/filebeat/data
+
+networks:
+  default:
+    external:
+      name: elk
+
+
+
+

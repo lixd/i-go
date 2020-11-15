@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-// https://github.com/xinliangnote/go-gin-api
 func Register(e *gin.Engine) {
 	e.GET("/ping", Ping)
 }

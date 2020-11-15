@@ -1,0 +1,34 @@
+version: '3.2'
+services:
+  # elasticsearch jaeger存储后端 单独部署
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    container_name: jaeger-es
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+
+  # kibana 方便观察es中的数据
+  kibana:
+    image: kibana:7.8.0
+    container_name: elk-kibana
+    environment:
+      SERVER_NAME: kibana.local
+      ELASTICSEARCH_HOSTS: http://elk-es:9200
+      I18N_LOCALE: zh-en
+    ports:
+      - 5602:5601
+
+networks:
+  default:
+    external:
+      name: jaeger

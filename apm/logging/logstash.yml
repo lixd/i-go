@@ -1,0 +1,20 @@
+version: '3.2'
+services:
+  # elasticsearch jaeger存储后端 单独部署
+  logstash:
+    container_name: elk-logstash
+    hostname: logstash
+    image: logstash:7.5.1
+    command: logstash -f ./conf/logstash-filebeat.conf
+    restart: always
+    volumes:
+      - ./logstash-filebeat.conf:/usr/share/logstash/conf/logstash-filebeat.conf
+    environment:
+      - elasticsearch.hosts=http://elk-es:9200
+    ports:
+      - 5044:5044
+
+networks:
+  default:
+    external:
+      name: elk
