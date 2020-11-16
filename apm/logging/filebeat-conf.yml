@@ -1,20 +1,40 @@
+close_inactive: 1m
+clean_inactive: 72h
+
 filebeat.inputs:
   - type: log
     enabled: true
+    scan_frequency: 10s
+    exclude_lines: [ '^DBG' ]
+    include_lines: [ '^INFO' ]
+    fields:
+      service: elk-test
+      # 将info 和 error 区分开
+      level: info
+      # 在环境变量中增加该值 或者写死在配置文件中
+      #ip: ${SERVER_IP}
+      clientip: 192.168.1.244
     paths:
-      - /usr/local/workspace/elk/filebeat/logstash-tutorial.log
-
+      # 这里是容器内的目录 需要在启动时将外部目录挂载到容器里才行
+      - /var/logs/api/info-*.log
+  - type: log
+    enabled: true
+    scan_frequency: 10s
+    exclude_lines: [ '^DBG' ]
+    include_lines: [ '^ERR', '^WARN' ]
+    # 加一个tag kibana中好查看
+    tags: [ "json" ]
+    fields:
+      service: elk-test
+      level: error
+      clientip: 192.168.1.244
+    paths:
+      - /var/logs/api/error-*.log
 filebeat.config:
   modules:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
-
-filebeat.autodiscover:
-  providers:
-    - type: docker
-      hints.enabled: true
-
-#output.elasticsearch:
-#  hosts: ["192.168.20.101:9200","192.168.20.101:9201"]
+# 发送到 logstash
 output.logstash:
-  hosts: ["elk-logstash:5044"]
+  hosts: [ "elk-logstash:5044" ]
+

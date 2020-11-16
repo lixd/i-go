@@ -35,7 +35,7 @@ func (p *participle) Cut(target ...string) []string {
 	)
 	// 1.分词
 	for _, v := range target {
-		cut := p.JieBa.Cut(v, true)
+		cut := p.JieBa.CutForSearch(v, true)
 		cuts = append(cuts, cut)
 	}
 	// 2.拼接

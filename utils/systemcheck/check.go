@@ -67,7 +67,7 @@ func DiskCheck(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Success 200 {string} plain "CRITICAL - Load average: 1.78, 1.99, 2.02 | Cores: 2"
-//// @Router /sd/cpu [get]
+// @Router /sd/cpu [get]
 func CPUCheck(c *gin.Context) {
 	cores, _ := cpu.Counts(false)
 

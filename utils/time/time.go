@@ -23,9 +23,11 @@ func UnixTime() int64 {
 	timestamp := time.Now().In(loc).Unix()
 	return timestamp
 }
+
 func Format(unix int64) string {
 	return time.Unix(unix, 0).Format(Layout)
 }
+
 func Parse(format string) (t time.Time) {
 	t, _ = time.Parse(Layout, format)
 	return

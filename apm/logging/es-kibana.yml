@@ -5,10 +5,12 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: jaeger-es
     environment:
+      # 开启内存锁定
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     ulimits:
+      # 取消内心相关限制  用于开启内存锁定
       memlock:
         soft: -1
         hard: -1

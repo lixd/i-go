@@ -48,7 +48,7 @@ func Map2StructUtil() {
 		Password string `json:"password"`
 		Nickname string `json:"nickname"`
 	}
-	//u:=User{
+	// u:=User{
 	//	Base:     Base{
 	//		Ids:        Ids{
 	//			Id:  1,
@@ -59,7 +59,7 @@ func Map2StructUtil() {
 	//	Passport: "Passport",
 	//	Password: "Password",
 	//	Nickname: "Nickname",
-	//}
+	// }
 	var u User
 	m := map[string]interface{}{
 		"id":          "1",

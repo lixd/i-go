@@ -12,7 +12,7 @@ bloom过滤hash工具类
 
 type BloomFilter struct {
 	m uint // bitmap大小
-	k uint //hash函数个数 越大冲突越小
+	k uint // hash函数个数 越大冲突越小
 }
 
 func NewBloomFilterHash(m, k uint) *BloomFilter {
