@@ -1,14 +1,16 @@
 close_inactive: 1m
 clean_inactive: 72h
+scan_frequency: 10s
 
 filebeat.inputs:
+  # user
   - type: log
     enabled: true
-    scan_frequency: 10s
-    exclude_lines: [ '^DBG' ]
-    include_lines: [ '^INFO' ]
+    scan_frequency: 5s
+    exclude_lines: [ '(?i).*DEBUG*.' ]
+    include_lines: [ '(?i).*INFO*.', '(?i).*WARN*.' ]
     fields:
-      service: elk-test
+      service: elk-user
       # 将info 和 error 区分开
       level: info
       # 在环境变量中增加该值 或者写死在配置文件中
@@ -16,20 +18,58 @@ filebeat.inputs:
       clientip: 192.168.1.244
     paths:
       # 这里是容器内的目录 需要在启动时将外部目录挂载到容器里才行
-      - /var/logs/api/info-*.log
+      - /var/logs/api/info_*.log
   - type: log
     enabled: true
-    scan_frequency: 10s
-    exclude_lines: [ '^DBG' ]
-    include_lines: [ '^ERR', '^WARN' ]
-    # 加一个tag kibana中好查看
+    include_lines: [ '(?i).*ERROR*.' ]
     tags: [ "json" ]
     fields:
-      service: elk-test
+      service: elk-user
       level: error
       clientip: 192.168.1.244
     paths:
-      - /var/logs/api/error-*.log
+      - /var/logs/api/error_*.log
+  # admin
+  - type: log
+    enabled: true
+    include_lines: [ '(?i).*INFO*.', '(?i).*WARN*.' ]
+    fields:
+      service: elk-admin
+      level: info
+      clientip: 192.168.1.244
+    paths:
+      - /var/logs/admin/info_*.log
+  - type: log
+    enabled: true
+    include_lines: [ '(?i).*ERROR*.' ]
+    tags: [ "json" ]
+    fields:
+      service: elk-admin
+      level: error
+      clientip: 192.168.1.244
+    paths:
+      - /var/logs/admin/error_*.log
+  # cronJob
+  - type: log
+    enabled: true
+    include_lines: [ '(?i).*INFO*.' , '(?i).*WARN*.' ]
+    fields:
+      service: elk-cronjob
+      level: info
+      clientip: 192.168.1.244
+    paths:
+      - /var/logs/task/info_*.log
+  - type: log
+    enabled: true
+    include_lines: [ '(?i).*ERROR*.' ]
+    tags: [ "json" ]
+    fields:
+      service: elk-cronjob
+      level: error
+      clientip: 192.168.1.244
+    paths:
+      - /var/logs/task/error_*.log
+
 filebeat.config:
   modules:
     path: ${path.config}/modules.d/*.yml
