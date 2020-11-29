@@ -1,0 +1,73 @@
+version: '3.2'
+services:
+  elasticsearch:
+    image: elasticsearch:7.8.0
+    container_name: elk-es1
+    restart: always
+    environment:
+      # JVM 参数
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      # 集群名称
+      - cluster.name=myes
+      # 当前节点名称
+      - node.name=elk-es1
+      # 配置集群中所有节点信息
+      - discovery.seed_hosts=elk-es1,elk-es2,elk-es3
+      # 配置有资格参与 master 选举的节点
+      - cluster.initial_master_nodes=elk-es1,elk-es2,elk-es3
+      # 开启内存锁定以提升性能
+      - bootstrap.memory_lock=true
+    # 取消 memlock 配合前面的内存锁定功能
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      # 将数据挂载到宿主机实现持久化
+      - ./node1/data:/usr/share/elasticsearch/data
+      - ./node1/logs:/usr/share/elasticsearch/logs
+      # 插件只需要其中一个节点有就行
+      - ./plugins:/usr/share/elasticsearch/plugins
+    ports:
+      - 9200:9200
+  elasticsearch2:
+    image: elasticsearch:7.8.0
+    container_name: elk-es2
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=myes
+      - node.name=elk-es2
+      - discovery.seed_hosts=elk-es1,elk-es2,elk-es3
+      - cluster.initial_master_nodes=elk-es1,elk-es2,elk-es3
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./node2/data:/usr/share/elasticsearch/data
+      - ./node2/logs:/usr/share/elasticsearch/logs
+  elasticsearch3:
+    image: elasticsearch:7.8.0
+    container_name: elk-es3
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=myes
+      - node.name=elk-es3
+      - discovery.seed_hosts=elk-es1,elk-es2,elk-es3
+      - cluster.initial_master_nodes=elk-es1,elk-es2,elk-es3
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./node3/data:/usr/share/elasticsearch/data
+      - ./node3/logs:/usr/share/elasticsearch/logs
+# 指定使用外部名叫 elk 的 docker 网络
+networks:
+  default:
+    external:
+      name: elk

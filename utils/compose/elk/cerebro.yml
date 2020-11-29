@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+  # cerebro 是一个简单的 ES 监控工具
+  cerebro:
+    image: lmenezes/cerebro:0.9.2
+    container_name: cerebro
+    ports:
+      - "9000:9000"
+    command:
+      - -Dhosts.0.host=http://elk-es1:9200
+
+networks:
+  default:
+    external:
+      name: elk
