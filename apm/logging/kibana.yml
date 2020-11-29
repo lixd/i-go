@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  # kibana 方便观察es中的数据
+  kibana:
+    image: kibana:7.8.0
+    container_name: elk-kibana
+    environment:
+      SERVER_NAME: kibana.local
+      ELASTICSEARCH_HOSTS: http://elk-es:9200
+      I18N_LOCALE: zh-en
+    ports:
+      - 5602:5601
+
+networks:
+  default:
+    external:
+      name: elk
