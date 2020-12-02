@@ -1,9 +1,9 @@
 # 全局配置
 global:
   # 数据采集间隔
-  scrape_interval: 5s
+  scrape_interval: 15s
   # 监控检查间隔
-  evaluation_interval: 5s
+  evaluation_interval: 15s
 
 # 报警规则
 rule_files:
@@ -27,7 +27,7 @@ scrape_configs:
   - job_name: jaeger-agent
     static_configs:
       - targets:
-          # 不在同一个网络下则需要通过IP访问 ip addr show docker0
+          # 不在同一个网络下则需要通过IP访问（宿主机内网IP）
           # 由于是通过容器访问宿主机 localhost 访问的是容器本身
           - localhost:14271
   - job_name: jaeger-collector
@@ -38,3 +38,11 @@ scrape_configs:
     static_configs:
       - targets:
           - localhost:16687
+  - job_name: jaeger-query
+    static_configs:
+      - targets:
+          - 172.17.0.1:16687
+  - job_name: api
+    static_configs:
+      - targets:
+          - localhost:8080

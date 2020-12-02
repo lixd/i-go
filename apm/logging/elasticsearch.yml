@@ -1,6 +1,6 @@
 version: '3.2'
 services:
-  # elasticsearch jaeger存储后端 单独部署
+  # elasticsearch
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: elk-es
@@ -10,16 +10,15 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     ulimits:
-      # 取消内心相关限制  用于开启内存锁定
+      # 取消内存相关限制  用于开启内存锁定
       memlock:
         soft: -1
         hard: -1
     volumes:
       - ./data:/usr/share/elasticsearch/data
       - ./logs:/usr/share/elasticsearch/logs
-      - ./plugins:/usr/share/elasticsearch/plugins
     ports:
-      - 9201:9200
+      - 9200:9200
 
 networks:
   default:
