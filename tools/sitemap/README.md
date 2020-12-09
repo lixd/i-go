@@ -24,9 +24,9 @@ Baidu https://ziyuan.baidu.com/college/courseinfo?id=267&page=2#h2_article_title
         <priority>0.8</priority>
     </url>
 </urlset>
+
 ```
 自适应网页
 ```xml
 <mobile:mobile type="pc,mobile"/>
 ```
-

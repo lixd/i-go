@@ -7,9 +7,9 @@ import (
 )
 
 func TestGetUnixTime(t *testing.T) {
-	date := DateTime()
-	unix := UnixTime()
-	fmt.Println(date)
+	daily := GetDailyTime(time.Now())
+	unix := GetUTC8()
+	fmt.Println(daily)
 	fmt.Println(unix)
 	fmt.Println(time.Now().Unix())
 	fmt.Println(Format(unix))

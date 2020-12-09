@@ -1,7 +1,7 @@
 package utils
 
 import (
-	uuid "github.com/satori/go.uuid"
+	"github.com/satori/go.uuid"
 )
 
 type stringHelper struct {

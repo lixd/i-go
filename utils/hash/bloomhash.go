@@ -59,11 +59,11 @@ func location(h [4]uint64, i uint) uint64 {
 // baseHashes murmur3 hash 计算出4个base hash值
 func baseHashes(data []byte) [4]uint64 {
 	a1 := []byte{1} // to grab another bit of data
-	hasher := murmur3.New128()
-	hasher.Write(data) // #nosec
-	v1, v2 := hasher.Sum128()
-	hasher.Write(a1) // #nosec
-	v3, v4 := hasher.Sum128()
+	her := murmur3.New128()
+	_, _ = her.Write(data) // #nosec
+	v1, v2 := her.Sum128()
+	_, _ = her.Write(a1) // #nosec
+	v3, v4 := her.Sum128()
 	return [4]uint64{
 		v1, v2, v3, v4,
 	}

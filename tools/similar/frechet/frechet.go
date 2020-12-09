@@ -105,14 +105,3 @@ func euclideanDistance(a, b Coordinate) float64 {
 	d := math.Sqrt(x2 + y2)
 	return d
 }
-
-/*
-String SDS
-Hash Hash表 压缩列表
-Set Hash表 整数数组
-SortedSet 跳表 压缩列表
-List 双向链表 压缩列表
-*/
-/*
-sonar-scanner.bat -D"sonar.projectKey=Vaptcha" -D"sonar.sources=." -D"sonar.host.url=http://47.93.123.142:9000" -D"sonar.login=9c1a1c41dea972439ac3b5348e08244d4261adb1"
-*/

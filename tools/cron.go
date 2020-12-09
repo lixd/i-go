@@ -45,7 +45,7 @@ type job struct {
 	desc string
 }
 
-// 实现 Run 方法 即实现了Job 接口
+// 实现 cron.Job 接口
 func (job *job) Run() {
 	fmt.Printf("job id=%v desc=%v \n", job.id, job.desc)
 }

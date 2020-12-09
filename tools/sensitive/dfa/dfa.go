@@ -1,4 +1,4 @@
-package audit
+package dfa
 
 import (
 	"strings"
@@ -152,7 +152,7 @@ func (dfa *DFA) Search(sentence string, matchType int64) (matchIndexList []Index
 					return matchIndexList
 				}
 
-				//重新回到root节点并重置标记，继续寻找下一个敏感词
+				// 重新回到root节点并重置标记，继续寻找下一个敏感词
 				currNode = dfa.root
 				isFirstMatch = true
 				start = -1
@@ -164,7 +164,7 @@ func (dfa *DFA) Search(sentence string, matchType int64) (matchIndexList []Index
 				// 所以这里就赋值为start
 				i = start
 			}
-			//重新回到root节点并重置标记，继续寻找下一个敏感词
+			// 重新回到root节点并重置标记，继续寻找下一个敏感词
 			currNode = dfa.root
 			start = -1
 			isFirstMatch = true

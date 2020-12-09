@@ -1,9 +1,5 @@
 package tire
 
-import (
-	"fmt"
-)
-
 const MaxCap = 26 // a-z 每一层级分支数
 
 type Tire struct {
@@ -31,9 +27,9 @@ func (t *Tire) Insert(word string) {
 	for _, v := range word {
 		if tire.next[v] == nil {
 			node := new(Tire)
-			//子节点数量为26
+			// 子节点数量为26
 			node.next = make(map[rune]*Tire, MaxCap)
-			//初始化节点单词标志为假
+			// 初始化节点单词标志为假
 			node.isWord = false
 			tire.next[v] = node
 		}
@@ -64,11 +60,4 @@ func (t *Tire) StartsWith(prefix string) bool {
 		tire = tire.next[v]
 	}
 	return true
-}
-
-func main() {
-	t := NewTire()
-	t.Insert("Hello")
-	fmt.Print(t.Search("Hello"), "\n")
-	fmt.Print(t.Search("Hallo"), "\n")
 }

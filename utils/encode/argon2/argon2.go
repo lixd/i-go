@@ -5,6 +5,7 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
+// 首选 Argon2 次选 Scrypt 最后为 BCrypt
 /*
 使用 argon2 进行密码加密
 */
