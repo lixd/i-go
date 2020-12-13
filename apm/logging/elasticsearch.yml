@@ -4,6 +4,7 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: elk-es
+    restart: always
     environment:
       # 开启内存锁定
       - bootstrap.memory_lock=true

@@ -4,6 +4,7 @@ services:
   kibana:
     image: kibana:7.8.0
     container_name: elk-kibana
+    restart: always
     environment:
       SERVER_NAME: kibana.local
       ELASTICSEARCH_HOSTS: http://elk-es:9200
