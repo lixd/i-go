@@ -1,13 +1,14 @@
 package main
 
 import (
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"i-go/grpc/hello/proto"
+	"log"
 	"net"
 	"runtime/debug"
 )
@@ -37,7 +38,7 @@ func main() {
 		panic(err)
 	}
 	// 构建Server的时候传入两个写好的interceptor
-	s := grpc.NewServer(grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(LoggingInterceptor, RecoveryInterceptor)))
+	s := grpc.NewServer(grpc.UnaryInterceptor(grpcMiddleware.ChainUnaryServer(LoggingInterceptor, RecoveryInterceptor)))
 	// 注册 server
 	proto.RegisterHelloServer(s, &helloServer{})
 	err = s.Serve(lis)
@@ -47,7 +48,8 @@ func main() {
 }
 
 // LoggingInterceptor RPC 方法的入参出参的日志输出
-func LoggingInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+func LoggingInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (
+	interface{}, error) {
 	logrus.Printf("gRPC before: %s, %v", info.FullMethod, req)
 	resp, err := handler(ctx, req)
 	logrus.Printf("gRPC after: %s, %v", info.FullMethod, resp)
@@ -55,7 +57,8 @@ func LoggingInterceptor(ctx context.Context, req interface{}, info *grpc.UnarySe
 }
 
 // RecoveryInterceptor RPC 方法的异常保护和日志输出
-func RecoveryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+func RecoveryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (
+	resp interface{}, err error) {
 	defer func() {
 		if e := recover(); e != nil {
 			debug.PrintStack()
@@ -63,5 +66,17 @@ func RecoveryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryS
 		}
 	}()
 
+	return handler(ctx, req)
+}
+
+// filter 拦截器需要实现为 grpc.UnaryServerInterceptor 这个类型
+/*
+ctx、req 则是 gPRC 方法的前两个参数
+info参数表示当前是对应的那个gRPC方法
+handler参数对应当前的gRPC方法函数
+*/
+func filter(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (
+	resp interface{}, err error) {
+	log.Println("fileter:", info)
 	return handler(ctx, req)
 }

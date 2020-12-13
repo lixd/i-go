@@ -47,7 +47,7 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
-	github.com/lixd/gozxing v0.0.0-20200414065239-6be69a426dd6
+	github.com/lixd/gozxing v0.0.0-20200414065239-6be69a426dd6 // indirect
 	github.com/lixd/vaptcha-sdk-go v0.0.0-20200810135250-cb0641d4d79b
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
@@ -58,7 +58,7 @@ require (
 	github.com/nats-io/nats-streaming-server v0.17.0 // indirect
 	github.com/nats-io/nats.go v1.10.0
 	github.com/nats-io/stan.go v0.6.0
-	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/olekukonko/tablewriter v0.0.4 // indirect
 	github.com/olivere/elastic v6.2.29+incompatible
 	github.com/opentracing/opentracing-go v1.2.0
@@ -78,7 +78,6 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.6.1
-	github.com/tdewolff/canvas v0.0.0-20201202123148-ce77df431d77
 	github.com/tealeg/xlsx v1.0.5
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
