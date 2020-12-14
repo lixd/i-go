@@ -48,8 +48,8 @@ func Init() {
 		panic(err)
 	}
 	// 一次初始化多个连接
-	//newClient(c)
-	newClientCluster(c)
+	newClient(c)
+	// newClientCluster(c)
 }
 
 func newClientCluster(c *Conf) {
@@ -58,7 +58,7 @@ func newClientCluster(c *Conf) {
 	for key, name := range c.DBS {
 		URLFull := strings.ReplaceAll(URLPwd, "<dbname>", name)
 		fmt.Println("mongodb URL: ", URLFull)
-		//appUrl := "mongodb+srv://17x:mongodb12345@clusterfree.p7rd5.mongodb.net/17x?retryWrites=true&w=majority"
+		// appUrl := "mongodb+srv://17x:mongodb12345@clusterfree.p7rd5.mongodb.net/17x?retryWrites=true&w=majority"
 		// 1. 获取客户端连接
 		MongoClient, err := mongo.NewClient(
 			options.Client().ApplyURI(URLFull).
@@ -94,10 +94,10 @@ func newClient(c *Conf) {
 		MongoClient, err := mongo.NewClient(
 			options.Client().ApplyURI(appUrl).
 				SetAuth(options.Credential{
-					Username: c.Username,
-					Password: c.Password,
-					// AuthMechanism: c.AuthMechanism0,
-					AuthSource: name}).
+					Username:      c.Username,
+					Password:      c.Password,
+					AuthMechanism: c.AuthMechanism,
+					AuthSource:    name}).
 				SetMaxPoolSize(c.MaxPoolSize),
 		)
 		if err != nil {
@@ -123,7 +123,7 @@ func newClient(c *Conf) {
 
 func parseConf() (*Conf, error) {
 	var c Conf
-	if err := viper.UnmarshalKey("mongodbCluster", &c); err != nil {
+	if err := viper.UnmarshalKey("mongodb", &c); err != nil {
 		return &Conf{}, err
 	}
 	if c.AppUrl == "" {

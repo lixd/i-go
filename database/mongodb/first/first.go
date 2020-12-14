@@ -11,21 +11,19 @@ import (
 
 var tdb = mongodb.TestDB
 
-// 5ed46396 1c7490 0ec8 482006
-//
-
 func main() {
 	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
 	mongodb.Init()
 
-	upsert()
-	//query()
-	//aggregate()
+	// upsert()
+	incUpsert()
+	// query()
+	// aggregate()
 }
 
 func upsert() {
 	var req = model.UserInfoReq{
-		//Id:       "5ebd4fe4d8c4278a887c4539",
+		// Id:       "5ebd4fe4d8c4278a887c4539",
 		UserName: "First",
 		Password: "First",
 		Age:      1323,
@@ -37,6 +35,13 @@ func upsert() {
 		logrus.WithFields(logrus.Fields{"Scenes": "mongodb 插入数据失败"}).Error(err)
 	}
 	fmt.Println(id)
+}
+
+func incUpsert() {
+	err := repository.UserInfo.IncUpsert()
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "mongodb 插入数据失败"}).Error(err)
+	}
 }
 
 func query() {

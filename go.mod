@@ -47,7 +47,6 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
-	github.com/lixd/gozxing v0.0.0-20200414065239-6be69a426dd6 // indirect
 	github.com/lixd/vaptcha-sdk-go v0.0.0-20200810135250-cb0641d4d79b
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
@@ -58,7 +57,6 @@ require (
 	github.com/nats-io/nats-streaming-server v0.17.0 // indirect
 	github.com/nats-io/nats.go v1.10.0
 	github.com/nats-io/stan.go v0.6.0
-	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/olekukonko/tablewriter v0.0.4 // indirect
 	github.com/olivere/elastic v6.2.29+incompatible
 	github.com/opentracing/opentracing-go v1.2.0

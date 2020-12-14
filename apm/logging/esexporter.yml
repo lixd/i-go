@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+  # es metric 采集
+  elasticsearch_exporter:
+    image: justwatch/elasticsearch_exporter:1.1.0
+    command:
+      - '--es.uri=http://elk-es:9200'
+    restart: always
+    ports:
+      - 9114:9114
+
+networks:
+  default:
+    external:
+      name: elk

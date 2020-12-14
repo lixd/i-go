@@ -25,6 +25,26 @@ func (ui *userInfo) GetColl() *mongo.Collection {
 	return ui.coll
 }
 
+type Template struct {
+	Hour int `bson:"Hour"`
+}
+
+func (ui *userInfo) IncUpsert() error {
+	list := make([]Template, 0, 24)
+	for i := 0; i < 24; i++ {
+		list = append(list, Template{Hour: i})
+	}
+	filter := bson.M{"UserName": "17x"}
+	update := bson.M{
+		"$addToSet": bson.M{"Hours24": bson.M{"$each": list}},
+		// "$inc":  bson.M{"Age": 1, "Hours24.0.request": 1},
+		"$set": bson.M{"Phone": 12345},
+	}
+	opts := options.Update().SetUpsert(true)
+	_, err := ui.GetColl().UpdateOne(context.Background(), filter, update, opts)
+	return err
+}
+
 func (ui *userInfo) Upsert(req *model.UserInfoReq) (string, error) {
 	var (
 		filter   bson.M

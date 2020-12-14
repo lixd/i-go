@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
-	"i-go/core/logger/ilogrus"
 	"i-go/core/logger/izap"
 	amodel "i-go/demo/account/model"
 	arouter "i-go/demo/account/router"
@@ -41,6 +40,6 @@ func Init() {
 	mysqldb.MySQL.AutoMigrate(&amodel.Account{})
 	mysqldb.MySQL.AutoMigrate(&omodel.Order{})
 
-	//ilogrus.InitLogger()
+	// ilogrus.InitLogger()
 	izap.InitLogger()
 }

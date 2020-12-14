@@ -8,6 +8,11 @@ import (
 func main() {
 	t1 := GetUnixTime()
 	fmt.Println(t1)
+	m := make(map[string]int64)
+	m["1"] += 2
+	fmt.Println(m["1"])
+	m["1"] += 2
+	fmt.Println(m["1"])
 }
 
 func GetUnixTime() int64 {
