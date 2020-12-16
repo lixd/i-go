@@ -151,6 +151,7 @@ type MongoCollection interface {
 func GetTestCollection(c MongoCollection) *mongo.Collection {
 	return TestDB.Collection(c.GetCollectionName())
 }
+
 func GetJobCollection(c MongoCollection) *mongo.Collection {
 	return JobDB.Collection(c.GetCollectionName())
 }

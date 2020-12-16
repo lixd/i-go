@@ -30,6 +30,7 @@ func main() {
 	s := grpc.NewServer()
 	// 注册 server
 	proto.RegisterHelloServer(s, &helloServer{})
+	// reflection.Register(s)
 	s.Serve(lis)
 
 }

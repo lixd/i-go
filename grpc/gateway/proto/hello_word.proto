@@ -1,0 +1,16 @@
+syntax = "proto3";
+package your.service.v1;
+option go_package = ".;proto";
+import "google/api/annotations.proto";
+service Hello {
+  rpc Echo(StringMessage) returns (StringMessage) {}
+}
+
+message StringMessage {
+  string value = 1;
+}
+
+/*
+protoc -I . --go_out . --go_opt paths=source_relative --go-grpc_out . --go-grpc_opt paths=source_relative  hello_word.proto
+protoc -I . --go_out .  --go-grpc_out .  hello_word.proto
+*/

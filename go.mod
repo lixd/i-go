@@ -35,11 +35,12 @@ require (
 	github.com/gocolly/colly v1.2.0
 	github.com/gogf/gf v1.13.1
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
-	github.com/golang/mock v1.4.3
-	github.com/golang/protobuf v1.4.2
+	github.com/golang/mock v1.4.4
+	github.com/golang/protobuf v1.4.3
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.1 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
@@ -100,8 +101,8 @@ require (
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
 	golang.org/x/tools v0.0.0-20201023174141-c8cfbd0f21e6 // indirect
 	gonum.org/v1/plot v0.8.0
-	google.golang.org/grpc v1.29.1
-	google.golang.org/protobuf v1.24.0
+	google.golang.org/grpc v1.33.1
+	google.golang.org/protobuf v1.25.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )

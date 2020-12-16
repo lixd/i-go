@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 )
 
+// http://localhost:8080/click.html
 func main() {
 	http.HandleFunc("/vaptcha/login", logic.Login)
 	http.HandleFunc("/vaptcha/offline", logic.Offline)
