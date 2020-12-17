@@ -13,6 +13,7 @@ func main() {
 	fmt.Println(m["1"])
 	m["1"] += 2
 	fmt.Println(m["1"])
+	fmt.Println(1608171721 / 30 * 30)
 }
 
 func GetUnixTime() int64 {
