@@ -1,59 +1,48 @@
 package main
 
 import (
-	"fmt"
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/sirupsen/logrus"
-	"google.golang.org/grpc"
-	"i-go/grpc/stream/proto"
-	"i-go/utils"
+	"log"
+	"math"
 	"net"
+
+	"google.golang.org/grpc"
+	pb "i-go/grpc/stream/proto"
 )
 
-const ServerStreamPort = ":50053"
-
 type serverStream struct {
+	pb.UnimplementedServerStreamServer
 }
 
-var ServerStream = &serverStream{}
-
-// ServerStream
+// Pow ServerStreamDemo 客户端发送一个请求 服务端以流的形式循环发送多个响应
 /*
-和客户端流相反 是服务端循环发送 然后发送完成后调用
+1. 获取客户端请求参数
+2. 循环处理并返回多个响应
+3. 返回nil表示已经完成响应
 */
-func (server *serverStream) ServerStream(req *proto.ServerStreamReq, stream proto.ServerStreamServer_ServerStreamServer) error {
-	fmt.Printf("Recv Client Data %v\n", req.Data)
-	for i := 0; i < 5; i++ {
+func (server *serverStream) Pow(req *pb.ServerStreamReq, stream pb.ServerStream_PowServer) error {
+	log.Printf("Recv Client Data %v", req.Number)
+	for i := 0; i < 10; i++ {
 		// 通过 send 方法不断推送数据
-		err := stream.Send(&proto.ServerStreamResp{Data: req.Data})
+		pow := int64(math.Pow(float64(req.Number), float64(i)))
+		err := stream.Send(&pb.ServerStreamResp{Number: pow})
 		if err != nil {
-			logrus.WithFields(logrus.Fields{"Caller": utils.Caller(), "Scenes": "ServerStream send error"}).Error(err)
+			log.Fatalf("Send error:%v", err)
 			return err
 		}
 	}
-	// ? 好像没有close方法 client也能监听到
+	// 返回nil表示已经完成响应
 	return nil
 }
 
 func main() {
-	// 监听端口
-	lis, err := net.Listen("tcp", ServerStreamPort)
+	lis, err := net.Listen("tcp", ":8082")
 	if err != nil {
 		panic(err)
 	}
-	s := grpc.NewServer(grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(GenerateInterceptor)))
-	proto.RegisterServerStreamServerServer(s, &serverStream{})
-	err = s.Serve(lis)
-	if err != nil {
+	s := grpc.NewServer()
+	pb.RegisterServerStreamServer(s, &serverStream{})
+	log.Println("Serving gRPC on 0.0.0.0:8082")
+	if err = s.Serve(lis); err != nil {
 		panic(err)
 	}
-}
-
-func GenerateInterceptor(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
-	logrus.Printf("gRPC method: %s", info.FullMethod)
-	err := handler(srv, ss)
-	if err != nil {
-		logrus.Printf("gRPC err:  %v", err)
-	}
-	return err
 }

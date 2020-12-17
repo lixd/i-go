@@ -6,6 +6,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"i-go/grpc/tls"
 	"i-go/grpc/tls/proto"
 	"net"
 )
@@ -27,8 +28,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	crt, key := tls.Server()
 	// 构建TransportCredentials
-	c, err := credentials.NewServerTLSFromFile("../../conf/server.pem", "../../conf/server.key")
+	//c, err := credentials.NewServerTLSFromFile("../../conf/server.pem", "../../conf/server.key")
+	c, err := credentials.NewServerTLSFromFile(crt, key)
 	if err != nil {
 		logrus.Fatalf("credentials.NewServerTLSFromFile err: %v", err)
 	}

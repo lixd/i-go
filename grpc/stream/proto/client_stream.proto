@@ -1,0 +1,19 @@
+syntax = "proto3";
+option go_package = ".;proto";
+package stream;
+
+// 客户端推送流
+service ClientStream {
+  // 客户端推送多个整数到服务端,服务端返回这些数之和
+  rpc Sum (stream ClientStreamReq) returns (ClientStreamResp) {
+  }
+}
+
+message ClientStreamReq {
+  int64 number = 1;
+}
+
+message ClientStreamResp {
+  int64 sum = 1;
+}
+

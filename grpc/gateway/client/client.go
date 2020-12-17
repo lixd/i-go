@@ -14,7 +14,7 @@ const (
 )
 
 func main() {
-	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.DialContext(context.Background(), address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		panic(err)
 	}
