@@ -6,7 +6,6 @@ protoc --proto_path=./proto \
    ./proto/helloworld/hello_world.proto
 
 
-
 protoc --proto_path=./proto --go_out=./proto --go_opt=paths=source_relative --go-grpc_out=./proto --go-grpc_opt=paths=source_relative ./proto/client_stream.proto
 protoc --proto_path=./proto \
         --go_out=./proto --go_opt=paths=source_relative \

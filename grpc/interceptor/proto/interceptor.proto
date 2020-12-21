@@ -1,0 +1,24 @@
+syntax = "proto3";
+option go_package = ".;proto";
+package interceptor;
+
+service Interceptor {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc Sqrt (stream SqrtReq) returns (stream SqrtReply) {}
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+message SqrtReq {
+  double number = 1;
+}
+
+message SqrtReply {
+  double sqrt = 1;
+}

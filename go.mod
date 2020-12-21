@@ -105,6 +105,7 @@ require (
 	google.golang.org/genproto v0.0.0-20201019141844-1ed22bb0c154
 	google.golang.org/grpc v1.34.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
+	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	mellium.im/sasl v0.2.1 // indirect

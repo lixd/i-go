@@ -6,6 +6,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	pb "i-go/grpc/helloworld/proto"
 )
 
@@ -19,6 +20,7 @@ type greeterServer struct {
 func (g *greeterServer) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
 }
+
 func main() {
 	listen, err := net.Listen("tcp", ":8080")
 	if err != nil {
@@ -28,7 +30,8 @@ func main() {
 	// 将服务描述(server)及其具体实现(greeterServer)注册到 gRPC 中去.
 	// 内部使用的是一个 map 结构存储，类似 HTTP server。
 	pb.RegisterGreeterServer(server, &greeterServer{})
-	//reflection.Register(server)
+	// 注册反射服务器 用于获取服务信息,和pb.RegisterGreeterServer()类似,只是没有具体实现
+	reflection.Register(server)
 	log.Println("Serving gRPC on 0.0.0.0:8080")
 	if err := server.Serve(listen); err != nil {
 		panic(err)
