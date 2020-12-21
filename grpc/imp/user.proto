@@ -1,0 +1,15 @@
+//声明proto的版本 只有 proto3 才支持 gRPC
+syntax = "proto3";
+// .表示生成go文件存在在当前目录，proto 表示生成go文件报名为proto
+option go_package = "/grpc/imp/;proto";
+// 指定当前proto文件属于imp包
+package imp;
+
+message UserID {
+  int64  ID = 1;
+}
+
+message Profile {
+  string ID = 1;
+  string Name = 2;
+}

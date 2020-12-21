@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = "/grpc/imp/;proto";
+package imp;
+import "grpc/imp/user.proto";
+
+service Msg {
+  rpc GetMsgList (imp.UserID) returns (MsgReq);
+}
+
+message MsgReq {
+  string ID = 1;
+  imp.Profile user = 2;
+}
