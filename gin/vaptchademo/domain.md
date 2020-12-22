@@ -1,3 +1,0 @@
-
-mirrorf.com
-mirrorsnow.com
