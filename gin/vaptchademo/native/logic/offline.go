@@ -1,23 +1,19 @@
 package logic
 
 import (
+	"net/http"
+
 	"github.com/lixd/vaptcha-sdk-go"
 	"github.com/lixd/vaptcha-sdk-go/model"
-	"i-go/gin/vaptchademo/native/constant"
-	"net/http"
+	"i-go/gin/vaptchademo/constant"
 )
 
 // Offline VAPTCHA离线验证接口
 func Offline(writer http.ResponseWriter, request *http.Request) {
 	req := queryParams(request)
 
-	option := func(options *vaptcha.Options) {
-		// options.Vid = constant.Vid
-		options.Vid = "offline" // 如果是测试离线模式 则vid直接传offline即可
-		options.SecretKey = constant.SecretKey
-		options.Scene = constant.Scene
-	}
-	v := vaptcha.NewVaptcha(option)
+	v := vaptcha.NewVaptcha(constant.VID, constant.Key, constant.Scene)
+
 	// invoke sdk offline
 	result := v.Offline(req)
 

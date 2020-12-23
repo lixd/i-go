@@ -1,11 +1,12 @@
 package logic
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/lixd/vaptcha-sdk-go"
-	"i-go/gin/vaptchademo/gin/constant"
+	"i-go/gin/vaptchademo/constant"
 	"i-go/gin/vaptchademo/gin/model"
-	"net/http"
 )
 
 func Login(c *gin.Context) {
@@ -14,13 +15,7 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusOK, model.Ret{Code: 400, Msg: "params error"})
 		return
 	}
-	option := func(options *vaptcha.Options) {
-		options.Vid = constant.Vid
-		//options.Vid = "offline" // test offline mode
-		options.SecretKey = constant.SecretKey
-		options.Scene = constant.Scene
-	}
-	v := vaptcha.NewVaptcha(option)
+	v := vaptcha.NewVaptcha(constant.VID, constant.Key, constant.Scene)
 
 	ret := v.Verify(m.Token, c.ClientIP())
 	if ret.Success != 1 {

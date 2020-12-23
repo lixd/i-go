@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>vaptcha</title>
+    <title>VAPTCHA Click</title>
     <style>
         .vaptcha-init-main {
             display: table;
@@ -40,9 +40,10 @@
     </style>
 </head>
 <body>
+
 <!-- The recommended height of the click button is between 36px and 46px  -->
 <div id="vaptchaContainer" style="width: 300px;height: 36px;">
-    <!--container for loading vaptcha-->
+    <!--container for load VAPTCHA-->
     <div class="vaptcha-init-main">
         <!--Preload animation-->
         <div class="vaptcha-init-loading">
@@ -62,38 +63,38 @@
 <script>
     vaptcha({
         // Required
-        vid: '5f2cd29bb35472b0acab1b52', // vid
-        type: 'click', // vaptcha type
-        container: '#vaptchaContainer', // Container for storage vaptcha,Element or selector
+        vid: '5f2cd29bb35472b0acab1b52', // VID
+        type: 'click', // VAPTCHA type,list:click、invisible、embed
+        // Required for click and embed type
+        container: '#vaptchaContainer', // Container for load VAPTCHA(Element or selector)
         // Recommend
+        scene: 0, // (default 0) config scene for distinguishing the different origin
         offline_server: 'http://localhost:8080/vaptcha/offline', // offline server url
-        scene: 0, // sceneNumber(default 0) config scene for distinguish different origin
         // Optional
-        lang: 'auto', // language (default zh-CN),list zh-CN,en,zh-TW,auto(will use your browser default language)
-        style: 'light', // button style （default dark）list:dark,light
-        color: '#00BFFF', // button color 默认值#57ABFF
-        // Only for test
-        // mode: 'offline', // this config will switch to offline mode, only used for the test, remove before release
+        lang: 'auto', // language (default zh-CN),list zh-CN、zh-TW、en、auto(will use your browser default language)
+        style: 'light', // button style (default dark), list:dark、light
+        // color: '#00BFFF', // button color (default #57ABFF)
+        // Test
+        // mode: 'offline', // force switch to offline mode
     }).then(function (vaptchaObj) {
-        obj = vaptchaObj; // storage to local variable
-        vaptchaObj.render();// render vaptcha
+        obj = vaptchaObj; //
+        vaptchaObj.render();// render VAPTCHA
 
         vaptchaObj.listen('pass', function () {
-            // watch pass event which will emit when fronted verify pass
+            // watch pass event which will emit when user verify pass
+            const token = vaptchaObj.getToken();
+            console.log("token: " + token);
             let data = {
-                // build your data
-                token: vaptchaObj.getToken(),
+                token: token,
                 username: "admin",
                 password: "root",
             };
-            console.log("token: " + data.token);
-            // login example should config backend verify in your server
             $.post('http://localhost:8080/vaptcha/login', data, function (r) {
                 if (r.code !== 200) {
-                    alert("backend verify fail");
-                    obj.reset() // reset vaptcha when verify fail
+                    alert("login fail");
+                    obj.reset() // reset VAPTCHA when login fail
                 } else {
-                    alert("backend verify success")
+                    alert("login success")
                 }
             });
         });
@@ -102,8 +103,7 @@
         vaptchaObj.listen('close', function () {
             console.log("close emit")
         });
-        // reset vaptcha this button only for demo.
-        // you should emit this operation at the right time such as verify fail
+        // reset VAPTCHA when click
         $('#btn_reset').on('click', function () {
             obj.reset();
         })

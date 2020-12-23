@@ -1,12 +1,13 @@
 package logic
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/lixd/vaptcha-sdk-go"
 	vmodel "github.com/lixd/vaptcha-sdk-go/model"
-	"i-go/gin/vaptchademo/gin/constant"
+	"i-go/gin/vaptchademo/constant"
 	"i-go/gin/vaptchademo/gin/model"
-	"net/http"
 )
 
 func Offline(c *gin.Context) {
@@ -15,13 +16,8 @@ func Offline(c *gin.Context) {
 		c.JSON(http.StatusOK, model.Ret{Code: 400, Msg: "params error"})
 		return
 	}
-	option := func(options *vaptcha.Options) {
-		options.Vid = constant.Vid
-		//options.Vid = "offline" // 如果是测试离线模式 则vid直接传offline即可
-		options.SecretKey = constant.SecretKey
-		options.Scene = constant.Scene
-	}
-	v := vaptcha.NewVaptcha(option)
+	v := vaptcha.NewVaptcha(constant.VID, constant.Key, constant.Scene)
+
 	// invoke sdk offline
 	item := vmodel.Offline{
 		Action:   m.Action,
