@@ -12,7 +12,7 @@ import (
 func Offline(writer http.ResponseWriter, request *http.Request) {
 	req := queryParams(request)
 
-	v := vaptcha.NewVaptcha(constant.VID, constant.Key, constant.Scene)
+	v := vaptcha.NewVaptcha("offline", constant.Key, constant.Scene)
 
 	// invoke sdk offline
 	result := v.Offline(req)

@@ -1,6 +1,9 @@
 package daily
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func Test_firstUniqChar(t *testing.T) {
 	type args struct {
@@ -27,4 +30,12 @@ func BenchmarkName(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		firstUniqChar("leetcode")
 	}
+}
+
+func Test1(t *testing.T) {
+	a := []int{1, 3, 5, 2, 4, 6}
+	for i := 0; i < len(a)/2; i++ {
+		a[i], a[len(a)-i-1] = a[len(a)-i-1], a[i]
+	}
+	fmt.Println(a)
 }
