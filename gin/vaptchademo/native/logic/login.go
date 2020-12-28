@@ -2,9 +2,12 @@ package logic
 
 import (
 	"encoding/json"
-	"github.com/lixd/vaptcha-sdk-go"
-	"i-go/gin/vaptchademo/native/constant"
 	"net/http"
+	"strings"
+
+	"github.com/lixd/vaptcha-sdk-go"
+	log "github.com/sirupsen/logrus"
+	"i-go/gin/vaptchademo/constant"
 )
 
 type ResCode struct {
@@ -13,28 +16,22 @@ type ResCode struct {
 	Msg  string      `json:"msg"`
 }
 
-// Login login demo for show vaptcha verify
+// Login login demo for VAPTCHA verify
 func Login(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Add("Content-Type", "application/json")
 
 	token, username, password, ip := postParams(request)
-	option := func(options *vaptcha.Options) {
-		options.Vid = constant.Vid
-		// options.Vid = "offline" // test offline mode
-		options.SecretKey = constant.SecretKey
-		options.Scene = constant.Scene
-	}
-	v := vaptcha.NewVaptcha(option)
+	v := vaptcha.NewVaptcha(constant.VID, constant.Key, constant.Scene)
 	// invoke vaptcha verify
-	verify := v.Verify(token, ip)
-	if verify.Success != 1 {
-		// verify fail return error
-		bytes := buildResponse(400, "fail")
+	ret := v.Verify(token, ip)
+	log.Printf("second verify token:%s ip:%s ret:%v", token, ip, ret)
+	if ret.Success != 1 {
+		bytes := buildResponse(http.StatusBadRequest, "fail")
 		_, _ = writer.Write(bytes)
 		return
 	}
 	isLogin := doLogin(username, password)
-	bytes := buildResponse(200, isLogin)
+	bytes := buildResponse(http.StatusOK, isLogin)
 	_, _ = writer.Write(bytes)
 }
 
@@ -44,6 +41,10 @@ func postParams(request *http.Request) (token, username, password, ip string) {
 	username = request.PostFormValue("username")
 	password = request.PostFormValue("password")
 	ip = request.RemoteAddr
+	// fix ipv6
+	if strings.Contains(ip, "::1") {
+		ip = "127.0.0.1"
+	}
 	return
 }
 

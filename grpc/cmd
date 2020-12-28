@@ -12,6 +12,9 @@ protoc --proto_path=./proto \
         --go-grpc_out=./proto --go-grpc_opt=paths=source_relative \
         ./proto/server_stream.proto
 
+# grpc design
+https://platformlab.stanford.edu/Seminar%20Talks/gRPC.pdf
+
 
         /*
         protoc --proto_path=. --go_out=. --go-grpc_out=. ./grpc/imp/*.proto

@@ -48,7 +48,7 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
-	github.com/lixd/vaptcha-sdk-go v0.0.0-20200810135250-cb0641d4d79b
+	github.com/lixd/vaptcha-sdk-go v0.0.0-20201207031253-e1167291ebae
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
 	github.com/micro/go-micro/v2 v2.9.1
