@@ -1,6 +1,6 @@
 //声明proto的版本 只有 proto3 才支持 gRPC
 syntax = "proto3";
-// .表示生成go文件存在在当前目录，proto 表示生成go文件报名为proto
+// .表示生成go文件输出在当前目录，proto 表示生成go文件包名为proto
 option go_package = ".;proto";
 // 指定当前proto文件属于helloworld包
 package helloworld;
