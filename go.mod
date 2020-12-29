@@ -110,5 +110,5 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
-
-//replace google.golang.org/grpc v1.29.1 => google.golang.org/grpc v1.26.0
+// grpcv1.26.0以上版本 和 etcd 冲突
+replace google.golang.org/grpc => google.golang.org/grpc v1.26.0

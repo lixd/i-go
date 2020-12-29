@@ -46,6 +46,7 @@ func main() {
 	// select {}
 	//compact()
 }
+
 func compact() {
 	var rev int64 = 10
 	// rev:会压缩指定版本之前的记录
