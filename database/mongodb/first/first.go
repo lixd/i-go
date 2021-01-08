@@ -12,7 +12,7 @@ import (
 var tdb = mongodb.TestDB
 
 func main() {
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
 	mongodb.Init()
 
 	// upsert()

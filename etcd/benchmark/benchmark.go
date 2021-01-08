@@ -28,8 +28,8 @@ var (
 )
 
 func init() {
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
-	// conf.Init("conf/config.yml")
+	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
+	// conf.Load("conf/config.yml")
 	etcd.Init()
 
 	client = etcd.CliV3
@@ -51,7 +51,8 @@ func main() {
 	// kv.Put(context.Background(),"/vaptcha/api_system_cfg/guide_version",`3.0.0`)
 	// kv.Put(context.Background(),"/vaptcha/api_system_cfg/mobile_referer",`v.vaptcha.com`)
 	// kv.Put(context.Background(),"/vaptcha/api_system_cfg/vaptcha_key",`4d7449ac01b44420a38233c52ceb0bf3`)
-	kv.Put(context.Background(), "/vaptcha/config/js_config/v3-default", `[{"key":"cssversion","value":"2.3.2"},{"key":"embed","value":"vaptcha-sdk-embed.2.9.2.js"},{"key":"invisible","value":"vaptcha-sdk-invisible.2.9.2.js"},{"key":"mobile","value":"vaptcha-sdk-mobile.2.9.8.js"},{"key":"popup","value":"vaptcha-sdk-popup.2.9.2.js"}]`)
+	val := ``
+	kv.Put(context.Background(), "/vaptcha/config/js_config/v3-test", val)
 
 	// ch := generate()
 

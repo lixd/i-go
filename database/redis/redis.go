@@ -14,7 +14,7 @@ import (
 )
 
 func Init(path string) {
-	err := conf.Init(path)
+	err := conf.Load(path)
 	if err != nil {
 		panic(err)
 	}

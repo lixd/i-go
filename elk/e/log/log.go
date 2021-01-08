@@ -22,7 +22,7 @@ var es *elastic.Client
 const PathNormal = "D:/wlinno/document/featuremodel/样本/4.29 正常轨迹10W样本.log"
 
 func Init() {
-	err := conf.Init("./conf/config.yml")
+	err := conf.Load("./conf/config.yml")
 	if err != nil {
 		panic(err)
 	}

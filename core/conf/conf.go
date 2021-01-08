@@ -13,8 +13,8 @@ type Config struct {
 	Name string
 }
 
-// Init 手动调用加载配置文件
-func Init(cfg string) error {
+// Load 手动调用加载配置文件
+func Load(cfg string) error {
 	c := Config{
 		Name: cfg,
 	}
@@ -38,7 +38,6 @@ func (c *Config) initConfig() error {
 		viper.AddConfigPath("../conf") // 如果没有指定配置文件，则解析默认的配置文件
 		viper.SetConfigName("config")
 	}
-	//viper.SetConfigType("json") //  设置配置文件格式为json
 	viper.SetConfigType("yml") //  设置配置文件格式为yml
 	viper.AutomaticEnv()       // 读取匹配的环境变量
 

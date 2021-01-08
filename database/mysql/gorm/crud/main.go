@@ -12,7 +12,7 @@ var db *gorm.DB
 
 func Init() {
 	path := `D:\lillusory\projects\i-go\\conf\config.yml`
-	conf.Init(path)
+	conf.Load(path)
 	mysqldb.Init()
 	db = mysqldb.MySQL
 	db.DropTableIfExists(&User{})

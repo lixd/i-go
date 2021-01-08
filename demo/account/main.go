@@ -25,7 +25,7 @@ func main() {
 读取配置文件 初始化数据库连接
 */
 func Init() {
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
 	mysqldb.Init()
 	mysqldb.MySQL.AutoMigrate(&model.Account{})
 

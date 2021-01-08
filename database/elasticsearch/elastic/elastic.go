@@ -15,7 +15,7 @@ var es *elastic.Client
 func Init() {
 	dir, _ := os.Getwd()
 	fmt.Println("pwd: ", dir)
-	err := conf.Init("conf/config.yml")
+	err := conf.Load("conf/config.yml")
 	if err != nil {
 		panic(err)
 	}

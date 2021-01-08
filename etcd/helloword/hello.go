@@ -24,7 +24,7 @@ const (
 )
 
 func init() {
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
 	etcd.Init()
 
 	client = etcd.CliV3

@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -36,12 +37,13 @@ func (ui *userInfo) IncUpsert() error {
 	}
 	filter := bson.M{"UserName": "17x"}
 	update := bson.M{
-		"$addToSet": bson.M{"Hours24": bson.M{"$each": list}},
-		// "$inc":  bson.M{"Age": 1, "Hours24.0.request": 1},
-		"$set": bson.M{"Phone": 12345},
+		// "$addToSet": bson.M{"Hours24": bson.M{"$each": list}},
+		"$inc": bson.M{"Age": 1, fmt.Sprintf("Hours24.%d.%s", 0, "r3"): 1},
+		"$set": bson.M{"Hours24.0.request2": 1},
 	}
 	opts := options.Update().SetUpsert(true)
 	_, err := ui.GetColl().UpdateOne(context.Background(), filter, update, opts)
+
 	return err
 }
 

@@ -38,8 +38,8 @@ const (
 )
 
 func Init() {
-	// err := conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
-	err := conf.Init("./conf/config.yml")
+	// err := conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
+	err := conf.Load("./conf/config.yml")
 	if err != nil {
 		panic(err)
 	}

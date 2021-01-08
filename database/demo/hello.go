@@ -9,7 +9,7 @@ import (
 
 func main() {
 	fmt.Println(os.Getwd())
-	//conf.Init("/conf/config.yml")
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	//conf.Load("/conf/config.yml")
+	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
 	mysqldb.Init()
 }

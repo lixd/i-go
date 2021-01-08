@@ -17,7 +17,7 @@ import (
 var es *elasticsearch7.Client
 
 func Init() {
-	conf.Init("D:/lillusory/projects/i-go/conf/config.yml")
+	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
 	elasticsearch.Init()
 	es = elasticsearch.ESClientOfficial
 }
