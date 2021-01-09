@@ -1,6 +1,6 @@
 module i-go
 
-go 1.12
+go 1.14
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
@@ -48,7 +48,6 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
-	github.com/lixd/vaptcha-sdk-go v0.0.0-20201207031253-e1167291ebae
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
 	github.com/micro/go-micro/v2 v2.9.1
@@ -110,5 +109,6 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
+
 // grpcv1.26.0以上版本 和 etcd 冲突
-replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
+//replace google.golang.org/grpc => google.golang.org/grpc v1.26.0

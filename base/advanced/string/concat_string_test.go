@@ -1,4 +1,4 @@
-package concat_string
+package main
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 
 const numbers = 3
 
-// https://github.com/geektime-geekbang/go_learning
+// Sprintf
 func BenchmarkSprintf(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		var s string
@@ -20,6 +20,7 @@ func BenchmarkSprintf(b *testing.B) {
 	}
 }
 
+// strings.Builder
 func BenchmarkStringBuilder(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		var builder strings.Builder
@@ -30,6 +31,7 @@ func BenchmarkStringBuilder(b *testing.B) {
 	}
 }
 
+// bytes.Buffer
 func BenchmarkBytesBuf(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		var buf bytes.Buffer
@@ -40,6 +42,7 @@ func BenchmarkBytesBuf(b *testing.B) {
 	}
 }
 
+// Add
 func BenchmarkStringAdd(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		var s string

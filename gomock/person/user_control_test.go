@@ -1,8 +1,9 @@
 package person
 
 import (
-	"github.com/golang/mock/gomock"
 	"testing"
+
+	"github.com/golang/mock/gomock"
 )
 
 func TestUserControl_Login(t *testing.T) {
