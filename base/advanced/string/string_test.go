@@ -27,7 +27,7 @@ func TestString2Bytes(t *testing.T) {
 	}
 }
 
-const Str = "Hello 指月 Hello 指月 Hello 指月 Hello 指月 Hello 指月"
+const Str = "Hello Gophers!Hello Gophers!Hello Gophers!Hello Gophers!Hello Gophers!"
 
 // 测试标准转换string()性能
 func Benchmark_NormalBytes2String(b *testing.B) {
