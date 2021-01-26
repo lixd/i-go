@@ -13,6 +13,7 @@ require (
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v0.0.0-20190319080838-ce1d48779e67 // indirect
 	github.com/axiomhq/hyperloglog v0.0.0-20191112132149-a4c4c47bc57f
+	github.com/bojand/ghz v0.90.0
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/coreos/etcd v3.3.22+incompatible
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
