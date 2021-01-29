@@ -47,7 +47,7 @@ const (
 // 字典树
 type Node struct {
 	children children
-	isEnd    bool // 是否是单词的结束，如打人受伤  打(true) 人(true) 伤(true)，可以有三个词汇（打/打人/打人受伤）
+	isEnd    bool // 是否是单词的结束，如打人受伤  打(true) 人(true) 受(false)伤(true)，可以有三个词汇（打/打人/打人受伤）
 }
 type children map[rune]*Node // 每个子节点都可以包含多个节点
 

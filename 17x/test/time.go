@@ -8,14 +8,19 @@ import (
 )
 
 func main() {
-	t1 := GetUnixTime()
-	fmt.Println(t1)
-	m := make(map[string]int64)
-	m["1"] += 2
-	fmt.Println(m["1"])
-	m["1"] += 2
-	fmt.Println(m["1"])
-	fmt.Println(1608171721 / 30 * 30)
+	// t1 := GetUnixTime()
+	// fmt.Println(t1)
+	// m := make(map[string]int64)
+	// m["1"] += 2
+	// fmt.Println(m["1"])
+	// m["1"] += 2
+	// fmt.Println(m["1"])
+	// fmt.Println(1608171721 / 30 * 30)
+	fmt.Println(time.Now().AddDate(0, 0, 1).Unix())
+	unix := time.Now().AddDate(0, 0, 1).Unix()
+	year, month, day := time.Unix(unix, 0).Date()
+	daytime := time.Date(year, month, day, 0, 0, 0, 0, time.Local)
+	fmt.Println(daytime.Unix())
 }
 
 func GetUnixTime() int64 {
@@ -24,6 +29,13 @@ func GetUnixTime() int64 {
 	daytime := time.Date(year, month, day, 0, 0, 0, 0, local).Unix()
 	timestamp := daytime
 	return timestamp
+}
+
+// GetUnixDay 获取到0点的时间戳
+func GetUnixDay(unix int64) time.Time {
+	year, month, day := time.Unix(unix, 0).Date()
+	daytime := time.Date(year, month, day, 0, 0, 0, 0, time.Local)
+	return daytime
 }
 
 // 模拟一个Redis客户端

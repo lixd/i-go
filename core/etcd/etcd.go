@@ -3,6 +3,7 @@ package etcd
 import (
 	"errors"
 	"i-go/utils"
+	"strings"
 	"time"
 
 	"github.com/coreos/etcd/clientv3"
@@ -90,4 +91,11 @@ func Release() {
 	if CliV3 != nil {
 		_ = CliV3.Close()
 	}
+}
+func Endpoints() []string {
+	endpoints := viper.GetString("endpoints")
+	if endpoints == "" {
+		panic("cannot find endpoints")
+	}
+	return strings.Split(endpoints, ",")
 }

@@ -1,0 +1,2 @@
+"endpoints": "http://192.168.3.3:2379,http://192.168.3.4:2379,http://192.168.3.5:2379",
+"region": "/var/region/ip2region.db"
