@@ -43,9 +43,11 @@ func InitLogger(path ...string) {
 
 	// 设置日志格式为json格式 如果添加了hook 这里的设置可能会被hook中的覆盖
 	logrus.SetFormatter(&logrus.JSONFormatter{})
+	out, _ := os.OpenFile("./z.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	// 设置将日志输出到标准输出（默认的输出为stderr,标准错误）
 	// 日志消息输出可以是任意的io.writer类型
-	logrus.SetOutput(os.Stdout)
+	logrus.SetOutput(out)
+	// logrus.SetOutput(os.Stdout)
 	// 设置日志级别为trace以上
 	logrus.SetLevel(logrus.TraceLevel)
 	//// 打印`打印日志的方法`
