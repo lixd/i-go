@@ -37,8 +37,14 @@ func A2(m, n string) {
 	fmt.Println(m, n)
 }
 func A() {
+	fmt.Println("A")
 	defer B()
 }
 func B() {
+	fmt.Println("B")
+}
 
+func main() {
+	defer A()
+	fmt.Println("Main")
 }

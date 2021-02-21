@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	conn, err := grpc.DialContext(context.Background(), "0.0.0.0:8080", grpc.WithInsecure())
+	conn, err := grpc.DialContext(context.Background(), "0.0.0.0:8080", grpc.WithInsecure(), grpc.WithDefaultServiceConfig())
 	if err != nil {
 		panic(err)
 	}
