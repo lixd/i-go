@@ -8,7 +8,7 @@ require (
 	github.com/HdrHistogram/hdrhistogram-go v1.0.0 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
 	github.com/antchfx/htmlquery v1.0.0 // indirect
 	github.com/antchfx/xmlquery v1.0.0 // indirect
@@ -21,7 +21,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200623144321-26ee26eb5407
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
-	github.com/fogleman/gg v1.3.0
+	github.com/fogleman/gg v1.3.0 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-contrib/pprof v1.3.0
@@ -37,7 +37,7 @@ require (
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gocolly/colly v1.2.0
 	github.com/gogf/gf v1.13.1
-	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
 	github.com/golang/snappy v0.0.1 // indirect
@@ -84,7 +84,7 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.3.0
-	github.com/swaggo/swag v1.7.0
+	github.com/swaggo/swag v1.7.0 // indirect
 	github.com/tealeg/xlsx v1.0.5
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
@@ -101,7 +101,7 @@ require (
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
 	go.uber.org/zap v1.15.0
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
-	golang.org/x/image v0.0.0-20200924062109-4578eab98f00
+	golang.org/x/image v0.0.0-20200924062109-4578eab98f00 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9
@@ -116,6 +116,7 @@ require (
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
+	gopl.io v0.0.0-20200323155855-65c318dde95e
 	mellium.im/sasl v0.2.1 // indirect
 )
 
