@@ -2,9 +2,10 @@ package converse
 
 import (
 	"fmt"
+	"reflect"
+
 	"github.com/gogf/gf/util/gconv"
 	"github.com/mitchellh/mapstructure"
-	"reflect"
 )
 
 // Struct2Map
@@ -27,10 +28,16 @@ func Struct2Map(obj interface{}) map[string]interface{} {
 	return data
 }
 
-// Map2Struct  m map s 结构体指针
+// Map2Struct  m map s 结构体指针 字段类型必须一致
 func Map2Struct(m map[string]interface{}, s interface{}) error {
 	decode := mapstructure.Decode(m, s)
 	return decode
+}
+
+// Map2StructAny 任意字段类型都可转换
+func Map2StructAny(m interface{}, s interface{}) error {
+	err := gconv.Struct(m, s)
+	return err
 }
 
 func Map2StructUtil() {

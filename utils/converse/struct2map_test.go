@@ -7,12 +7,16 @@ import (
 
 func TestStruct2Map(t *testing.T) {
 	type user struct {
-		Name  string
-		Phone string
+		Name    string
+		Phone   string
+		Address string
+		Age     int
 	}
 	item := user{
-		Name:  "China Mobile",
-		Phone: "10086",
+		Name:    "China Mobile",
+		Phone:   "10086",
+		Address: "CQ",
+		Age:     111,
 	}
 	m := Struct2Map(item)
 	item2 := user{}
