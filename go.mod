@@ -49,6 +49,7 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.10
 	github.com/kennygrant/sanitize v1.2.4 // indirect
+	github.com/lazytiger/go-v8 v0.0.0-20131210065505-b2466929848d
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
@@ -97,7 +98,7 @@ require (
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.etcd.io/etcd v3.3.13+incompatible
-	go.mongodb.org/mongo-driver v1.0.4
+	go.mongodb.org/mongo-driver v1.4.6
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
 	go.uber.org/zap v1.15.0
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
@@ -116,7 +117,7 @@ require (
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
-	gopl.io v0.0.0-20200323155855-65c318dde95e
+	gopl.io v0.0.0-20200323155855-65c318dde95e // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
 

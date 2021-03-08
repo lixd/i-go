@@ -4,9 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"i-go/utils"
 	"strings"
 	"time"
+
+	"i-go/utils"
 
 	"github.com/sirupsen/logrus"
 
@@ -35,7 +36,8 @@ type Conf struct {
 	AppUrl        string            `json:"appUrl"`
 	Username      string            `json:"username"`
 	Password      string            `json:"password"`
-	MaxPoolSize   uint16            `json:"maxPoolSize"`
+	MaxPoolSize   uint64            `json:"maxPoolSize"`
+	MinPoolSize   uint64            `json:"minPoolSize"`
 	DBS           map[string]string `json:"dbs"`
 	AuthMechanism string            `json:"authMechanism"`
 }
@@ -61,9 +63,10 @@ func newClientCluster(c *Conf) {
 		// appUrl := "mongodb+srv://17x:mongodb12345@clusterfree.p7rd5.mongodb.net/17x?retryWrites=true&w=majority"
 		// 1. 获取客户端连接
 		MongoClient, err := mongo.NewClient(
-			options.Client().ApplyURI(URLFull).
-				SetMaxPoolSize(c.MaxPoolSize),
-		)
+			options.Client().
+				ApplyURI(URLFull).
+				SetMaxPoolSize(c.MaxPoolSize).
+				SetMinPoolSize(c.MinPoolSize))
 		if err != nil {
 			panic(err)
 		}
