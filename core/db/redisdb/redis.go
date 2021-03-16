@@ -57,10 +57,10 @@ func newClient(c *redisConf) *redis.Client {
 		MaxRetries:         c.MaxRetries,
 		PoolSize:           c.PoolSize,
 		MinIdleConns:       c.MinIdleConns,
-		MaxConnAge:         c.MaxConnAge * time.Second,
-		PoolTimeout:        c.PoolTimeout * time.Second,
-		IdleTimeout:        c.IdleTimeout * time.Second,
-		IdleCheckFrequency: c.IdleCheckFrequency * time.Minute,
+		MaxConnAge:         c.MaxConnAge,
+		PoolTimeout:        c.PoolTimeout,
+		IdleTimeout:        c.IdleTimeout,
+		IdleCheckFrequency: c.IdleCheckFrequency,
 	})
 }
 
