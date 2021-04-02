@@ -5,52 +5,54 @@ import (
 	"math"
 )
 
-type ShapeInterface interface {
+type iShape interface {
 	Area() float64
 	GetName() string
 }
 
-// 标准形状，它的面积为0.0
-type Shape struct {
-	name string
-}
-
-func (s *Shape) Area() float64 {
-	return 0.0
-}
-
-func (s *Shape) GetName() string {
-	return s.name
-}
-
-func PrintArea(s ShapeInterface) {
+func printArea(s iShape) {
 	fmt.Printf("%s : Area %v\r\n", s.GetName(), s.Area())
 }
 
+// shape 标准形状，它的面积为0.0
+type shape struct {
+	name string
+}
+
+func (s *shape) Area() float64 {
+	return 0.0
+}
+
+func (s *shape) GetName() string {
+	return s.name
+}
+
 // 矩形 : 重新定义了Area方法
-type Rectangle struct {
-	Shape
+type rectangle struct {
+	shape
 	w, h float64
 }
 
-func (r *Rectangle) Area() float64 {
+func (r *rectangle) Area() float64 {
 	return r.w * r.h
 }
 
-// 圆形  : 重新定义 Area 和PrintArea 方法
-type Circle struct {
-	Shape
+// circle 圆 πr^2
+type circle struct {
+	shape
 	r float64
 }
 
-func (c *Circle) Area() float64 {
+func (c *circle) Area() float64 {
 	return c.r * c.r * math.Pi
 }
 
-func (c *Circle) PrintArea() {
-	fmt.Printf("%s : Area %v\r\n", c.GetName(), c.Area())
-}
+// GO 伪多态的实现方式 将接口作为参数传递
 func main() {
-	r := Rectangle{Shape: Shape{name: "Rectangle"}, w: 5, h: 4}
-	PrintArea(&r)
+	s := shape{name: "shape"}
+	printArea(&s)
+	r := rectangle{shape: shape{name: "rectangle"}, w: 5, h: 4}
+	printArea(&r)
+	c := circle{shape: shape{name: "rectangle"}, r: 5}
+	printArea(&c)
 }

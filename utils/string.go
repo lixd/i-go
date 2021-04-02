@@ -7,6 +7,7 @@ import (
 type stringHelper struct {
 }
 
+// StringHelper string相关工具函数
 var StringHelper = &stringHelper{}
 
 /*

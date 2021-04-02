@@ -7,8 +7,8 @@ import (
 )
 
 func TestNewRequestLimitService(t *testing.T) {
-	rater := NewRateLimiter(time.Second*10, 10)
-	for i := 0; i < 10; i++ {
+	rater := NewRateLimiter(time.Second, 10)
+	for i := 0; i < 100; i++ {
 		if rater.AllowN(2) {
 			fmt.Printf("通过 当前请求数:%v \n", rater.ReqCount())
 		} else {

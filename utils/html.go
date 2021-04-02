@@ -5,7 +5,8 @@ import (
 	"strings"
 )
 
-func TrimHtml(src string) string {
+// TrimHTML 剔除HTML标签
+func TrimHTML(src string) string {
 	// 将HTML标签全转换成小写
 	re, _ := regexp.Compile("<[\\S\\s]+?>")
 	src = re.ReplaceAllStringFunc(src, strings.ToLower)

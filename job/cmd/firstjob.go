@@ -21,7 +21,7 @@ func main() {
 	manager.DefaultJobManager.CreateJobs(ts)
 	manager.DefaultJobManager.StartAll()
 
-	logrus.Info("ip:", utils.GetIntranetIp())
+	logrus.Info("ip:", utils.GetIntranetIP())
 
 	s := make(chan os.Signal, 1)
 	signal.Notify(s, syscall.SIGINT, syscall.SIGTERM)

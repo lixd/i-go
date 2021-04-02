@@ -24,9 +24,8 @@ func getToken(bucket tokenBucket) bool {
 	if leftTokens < 1 {
 		// 若桶中一个令牌都没有了，则拒绝
 		return false
-	} else {
-		// 桶中还有令牌，领取令牌
-		bucket.tokens -= 1
-		return true
 	}
+	// 桶中还有令牌，领取令牌
+	bucket.tokens -= 1
+	return true
 }

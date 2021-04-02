@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"time"
 )
 
 func main() {
-	URL := "http://img.lixueduan.com/redis/global-hash-table.png"
-	for i := 0; i < 10000; i++ {
+	URL := "http://www.baidu.com/"
+	for i := 0; i < 1; i++ {
 		if i%100 == 0 {
 			fmt.Printf("已请求%v次\n", i)
 		}
@@ -18,6 +19,8 @@ func main() {
 			fmt.Print("Error: ", err)
 			continue
 		}
+		data, _ := ioutil.ReadAll(resp.Body)
+		fmt.Println(string(data))
 		_ = resp.Body.Close()
 	}
 }

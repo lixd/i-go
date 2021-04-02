@@ -24,8 +24,7 @@ func addWater(bucket leakyBucket) bool {
 		// 尝试加水，此时水桶未满
 		bucket.water = leftWater + 1
 		return true
-	} else {
-		// 水满了，拒绝加水
-		return false
 	}
+	// 水满了，拒绝加水
+	return false
 }

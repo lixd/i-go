@@ -6,7 +6,7 @@ import (
 	"runtime/trace"
 )
 
-// go run trace.go 会生成 trace.out
+// go run trace.go 生成 trace.out
 // go tool trace trace.out 分析 trace.out 文件
 func main() {
 

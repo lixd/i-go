@@ -39,7 +39,7 @@ func (c *FirstJob) GetInfo() model.JobInfo {
 }
 
 func (c *FirstJob) CheckAndUpdate() bool {
-	return manager.DefaultJobManager.CheckAndUpdate(c.JobInfo.JobCode, utils.GetIntranetIp(), c.JobInfo.MinDuration)
+	return manager.DefaultJobManager.CheckAndUpdate(c.JobInfo.JobCode, utils.GetIntranetIP(), c.JobInfo.MinDuration)
 }
 
 func (c *FirstJob) work(t time.Time) {
@@ -51,7 +51,7 @@ func (c *FirstJob) work(t time.Time) {
 		CronSpec:       c.JobInfo.CronSpec,
 		Desc:           c.JobInfo.Desc,
 		StartTime:      time.Now().Unix(),
-		ExecuteMachine: utils.GetIntranetIp(),
+		ExecuteMachine: utils.GetIntranetIP(),
 		Id:             primitive.NewObjectID(),
 		Status:         jobstatus.Done,
 	}

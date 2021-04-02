@@ -6,7 +6,8 @@ import (
 	"os"
 )
 
-func GetIntranetIp() string {
+// GetIntranetIP 获取内网IP
+func GetIntranetIP() string {
 	addr, err := net.InterfaceAddrs()
 
 	if err != nil {
