@@ -3,16 +3,19 @@ package elasticsearch
 import (
 	"errors"
 	"fmt"
+
+	"go.uber.org/zap"
+	"i-go/core/logger/izap"
 	"i-go/utils"
 
 	"github.com/olivere/elastic"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 /*
-github.com/olivere/elastic 与官方库的差异 or 推荐使用情况
-https://github.com/olivere/elastic/issues/1240
+社区:https://github.com/olivere/elastic
+官方:https://github.com/elastic/go-elasticsearch
+社区与官方库的差异:https://github.com/olivere/elastic/issues/1240
 */
 var ESClient *elastic.Client
 
@@ -40,31 +43,31 @@ func Init() {
 	}
 	fmt.Printf("Elasticsearch version %s\n", version)
 
-	ESClient.CreateIndex("title_index").BodyString("")
+	ESClient.CreateIndex("test_index").BodyString("")
 }
 
-func parseConf() (*ESConf, error) {
+func parseConf() (ESConf, error) {
 	var c ESConf
 	if err := viper.UnmarshalKey("elasticsearch", &c); err != nil {
-		return &ESConf{}, err
+		return c, err
 	}
 	if c.Addr == "" {
-		return &ESConf{}, errors.New("elasticsearch conf nil")
+		return c, errors.New("elasticsearch conf nil")
 	}
-	return &c, nil
+	return c, nil
 }
 
-func newClient(c *ESConf) (*elastic.Client, error) {
+func newClient(c ESConf) (*elastic.Client, error) {
 	// errorLog := log.New(os.Stdout, "APP", log.LstdFlags)
-	logger := logrus.New()
 	ESClient, err := elastic.NewClient(
 		/*	Sniff开启时会使客户端去嗅探整个集群的状态，把集群中其它机器的ip地址加到客户端中。这样做的好处是，一般你不用手动设置集群里所有集群的ip到连接客户端，
 			它会自动帮你添加，并且自动发现新加入集群的机器。
 			当ES服务器监听(publish_address)使用内网服务器IP，而访问(bound_addresses)使用外网IP时，需要关闭该功能。因为在自动发现时会使用内网IP进行通信，导致无法连接到ES服务器。
 			不设置时，默认为enable(关闭客户端去嗅探整个集群的状态)。
 		*/
-		elastic.SetSniff(false),     // 关闭客户端嗅探
-		elastic.SetErrorLog(logger), // 指定用什么来打印日志
+		elastic.SetSniff(false), // 关闭客户端嗅探
+		// elastic.SetErrorLog(logger), // 指定用什么来打印日志
+		elastic.SetErrorLog(zap.NewStdLog(izap.Logger.Desugar())), // 指定用什么来打印日志
 		elastic.SetURL(c.Addr),
 		elastic.SetBasicAuth(c.Username, c.Password))
 	if err != nil {

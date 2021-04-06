@@ -1,13 +1,14 @@
 package zap
 
 import (
+	"io"
+	"strings"
+	"time"
+
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"io"
-	"strings"
-	"time"
 )
 
 var (
@@ -66,7 +67,7 @@ func getEncoder() zapcore.Encoder {
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	return zapcore.NewJSONEncoder(encoderConfig)
 	// 可选普通Encoder
-	//return zapcore.NewConsoleEncoder(encoderConfig)
+	// return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
 // getWriter 传入日志文件存储地址 返回一个writer

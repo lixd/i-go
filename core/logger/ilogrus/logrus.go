@@ -1,13 +1,14 @@
 package ilogrus
 
 import (
+	"os"
+	"time"
+
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"os"
-	"time"
 )
 
 const (
@@ -37,8 +38,8 @@ func InitLogger(path ...string) {
 	logrus.SetOutput(os.Stdout)
 	// 设置日志级别为trace以上
 	logrus.SetLevel(logrus.TraceLevel)
-	//// 打印`打印日志的方法`
-	//logrus.SetReportCaller(true)
+	// // 打印出`打印日志的方法`
+	// logrus.SetReportCaller(true)
 }
 
 // newLfsHook 构建hook 包含日志切割归档功能
