@@ -19,7 +19,7 @@ import (
 */
 var ESClient *elastic.Client
 
-type ESConf struct {
+type conf struct {
 	Addr     string `json:"addr"`
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -46,8 +46,8 @@ func Init() {
 	ESClient.CreateIndex("test_index").BodyString("")
 }
 
-func parseConf() (ESConf, error) {
-	var c ESConf
+func parseConf() (conf, error) {
+	var c conf
 	if err := viper.UnmarshalKey("elasticsearch", &c); err != nil {
 		return c, err
 	}
@@ -57,7 +57,7 @@ func parseConf() (ESConf, error) {
 	return c, nil
 }
 
-func newClient(c ESConf) (*elastic.Client, error) {
+func newClient(c conf) (*elastic.Client, error) {
 	// errorLog := log.New(os.Stdout, "APP", log.LstdFlags)
 	ESClient, err := elastic.NewClient(
 		/*	Sniff开启时会使客户端去嗅探整个集群的状态，把集群中其它机器的ip地址加到客户端中。这样做的好处是，一般你不用手动设置集群里所有集群的ip到连接客户端，
