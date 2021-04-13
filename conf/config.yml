@@ -17,7 +17,7 @@ redis:
   IdleCheckFrequency: 10s
 
 mongodb:
-  appUrl: "123.57.236.125:27017"
+  appUrl: "47.93.123.142:5000"
   username: "test"
   password: "123456"
   maxPoolSize: 10

@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -10,7 +12,7 @@ import (
 	"i-go/core/db/mongodb"
 	"i-go/job/model"
 	"i-go/utils"
-	"time"
+	"i-go/utils/itime"
 )
 
 type logRepository struct {
@@ -56,7 +58,7 @@ func (c *logRepository) UpdateEndTime(id string, end int64) error {
 	return err
 }
 
-//ClearLogs 删除50条之前的日志
+// ClearLogs 删除50条之前的日志
 func (c *logRepository) ClearLogs(names []string, t time.Time) {
 
 	for _, name := range names {
@@ -118,7 +120,7 @@ func (c *logRepository) FindPage(filter bson.D, skip int64, limit int64) (result
 
 func (c *logRepository) FindError() (total int64, err error) {
 	start := time.Now().Unix()
-	end := utils.GetDailyUnix(time.Now())
+	end := itime.GetZeroTime(time.Now().Unix())
 	filter := bson.D{
 		{"StartTime", bson.D{
 			{"$gte", start},
@@ -134,7 +136,7 @@ func (c *logRepository) FindError() (total int64, err error) {
 }
 
 func (c *logRepository) CleanWeekBeforeLog() {
-	start := utils.GetDailyUnix(time.Now().AddDate(0, 0, -6))
+	start := itime.GetZeroTime(time.Now().AddDate(0, 0, -6).Unix())
 	filter := bson.D{
 		{"StartTime", bson.D{
 			{"$lte", start},

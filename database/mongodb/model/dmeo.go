@@ -18,10 +18,16 @@ func (*UserInfo) GetCollectionName() string {
 }
 
 type UserInfoReq struct {
-	ID       string   `bson:"_id"`
-	UserName string   `bson:"UserName"`
-	Password string   `bson:"Password"`
-	Age      int      `bson:"Age"`
-	Phone    string   `bson:"Phone"`
-	Hobby    []string `bson:"Hobby"`
+	ID       string     `bson:"_id"`
+	UserName string     `bson:"UserName"`
+	Password string     `bson:"Password"`
+	Age      int        `bson:"Age"`
+	Phone    string     `bson:"Phone"`
+	Hobby    []string   `bson:"Hobby"`
+	Reselect []Reselect `bson:"Reselect"`
+}
+
+type Reselect struct {
+	Node   string `bson:"Node"`
+	Status int    `bson:"Status"`
 }
