@@ -1,0 +1,16 @@
+syntax = "proto3";
+package proto;
+option go_package = "i-go/tools/region/rpc/proto;proto";
+
+service RegionServer {
+  rpc IP2Region (IP) returns (Region) {}
+}
+
+message IP {
+  string ip = 1;
+}
+
+message Region {
+  string region = 1;
+}
+

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	region "i-go/tools/itools/region/client"
+	"i-go/tools/region/core"
 )
 
 type ip2region struct {
@@ -22,7 +22,7 @@ func (ip2region) Ip2Region(c *gin.Context) {
 	if ip == "" {
 		ip = c.ClientIP()
 	}
-	reg := region.Ip2Region(ip)
+	reg := core.IP2Region(ip)
 	ret := IP{
 		IP:     ip,
 		Region: reg,

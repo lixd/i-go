@@ -1,4 +1,4 @@
-package converse
+package convert
 
 import (
 	"fmt"

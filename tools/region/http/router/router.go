@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"i-go/tools/itools/region/http/controller"
+	"i-go/tools/region/http/controller"
 )
 
 func RegisterRegion(e *gin.Engine) {

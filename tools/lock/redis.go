@@ -1,9 +1,10 @@
 package lock
 
 import (
-	"github.com/go-redis/redis"
 	"sync"
 	"time"
+
+	"github.com/go-redis/redis"
 )
 
 var (
@@ -13,11 +14,6 @@ var (
 
 type redisLock struct {
 	RedisCli *redis.Client
-}
-
-type Lock interface {
-	Lock(key int) bool
-	UnLock(key int) bool
 }
 
 func NewRedisLock(cli *redis.Client) *redisLock {

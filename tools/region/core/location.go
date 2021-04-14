@@ -1,4 +1,4 @@
-package logic
+package core
 
 import (
 	"strings"
@@ -23,7 +23,7 @@ func Init() {
 	}
 }
 
-func (*Region) ip2Region(ip string) string {
+func IP2Region(ip string) string {
 	ipInfo, err := client.MemorySearch(ip)
 	if err != nil {
 		return ""
