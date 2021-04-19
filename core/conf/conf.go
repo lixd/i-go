@@ -2,59 +2,75 @@
 package conf
 
 import (
+	"fmt"
 	"log"
+	"runtime"
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"i-go/data"
+	"i-go/data/conf"
+	"i-go/utils"
 )
 
-type Config struct {
-	Name string
+// Load 手动调用加载配置文件
+func Loads(files []string) error {
+	for _, file := range files {
+		Load(file)
+	}
+	return nil
 }
 
 // Load 手动调用加载配置文件
-func Load(cfg string) error {
-	c := Config{
-		Name: cfg,
+func Load(file string) error {
+	if runtime.GOOS == "windows" {
+		file = data.Path(file)
 	}
-
 	// 初始化配置文件
-	if err := c.initConfig(); err != nil {
+	if err := initConfig(file); err != nil {
 		return err
 	}
-
 	// 监控配置文件变化并热加载程序
-	c.watchConfig()
-
+	watchConfig()
 	return nil
 }
 
 // initConfig 配置文件初始化
-func (c *Config) initConfig() error {
-	if c.Name != "" {
-		viper.SetConfigFile(c.Name) // 如果指定了配置文件，则解析指定的配置文件
-	} else {
-		viper.AddConfigPath("../conf") // 如果没有指定配置文件，则解析默认的配置文件
-		viper.SetConfigName("config")
-	}
+func initConfig(file string) error {
+	viper.SetConfigFile(file)  // 指定配置文件
 	viper.SetConfigType("yml") //  设置配置文件格式为yml
 	viper.AutomaticEnv()       // 读取匹配的环境变量
 
-	viper.SetEnvPrefix("TESTSERVER") // 读取环境变量的前缀为APISERVER
+	viper.SetEnvPrefix("TEST_") // 读取环境变量的前缀为TEST_
 	replacer := strings.NewReplacer(".", "-")
 	viper.SetEnvKeyReplacer(replacer)
 	if err := viper.ReadInConfig(); err != nil { // viper解析配置文件
-		log.Printf("config error : %s", err.Error())
 		return err
 	}
 	return nil
 }
 
 // watchConfig 监控配置文件变化并热加载程序
-func (c *Config) watchConfig() {
+func watchConfig() {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		log.Printf("Config file changed: %s", e.Name)
+
+		prefix := utils.GetFilePrefix(e.Name)
+		switch prefix {
+		case conf.Elasticsearch:
+			fmt.Println("elasticsearch conf changed!")
+			// 配置文件更新后再次初始化
+			// elasticsearch.Init()
+		case conf.MongoDB:
+			fmt.Println("mongo conf changed!")
+		case conf.Redis:
+			fmt.Println("redis conf changed!")
+		case conf.Basic:
+			fmt.Println("basic conf changed!")
+		default:
+			fmt.Println("conf changed!")
+		}
 	})
 }

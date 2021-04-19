@@ -1,0 +1,5 @@
+# ElasticSearch 第三方 sdk
+elasticsearch:
+  addr: "http://47.93.123.142:9201"
+  username: ""
+  password: ""
