@@ -96,11 +96,11 @@ func newClient(c *Conf) {
 		// 1. 获取客户端连接
 		MongoClient, err := mongo.NewClient(
 			options.Client().ApplyURI(appUrl).
-				// SetAuth(options.Credential{
-				// 	Username:      c.Username,
-				// 	Password:      c.Password,
-				// 	AuthMechanism: c.AuthMechanism,
-				// 	AuthSource:    name}).
+				SetAuth(options.Credential{
+					Username:      c.Username,
+					Password:      c.Password,
+					AuthMechanism: c.AuthMechanism,
+					AuthSource:    name}).
 				SetMaxPoolSize(c.MaxPoolSize),
 		)
 		if err != nil {

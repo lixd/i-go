@@ -43,13 +43,13 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.1
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.1 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.10
 	github.com/kennygrant/sanitize v1.2.4 // indirect
-	github.com/lazytiger/go-v8 v0.0.0-20131210065505-b2466929848d
+	github.com/lazytiger/go-v8 v0.0.0-20131210065505-b2466929848d // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
@@ -111,7 +111,7 @@ require (
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
 	golang.org/x/tools v0.0.0-20210114065538-d78b04bdf963 // indirect
 	gonum.org/v1/plot v0.8.0
-	google.golang.org/genproto v0.0.0-20201019141844-1ed22bb0c154
+	google.golang.org/genproto v0.0.0-20201019141844-1ed22bb0c154 // indirect
 	google.golang.org/grpc v1.34.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
