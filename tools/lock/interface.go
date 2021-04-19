@@ -1,6 +1,8 @@
 package lock
 
+import "time"
+
 type ILock interface {
-	Lock(key int) bool
-	UnLock(key int) bool
+	Lock(key string, value interface{}, expire time.Duration) bool
+	UnLock(key string, value interface{}) bool
 }

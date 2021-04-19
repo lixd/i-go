@@ -8,6 +8,8 @@ import (
 	"github.com/bojand/ghz/runner"
 )
 
+// https://github.com/bojand/ghz
+// https://ghz.sh/docs/intro.html
 func main() {
 	data := map[string]string{
 		"name": "1231",

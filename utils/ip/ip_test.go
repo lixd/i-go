@@ -21,11 +21,17 @@ func TestInetAtoN(t *testing.T) {
 }
 
 func TestExternalIP(t *testing.T) {
-	exIP := ExternalIP()
+	exIP, err := ExternalIP()
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(exIP)
 }
 
 func TestInternalIP(t *testing.T) {
-	inIP := InternalIP()
+	inIP, err := IntranetIP()
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(inIP)
 }

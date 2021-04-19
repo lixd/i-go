@@ -3,18 +3,19 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/360EntSecGroup-Skylar/excelize"
-	"github.com/tealeg/xlsx"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/tealeg/xlsx"
 )
 
 func main() {
 	path := "D:/wlinno/document/test2.xlsx"
 	excelizeExcel(path)
-	//xlxs(path)
+	xlxs(path)
 }
 
 const (
@@ -30,7 +31,7 @@ const (
 )
 
 type AdTbInfo struct {
-	//Id            primitive.ObjectID `bson:"_id"`
+	// Id            primitive.ObjectID `bson:"_id"`
 	AdId          string  `bson:"AdId"`          // 关联 当前记录具体属于哪个广告
 	Img           string  `bson:"Img"`           // 图片链接
 	Link          string  `bson:"Link"`          // 广告链接(优惠券链接)
@@ -51,7 +52,7 @@ func excelizeExcel(path string) {
 	)
 
 	// 读取excel 只支持xlsx文件
-	//xlsx, err := excelize.OpenFile(path)
+	// xlsx, err := excelize.OpenFile(path)
 	file, err := os.Open(path)
 	all, err := ioutil.ReadAll(file)
 	reader := bytes.NewReader(all)
@@ -67,7 +68,7 @@ func excelizeExcel(path string) {
 	fmt.Println("xlsx.Sheet", sheetMap)
 	for _, v := range sheetMap {
 		rows := xlsx.GetRows(v)
-		//fmt.Println("rows", rows)
+		// fmt.Println("rows", rows)
 		// 定位标题 需要的数据在多少列
 		titleRow := rows[0:1]
 		for _, row := range titleRow {
@@ -135,7 +136,7 @@ func locationTitle(columnMap *map[string]int, colCell string, index int) {
 
 func xlxs(path string) {
 	xlFile, err := xlsx.OpenFile(path)
-	//xlFile, err := xlsx.OpenBinary()
+	// xlFile, err := xlsx.OpenBinary()
 	if err != nil {
 		fmt.Printf("open failed: %s\n", err)
 	} else {
