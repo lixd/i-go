@@ -3,14 +3,19 @@ package repository
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readconcern"
+	"go.mongodb.org/mongo-driver/mongo/writeconcern"
 	"i-go/core/db/mongodb"
 	"i-go/storage/mongodb/model"
 	"time"
+	"i-go/database/mongodb/model"
 )
 
 type userInfo struct {
@@ -135,4 +140,36 @@ func (ui *userInfo) QueryCount(username string) ([]QueryCount, error) {
 		list = append(list, item)
 	}
 	return list, nil
+}
+
+// Transaction 测试MongoDB事务
+/*
+复制集多表多行：4.0复制集；
+分片集群多表多行：4.2版本
+*/
+func (ui *userInfo) Transaction() error {
+	var (
+		ctx = context.TODO()
+	)
+	err := mongodb.TestClient.UseSession(ctx, func(sctx mongo.SessionContext) error {
+		err := sctx.StartTransaction(options.Transaction().
+			SetReadConcern(readconcern.Snapshot()).
+			SetWriteConcern(writeconcern.New(writeconcern.WMajority())),
+		)
+		if err != nil {
+			return err
+		}
+		doc1 := bson.M{"Hello": "World"}
+		ui.GetColl().InsertOne(ctx, doc1)
+		doc2 := bson.M{"Hello": "MongoDB"}
+		ui.GetColl().InsertOne(ctx, doc2)
+		// sctx.AbortTransaction(ctx) // 手动回滚，放弃之前的改动
+		err = sctx.CommitTransaction(ctx)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	return err
 }
