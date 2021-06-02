@@ -55,9 +55,9 @@ require (
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
-	github.com/micro/go-micro v1.18.0
+	github.com/micro/go-micro v1.18.0 // indirect
 	github.com/micro/go-micro/v2 v2.9.1
-	github.com/micro/go-plugins/registry/etcdv3 v0.0.0-20200119172437-4fe21aa238fd
+	github.com/micro/go-plugins/registry/etcdv3 v0.0.0-20200119172437-4fe21aa238fd // indirect
 	github.com/miekg/dns v1.1.29 // indirect
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
@@ -121,6 +121,8 @@ require (
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopl.io v0.0.0-20200323155855-65c318dde95e // indirect

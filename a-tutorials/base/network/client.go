@@ -15,7 +15,7 @@ func main() {
 		fmt.Printf("client conn error err=%v \n", e)
 		return
 	}
-	fmt.Println("连接成功", conn)
+	fmt.Println("连接成功")
 
 	reader := bufio.NewReader(os.Stdin)
 	for {

@@ -3,9 +3,10 @@ package ratelimit
 import (
 	"context"
 	"fmt"
-	"golang.org/x/time/rate"
 	"testing"
 	"time"
+
+	"golang.org/x/time/rate"
 )
 
 func TestTokenBucketAllow(t *testing.T) {
