@@ -2,17 +2,17 @@ package middleware
 
 import (
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 )
 
-// 用https把这个中间件在router里面use一下就好
-
-func LoadTls() gin.HandlerFunc {
+// HTTP2HTTPS Redirecting HTTP to HTTPS
+func HTTP2HTTPS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		middleware := secure.New(secure.Options{
 			SSLRedirect: true,
-			SSLHost:     "localhost:443",
+			SSLHost:     "localhost:443", // https server
 		})
 		err := middleware.Process(c.Writer, c.Request)
 		if err != nil {

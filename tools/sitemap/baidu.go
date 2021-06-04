@@ -2,14 +2,16 @@ package main
 
 import (
 	"encoding/xml"
-	"github.com/sittipongwork/GoSitemapxml"
 	"os"
+
+	"github.com/sittipongwork/GoSitemapxml"
 )
 
 func main() {
 	Generate()
 }
 
+// Generate 自动生成站点地图
 func Generate() {
 	// Create Sitemap Container for keep data xml
 	sitemap := gositemap.CreateSitemapContainer("https://www.sitemaps.org/schemas/sitemap/0.9")

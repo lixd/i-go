@@ -1,3 +1,4 @@
+// Package frechet 轨迹相似度算法
 package frechet
 
 import (
@@ -10,6 +11,8 @@ import (
 http://html.rhhz.net/WHDXXBXXKXB/html/2015-9-1225.htm
 https://blog.csdn.net/YYZZHC999/article/details/105799826
 */
+
+// Coordinate 坐标点
 type Coordinate struct {
 	X int64 `json:"X"`
 	Y int64 `json:"Y"`

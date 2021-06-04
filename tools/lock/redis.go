@@ -7,6 +7,8 @@ import (
 	"github.com/go-redis/redis"
 )
 
+// 基于 Redis 的分布式锁
+
 var (
 	once      sync.Once
 	RedisLock *redisLock

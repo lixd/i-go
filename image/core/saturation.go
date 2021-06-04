@@ -1,10 +1,11 @@
 package core
 
 import (
-	"github.com/Comdex/imgo"
-	"i-go/image/util"
 	"image"
 	"io"
+
+	"github.com/Comdex/imgo"
+	"i-go/image/util"
 )
 
 // AdjustSaturation 调整图像饱和度 percent 饱和度控制参数 (0,1)
@@ -80,7 +81,7 @@ func adjustSaturationByRGB(R, G, B uint8, percent float64) (nr, ng, nb uint8) {
 	return
 }
 
-// RGB2YCrCb 颜色空间转换
+// RGB2YCrCb 色彩空间转换
 func RGB2YCrCb(R, G, B float64) (Y, Cr, Cb float64) {
 	Y = 0.299*R + 0.587*G + 0.114*B
 	Cr = 0.500*R - 0.419*G - 0.081*B
@@ -88,7 +89,7 @@ func RGB2YCrCb(R, G, B float64) (Y, Cr, Cb float64) {
 	return
 }
 
-// YCrCb2RGB
+// YCrCb2RGB 色彩空间转换
 func YCrCb2RGB(Y, Cr, Cb float64) (R, G, B uint8) {
 	R = uint8(Y + 1.371*Cr)
 	G = uint8(Y - 0.6982*Cr - 0.3365*Cb)

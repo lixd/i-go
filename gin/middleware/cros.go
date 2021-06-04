@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Cors 处理跨域请求
@@ -11,7 +12,7 @@ func Cors() gin.HandlerFunc {
 		method := c.Request.Method
 		origin := c.Request.Header.Get("Origin") // 请求头部
 		if origin != "" {
-			// 接收客户端发送的origin （重要！）
+			// 接收客户端发送的origin （重要!）
 			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 			// 这是允许访问所有域
 			// c.Header("Access-Control-Allow-Origin", "*")

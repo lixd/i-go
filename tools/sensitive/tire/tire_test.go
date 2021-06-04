@@ -12,4 +12,5 @@ func TestTire_Search(t *testing.T) {
 	tire.InsertMany(words)
 	fmt.Println(tire.Search("三余无梦生"))
 	fmt.Println(tire.Search("三非"))
+	fmt.Println(tire.StartsWith("三非"))
 }

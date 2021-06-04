@@ -1,6 +1,6 @@
+// Package compress 数据压缩工具类 使用标准库 gzip 包实现
 package compress
 
-// 数据压缩 使用标准库gzip包实现
 import (
 	"bytes"
 	"compress/gzip"
@@ -13,9 +13,9 @@ func Compress(src []byte) []byte {
 	// 将待压缩数据写入返回的io.Writer最后从传入的io.Writer中读取压缩后的数据
 	buf := new(bytes.Buffer)
 	zw := gzip.NewWriter(buf)
-	zw.Write(src)
-	zw.Flush()
-	zw.Close() // Close不能用defer 必须在buf.Bytes()取值之前执行
+	_, _ = zw.Write(src)
+	_ = zw.Flush()
+	_ = zw.Close() // Close不能用defer 必须在buf.Bytes()取值之前执行
 	return buf.Bytes()
 }
 

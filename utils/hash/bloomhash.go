@@ -45,7 +45,7 @@ func (bf *BloomFilter) BloomHash(data []byte) []uint64 {
 	return bits
 }
 
-// location returns the ith hashed location using the four base hash values
+// Location returns the ith hashed location using the four base hash values
 func (bf *BloomFilter) Location(h [4]uint64, i uint) uint64 {
 	return location(h, i) % uint64(bf.m)
 }

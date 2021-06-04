@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"i-go/core/conf"
-	"i-go/core/etcd"
 	"strconv"
 	"time"
+
+	"i-go/core/conf"
+	"i-go/core/etcd"
 
 	"github.com/coreos/etcd/clientv3"
 	"github.com/sirupsen/logrus"
@@ -24,7 +25,7 @@ const (
 )
 
 func init() {
-	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
+	conf.Load("/conf/config.yml")
 	etcd.Init()
 
 	client = etcd.CliV3

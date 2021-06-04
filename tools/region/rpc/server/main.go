@@ -21,7 +21,7 @@ type regionServer struct {
 	pb.UnimplementedRegionServerServer
 }
 
-// SayHello 简单实现一下.proto文件中定义的 SayHello 方法
+// IP2Region RPC 实现
 func (r *regionServer) IP2Region(ctx context.Context, in *pb.IP) (*pb.Region, error) {
 	log.Printf("Received: %v", in.GetIp())
 	region := core.IP2Region(in.GetIp())

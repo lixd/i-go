@@ -1,17 +1,19 @@
 package utils
 
 import (
-	"github.com/sirupsen/logrus"
+	"fmt"
 	"runtime"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Trace 测试func运行时间
 func Trace(msg string) func() {
 	start := time.Now()
-	logrus.Printf("-------------------------enter %s--------------------------", msg)
+	fmt.Printf("-------------------------enter %s--------------------------\n", msg)
 	return func() {
-		logrus.Printf("--------------------exit %s (%s)--------------------", msg, time.Since(start))
+		fmt.Printf("--------------------exit %s (%s)--------------------\n", msg, time.Since(start))
 	}
 }
 

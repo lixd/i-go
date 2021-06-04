@@ -33,7 +33,7 @@ type Index struct {
 	end   int
 }
 
-// DFA则是字典树上进行优化
+// DFA 则是字典树上进行优化
 type DFA struct {
 	root *Node
 	mu   sync.Mutex
@@ -44,7 +44,7 @@ const (
 	MatchAll   = 1 // 匹配完整个字符串
 )
 
-// 字典树
+// Node 字典树
 type Node struct {
 	children children
 	isEnd    bool // 是否是单词的结束，如打人受伤  打(true) 人(true) 受(false)伤(true)，可以有三个词汇（打/打人/打人受伤）
@@ -174,7 +174,7 @@ func (dfa *DFA) Search(sentence string, matchType int64) (matchIndexList []Index
 	return matchIndexList
 }
 
-// Cover 找出给定字符串中的铭感词并将其替换为指定字符{mask}
+// Cover 找出给定字符串中的敏感词并将其替换为指定字符 {mask}
 func (dfa *DFA) Cover(sentence string, mask rune) (ok bool, marked string) {
 	matchIndexList := dfa.Search(sentence, MatchAll)
 	if len(matchIndexList) == 0 {

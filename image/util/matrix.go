@@ -8,7 +8,7 @@ import (
 	"image/png"
 )
 
-// matrix2Bytes 矩阵转成[]byte
+// Matrix2Bytes 矩阵转成 []byte
 func Matrix2Bytes(imgMatrix [][][]uint8) ([]byte, error) {
 	height := len(imgMatrix)
 	width := len(imgMatrix[0])

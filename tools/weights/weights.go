@@ -24,12 +24,12 @@ type Item struct {
 	Range  []int64 // 当前项目所占区间(左闭右开区间)
 }
 
-// getAllWeights 计算总权重 当前默认为100
+// GetAllWeights 获取总权重
 func (w *Weights) GetAllWeights() int64 {
 	return w.totalWeight
 }
 
-// NewWeight
+// NewWeight new 一个 weight 实例
 func NewWeight() *Weights {
 	var weights = &Weights{
 		list:        nil,
@@ -39,7 +39,7 @@ func NewWeight() *Weights {
 	return weights
 }
 
-// add 添加item
+// Add 添加item
 func (w *Weights) Add(key string, weight int64) {
 	if weight == 0 {
 		return

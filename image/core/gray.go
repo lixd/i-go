@@ -1,13 +1,14 @@
 package core
 
 import (
-	"github.com/Comdex/imgo"
-	"i-go/image/util"
 	"image"
 	"io"
+
+	"github.com/Comdex/imgo"
+	"i-go/image/util"
 )
 
-// RBGGray 图像灰度处理-基于人眼感知算法
+// RGB2Gray 图像灰度处理-基于人眼感知算法
 func RGB2Gray(file io.Reader) (gray []byte) {
 	// 1.解析图片加载矩阵
 	img, _, err := image.Decode(file)
@@ -108,22 +109,4 @@ func RGB2GrayDemo(src [][][]uint8) [][][]uint8 {
 		}
 	}
 	return imgMatrix
-}
-func max(nums ...uint8) uint8 {
-	var max uint8
-	for _, v := range nums {
-		if v > max {
-			max = v
-		}
-	}
-	return max
-}
-func min(nums ...uint8) uint8 {
-	var min uint8
-	for _, v := range nums {
-		if v < min {
-			min = v
-		}
-	}
-	return min
 }

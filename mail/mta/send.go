@@ -4,10 +4,13 @@ import (
 	"bufio"
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"io"
 	"net"
 	"net/smtp"
 	"time"
+
+	"golang.org/x/net/proxy"
 )
 
 /*
@@ -59,7 +62,8 @@ mx 收件服务器的 MX 解析记录
 */
 func (s *Sender) sendBySMTP(from, to string, data []byte, mx *net.MX) error {
 	// c, err := smtp.Dial(mx.Host + ":25")
-	c, err := clientWithTimeOut(mx.Host)
+	// c, err := clientWithTimeOut(mx.Host)
+	c, err := clientWithProxy(mx.Host)
 	if err != nil {
 		return err
 	}
@@ -145,6 +149,22 @@ func wrapperClient(c *smtp.Client) (*smtp.Client, error) {
 
 func clientWithTimeOut(mx string) (*smtp.Client, error) {
 	conn, err := net.DialTimeout("tcp", mx+":"+"25", time.Minute)
+	if err != nil {
+		return nil, err
+	}
+	_ = conn.SetDeadline(time.Now().Add(time.Minute))
+	return smtp.NewClient(conn, mx)
+}
+
+// clientWithProxy 使用SOCKS5代理
+func clientWithProxy(mx string) (*smtp.Client, error) {
+	httpProxyServer := "61.131.147.74:7148"
+	dialer, err := proxy.SOCKS5("tcp", httpProxyServer, nil, proxy.Direct)
+	if err != nil {
+		fmt.Println("can't connect to the proxy:", err)
+		return nil, err
+	}
+	conn, err := dialer.Dial("tcp", mx+":25")
 	if err != nil {
 		return nil, err
 	}

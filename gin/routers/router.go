@@ -1,17 +1,17 @@
 package router
 
 import (
-	"i-go/gin/user"
 	"net/http"
+
+	"i-go/gin/user"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(router *gin.Engine) {
-
 	// 加载静态资源
 	router.LoadHTMLFiles("D:/lillusory/projects/i-go/gin/templates/advert.tmpl")
-	//router.LoadHTMLGlob("../templates/*")
+	// router.LoadHTMLGlob("../templates/*")
 	// 设定请求url不存在的返回值
 	router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{

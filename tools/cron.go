@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/robfig/cron"
 	"time"
+
+	"github.com/robfig/cron"
 )
 
 /*
@@ -45,7 +46,7 @@ type job struct {
 	desc string
 }
 
-// 实现 cron.Job 接口
+// Run 实现 cron.Job 接口
 func (job *job) Run() {
 	fmt.Printf("job id=%v desc=%v \n", job.id, job.desc)
 }

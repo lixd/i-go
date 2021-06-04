@@ -38,7 +38,7 @@ func (t *Tire) Insert(word string) {
 	tire.isWord = true
 }
 
-/** Returns if the word is in the trie. */
+// Search 存在于 word 相同的词则返回 true,否则返回 false
 func (t *Tire) Search(word string) bool {
 	tire := t
 	for _, v := range word {
@@ -50,7 +50,7 @@ func (t *Tire) Search(word string) bool {
 	return tire.isWord
 }
 
-/** Returns if there is any word in the trie that starts with the given prefix. */
+// StartsWith 存在以 prefix 为前缀的词则返回 true 否则返回 false
 func (t *Tire) StartsWith(prefix string) bool {
 	tire := t
 	for _, v := range prefix {

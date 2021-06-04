@@ -3,6 +3,7 @@ package jwt
 import (
 	"errors"
 	"fmt"
+
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -10,7 +11,7 @@ const (
 	hmacSampleSecret = "17x"
 )
 
-// GenerateToken
+// GenerateToken 根据提供的信息生成 jwt token
 func GenerateToken(userId int64) (string, error) {
 	// 指定需要存储的数据
 	claims := jwt.MapClaims{
@@ -21,7 +22,7 @@ func GenerateToken(userId int64) (string, error) {
 	return token.SignedString([]byte(hmacSampleSecret))
 }
 
-// ParseToken
+// ParseToken 从 jwt token 中解析出原始信息
 func ParseToken(tokenString string) (userId int64, err error) {
 	token, err := jwt.ParseWithClaims(tokenString, jwt.MapClaims{}, secret())
 	if err != nil {
