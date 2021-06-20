@@ -1,6 +1,8 @@
 package utils
 
-import "strings"
+import (
+	"strings"
+)
 
 // AddBase64Header 图片base64编码 添加Header
 // completeBase64-->data:image/png;base64,iVBORw0KGgo...

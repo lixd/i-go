@@ -1,4 +1,4 @@
-// conf 加载配置文件
+// Package conf 配置文件
 package conf
 
 import (
@@ -9,15 +9,16 @@ import (
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"i-go/core/db/elasticsearch"
 	"i-go/data"
 	"i-go/data/conf"
 	"i-go/utils"
 )
 
-// Load 手动调用加载配置文件
+// Loads 手动调用加载配置文件
 func Loads(files []string) error {
 	for _, file := range files {
-		Load(file)
+		_ = Load(file)
 	}
 	return nil
 }
@@ -62,7 +63,7 @@ func watchConfig() {
 		case conf.Elasticsearch:
 			fmt.Println("elasticsearch conf changed!")
 			// 配置文件更新后再次初始化
-			// elasticsearch.Init()
+			elasticsearch.Init()
 		case conf.MongoDB:
 			fmt.Println("mongo conf changed!")
 		case conf.Redis:

@@ -11,8 +11,8 @@ func TestBloomFilter_BloomHash(t *testing.T) {
 	hash := NewBloomFilterHash(1000*10, 3)
 	key := []byte("second")
 	bloomHash := hash.BloomHash(key)
-	logrus.Infof("res :%v", bloomHash)
-	logrus.Infof("res2 :%v", Murmur3(key))
+	fmt.Printf("res :%v\n", bloomHash)
+	fmt.Printf("res2 :%v\n", Murmur3(key))
 }
 
 func BenchmarkNewBloomFilterHash(b *testing.B) {

@@ -45,7 +45,3 @@ func BenchmarkStruct2Map(b *testing.B) {
 		_ = Struct2Map(item)
 	}
 }
-
-func TestMap2StructUtil(t *testing.T) {
-	Map2StructUtil()
-}

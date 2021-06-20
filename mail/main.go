@@ -1,13 +1,9 @@
 package main
 
 import (
-	"crypto/tls"
 	"fmt"
 	"net/smtp"
-	"strconv"
 	"strings"
-
-	"gopkg.in/gomail.v2"
 )
 
 /*
@@ -28,7 +24,6 @@ func main() {
 	body := `empty body`
 	fmt.Println("send email")
 	err := SendByNative(nickName, user, password, host, to, subject, body)
-	// err := SendByGoMail(nickName, user, password, host, to, subject, body)
 	if err != nil {
 		fmt.Println("Send mail error:", err)
 		return
@@ -50,30 +45,8 @@ func SendByNative(nickname, user, password, host, to, subject, body string) erro
 		nickname, user, to, subject, ContentTypeHTML, body)
 	msg := []byte(s)
 	sendTo := strings.Split(to, ";")
-	// fmt.Printf("host:%v user:%v sendTo:%#v msg:%v\n", host, user, sendTo, string(msg))
-	// auth := smtp.PlainAuth("", "admin", "root", host)
-	err := smtp.SendMail(host, nil, user, sendTo, msg)
-	return err
-}
-
-// SendByGoMail 使用第三方库 goMail 发送
-func SendByGoMail(nickname, user, password, addr, to, subject, body string) error {
-	m := gomail.NewMessage()
-	// f := fmt.Sprintf("%s<%s>", nickname, user)
-	// fmt.Println(f)
-	m.SetHeader("From", user)
-	// m.SetHeader("From", user, nickname) // 发件人+发件人昵称 name@example.com,nickName
-	m.SetHeader("To", to) // 收件人 nickName@example.com
-	// m.SetAddressHeader("Cc", "xxx@163.com", "Dan") // 抄送
-	m.SetHeader("Subject", subject) // 邮件标题
-	m.SetBody("text/html", body)    // 邮件内容
-	// m.Attach("/home/Alex/lolcat.jpg") // 附件
-	h := strings.Split(addr, ":")
-	host := h[0]
-	port, _ := strconv.Atoi(h[1])
-	d := gomail.NewDialer(host, port, user, password)
-	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
-	err := d.DialAndSend(m)
+	auth := smtp.PlainAuth("", "admin", "root", host)
+	err := smtp.SendMail(host, auth, user, sendTo, msg)
 	return err
 }
 

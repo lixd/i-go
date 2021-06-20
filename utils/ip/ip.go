@@ -20,7 +20,7 @@ func InetAtoN(ip string) int64 {
 	return ret.Int64()
 }
 
-// ExternalIP 获取外网IP
+// ExternalIP 获取外网IP 只能请求外部服务器以获取IP
 func ExternalIP() (string, error) {
 	resp, err := http.Get("http://myexternalip.com/raw")
 	if err != nil {
