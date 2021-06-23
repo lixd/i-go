@@ -49,12 +49,3 @@ func SendByNative(nickname, user, password, host, to, subject, body string) erro
 	err := smtp.SendMail(host, auth, user, sendTo, msg)
 	return err
 }
-
-/*
-错误码
-QQ: 550 Suspected bounce attacks https://service.mail.qq.com/cgi-bin/help?id=20022&no=1001602&subtype=1
-疑似退信攻击
-发生此问题，可能是你的邮件服务器接收了仿冒qq.com账号发出的垃圾邮件，并且你的邮件服务器没有检查发件人真实性，在某种条件下触发了退信。
-qq.com发出的所有邮件均可通过SPF和DKIM校验，请根据标准直接拒绝此类仿冒qq.com的邮件。
-503 身份验证
-*/

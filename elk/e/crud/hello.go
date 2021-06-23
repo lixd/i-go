@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
+	"reflect"
+	"sync"
+
 	"github.com/olivere/elastic"
 	"github.com/sirupsen/logrus"
 	"i-go/utils"
-	"reflect"
-	"sync"
 )
 
 type IHello interface {
@@ -64,7 +65,7 @@ func (s *hello) MatchPrefix(keyword string, count int) ([]string, error) {
 	return list, err
 }
 
-// Upsert
+// Upsert 根据 id 更新文档
 func (s *hello) Upsert(id, keyword string) error {
 	body := HelloItem{Name: keyword}
 	_, err := s.Cli.Update().
@@ -83,7 +84,7 @@ func (s *hello) Upsert(id, keyword string) error {
 	return err
 }
 
-// Delete
+// Delete 根据 id 删除文档
 func (s *hello) Delete(id string) error {
 	_, err := s.Cli.Delete().
 		Index(s.Index).

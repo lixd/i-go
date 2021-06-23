@@ -3,12 +3,9 @@ package mta
 import (
 	"fmt"
 	"testing"
-
-	"zzra/core/logger"
 )
 
 func TestSender_Send(t *testing.T) {
-	logger.Init()
 	// 1.构建邮件内容
 	from := From{
 		Nickname: "意琦行",
