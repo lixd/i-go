@@ -13,3 +13,4 @@
 *.log
 .idea
 go.sum
+/wbl/
