@@ -2,31 +2,25 @@ package core
 
 import (
 	"image"
-	"io"
 
 	"github.com/Comdex/imgo"
+	"github.com/pkg/errors"
 	"i-go/image/util"
 )
 
 // AdjustSaturation 调整图像饱和度 percent 饱和度控制参数 (0,1)
-func AdjustSaturation(file io.Reader, percent float64) (saturation []byte) {
+func AdjustSaturation(origin image.Image, percent float64) (image.Image, error) {
 	// 1.解析图片加载矩阵
-	_image, _, err := image.Decode(file)
-	if err != nil {
-		return
-	}
-	imgMatrix, err := imgo.Read(_image)
-	if err != nil {
-		return
-	}
+	// imgMatrix, err := imgo.Read(origin)
+	// if err != nil {
+	// 	return origin, errors.Wrap(err, "image对象转颜色矩阵")
+	// }
+	imgMatrix := util.Image2Matrix(origin)
 	// 2.饱和度调整
 	rgb2Gray := doAdjustSaturation(imgMatrix, percent)
 	// 3.矩阵转为[]byte
-	saturation, err = util.Matrix2Bytes(rgb2Gray)
-	if err != nil {
-		return
-	}
-	return
+	img, err := util.Matrix2Image(rgb2Gray)
+	return img, errors.Wrap(err, "颜色矩阵转image对象")
 }
 
 // doAdjustSaturation 调整饱和度

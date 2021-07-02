@@ -1,32 +1,31 @@
 package core
 
 import (
-	"io/ioutil"
-	"os"
 	"testing"
+
+	"i-go/image/util"
 )
 
 func Test_quality(t *testing.T) {
-	file, err := ioutil.ReadFile("../assets/origin.png")
+	image, err := util.LoadImage(originImage)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal("LoadImage", err)
 	}
-	bytes, err := Quality(file, 10)
-	create, err := os.Create("./compress.png")
+	quality, err := Quality(image, 10)
+	err = util.SaveImage("./quality.jpg", quality)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal("SaveImage", err)
 	}
-	defer create.Close()
-	_, _ = create.Write(bytes)
 }
 
-// 4ms
+// 4079862 ns/op 4ms
 func BenchmarkQuality(b *testing.B) {
-	img, err := ioutil.ReadFile("../assets/origin.png")
+	image, err := util.LoadImage(originImage)
 	if err != nil {
-		b.Fatal(err)
+		b.Fatal("LoadImage", err)
 	}
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = Quality(img, 70)
+		_, _ = Quality(image, 70)
 	}
 }

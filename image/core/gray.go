@@ -2,38 +2,29 @@ package core
 
 import (
 	"image"
-	"io"
 
-	"github.com/Comdex/imgo"
+	"github.com/pkg/errors"
 	"i-go/image/util"
 )
 
 // RGB2Gray 图像灰度处理-基于人眼感知算法
-func RGB2Gray(file io.Reader) (gray []byte) {
+func RGB2Gray(origin image.Image) (image.Image, error) {
 	// 1.解析图片加载矩阵
-	img, _, err := image.Decode(file)
-	if err != nil {
-		panic(err)
-	}
-	imgMatrix, err := imgo.Read(img)
-	if err != nil {
-		panic(err)
-	}
+	// imgMatrix, err := imgo.Read(origin)
+	imgMatrix := util.Image2Matrix(origin)
 	// 2.灰度化
 	rgb2Gray := doRGB2Gray(imgMatrix)
-	// 3.矩阵转为[]byte
-	gray, err = util.Matrix2Bytes(rgb2Gray)
-	if err != nil {
-		panic(err)
-	}
-	return
+	// 3.矩阵转为image
+	gray, err := util.Matrix2Image(rgb2Gray)
+	return gray, errors.Wrap(err, "矩阵转image")
 }
 
 // doRGB2Gray
 func doRGB2Gray(src [][][]uint8) [][][]uint8 {
 	height := len(src)
 	width := len(src[0])
-	imgMatrix := imgo.NewRGBAMatrix(height, width)
+	imgMatrix := util.NewRGBAMatrix(height, width)
+	// imgMatrix := imgo.NewRGBAMatrix(height, width)
 	copy(imgMatrix, src)
 
 	for i := 0; i < height; i++ {
@@ -43,9 +34,9 @@ func doRGB2Gray(src [][][]uint8) [][][]uint8 {
 				green = imgMatrix[i][j][1]
 				blue  = imgMatrix[i][j][2]
 			)
-			// 计算灰度值
-			// RGB3通道值一致时 图片就是灰色
+			// 基于人眼感知算法计算灰度值
 			gray := uint8(float64(red)*0.3 + float64(green)*0.59 + float64(blue)*0.11)
+			// RGB3通道值一致时 图片就是灰色
 			imgMatrix[i][j][0] = gray
 			imgMatrix[i][j][1] = gray
 			imgMatrix[i][j][2] = gray
@@ -71,7 +62,9 @@ https://tannerhelland.com/2011/10/01/grayscale-image-algorithm-vb6.html
 func RGB2GrayDemo(src [][][]uint8) [][][]uint8 {
 	height := len(src)
 	width := len(src[0])
-	imgMatrix := imgo.NewRGBAMatrix(height, width)
+	// imgMatrix := imgo.NewRGBAMatrix(height, width)
+	imgMatrix := util.NewRGBAMatrix(height, width)
+
 	copy(imgMatrix, src)
 
 	for i := 0; i < height; i++ {

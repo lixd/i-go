@@ -1,24 +1,37 @@
 package core
 
 import (
-	"os"
 	"testing"
+
+	"i-go/image/util"
 )
 
 func TestRGB2Gray(t *testing.T) {
 	// 1.读取数据
-	file, err := os.Open(originImage)
+	img, err := util.LoadImage(originImage)
 	if err != nil {
-		panic(err)
+		t.Fatal("LoadImage err:", err)
 	}
-	defer file.Close()
 	// 2.灰度化
-	grays := RGB2Gray(file)
-	// 3.保存
-	create, err := os.Create("./gray.jpg")
+	gray, err := RGB2Gray(img)
 	if err != nil {
-		panic(err)
+		t.Fatal("RGB2Gray err:", err)
 	}
-	defer create.Close()
-	_, _ = create.Write(grays)
+	// 3.保存
+	err = util.SaveImage("./gray.jpg", gray)
+	if err != nil {
+		t.Fatal("SaveImage err:", err)
+	}
+}
+
+// 8830345 ns/op 8ms
+func BenchmarkGray(b *testing.B) {
+	img, err := util.LoadImage(originImage)
+	if err != nil {
+		b.Fatal("LoadImage err:", err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = RGB2Gray(img)
+	}
 }

@@ -1,27 +1,31 @@
 package core
 
 import (
-	"os"
 	"testing"
-)
 
-const (
-	originImage = "../assets/origin.png"
+	"i-go/image/util"
 )
 
 func TestAdjustSaturation(t *testing.T) {
-	file, err := os.Open(originImage)
+	image, err := util.LoadImage(originImage)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal("LoadImage", err)
 	}
-	defer file.Close()
-	// 2.灰度化
-	grays := AdjustSaturation(file, 0.6)
-	// 3.保存
-	create, err := os.Create("./adjustSaturation.jpg")
+	quality, err := AdjustSaturation(image, 0.8)
+	err = util.SaveImage("./saturation.jpg", quality)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal("SaveImage", err)
 	}
-	defer create.Close()
-	_, _ = create.Write(grays)
+}
+
+// 10123722 ns/op 10ms
+func BenchmarkSaturation(b *testing.B) {
+	image, err := util.LoadImage(originImage)
+	if err != nil {
+		b.Fatal("LoadImage", err)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = AdjustSaturation(image, 0.8)
+	}
 }
