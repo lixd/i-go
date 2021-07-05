@@ -1,0 +1,7 @@
+### 经纬度
+GET http://localhost:8081/api/v1/tools/ip2latlong?ip=183.69.225.99
+Accept: application/json
+
+### 区域
+GET http://localhost:8081/api/v1/tools/ip2region?ip=183.69.225.99
+Accept: application/json

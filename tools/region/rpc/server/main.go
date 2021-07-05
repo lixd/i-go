@@ -23,17 +23,32 @@ type regionServer struct {
 
 // IP2Region RPC 实现
 func (r *regionServer) IP2Region(ctx context.Context, in *pb.IP) (*pb.Region, error) {
-	log.Printf("Received: %v", in.GetIp())
 	region := core.IP2Region(in.GetIp())
+	log.Printf("IP2Region ip:%s region:%s\n", in.GetIp(), region)
 	return &pb.Region{Region: region}, nil
 }
 
+// IP2LatLong RPC 实现
+func (r *regionServer) IP2LatLong(ctx context.Context, in *pb.IP) (*pb.LatLong, error) {
+	latLong, err := core.IP2LatLong(in.GetIp())
+	if err != nil {
+		return nil, err
+	}
+	item := &pb.LatLong{
+		Latitude:  latLong.Latitude,
+		Longitude: latLong.Longitude,
+	}
+	log.Printf("IP2LatLong ip:%s lagLong:%+v\n", in.GetIp(), item)
+	return item, nil
+}
+
 func main() {
-	err := conf.Load("conf/config.yml")
+	err := conf.Load("conf/config_ip.yaml")
 	if err != nil {
 		panic(err)
 	}
-	core.Init()
+	core.InitRegion()
+	core.InitLatLong()
 
 	listen, err := net.Listen("tcp", port)
 	if err != nil {

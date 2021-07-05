@@ -11,7 +11,7 @@ var (
 	client *ip2region.Ip2Region
 )
 
-func Init() {
+func InitRegion() {
 	db := viper.GetString("region")
 	if db == "" {
 		panic("can not get region")

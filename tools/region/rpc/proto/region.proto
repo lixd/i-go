@@ -4,6 +4,7 @@ option go_package = "i-go/tools/region/rpc/proto;proto";
 
 service RegionServer {
   rpc IP2Region (IP) returns (Region) {}
+  rpc IP2LatLong (IP) returns (LatLong) {}
 }
 
 message IP {
@@ -14,3 +15,7 @@ message Region {
   string region = 1;
 }
 
+message LatLong{
+  double Latitude = 1;
+  double Longitude = 2;
+}

@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RegionServerClient interface {
 	IP2Region(ctx context.Context, in *IP, opts ...grpc.CallOption) (*Region, error)
+	IP2LatLong(ctx context.Context, in *IP, opts ...grpc.CallOption) (*LatLong, error)
 }
 
 type regionServerClient struct {
@@ -37,11 +38,21 @@ func (c *regionServerClient) IP2Region(ctx context.Context, in *IP, opts ...grpc
 	return out, nil
 }
 
+func (c *regionServerClient) IP2LatLong(ctx context.Context, in *IP, opts ...grpc.CallOption) (*LatLong, error) {
+	out := new(LatLong)
+	err := c.cc.Invoke(ctx, "/proto.RegionServer/IP2LatLong", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RegionServerServer is the server API for RegionServer service.
 // All implementations must embed UnimplementedRegionServerServer
 // for forward compatibility
 type RegionServerServer interface {
 	IP2Region(context.Context, *IP) (*Region, error)
+	IP2LatLong(context.Context, *IP) (*LatLong, error)
 	mustEmbedUnimplementedRegionServerServer()
 }
 
@@ -51,6 +62,9 @@ type UnimplementedRegionServerServer struct {
 
 func (UnimplementedRegionServerServer) IP2Region(context.Context, *IP) (*Region, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IP2Region not implemented")
+}
+func (UnimplementedRegionServerServer) IP2LatLong(context.Context, *IP) (*LatLong, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IP2LatLong not implemented")
 }
 func (UnimplementedRegionServerServer) mustEmbedUnimplementedRegionServerServer() {}
 
@@ -83,6 +97,24 @@ func _RegionServer_IP2Region_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RegionServer_IP2LatLong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IP)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RegionServerServer).IP2LatLong(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.RegionServer/IP2LatLong",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RegionServerServer).IP2LatLong(ctx, req.(*IP))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _RegionServer_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.RegionServer",
 	HandlerType: (*RegionServerServer)(nil),
@@ -90,6 +122,10 @@ var _RegionServer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IP2Region",
 			Handler:    _RegionServer_IP2Region_Handler,
+		},
+		{
+			MethodName: "IP2LatLong",
+			Handler:    _RegionServer_IP2LatLong_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

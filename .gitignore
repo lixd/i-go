@@ -1,6 +1,6 @@
 # Binaries for programs and plugins
 *.exe
-*.exe~
+*.exe~ip2region.db
 *.dll
 *.so
 *.dylib
@@ -14,3 +14,7 @@
 .idea
 go.sum
 /wbl/
+# ip2latlong 数据库
+*.mmdb
+# ip2region 数据库
+*.db

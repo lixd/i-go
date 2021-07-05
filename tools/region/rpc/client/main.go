@@ -7,7 +7,6 @@ import (
 
 	"google.golang.org/grpc"
 	pb "i-go/tools/region/rpc/proto"
-	"i-go/utils/ip"
 )
 
 const (
@@ -22,23 +21,27 @@ func main() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	for {
-		c := pb.NewRegionServerClient(conn)
+	c := pb.NewRegionServerClient(conn)
 
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		externalIP, err := ip.ExternalIP()
-		if err != nil {
-			intranetIP, _ := ip.IntranetIP()
-			externalIP = intranetIP
-		}
-		r, err := c.IP2Region(ctx, &pb.IP{
-			Ip: externalIP,
-		})
-		if err != nil {
-			log.Fatalf("could not greet: %v", err)
-		}
-		log.Printf("Region: %s", r.GetRegion())
-		cancel()
-		time.Sleep(time.Second * 3)
+	in := &pb.IP{Ip: "183.69.225.99"}
+	for i := 0; i < 1000; i++ {
+		ip2region(c, in)
+		ip2LatLong(c, in)
 	}
+}
+
+func ip2region(c pb.RegionServerClient, in *pb.IP) {
+	r, err := c.IP2Region(context.Background(), in)
+	if err != nil {
+		log.Fatalf("could not IP2Region: %v", err)
+	}
+	log.Printf("Region: %s", r.GetRegion())
+}
+
+func ip2LatLong(c pb.RegionServerClient, in *pb.IP) {
+	long, err := c.IP2LatLong(context.Background(), in)
+	if err != nil {
+		log.Fatalf("could not IP2LatLong: %v", err)
+	}
+	log.Printf("lag: %v long:%v \n", long.GetLatitude(), long.GetLongitude())
 }
