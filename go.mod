@@ -14,7 +14,6 @@ require (
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v0.0.0-20190319080838-ce1d48779e67 // indirect
 	github.com/axiomhq/hyperloglog v0.0.0-20191112132149-a4c4c47bc57f
-	github.com/bojand/ghz v0.90.0 // indirect
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/coreos/etcd v3.3.22+incompatible
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
@@ -45,7 +44,6 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.1 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
@@ -55,6 +53,7 @@ require (
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
+	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
 	github.com/micro/go-micro v1.18.0 // indirect
@@ -73,8 +72,8 @@ require (
 	github.com/oschwald/geoip2-golang v1.5.0
 	github.com/pelletier/go-toml v1.9.0 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.3.0
-	github.com/prometheus/common v0.7.0
+	github.com/prometheus/client_golang v1.7.1
+	github.com/prometheus/common v0.10.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron v1.1.0
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
@@ -113,15 +112,14 @@ require (
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
 	golang.org/x/image v0.0.0-20200924062109-4578eab98f00 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
-	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
+	golang.org/x/net v0.0.0-20210119194325-5f4716e94777
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9
 	golang.org/x/sys v0.0.0-20210415045647-66c3f260301c // indirect
 	golang.org/x/text v0.3.6 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
 	golang.org/x/tools v0.0.0-20210114065538-d78b04bdf963 // indirect
 	gonum.org/v1/plot v0.8.0
-	google.golang.org/genproto v0.0.0-20201019141844-1ed22bb0c154 // indirect
-	google.golang.org/grpc v1.34.0
+	google.golang.org/grpc v1.35.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
