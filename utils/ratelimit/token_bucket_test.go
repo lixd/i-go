@@ -23,6 +23,7 @@ func TestTokenBucketAllow(t *testing.T) {
 		}
 	}
 }
+
 func TestTokenBucketWait(t *testing.T) {
 	// 1st: 每秒新增 token 数
 	// 2ed: 桶中令牌最大数

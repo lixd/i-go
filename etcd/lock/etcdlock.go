@@ -3,11 +3,12 @@ package lock
 import (
 	"context"
 	"fmt"
+	"sync"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	"go.etcd.io/etcd/clientv3/concurrency"
 	"i-go/core/etcd"
-	"sync"
-	"time"
 )
 
 var (
@@ -28,7 +29,7 @@ func newMutex(ttl int, pfx string) *concurrency.Mutex {
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"Scenes": "etcd NewSession"}).Error(err)
 	}
-	// NewMutex 指定将锁存在哪里 需要强锁的客户端必须指定同一个prefix
+	// NewMutex 指定将锁存在哪里 需要抢锁的客户端必须指定同一个prefix
 	mutex := concurrency.NewMutex(session, pfx)
 	return mutex
 }

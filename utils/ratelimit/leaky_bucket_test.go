@@ -2,13 +2,14 @@ package ratelimit
 
 import (
 	"fmt"
-	"go.uber.org/ratelimit"
 	"testing"
 	"time"
+
+	"go.uber.org/ratelimit"
 )
 
 func TestLeakyBucket(t *testing.T) {
-	// 每秒 100 次 即 10ms 一次
+	// 限制每秒 100 次请求 即 10ms 一次
 	rl := ratelimit.New(100) // per second
 
 	prev := time.Now()

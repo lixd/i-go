@@ -59,7 +59,7 @@ func (m *Mutex) Lock(ctx context.Context) error {
 	}
 	// 本次操作的revision
 	m.myRev = resp.Header.Revision
-	// 操作失败，则获取else返回的值，即已有的revision
+	// 事务操作失败，即 compare 失败，则获取else返回的值，即已有的revision
 	if !resp.Succeeded {
 		// Responses[0] 为上面事务中Then操作或Else操作的第一个返回值
 		// 这里是事务失败了所以是Else操作的第一个返回值
@@ -70,6 +70,7 @@ func (m *Mutex) Lock(ctx context.Context) error {
 	ownerKey := resp.Responses[1].GetResponseRange().Kvs
 	if len(ownerKey) == 0 || ownerKey[0].CreateRevision == myRev {
 		// 如果ownerKey数组为空或则最旧的那个就是当前自己的 那就算获取锁成功了 直接返回
+		// 这里就实现了锁的重入 etcd 分布式锁也是可重入锁。
 		m.hdr = resp.Header
 		return nil
 		//成功获取锁
