@@ -15,10 +15,10 @@ import (
 正常
 */
 func TestEtcdMutex_Lock(t *testing.T) {
-	var waitGroup = new(sync.WaitGroup)
+	var wg sync.WaitGroup
 	for i := 0; i < 3; i++ {
-		waitGroup.Add(1)
-		go testLock(10, "/mylock", i, waitGroup)
+		wg.Add(1)
+		go testLock(10, "/mylock", i, &wg)
 	}
-	waitGroup.Wait()
+	wg.Wait()
 }
