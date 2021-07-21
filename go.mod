@@ -7,6 +7,7 @@ require (
 	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
 	github.com/HdrHistogram/hdrhistogram-go v1.0.0 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
+	github.com/Shopify/sarama v1.29.1
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
@@ -40,7 +41,6 @@ require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
-	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
@@ -55,6 +55,7 @@ require (
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
 	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4
 	github.com/magiconair/properties v1.8.5 // indirect
+	github.com/mattn/go-sqlite3 v2.0.1+incompatible
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
 	github.com/micro/go-micro v1.18.0 // indirect
 	github.com/micro/go-micro/v2 v2.9.1 // indirect
@@ -103,18 +104,15 @@ require (
 	github.com/unrolled/secure v1.0.8
 	github.com/willf/bitset v1.1.10 // indirect
 	github.com/willf/bloom v2.0.3+incompatible
-	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
-	github.com/xdg/stringprep v1.0.0 // indirect
 	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.4.6
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
 	go.uber.org/zap v1.15.0
-	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
+	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 	golang.org/x/image v0.0.0-20200924062109-4578eab98f00 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
-	golang.org/x/net v0.0.0-20210119194325-5f4716e94777
+	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9
-	golang.org/x/sys v0.0.0-20210415045647-66c3f260301c // indirect
 	golang.org/x/text v0.3.6 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
 	golang.org/x/tools v0.0.0-20210114065538-d78b04bdf963 // indirect
