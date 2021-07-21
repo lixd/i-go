@@ -18,7 +18,7 @@ func main() {
 	defer producer.Close()
 	// producer.Input() <- &sarama.ProducerMessage{Topic: "my_topic", Key: nil, Value: sarama.StringEncoder("testing 123")}
 	for {
-		// time.Sleep(time.Second)
+		time.Sleep(time.Second)
 		str := strconv.Itoa(int(time.Now().Unix()))
 		msg := &sarama.ProducerMessage{Topic: kafka.Topic, Key: nil, Value: sarama.StringEncoder(str)}
 		partition, offset, err := producer.SendMessage(msg)

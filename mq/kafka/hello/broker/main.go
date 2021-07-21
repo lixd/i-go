@@ -29,6 +29,7 @@ func main() {
 	topicDetail.NumPartitions = int32(1)                 // 分区数
 	topicDetail.ReplicationFactor = int16(1)             // 备份数
 	topicDetail.ConfigEntries = make(map[string]*string) // 不知道
+	// 创建 topic
 	topicDetails := make(map[string]*sarama.TopicDetail)
 	topicDetails["new_topic_from_client_test"] = topicDetail
 	resp, err := leaderBroker.CreateTopics(&sarama.CreateTopicsRequest{
@@ -43,5 +44,16 @@ func main() {
 		fmt.Printf("Key: '%s', Err: %#v, ErrMsg: %#v\n", key, val.Err.Error(), val.ErrMsg)
 	}
 	client.RefreshMetadata() // 重新获取元数据
+	// 删除 topic
+	delResp, err := leaderBroker.DeleteTopics(&sarama.DeleteTopicsRequest{
+		Timeout: time.Second * 15,
+		Topics:  []string{"new_topic_from_client_test"},
+	})
+	if err != nil {
+		panic(err)
+	}
+	for key, val := range delResp.TopicErrorCodes {
+		fmt.Printf("Key: '%s', Err: %#v\n", key, val.Error())
+	}
 	fmt.Println(client.Topics())
 }
