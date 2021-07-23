@@ -2,8 +2,10 @@ package kafka
 
 const (
 	HOST             = "123.57.236.125:9092"
-	Topic            = "test"
-	Partition        = 0
-	ConsumerGroupID  = "my_consumer_group"
-	ConsumerGroupID2 = "my_consumer_group2"
+	Topic            = "standAlone"
+	Topic2           = "consumerGroup"
+	Topic3           = "benchmark"
+	DefaultPartition = 0
+	ConsumerGroupID  = "cg1"
+	ConsumerGroupID2 = "cg2"
 )
