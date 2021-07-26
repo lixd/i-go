@@ -28,6 +28,8 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
       # 关闭自动创建 topic 功能
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      # 全局消息过期时间 6 小时(测试时设置短一点)
+      - KAFKA_CFG_LOG_RETENTION_HOURS=6
       # 开启JMX监控
       - JMX_PORT=9999
     volumes:
@@ -36,7 +38,7 @@ services:
       - zookeeper
   # Web 管理界面 另外也可以用exporter+prometheus+grafana的方式来监控 https://github.com/danielqsj/kafka_exporter
   kafka_manager:
-    image: hlebalbau/kafka-manager
+    image: 'hlebalbau/kafka-manager:latest'
     ports:
       - "9000:9000"
     environment:
