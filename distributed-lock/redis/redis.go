@@ -1,6 +1,10 @@
 package main
 
 import (
+	"strconv"
+	"sync"
+	"time"
+
 	"github.com/go-redis/redis"
 	"i-go/core/conf"
 	_ "i-go/core/conf"
@@ -10,10 +14,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"i-go/tools/lock"
 	"i-go/utils"
-	"strconv"
-	"sync"
-
-	"time"
 )
 
 const (
@@ -42,7 +42,7 @@ func main() {
 }
 
 func checkLock(taskId string) {
-	redisLock := lock.NewRedisLock(redisdb.RedisClient)
+	redisLock := lock.NewRedisLock(redisdb.Cli)
 	uuid := utils.StringHelper.GetUUID()
 	for {
 		if redisLock.Lock(MyLock, uuid, Expire) {
@@ -69,13 +69,13 @@ func doSomething(taskId string) {
 func GetUser(userId int) {
 	key := "xxx"
 	// 1. 直接查缓存
-	m, err := redisdb.RedisClient.HGetAll(key).Result()
+	m, err := redisdb.Cli.HGetAll(key).Result()
 	if err != nil && err != redis.Nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "获取用户信息，查询缓存"}).Error(err)
 	}
 	if err == redis.Nil || len(m) == 0 {
 		// 2. 如果不存在就去查 数据库
-		redisLock := lock.NewRedisLock(redisdb.RedisClient)
+		redisLock := lock.NewRedisLock(redisdb.Cli)
 		value := time.Now().UnixNano()
 		// 2.1 查询数据库需要先获取锁
 		isLock := redisLock.Lock(key, value, time.Second*5)
@@ -90,5 +90,5 @@ func GetUser(userId int) {
 		}
 
 	}
-	redisdb.RedisClient.Expire(key, time.Minute*30)
+	redisdb.Cli.Expire(key, time.Minute*30)
 }

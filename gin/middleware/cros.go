@@ -12,9 +12,10 @@ func Cors() gin.HandlerFunc {
 		method := c.Request.Method
 		origin := c.Request.Header.Get("Origin") // 请求头部
 		if origin != "" {
+			c.ClientIP()
 			// 接收客户端发送的origin （重要!）
 			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
-			// 这是允许访问所有域
+			// 这是允许访问所有域 为 * 时
 			// c.Header("Access-Control-Allow-Origin", "*")
 			// 服务器支持的所有跨域请求的方法
 			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE,UPDATE")
@@ -32,7 +33,6 @@ func Cors() gin.HandlerFunc {
 		// 如果不支持，建议返回 403 状态码（返回 404 或其他错误状态码也可以）
 		if method == "OPTIONS" {
 			c.AbortWithStatus(http.StatusNoContent)
-			return
 		}
 		c.Next()
 	}

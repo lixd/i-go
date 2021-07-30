@@ -1,15 +1,16 @@
 package redisdb
 
 import (
-	"i-go/utils"
 	"time"
+
+	"i-go/utils"
 
 	"github.com/go-redis/redis"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-var RedisClient *redis.Client
+var Cli *redis.Client
 
 type redisConf struct {
 	Addr               string        `json:"addr"`
@@ -28,14 +29,14 @@ func Init() {
 	defer utils.InitLog("Redis")()
 
 	c := parseConf()
-	RedisClient = newClient(c)
+	Cli = newClient(c)
 }
 
 func Client() *redis.Client {
-	if RedisClient == nil {
+	if Cli == nil {
 		Init()
 	}
-	return RedisClient
+	return Cli
 }
 
 func parseConf() *redisConf {
@@ -65,8 +66,8 @@ func newClient(c *redisConf) *redis.Client {
 }
 
 func Release() {
-	if RedisClient != nil {
-		_ = RedisClient.Close()
+	if Cli != nil {
+		_ = Cli.Close()
 		logrus.Info("redis is closed")
 	}
 }

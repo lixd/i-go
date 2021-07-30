@@ -2,6 +2,10 @@ version: '3'
 services:
   mongo-db:
     image: mongo:latest
+    # 只限制内存 其他用默认配置
+#    command: --wiredTigerCacheSizeGB 1
+    # 使用自定义配置文件 其他配置可以在配置文件中调整
+    command: --config /data/configdb/mongod.conf
     container_name: mongodb
     #network_mode: "host"
     restart: always
@@ -16,8 +20,3 @@ services:
       - ./data/db:/data/db
       - ./backup:/data/backup
       - ./conf:/data/configdb
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
