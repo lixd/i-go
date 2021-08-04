@@ -14,8 +14,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/writeconcern"
 	"i-go/core/db/mongodb"
 	"i-go/storage/mongodb/model"
-	"time"
-	"i-go/database/mongodb/model"
 )
 
 type userInfo struct {
@@ -110,7 +108,6 @@ func (ui *userInfo) QueryByHobby(hobby string) ([]model.UserInfo, error) {
 	return list, nil
 }
 
-// 每小时从攻击日志中统计出{区域、类型、活跃攻击ip}数量
 type QueryCount struct {
 	Count int64 `bson:"Count"`
 	Age   int   `bson:"_id"`

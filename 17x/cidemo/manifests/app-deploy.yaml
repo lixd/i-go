@@ -1,0 +1,80 @@
+# https://k8syaml.com/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: web-deployment
+spec:
+  progressDeadlineSeconds: 600 # deploy 升级最大时间
+  revisionHistoryLimit: 10 # 最大历史版本保存数
+  replicas: 1 # 副本数
+  selector:
+    matchLabels:
+      app: web-deploy # <edit>
+  strategy:
+    # 滚动更新配置
+    rollingUpdate:
+      maxSurge: 25% # 超过期望的Pod数量:25%
+      maxUnavailable: 25% # 不可用Pod最大数量:25%
+    type: RollingUpdate
+  # Pod 模板
+  template:
+    metadata:
+      labels:
+        app: web-deploy # <edit>
+    spec:
+      containers:
+        - name: go-4-docker
+          image: ${IMAGE} # e.g. registry-vpc.us-west-1.aliyuncs.com/wlinno/go-4-docker:2021-07-26-11-53-47
+          imagePullPolicy: Always  # 镜像拉取策略
+          # 端口映射<optional> <edit>
+          ports:
+            - containerPort: 8080
+              name: rest
+              protocol: TCP
+          # 就绪检测<optional>
+          readinessProbe:
+            initialDelaySeconds: 3 # 延迟探测时间
+            periodSeconds: 10 # 执行探测频率(秒)
+            successThreshold: 1 # 健康阈值
+            failureThreshold: 3 # 不健康阈值
+            timeoutSeconds: 1 # 超时时间
+#            tcpSocket:
+#              port: 8080
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+          # 资源限制
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 250m
+              memory: 512Mi
+          # 容器终止消息路径-用于查看异常消息
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          # 数据卷挂载<optional><edit>
+#          volumeMounts:
+#            - mountPath: /var/log/vaptcha/api
+#              name: volume-log
+#            - mountPath: /conf
+#              name: volume-config
+      restartPolicy: Always # 重启策略
+      dnsPolicy: ClusterFirst
+      schedulerName: default-scheduler
+      # 授权<optional>
+#      serviceAccount: grpclb-sa
+#      serviceAccountName: grpclb-sa
+      terminationGracePeriodSeconds: 30 # 容器停止前最大清理时间
+      # 数据卷定义<optional> # <edit>
+#      volumes:
+#        - emptyDir: { }
+#          name: volume-log
+#        - configMap:
+#            defaultMode: 420
+#            name: config-api-na.yaml
+#          name: volume-config
