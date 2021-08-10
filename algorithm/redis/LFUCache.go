@@ -1,7 +1,7 @@
-// LFU: Least Frequently Used，缓存满的时候，删除缓存里使用次数最少的元素，然后放入新元素，如果使用频率一样，删除缓存最久的元素
 package redis
 
 /*
+LFU: Least Frequently Used，缓存满的时候，删除缓存里使用次数最少的元素，然后放入新元素，如果使用频率一样，删除缓存最久的元素
 基于 如果一个数据在最近一段时间内使用次数很少，那么在将来一段时间内被使用的可能性也很小
 思路 利用一个数组存储数据项(cacheMap),另一个数组存放访问频次(frequentMap) 当数据项被命中时，访问频次自增，在淘汰的时候淘汰访问频次最少的数据。
 	这样一来的话，在插入数据和访问数据的时候都能达到O(1)的时间复杂度，在淘汰数据的时候，通过选择算法得到应该淘汰的数据项在数组中的索引，
@@ -15,6 +15,8 @@ package redis
 // minFrequent为当前最少访问频次：
 // 1. 插入一个新节点时，之前肯定没访问过，minFrequent = 1
 // 2. set和get时，如果将key从当前频次移除后双向链表节点个数为0，且恰好是最小访问链表, minFrequent++
+
+// LFUCache LFU demo
 type LFUCache struct {
 	capacity    int
 	len         int
@@ -23,14 +25,14 @@ type LFUCache struct {
 	frequentMap map[int]*List
 }
 
-// 双向链表：包含head头指针, tail尾指针, len长度
+// List 双向链表：包含head头指针, tail尾指针, len长度
 type List struct {
 	head *Node
 	tail *Node
 	len  int
 }
 
-// 节点：包含key, value, frequent访问次数, pre前驱指针, next后继指针
+// Node 节点：包含key, value, frequent访问次数, pre前驱指针, next后继指针
 type Node struct {
 	key      int
 	value    int

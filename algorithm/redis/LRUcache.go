@@ -1,7 +1,7 @@
-// LRU: Least Recently Used，缓存满的时候，删除缓存里最久未使用的数据，然后放入新元素
 package redis
 
 /*
+ LRU: Least Recently Used，缓存满的时候，删除缓存里最久未使用的数据，然后放入新元素
 原理
 	使用链表 每次get/set时将key移动到表头
 	这样最后在表尾的元素就是最近未使用的
@@ -26,14 +26,14 @@ type LinkList struct {
 	len  int
 }
 
-// LRU结构
+// LRUCache LRU结构
 type LRUCache struct {
 	m    map[int]*LinkNode
 	cap  int
 	list *LinkList
 }
 
-// NewLURCache 对外提供构造方法
+// NewLRUCache 对外提供构造方法
 func NewLRUCache(capacity int) LRUCache {
 	// 其中head和tail节点是固定的 后续操作也不会动
 	head := &LinkNode{0, 0, nil, nil}
@@ -41,7 +41,6 @@ func NewLRUCache(capacity int) LRUCache {
 	head.next = tail
 	tail.pre = head
 	list := &LinkList{head: head, tail: tail}
-	//return LRUCache{make(map[int]*LinkNode, capacity), capacity, head, tail}
 	return LRUCache{make(map[int]*LinkNode, capacity), capacity, list}
 }
 
