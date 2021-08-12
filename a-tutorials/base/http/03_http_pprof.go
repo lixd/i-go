@@ -15,6 +15,10 @@ func HelloServerPprof(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// pprof
+	go func() {
+		_ = http.ListenAndServe("0.0.0.0:8180", nil)
+	}()
 	http.HandleFunc("/hello", HelloServerPprof)
 	err := http.ListenAndServe(":50051", nil)
 	if err != nil {

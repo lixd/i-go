@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/gocolly/colly"
+	log "github.com/sirupsen/logrus"
 )
 
 // go语言的一个爬虫框架
@@ -23,38 +23,42 @@ func main() {
 
 		fmt.Println("Visiting", r.URL)
 	})
-
+	c.OnScraped(func(response *colly.Response) {
+		fmt.Println("OnScraped")
+		return
+	})
 	// 对响应的HTML元素处理
 	c.OnHTML("title", func(e *colly.HTMLElement) {
 		// e.Request.Visit(e.Attr("href"))
 		fmt.Println("title:", e.Text)
+		return
 	})
-	c.OnHTML("p", func(e *colly.HTMLElement) {
-		space := strings.TrimSpace(e.Text)
-		if space != "" {
-			fmt.Printf("p标签:%s\n", space)
-		}
-	})
+	// c.OnHTML("p", func(e *colly.HTMLElement) {
+	// 	space := strings.TrimSpace(e.Text)
+	// 	if space != "" {
+	// 		fmt.Printf("p标签:%s\n", space)
+	// 	}
+	// })
 
-	c.OnHTML("body", func(e *colly.HTMLElement) {
-		// <div class="hotnews" alog-group="focustop-hotnews"> 下所有的a解析
-		e.ForEach(".hotnews a", func(i int, el *colly.HTMLElement) {
-			band := el.Attr("href")
-			// title := el.Text
-			// fmt.Printf("新闻 %d : %s - %s\n", i, title, band)
-			e.Request.Visit(band)
-		})
-	})
-
-	// 发现并访问下一个连接
-	c.OnHTML(`.next a[href]`, func(e *colly.HTMLElement) {
-		e.Request.Visit(e.Attr("href"))
-	})
-
-	// extract status code
-	c.OnResponse(func(r *colly.Response) {
-		fmt.Printf("URL:%v code:%v\n", r.Ctx.Get("url"), r.StatusCode)
-	})
+	// c.OnHTML("body", func(e *colly.HTMLElement) {
+	// 	// <div class="hotnews" alog-group="focustop-hotnews"> 下所有的a解析
+	// 	e.ForEach(".hotnews a", func(i int, el *colly.HTMLElement) {
+	// 		band := el.Attr("href")
+	// 		// title := el.Text
+	// 		// fmt.Printf("新闻 %d : %s - %s\n", i, title, band)
+	// 		e.Request.Visit(band)
+	// 	})
+	// })
+	//
+	// // 发现并访问下一个连接
+	// c.OnHTML(`.next a[href]`, func(e *colly.HTMLElement) {
+	// 	e.Request.Visit(e.Attr("href"))
+	// })
+	//
+	// // extract status code
+	// c.OnResponse(func(r *colly.Response) {
+	// 	fmt.Printf("URL:%v code:%v\n", r.Ctx.Get("url"), r.StatusCode)
+	// })
 
 	// 对visit的线程数做限制，visit可以同时运行多个
 	c.Limit(&colly.LimitRule{
@@ -62,5 +66,14 @@ func main() {
 		Delay:       5 * time.Second,
 	})
 
-	c.Visit("http://news.baidu.com")
+	err := c.Visit("http://news.baidu.com")
+	if err != nil {
+		log.Println("first err:", err)
+	}
+	fmt.Println("------------")
+	err = c.Visit("http://www.vaptcha.com")
+	if err != nil {
+		log.Println("second err:", err)
+	}
+
 }
