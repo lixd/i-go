@@ -1,0 +1,22 @@
+version: '3'
+networks:
+  myetcd_single:
+services:
+  etcd:
+    image: quay.io/coreos/etcd
+    container_name: etcd_single
+    command: etcd -name etcd1 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380
+    ports:
+      - 12379:2379
+      - 12380:2380
+    volumes:
+      - ./data:/etcd-data
+    networks:
+      - myetcd_single
+  etcdkeeper:
+    image: deltaprojects/etcdkeeper
+    container_name: etcdkeeper_single
+    ports:
+      - 8088:8080
+    networks:
+      - myetcd_single

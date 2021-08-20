@@ -53,7 +53,7 @@ func (w *Weights) Add(key string, weight int64) {
 	w.totalWeight += weight
 }
 
-// random 根据总权重进行随机
+// Random 根据总权重进行随机
 func (w *Weights) Random() int64 {
 	if w.totalWeight == 0 {
 		return 1
@@ -61,7 +61,7 @@ func (w *Weights) Random() int64 {
 	return w.r.Int63() % w.totalWeight
 }
 
-// locationData 根据数值 定位具体的item
+// LocationData 根据数值 定位具体的item
 func (w *Weights) LocationData(randVal int64) *Item {
 	for _, v := range w.list {
 		// 随机值在该item的范围内则对应该item

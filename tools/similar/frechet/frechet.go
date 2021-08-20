@@ -51,7 +51,7 @@ func (f *freChet) InitFrechetMatrix() {
 	f.Matrix = matrix
 }
 
-// claDFD
+// claDFD 动态规划
 func (f *freChet) claDFD(i, j int) float64 {
 	// if the value has already been solved
 	if f.Matrix[i][j] > -1 {

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+	"time"
 
-	"github.com/willf/bloom"
+	"github.com/bits-and-blooms/bloom/v3"
 )
 
 /*
@@ -15,8 +16,32 @@ import (
 */
 func main() {
 	// new一个实例 2_0000 个位置(bit) 5个hash方法
-	filter := bloom.New(2_0000, 5)
+	// filter := bloom.New(2_0000, 5)
+	filter := bloom.NewWithEstimates(1000000000, 0.01)
 	filter.Add([]byte("Golang"))          // 添加数据
 	test := filter.Test([]byte("Golang")) // 测试是否存在
 	fmt.Println("是否存在:", test)
+	time.Sleep(time.Second * 10)
+}
+
+func worker2(ch1, ch2 <-chan int, stopCh chan struct{}) {
+	for {
+		select {
+		case <-stopCh:
+			return
+		case job1 := <-ch1:
+			fmt.Println(job1)
+		case job2 := <-ch2:
+		priority:
+			for {
+				select {
+				case job1 := <-ch1:
+					fmt.Println(job1)
+				default:
+					break priority
+				}
+			}
+			fmt.Println(job2)
+		}
+	}
 }

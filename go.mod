@@ -14,6 +14,7 @@ require (
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v0.0.0-20190319080838-ce1d48779e67 // indirect
 	github.com/axiomhq/hyperloglog v0.0.0-20191112132149-a4c4c47bc57f
+	github.com/bits-and-blooms/bloom/v3 v3.0.1
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/coreos/etcd v3.3.22+incompatible
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
@@ -84,7 +85,7 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/sittipongwork/GoSitemapxml v0.0.0-20161123104827-ebd05028e4be
 	github.com/sony/gobreaker v0.4.1
-	github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
+	github.com/spaolacci/murmur3 v1.1.0
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
