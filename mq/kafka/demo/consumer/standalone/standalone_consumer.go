@@ -34,7 +34,7 @@ func SinglePartition(topic string) {
 	// 参数3 offset 从哪儿开始消费起走，正常情况下每次消费完都会将这次的offset提交到kafka，然后下次可以接着消费，
 	// 这里demo就从最新的开始消费，即该 consumer 启动之前产生的消息都无法被消费
 	// 如果改为 sarama.OffsetOldest 则会从最旧的消息开始消费，即每次重启 consumer 都会把该 topic 下的所有消息消费一次
-	partitionConsumer, err := consumer.ConsumePartition(topic, 0, sarama.OffsetNewest)
+	partitionConsumer, err := consumer.ConsumePartition(topic, 0, sarama.OffsetOldest)
 	if err != nil {
 		log.Fatal("ConsumePartition err: ", err)
 	}
@@ -68,7 +68,7 @@ func Partitions(topic string) {
 
 func consumeByPartition(consumer sarama.Consumer, partitionId int32, wg *sync.WaitGroup) {
 	defer wg.Done()
-	partitionConsumer, err := consumer.ConsumePartition(kafka.Topic, partitionId, sarama.OffsetNewest)
+	partitionConsumer, err := consumer.ConsumePartition(kafka.Topic, partitionId, sarama.OffsetOldest)
 	if err != nil {
 		log.Fatal("ConsumePartition err: ", err)
 	}

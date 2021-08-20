@@ -4,7 +4,7 @@ import (
 	"go/ast"
 	"reflect"
 
-	"i-go/demo/orm/dialect"
+	dialect2 "i-go/7days/orm/dialect"
 )
 
 // Field represents a column of database
@@ -27,7 +27,7 @@ func (schema *Schema) GetField(name string) *Field {
 	return schema.fieldMap[name]
 }
 
-func Parse(dest interface{}, d dialect.Dialect) *Schema {
+func Parse(dest interface{}, d dialect2.Dialect) *Schema {
 	modelType := reflect.Indirect(reflect.ValueOf(dest)).Type()
 	schema := &Schema{
 		Model:    dest,

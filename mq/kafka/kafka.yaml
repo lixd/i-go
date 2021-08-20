@@ -1,4 +1,5 @@
-# 经测试可用 最后更新于 2021.07.23
+# 最后更新于 2021.07.31
+# docker-compose.yaml
 # 需要持久化则要提前创建好 /kafka 和 /zookeeper 目录并将权限修改为 777
 # 因为容器内部使用uid=1001的用户在运行程序，容器外部其他用户创建的文件夹对1001来说是没有权限的，具体容器内是用哪个uid来运行可以查Dockerfile来确定
 # 不需要则可以注释掉 volumes 相关配置
@@ -28,7 +29,7 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
       # 关闭自动创建 topic 功能
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
-      # 全局消息过期时间 6 小时(测试时设置短一点)
+      # 全局消息过期时间 6 小时(测试时可以设置短一点)
       - KAFKA_CFG_LOG_RETENTION_HOURS=6
       # 开启JMX监控
       - JMX_PORT=9999

@@ -36,8 +36,6 @@ func Producer(topic string, limit int) {
 	defer producer.Close()
 	for i := 0; i < limit; i++ {
 		str := strconv.Itoa(int(time.Now().UnixNano()))
-		// str = strings.Repeat(str, 100) // 使用 repeat 方法将消息变长一点
-		// kafka 中的消息为[]byte,在 sarama 库中实现为 sarama.Encoder 接口。
 		msg := &sarama.ProducerMessage{Topic: topic, Key: nil, Value: sarama.StringEncoder(str)}
 		partition, offset, err := producer.SendMessage(msg) // 发送逻辑也是封装的异步发送逻辑，可以理解为将异步封装成了同步
 		if err != nil {

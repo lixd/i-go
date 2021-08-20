@@ -14,6 +14,6 @@ func main() {
 	go standalone.SinglePartition(topic)
 	// go standalone.Partitions(topic)
 	time.Sleep(time.Millisecond * 100)
-	sync.Producer(topic, 1000)
+	sync.Producer(topic, 100)
 	time.Sleep(time.Second * 10)
 }

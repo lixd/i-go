@@ -6,6 +6,6 @@ const (
 	Topic2           = "consumerGroup"
 	Topic3           = "benchmark"
 	DefaultPartition = 0
-	ConsumerGroupID  = "cg1"
+	ConsumerGroupID  = "cgID"
 	ConsumerGroupID2 = "cg2"
 )

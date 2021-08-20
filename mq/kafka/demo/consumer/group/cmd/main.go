@@ -15,8 +15,9 @@ func main() {
 
 	go group.ConsumerGroup(topic, kafka.ConsumerGroupID, "CG1")
 	go group.ConsumerGroup(topic, kafka.ConsumerGroupID, "CG2")
+	time.Sleep(time.Second * 5)
 	// go group.ConsumerGroup(topic, kafka.ConsumerGroupID, "CG3") // 该 topic 只有两个分区 如果启动 3 个消费者会导致其中有一个不会消费到任何消息
 	// topic 有多个分区时，消息会自动路由到对应的分区,因为路由算法的关系 可能不会平均分
-	async.Producer(topic, 10000)
-	time.Sleep(time.Second * 10)
+	async.Producer(topic, 100)
+	time.Sleep(time.Second * 20)
 }

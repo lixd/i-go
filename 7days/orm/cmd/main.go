@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
-	"i-go/demo/orm"
+	orm2 "i-go/7days/orm"
 )
 
 // func main() {
@@ -38,7 +38,7 @@ import (
 // }
 
 func main() {
-	engine, _ := orm.NewEngine("sqlite3", "17x.db")
+	engine, _ := orm2.NewEngine("sqlite3", "17x.db")
 	defer engine.Close()
 	s := engine.NewSession()
 	_, _ = s.Raw("DROP TABLE IF EXISTS User;").Exec()

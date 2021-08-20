@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
-	github.com/HdrHistogram/hdrhistogram-go v1.0.0 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/Shopify/sarama v1.29.1
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
@@ -28,6 +27,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-ego/gse v0.63.2
 	github.com/go-kit/kit v0.10.0
+	github.com/go-kratos/kratos v1.0.0
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-openapi/spec v0.20.0 // indirect
 	github.com/go-pg/pg v8.0.6+incompatible
@@ -42,7 +42,7 @@ require (
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
 	github.com/google/wire v0.5.0
-	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
@@ -53,7 +53,7 @@ require (
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
-	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4
+	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
@@ -121,7 +121,7 @@ require (
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
-	gopkg.in/Clever/optimus.v3 v3.8.0
+	gopkg.in/Clever/optimus.v3 v3.8.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect

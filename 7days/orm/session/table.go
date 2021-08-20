@@ -5,21 +5,21 @@ import (
 	"reflect"
 	"strings"
 
-	"i-go/demo/orm/log"
-	"i-go/demo/orm/schema"
+	log2 "i-go/7days/orm/log"
+	schema2 "i-go/7days/orm/schema"
 )
 
 func (s *Session) Model(value interface{}) *Session {
 	// nil or different model, update refTable
 	if s.refTable == nil || reflect.TypeOf(value) != reflect.TypeOf(s.refTable.Model) {
-		s.refTable = schema.Parse(value, s.dialect)
+		s.refTable = schema2.Parse(value, s.dialect)
 	}
 	return s
 }
 
-func (s *Session) RefTable() *schema.Schema {
+func (s *Session) RefTable() *schema2.Schema {
 	if s.refTable == nil {
-		log.Error("Model is not set")
+		log2.Error("Model is not set")
 	}
 	return s.refTable
 }

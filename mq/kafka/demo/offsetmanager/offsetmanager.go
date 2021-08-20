@@ -1,6 +1,7 @@
 package offsetmanager
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -28,17 +29,30 @@ func OffsetManager(topic string) {
 	defer client.Close()
 	// offsetManager 用于管理每个 consumerGroup的 offset
 	// 根据 groupID 来区分不同的 consumer，注意: 每次提交的 offset 信息也是和 groupID 关联的
-	offsetManager, _ := sarama.NewOffsetManagerFromClient("myGroupID", client) // 偏移量管理器
+	offsetManager, err := sarama.NewOffsetManagerFromClient("myGroupID", client) // 偏移量管理器
+	if err != nil {
+		log.Println("NewOffsetManagerFromClient err:", err)
+	}
 	defer offsetManager.Close()
 	// 每个分区的 offset 也是分别管理的，demo 这里使用 0 分区，因为该 topic 只有 1 个分区
-	partitionOffsetManager, _ := offsetManager.ManagePartition(topic, kafka.DefaultPartition) // 对应分区的偏移量管理器
+	partitionOffsetManager, err := offsetManager.ManagePartition(topic, kafka.DefaultPartition) // 对应分区的偏移量管理器
+	if err != nil {
+		log.Println("ManagePartition err:", err)
+	}
 	defer partitionOffsetManager.Close()
 	// defer 在程序结束后在 commit 一次，防止自动提交间隔之间的信息被丢掉
 	defer offsetManager.Commit()
-	consumer, _ := sarama.NewConsumerFromClient(client)
+	consumer, err := sarama.NewConsumerFromClient(client)
+	if err != nil {
+		log.Println("NewConsumerFromClient err:", err)
+	}
 	// 根据 kafka 中记录的上次消费的 offset 开始+1的位置接着消费
 	nextOffset, _ := partitionOffsetManager.NextOffset() // 取得下一消息的偏移量作为本次消费的起点
-	pc, _ := consumer.ConsumePartition(topic, kafka.DefaultPartition, nextOffset)
+	fmt.Println("nextOffset:", nextOffset)
+	pc, err := consumer.ConsumePartition(topic, kafka.DefaultPartition, nextOffset)
+	if err != nil {
+		log.Println("ConsumePartition err:", err)
+	}
 	defer pc.Close()
 
 	for message := range pc.Messages() {
