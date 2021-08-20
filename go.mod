@@ -15,6 +15,7 @@ require (
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v0.0.0-20190319080838-ce1d48779e67 // indirect
 	github.com/axiomhq/hyperloglog v0.0.0-20191112132149-a4c4c47bc57f
+	github.com/bits-and-blooms/bloom/v3 v3.0.1
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/coreos/etcd v3.3.22+incompatible
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
@@ -53,7 +54,7 @@ require (
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
-	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4
+	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
@@ -84,7 +85,7 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/sittipongwork/GoSitemapxml v0.0.0-20161123104827-ebd05028e4be
 	github.com/sony/gobreaker v0.4.1
-	github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
+	github.com/spaolacci/murmur3 v1.1.0
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -121,7 +122,7 @@ require (
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
-	gopkg.in/Clever/optimus.v3 v3.8.0
+	gopkg.in/Clever/optimus.v3 v3.8.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect

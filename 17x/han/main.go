@@ -1,13 +1,24 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"regexp"
 	"unicode"
 )
 
+const (
+	Unknown   = iota
+	IsVisited = iota << 1
+	IsCN      = iota << 1
+)
+
 func main() {
-	s1 := "我是中国人hello word!,2020 street 188#"
+	fmt.Printf("%b \n", Unknown)
+	fmt.Printf("%b \n", IsVisited)
+	fmt.Printf("%b \n", IsCN)
+	return
+	s1 := "你好世界 hello word!,2020 street 188#"
 	var count int
 	for _, v := range s1 {
 		if unicode.Is(unicode.Han, v) {
@@ -28,4 +39,12 @@ func IsChineseChar(str string) bool {
 		}
 	}
 	return false
+}
+
+func doSomething(ctx context.Context) {
+	go func() {}()
+	select {
+	case <-ctx.Done():
+		fmt.Println("超时")
+	}
 }

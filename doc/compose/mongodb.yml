@@ -1,22 +1,19 @@
 version: '3'
 services:
   mongo-db:
-    image: mongo:latest
-    # 只限制内存 其他用默认配置
-#    command: --wiredTigerCacheSizeGB 1
-    # 使用自定义配置文件 其他配置可以在配置文件中调整
-    command: --config /data/configdb/mongod.conf
-    container_name: mongodb
-    #network_mode: "host"
+    image: mongo
     restart: always
+    # 自定义配置文件
+    command: --config /etc/mongo/mongod.conf
     ports:
-      - 27017:27017
+      - "27017:27017"
     environment:
-      TZ: Asia/Shanghai
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
     volumes:
-      - /etc/localtime:/etc/localtime
-      - ./data/db:/data/db
-      - ./backup:/data/backup
-      - ./conf:/data/configdb
+      # 日志
+      - ./log:/var/log/mongodb
+      # 存储文件
+      - ./db:/data/db
+      # 配置文件
+      - ./conf:/etc/mongo

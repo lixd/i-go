@@ -1,6 +1,6 @@
-package util
+package main
 
-/*// get 伪代码 互斥锁 防止缓存击穿问题
+/*// get 伪代码 互斥锁 防止缓存击穿问题 建议使用 singleflight 库
 func get(key string) {
 	ret := redis.get(Key)
 	if ret == nil { // 为空代表缓存值过期
