@@ -5,7 +5,7 @@ import (
 	"math/rand"
 
 	"github.com/satori/go.uuid"
-	"i-go/utils/hash"
+	"i-go/utils/murmur"
 )
 
 type stringHelper struct {
@@ -33,6 +33,7 @@ func ShuffleSlice(arr []string) []string {
 	return arr
 }
 
+// Subset 从服务列表中取一部分出来进行健康检测
 func Subset(backends []string, clientID string, subsetSize int64) []string {
 	subSetCount := int64(len(backends)) / subsetSize
 	clientHash := hashDemo(clientID)
@@ -45,7 +46,7 @@ func Subset(backends []string, clientID string, subsetSize int64) []string {
 }
 
 func hashDemo(str string) int64 {
-	clientHash := int64(hash.Murmur3([]byte(str)))
+	clientHash := int64(murmur.Murmur3([]byte(str)))
 	if clientHash < 0 {
 		clientHash = int64(math.Abs(float64(clientHash)))
 	}

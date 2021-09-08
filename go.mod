@@ -85,6 +85,7 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/sittipongwork/GoSitemapxml v0.0.0-20161123104827-ebd05028e4be
 	github.com/sony/gobreaker v0.4.1
+	github.com/sony/sonyflake v1.0.0
 	github.com/spaolacci/murmur3 v1.1.0
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect

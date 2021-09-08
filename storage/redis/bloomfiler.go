@@ -22,10 +22,11 @@ func NewBloomFilter(m, k uint, rc *redis.Client) *redisBloomFilter {
 // Set 将data添加到当前key中
 func (rbf *redisBloomFilter) Set(key string, data []byte) {
 	defer utils.Trace("Set")()
-
+	// 将当前key根据多个hash函数计算出多个hash值
 	bloomHash := rbf.bf.BloomHash(data)
 	cmders, err := rbf.rc.Pipelined(func(pipeLiner redis.Pipeliner) error {
 		for _, v := range bloomHash {
+			// 并将对应位置置1
 			pipeLiner.SetBit(key, int64(v), 1)
 		}
 		return nil
@@ -40,7 +41,7 @@ func (rbf *redisBloomFilter) Set(key string, data []byte) {
 // isContains 检测当前key中是否存在data
 func (rbf *redisBloomFilter) isContains(key string, data []byte) bool {
 	defer utils.Trace("isContains")()
-
+	// 同样的 计算出多个hash值后看是否每位都为1
 	bloomHash := rbf.bf.BloomHash(data)
 	cmders, err := rbf.rc.Pipelined(func(pipeLiner redis.Pipeliner) error {
 		for _, v := range bloomHash {

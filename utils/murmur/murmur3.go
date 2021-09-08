@@ -1,4 +1,7 @@
-package hash
+package murmur
+
+// Murmur3 32bit hash function based on
+// http://en.wikipedia.org/wiki/MurmurHash
 
 const (
 	c1 = 0xcc9e2d51
