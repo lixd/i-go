@@ -11,7 +11,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
     volumes:
-      # 日志
+      # 日志 需要在宿主机修改为 777 权限容器里才能写入
       - ./log:/var/log/mongodb
       # 存储文件
       - ./db:/data/db
