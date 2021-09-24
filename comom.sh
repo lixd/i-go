@@ -14,3 +14,10 @@ head -n 10
 
 # 查看TCP连接数及其状态
 netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+# 查看句柄占用情况 模糊值
+lsof -n|awk '{print $2}'|sort|uniq -c|sort -nr|more
+
+# 查看句柄占用情况 精确值
+ls /proc/$pid/fd/ |wc -l
+

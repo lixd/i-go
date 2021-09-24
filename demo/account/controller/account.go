@@ -1,13 +1,14 @@
 package controller
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
+	"i-go/core/http/ret/svc"
 	"i-go/demo/account/dto"
 	"i-go/demo/account/server"
 	"i-go/demo/cmodel"
-	"i-go/demo/common/ret"
-	"net/http"
-	"strconv"
 )
 
 type IAccount interface {
@@ -30,7 +31,7 @@ func NewAccount(ser server.IAccount) IAccount {
 func (a *account) Insert(c *gin.Context) {
 	var m dto.AccountInsertReq
 	if err := c.ShouldBindJSON(&m); err != nil {
-		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+		c.JSON(http.StatusOK, svc.Fail("", "参数错误"))
 		return
 	}
 	result := a.Server.Insert(&m)
@@ -41,7 +42,7 @@ func (a *account) Insert(c *gin.Context) {
 func (a *account) DeleteByUserId(c *gin.Context) {
 	var m dto.AccountReq
 	if err := c.ShouldBindJSON(&m); err != nil {
-		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+		c.JSON(http.StatusOK, svc.Fail("", "参数错误"))
 		return
 	}
 	result := a.Server.DeleteByUserId(m.UserId)
@@ -52,7 +53,7 @@ func (a *account) DeleteByUserId(c *gin.Context) {
 func (a *account) Update(c *gin.Context) {
 	var m dto.AccountReq
 	if err := c.ShouldBindJSON(&m); err != nil {
-		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+		c.JSON(http.StatusOK, svc.Fail("", "参数错误"))
 		return
 	}
 	result := a.Server.Update(&m)
@@ -64,7 +65,7 @@ func (a *account) FindByUserId(c *gin.Context) {
 	strUserId := c.Param("userId")
 	userId, err := strconv.Atoi(strUserId)
 	if err != nil {
-		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+		c.JSON(http.StatusOK, svc.Fail("", "参数错误"))
 		return
 	}
 
@@ -76,7 +77,7 @@ func (a *account) FindByUserId(c *gin.Context) {
 func (a *account) FindList(c *gin.Context) {
 	var m cmodel.Page
 	if err := c.ShouldBindQuery(&m); err != nil {
-		c.JSON(http.StatusOK, ret.Fail("", "参数错误"))
+		c.JSON(http.StatusOK, svc.Fail("", "参数错误"))
 		return
 	}
 	res := a.Server.FindList(&m)

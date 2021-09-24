@@ -15,7 +15,7 @@ var (
 	ErrConnCreateLimit = errors.New("connection create limit")
 )
 
-// Pool 基本方法 只需要实现了 io.Closer 方法即可使用该连接池
+// Pool 基本方法 只需要实现了 io.Closer 接口即可使用该连接池
 type Pool interface {
 	Get() (io.Closer, error)
 

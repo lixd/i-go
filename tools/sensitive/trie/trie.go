@@ -1,4 +1,4 @@
-package tire
+package trie
 
 const MaxCap = 26 // a-z 每一层级分支数
 

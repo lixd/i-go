@@ -1,4 +1,4 @@
-package tire
+package trie
 
 import (
 	"fmt"

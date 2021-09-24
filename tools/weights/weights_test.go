@@ -25,7 +25,7 @@ func TestNewWeight(t *testing.T) {
 	}
 }
 
-// 69.8 ns/op
+// 30.8 ns/op
 func BenchmarkNewWeight(b *testing.B) {
 	weights := NewWeight()
 	//	添加初始化值
@@ -34,7 +34,7 @@ func BenchmarkNewWeight(b *testing.B) {
 	weights.Add("C", 30)
 	weights.Add("D", 30)
 	weights.Add("E", 10)
-
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		//	进行随机
 		random := weights.Random()

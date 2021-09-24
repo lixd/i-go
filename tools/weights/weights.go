@@ -62,12 +62,12 @@ func (w *Weights) Random() int64 {
 }
 
 // LocationData 根据数值 定位具体的item
-func (w *Weights) LocationData(randVal int64) *Item {
+func (w *Weights) LocationData(randVal int64) Item {
 	for _, v := range w.list {
 		// 随机值在该item的范围内则对应该item
 		if randVal >= v.Range[0] && randVal < v.Range[1] {
-			return &v
+			return v
 		}
 	}
-	return nil
+	return Item{}
 }

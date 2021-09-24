@@ -8,14 +8,16 @@ import (
 
 /*
 一致性Hash算法Go语言简单实现
+Consistent Hashing Go Implement
 */
 
 type Hash func(data []byte) uint32
+
 type Map struct {
 	hash     Hash           // 计算 hash 的函数
 	replicas int            // 副本数(一个物理节点对应多少个虚拟节点)
-	keys     []int          // 有序的列表，从大到小排序的，这个很重要
-	hashMap  map[int]string // 可以理解成用来记录虚拟节点和物理节点元数据关系的
+	keys     []int          // 虚拟节点计算出的 Hash 值列表,升序排列
+	hashMap  map[int]string // 可以理解成用来记录虚拟节点和物理节点元数据关系的,具体为: 虚拟节点 hash 值和物理节点的映射关系
 }
 
 func New(replicas int, fn Hash) *Map {
@@ -51,11 +53,10 @@ func (m *Map) Get(key string) string {
 	if m.IsEmpty() {
 		return ""
 	}
-	// 根据用户输入key值，计算出一个hash值
+	// 根据用户输入 key 值，计算出一个 hash 值
 	hash := int(m.hash([]byte(key)))
-	// 使用Hash值进行比较,确定属于哪个虚拟节点
-	// 这里使用的是 m.keys[i] >= hash 来判断属于哪个节点，如果keys是无序的就可能会出现误差
-	// 不过按理来说升序应该是最简单的
+	// 使用 hash 值进行比较,确定属于哪个虚拟节点
+	// 这里使用的是 m.keys[i] >= hash 来判断属于哪个节点，如果 keys 是无序的就可能会出现误差,所以每次添加新节点后都需要进行排序
 	idx := sort.Search(len(m.keys), func(i int) bool { return m.keys[i] >= hash })
 	if idx == len(m.keys) {
 		idx = 0
@@ -63,6 +64,7 @@ func (m *Map) Get(key string) string {
 	// 选择到对应物理节点
 	return m.hashMap[m.keys[idx]]
 }
+
 func (m *Map) IsEmpty() bool {
 	return len(m.hashMap) == 0
 }

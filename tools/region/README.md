@@ -1,6 +1,5 @@
-"endpoints": "http://192.168.3.3:2379,http://192.168.3.4:2379,http://192.168.3.5:2379"
+ip2region.db 下载
 # 百度云链接 链接：https://pan.baidu.com/s/180__IJ11q0ng5IDYgwXE3A 提取码：6666
 # 仓库地址 https://github.com/lionsoul2014/ip2region/tree/master/data
-"region": "data/conf/data/ip2region.db"
+GeoLite2-City.mmdb 下载
 # 下载链接(需登录): https://www.maxmind.com/en/accounts/576594/geoip/downloads
-"geo": "data/conf/data/GeoLite2-City.mmdb"

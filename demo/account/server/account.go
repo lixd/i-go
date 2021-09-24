@@ -3,21 +3,21 @@ package server
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
+	"i-go/core/http/ret/svc"
 	"i-go/demo/account/dto"
 	"i-go/demo/account/model"
 	"i-go/demo/account/repository"
 	"i-go/demo/cmodel"
-	"i-go/demo/common/ret"
 
 	"i-go/utils"
 )
 
 type IAccount interface {
-	Insert(req *dto.AccountInsertReq) *ret.Result
-	DeleteByUserId(userId uint) *ret.Result
-	Update(req *dto.AccountReq) *ret.Result
-	FindByUserId(userId uint) *ret.Result
-	FindList(req *cmodel.Page) *ret.Result
+	Insert(req *dto.AccountInsertReq) *svc.Result
+	DeleteByUserId(userId uint) *svc.Result
+	Update(req *dto.AccountReq) *svc.Result
+	FindByUserId(userId uint) *svc.Result
+	FindList(req *cmodel.Page) *svc.Result
 }
 
 type account struct {
@@ -29,7 +29,7 @@ func NewAccount(dao repository.IAccount) IAccount {
 }
 
 // Insert
-func (a *account) Insert(req *dto.AccountInsertReq) *ret.Result {
+func (a *account) Insert(req *dto.AccountInsertReq) *svc.Result {
 	account := model.Account{
 		Model:  gorm.Model{ID: req.Id},
 		UserId: req.UserId,
@@ -38,7 +38,7 @@ func (a *account) Insert(req *dto.AccountInsertReq) *ret.Result {
 	err := a.Dao.Insert(&account)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "create account"}).Error(err)
-		return ret.Fail("", "db error")
+		return svc.Fail("", "db error")
 	}
 	// response the item which created by request
 	res := dto.AccountResp{
@@ -46,19 +46,19 @@ func (a *account) Insert(req *dto.AccountInsertReq) *ret.Result {
 		UserId: req.UserId,
 		Amount: req.Amount,
 	}
-	return ret.Success(&res)
+	return svc.Success(&res)
 }
 
-func (a *account) DeleteByUserId(userId uint) *ret.Result {
+func (a *account) DeleteByUserId(userId uint) *svc.Result {
 	err := a.Dao.DeleteByUserId(userId)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "删除用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return svc.Fail("", "db error")
 	}
-	return ret.Success("")
+	return svc.Success("")
 }
 
-func (a *account) Update(req *dto.AccountReq) *ret.Result {
+func (a *account) Update(req *dto.AccountReq) *svc.Result {
 	account := model.Account{
 		Model:  gorm.Model{ID: req.Id},
 		UserId: req.UserId,
@@ -67,40 +67,40 @@ func (a *account) Update(req *dto.AccountReq) *ret.Result {
 	err := a.Dao.Update(&account)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return ret.Fail(err.Error())
+			return svc.Fail(err.Error())
 		}
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新账户"}).Error(err)
-		return ret.Fail("")
+		return svc.Fail("")
 	}
 	res := dto.AccountResp{
 		Id:     req.Id,
 		UserId: req.UserId,
 		Amount: req.Amount,
 	}
-	return ret.Success(&res)
+	return svc.Success(&res)
 }
 
-func (a *account) FindByUserId(userId uint) *ret.Result {
+func (a *account) FindByUserId(userId uint) *svc.Result {
 	res, err := a.Dao.FindByUserId(userId)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller()}).Error(err)
-		return ret.Fail("", "db error")
+		return svc.Fail("", "db error")
 	}
 	account := dto.AccountResp{
 		Id:     res.ID,
 		UserId: res.UserId,
 		Amount: res.Amount,
 	}
-	return ret.Success(&account)
+	return svc.Success(&account)
 }
 
-func (a *account) FindList(req *cmodel.Page) *ret.Result {
+func (a *account) FindList(req *cmodel.Page) *svc.Result {
 	var resp dto.AccountList
 
 	res, err := a.Dao.FindList(req)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return svc.Fail("", "db error")
 	}
 	accounts := make([]dto.AccountResp, 0, len(res))
 	var account dto.AccountResp
@@ -114,5 +114,5 @@ func (a *account) FindList(req *cmodel.Page) *ret.Result {
 	}
 	resp.Data = accounts
 	resp.Page = *req
-	return ret.Success(&resp)
+	return svc.Success(&resp)
 }

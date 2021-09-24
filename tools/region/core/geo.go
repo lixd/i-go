@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"net"
 
 	"github.com/oschwald/geoip2-golang"
@@ -58,7 +59,7 @@ var DB *geoip2.Reader
 
 func InitLatLong() {
 	var err error
-	path := viper.GetString("latlong")
+	path := viper.GetString("geo")
 	if path == "" {
 		panic("can not get latlong")
 	}
@@ -84,4 +85,55 @@ func IP2LatLong(ip string) (LatLong, error) {
 		Longitude: city.Location.Longitude,
 	}
 	return item, nil
+}
+
+const (
+	LangCN = "zh-CN"
+	LangEN = "en"
+)
+
+func IP2RegionCN(ip string) string {
+	region, err := iP2Region(ip, LangCN)
+	if err != nil {
+		return "内网IP"
+	}
+	return region
+}
+
+func IP2RegionEN(ip string) string {
+	region, err := iP2Region(ip, LangEN)
+	if err != nil {
+		return "Intranet IP"
+	}
+	return region
+}
+
+func iP2Region(ip, lang string) (string, error) {
+	ipFormat := net.ParseIP(ip)
+	if ipFormat == nil {
+		return "", errors.Wrapf(ErrInvalidIP, "IP%s 无法解析", ip)
+	}
+	city, err := DB.City(ipFormat)
+	if err != nil {
+		return "", errors.Wrapf(err, "根据IP%s查询City数据", ip)
+	}
+	printCity(city)
+	var spilt string
+	if lang == LangEN {
+		spilt = " " // 英文时用空格分开
+	}
+	region := city.Country.Names[lang] + spilt + city.City.Names[lang]
+	return region, nil
+}
+
+func printCity(city *geoip2.City) {
+	fmt.Printf("country: %+v\n", city.Country)
+	fmt.Printf("city: %+v\n", city.City)
+	fmt.Printf("RegisteredCountry: %+v\n", city.RegisteredCountry)
+	fmt.Printf("RepresentedCountry: %+v\n", city.RepresentedCountry)
+	fmt.Printf("Location: %+v\n", city.Location)
+	fmt.Printf("Continent: %+v\n", city.Continent)
+	fmt.Printf("Postal: %+v\n", city.Postal)
+	fmt.Printf("Subdivisions: %+v\n", city.Subdivisions)
+	fmt.Printf("Traits: %+v\n", city.Traits)
 }
