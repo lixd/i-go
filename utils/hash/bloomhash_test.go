@@ -3,8 +3,6 @@ package hash
 import (
 	"fmt"
 	"testing"
-
-	"github.com/sirupsen/logrus"
 )
 
 func TestBloomFilter_BloomHash(t *testing.T) {
@@ -12,7 +10,6 @@ func TestBloomFilter_BloomHash(t *testing.T) {
 	key := []byte("second")
 	bloomHash := hash.BloomHash(key)
 	fmt.Printf("res :%v\n", bloomHash)
-	fmt.Printf("res2 :%v\n", Murmur3(key))
 }
 
 func BenchmarkNewBloomFilterHash(b *testing.B) {

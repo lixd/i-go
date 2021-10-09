@@ -5,7 +5,7 @@ import (
 )
 
 /*
-bloom过滤hash工具类
+布隆过滤器 hash工具类
 根据数组大小和hash函数个数 计算出多个hash
 用于对应一个值 降低冲突
 */
