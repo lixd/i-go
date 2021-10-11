@@ -5,12 +5,6 @@ all:
 
 print-%: ; @echo $*=$($*)
 
-##
-## Tools
-##
-tools:
-	go get github.com/tv42/becky
-
 domains:
 	curl https://publicsuffix.org/list/effective_tld_names.dat > tldomains.dat
 

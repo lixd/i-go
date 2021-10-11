@@ -1,6 +1,6 @@
 module i-go
 
-go 1.14
+go 1.16
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
@@ -28,7 +28,6 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-ego/gse v0.63.2
 	github.com/go-kit/kit v0.10.0
-	github.com/go-kratos/kratos v1.0.0
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/go-openapi/spec v0.20.0 // indirect
 	github.com/go-pg/pg v8.0.6+incompatible
@@ -113,7 +112,6 @@ require (
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 	golang.org/x/image v0.0.0-20200924062109-4578eab98f00 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
-	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	golang.org/x/text v0.3.6 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
