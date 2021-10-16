@@ -24,14 +24,14 @@ const (
 	消费者组消费进度监控
 Broker
 	位移主题
-	幂等生产者 事务消费者 https://www.jianshu.com/p/f77ade3f41fd
+	幂等生产者 事务消费者 https://www.jianshu.com/p/f77ade3f41fd √
 	客户端高级功能 拦截器
 原理分析
 	Kafka 副本机制
 	请求是怎么被处理的
 	消费者组重平衡流程解析
 	Kafka控制器
-	高水位和LeaderEpoch
+	高水位和LeaderEpoch √
 其他
 	无消息丢失配置 √
 	exactlyOnce 语义 √

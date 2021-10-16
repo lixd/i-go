@@ -46,6 +46,6 @@ func (r *redisLock) Lock(key string, value interface{}, expire time.Duration) bo
 
 // UnLock 释放锁 释放时要检测和获取时是相同的值才能释放锁
 func (r *redisLock) UnLock(key string, value interface{}) error {
-	err := r.RedisCli.Eval(unLockLua, []string{key}, []interface{}{value}).Err()
+	err := r.RedisCli.Eval(unLockLua, []string{key}, value).Err()
 	return err
 }
