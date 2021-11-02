@@ -14,9 +14,9 @@ func main() {
 	fmt.Println("first", first, "second", second)
 
 	//go tickerBad()
-	go tickerGood()
+	// go tickerGood()
 	//go timerBad()
-	Load()
+	// Load()
 	go timerGood()
 	select {}
 }
@@ -95,7 +95,6 @@ func timerGood() {
 	for {
 		select {
 		case <-timer.C:
-			timer.Reset(time.Second)
 			println("time out, and end")
 		case <-ch:
 		}

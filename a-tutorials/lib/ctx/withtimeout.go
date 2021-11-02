@@ -11,6 +11,7 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	// ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*100)
+	// 超时时间设置越短  越不容易计算出满足条件的随机值 超时几率越大
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(time.Millisecond*100))
 	// defer cancel() // 一般推荐 defer 中调用cancel()
 	ret := make(chan int)

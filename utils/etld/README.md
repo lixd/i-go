@@ -5,10 +5,10 @@ https://github.com/goware/tldomains
 ## Usage
 
 ```go
-hostInfo := tldomains.Parse("mmmm.jello.co.uk")
-// hostInfo.Subdomain = "mmmm"
-// hostInfo.Domain = "jello"
-// hostInfo.Suffix = "co.uk"
+hostInfo := tldomains.Parse("www.lixueduan.com")
+// hostInfo.Subdomain = "www"
+// hostInfo.Domain = "lixueduan"
+// hostInfo.Suffix = "com"
 ```
 
 ## Build

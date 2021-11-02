@@ -1,9 +1,10 @@
 package main
 
 import (
+	"testing"
+
 	"github.com/sirupsen/logrus"
 	"i-go/core/db/redisdb"
-	"testing"
 )
 
 func TestRedisBloomFilter(t *testing.T) {

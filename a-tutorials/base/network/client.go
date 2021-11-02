@@ -10,13 +10,13 @@ import (
 
 func main() {
 	fmt.Println("客户端开始监听...")
-	conn, e := net.Dial("tcp", "127.0.0.1:8888")
+	// conn, e := net.Dial("tcp", "127.0.0.1:8888")
+	conn, e := net.Dial("tcp", "40v04h0108.wicp.vip:34339")
 	if e != nil {
 		fmt.Printf("client conn error err=%v \n", e)
 		return
 	}
 	fmt.Println("连接成功")
-
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		line, e := reader.ReadString('\n')

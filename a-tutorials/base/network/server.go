@@ -9,7 +9,7 @@ func main() {
 	fmt.Println("服务端开始监听...")
 	// "tcp" 表示使用网络协议是 tcp
 	// "0.0.0.0:8888" 本地监听8888端口
-	listener, err := net.Listen("tcp", "0.0.0.0:8888")
+	listener, err := net.Listen("tcp", "0.0.0.0:7777")
 	if err != nil {
 		fmt.Printf("listen error err=%v \n", err)
 		return

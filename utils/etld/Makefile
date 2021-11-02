@@ -12,11 +12,9 @@ domains:
 ## Building
 ##
 dist: domains
-	@go generate
 	@go build -i
 
 build:
-	go generate
 	go build -i
 
 test:

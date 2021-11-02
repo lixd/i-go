@@ -7,6 +7,8 @@ import (
 	"i-go/utils/hash"
 )
 
+// 使用 Redis Bitmap 自己实现的一个 BloomFilter
+
 type redisBloomFilter struct {
 	bf *hash.BloomFilter
 	rc *redis.Client

@@ -3,8 +3,12 @@ package sync_pool
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"net"
+	"net/url"
 	"sync"
 	"testing"
+	"time"
 )
 
 /*
@@ -60,6 +64,9 @@ var defaultStu, _ = json.Marshal(Student{Name: "Geektutu", Age: 25})
 var emptyStu = Student{}
 
 func BenchmarkUnmarshal(b *testing.B) {
+	expire, _ := time.Parse("2006-01-02 15:04:05", "2021-10-19 12:50:43")
+	fmt.Println(expire.Unix())
+	return
 	for n := 0; n < b.N; n++ {
 		stu := &Student{}
 		json.Unmarshal(defaultStu, stu)
@@ -70,7 +77,28 @@ func BenchmarkUnmarshalWithPool(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		stu := studentPool.Get().(*Student)
 		json.Unmarshal(defaultStu, stu)
-		stu.Reset() // 将stu重置后在放进去
+		stu.Reset() // 将stu重置后再放进去
 		studentPool.Put(stu)
 	}
+}
+
+func TestA(t *testing.T) {
+	// 103.101.225.229
+	// ip, err := net.LookupIP("lee-seung-yeoul-0-korea-selatan-2010-dd-s8.utsmakassar.web.id")
+	ip, err := net.LookupIP("perkuliahan-siang-pmb-kutaitimur.peta-lokasi.web.id")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(ip)
+
+	rawURL := "https://www.vaptcha.com/document/install.html"
+	parse, err := url.Parse(rawURL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println("Home:", parse.Scheme+"://"+parse.Host)
+	fmt.Println(parse.Path)
+	day := time.Unix(1634790080, 1).Day()
+	day2 := time.Now().Day()
+	fmt.Printf("day1:%v day2:%v\n", day, day2)
 }
