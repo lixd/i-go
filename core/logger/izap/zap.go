@@ -1,20 +1,22 @@
 package izap
 
 import (
+	"io"
+	"os"
+	"strings"
+	"time"
+
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-
-	"io"
-	"strings"
-	"time"
 )
 
 var (
 	Logger *zap.SugaredLogger
 )
 
+// 如何通过一封恶意邮件追踪幕后黑客组织 https://zhuanlan.zhihu.com/p/148879311
 const (
 	// LogPath 日志文件路径
 	LogPath = "./log/zap/logs"
@@ -49,8 +51,12 @@ func InitLogger(path ...string) {
 	infoWriter := getWriter(logPath + "/info.log")
 	errorWriter := getWriter(logPath + "/error.log")
 	encoder := getEncoder()
+	console := getConsoleEncoder()
 	// 最后创建具体的Logger
 	core := zapcore.NewTee(
+		// 同时也打印到控制台
+		zapcore.NewCore(console, zapcore.AddSync(os.Stdout), infoLevel),
+		zapcore.NewCore(console, zapcore.AddSync(os.Stderr), errorLevel),
 		// 分别指定writer和level
 		zapcore.NewCore(encoder, zapcore.AddSync(infoWriter), infoLevel),
 		zapcore.NewCore(encoder, zapcore.AddSync(errorWriter), errorLevel),
@@ -69,6 +75,12 @@ func getEncoder() zapcore.Encoder {
 	return zapcore.NewJSONEncoder(encoderConfig)
 	// 可选普通Encoder
 	// return zapcore.NewConsoleEncoder(encoderConfig)
+}
+
+func getConsoleEncoder() zapcore.Encoder {
+	// 获取默认配置然后自定义调整
+	encoderConfig := zap.NewDevelopmentEncoderConfig()
+	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
 // getWriter 传入日志文件存储地址 返回一个writer

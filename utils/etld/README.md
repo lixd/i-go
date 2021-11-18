@@ -1,7 +1,8 @@
-# Top-Level Domain Parser
+# effective top-level domains (eTLD)
 
-Tiny library to parse the subdomain, domain, and tld extension from a host string.
-https://github.com/goware/tldomains
+eTLD: effective top-level domains.
+
+a simple library to parse the subdomain, domain, and eTLD from host.
 ## Usage
 
 ```go

@@ -3,10 +3,8 @@ module i-go
 go 1.16
 
 require (
-	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
-	github.com/RedisBloom/redisbloom-go v1.0.0 // indirect
 	github.com/Shopify/sarama v1.29.1
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
@@ -19,10 +17,8 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/coreos/etcd v3.3.22+incompatible
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/elastic/go-elasticsearch/v7 v7.5.1-0.20200623144321-26ee26eb5407
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
-	github.com/fogleman/gg v1.3.0 // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-contrib/pprof v1.3.0
@@ -30,16 +26,14 @@ require (
 	github.com/go-ego/gse v0.63.2
 	github.com/go-kit/kit v0.10.0
 	github.com/go-ole/go-ole v1.2.4 // indirect
-	github.com/go-openapi/spec v0.20.0 // indirect
 	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/locales v0.13.0
 	github.com/go-playground/universal-translator v0.17.0
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/go-redis/redis v6.15.2+incompatible
-	github.com/go-test/deep v1.0.7 // indirect
 	github.com/gocolly/colly v1.2.0
 	github.com/gogf/gf v1.13.1
-	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
@@ -49,20 +43,13 @@ require (
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
-	github.com/json-iterator/go v1.1.10
 	github.com/kennygrant/sanitize v1.2.4 // indirect
-	github.com/lazytiger/go-v8 v0.0.0-20131210065505-b2466929848d // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
-	github.com/lixd/grpc-go-example v0.0.0-20210620023824-cf6f1be242a4 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mattn/go-sqlite3 v2.0.1+incompatible
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
-	github.com/micro/go-micro v1.18.0 // indirect
-	github.com/micro/go-micro/v2 v2.9.1 // indirect
-	github.com/micro/go-plugins/registry/etcdv3 v0.0.0-20200119172437-4fe21aa238fd // indirect
-	github.com/miekg/dns v1.1.29 // indirect
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/nats-io/nats-streaming-server v0.17.0 // indirect

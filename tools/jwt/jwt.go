@@ -1,57 +1,68 @@
 package jwt
 
 import (
-	"errors"
-	"fmt"
+	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
+	"i-go/utils"
 )
+
+// https://jwt.io/ 在线解码
+// https://datatracker.ietf.org/doc/html/rfc7519 rfc 文档
+
+/*
+JWT 优点是无状态的
+确定则是一旦发布后无法撤销，比如用户改密码后旧的JWT任然可以使用
+一般使用JWT黑名单方式处理，比如退出登录或者改密码后把之前的JWT写入黑名单
+*/
 
 const (
-	hmacSampleSecret = "17x"
+	ExpireTime = time.Hour * 24 // JWT 有效期24小时
 )
 
-// GenerateToken 根据提供的信息生成 jwt token
-func GenerateToken(userId int64) (string, error) {
-	// 指定需要存储的数据
-	claims := jwt.MapClaims{
-		"userId": userId,
-	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	// 秘钥签名
-	return token.SignedString([]byte(hmacSampleSecret))
+// CustomClaims 自定义Claims
+type CustomClaims struct {
+	UserId int64
+	jwt.StandardClaims
 }
 
-// ParseToken 从 jwt token 中解析出原始信息
-func ParseToken(tokenString string) (userId int64, err error) {
-	token, err := jwt.ParseWithClaims(tokenString, jwt.MapClaims{}, secret())
-	if err != nil {
-		return
+// GenerateJWT 生成jwt
+func GenerateJWT(userId int64) (string, error) {
+	claim := CustomClaims{
+		UserId: userId,
+		StandardClaims: jwt.StandardClaims{
+			Audience:  "web",                             // 观众，相当于接受者
+			ExpiresAt: time.Now().Add(ExpireTime).Unix(), // 过期时间
+			Id:        utils.StringHelper.GetUUID(),      // jwt 编号
+			IssuedAt:  time.Now().Unix(),                 // 发布时间
+			Issuer:    "i-go",                            // 发布者
+			NotBefore: time.Now().Unix(),                 // 生效时间，在生效时间前该JWT依旧无效
+			Subject:   "device",                          // 主题
+		},
 	}
-	claim, ok := token.Claims.(jwt.MapClaims)
-	if !ok {
-		err = errors.New("cannot convert claim to mapclaim")
-		return
-	}
-	// 验证token,如果token被修改过则为false
-	if !token.Valid {
-		err = errors.New("invalid jwt token")
-		return
-	}
-	if value, ok := claim["userId"]; ok {
-		// 默认会处理成 float64
-		userId = int64(value.(float64))
-	}
-	return
+	st := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+	return st.SignedString(secret())
 }
 
-// secret 获取 secret 的方法 类型必须为 jwt.Keyfunc
-func secret() jwt.Keyfunc {
+func keyFunc() jwt.Keyfunc {
 	return func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-		}
-		// TODO 可以放在配置文件里
-		return []byte(hmacSampleSecret), nil
+		return secret(), nil
 	}
+}
+
+func secret() []byte {
+	return []byte("my secret")
+}
+
+// ParseJWT 解析jwt
+func ParseJWT(token string) (CustomClaims, error) {
+	t, err := jwt.ParseWithClaims(token, &CustomClaims{}, keyFunc())
+	if err != nil {
+		return CustomClaims{}, err
+	}
+	// 类型转换并判断是否有效
+	if claim, ok := t.Claims.(*CustomClaims); ok && t.Valid {
+		return *claim, nil
+	}
+	return CustomClaims{}, err
 }
