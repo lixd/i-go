@@ -72,6 +72,8 @@ require (
 	github.com/shirou/gopsutil v2.20.6+incompatible
 	github.com/sirupsen/logrus v1.6.0
 	github.com/sittipongwork/GoSitemapxml v0.0.0-20161123104827-ebd05028e4be
+	github.com/smartwalle/alipay/v3 v3.1.6 // indirect
+	github.com/smartwalle/crypto4go v1.0.3 // indirect
 	github.com/sony/gobreaker v0.4.1
 	github.com/sony/sonyflake v1.0.0
 	github.com/spaolacci/murmur3 v1.1.0
@@ -92,13 +94,14 @@ require (
 	github.com/uber/jaeger-client-go v2.25.0+incompatible
 	github.com/uber/jaeger-lib v2.4.0+incompatible // indirect
 	github.com/unrolled/secure v1.0.8
+	github.com/wechatpay-apiv3/wechatpay-go v0.2.9 // indirect
 	github.com/willf/bitset v1.1.10 // indirect
 	github.com/willf/bloom v2.0.3+incompatible
 	go.etcd.io/etcd v3.3.13+incompatible
 	go.mongodb.org/mongo-driver v1.4.6
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
 	go.uber.org/zap v1.15.0
-	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
+	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
 	golang.org/x/image v0.0.0-20200924062109-4578eab98f00 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
