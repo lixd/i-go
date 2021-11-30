@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 	"github.com/sirupsen/logrus"
 	"i-go/utils"
 )
@@ -18,7 +18,6 @@ type IHello interface {
 
 type hello struct {
 	Index string `json:"index"`
-	Type  string `json:"type"` // 7.0 后只有一个 type _doc
 	Cli   *elastic.Client
 }
 
@@ -32,11 +31,10 @@ var (
 	HelloCli *hello
 )
 
-func NewHelloCli(index, _type string, cli *elastic.Client) *hello {
+func NewHelloCli(index, _type string, cli *elastic.Client) IHello {
 	once.Do(func() {
 		HelloCli = &hello{
 			Index: index,
-			Type:  _type,
 			Cli:   cli,
 		}
 	})
@@ -48,7 +46,6 @@ func (s *hello) MatchPrefix(keyword string, count int) ([]string, error) {
 	query := elastic.NewMatchPhrasePrefixQuery("name", keyword)
 	res, err := s.Cli.Search().
 		Index(s.Index).
-		Type(s.Type).
 		Query(query).
 		Size(count).
 		Do(context.Background())
@@ -70,7 +67,6 @@ func (s *hello) Upsert(id, keyword string) error {
 	body := HelloItem{Name: keyword}
 	_, err := s.Cli.Update().
 		Index(s.Index).
-		Type(s.Type).
 		Id(id).
 		Doc(&body).
 		// ES 检测到 文档无变化则不执行任何操作
@@ -88,7 +84,6 @@ func (s *hello) Upsert(id, keyword string) error {
 func (s *hello) Delete(id string) error {
 	_, err := s.Cli.Delete().
 		Index(s.Index).
-		Type(s.Type).
 		Id(id).
 		Do(context.Background())
 	return err

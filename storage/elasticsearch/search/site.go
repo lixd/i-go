@@ -6,7 +6,7 @@ import (
 	"io"
 	"reflect"
 
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 	"i-go/core/db/elasticsearch"
 )
 
@@ -38,7 +38,7 @@ func (s *Site) Search(keywords string) (int64, []ESite, error) {
 	// 只根据内容进行搜索
 	query := elastic.NewBoolQuery().Should(elastic.NewMatchPhrasePrefixQuery(Keywords, keywords))
 
-	svc := elasticsearch.ESClient.Search(s.SearchIndex.Index).Type(s.SearchIndex.Type)
+	svc := elasticsearch.ESClient.Search(s.SearchIndex.Index)
 	res, err := svc.
 		Query(query).
 		From(0).
@@ -65,7 +65,6 @@ func (s *Site) SearchAll(keywords string) (<-chan ESite, error) {
 
 	svc := elasticsearch.ESClient.
 		Scroll(s.SearchIndex.Index).
-		Type(s.SearchIndex.Type).
 		Query(query).
 		Size(20)
 
@@ -95,7 +94,6 @@ func (s *Site) SearchAll(keywords string) (<-chan ESite, error) {
 func (s *Site) Create(e ESite) error {
 	_, err := elasticsearch.ESClient.Update().
 		Index(s.SearchIndex.Index).
-		Type(s.SearchIndex.Type).
 		Id(e.ID).
 		Doc(&e).
 		DetectNoop(true).
@@ -109,13 +107,12 @@ func (s *Site) Read(id string) (ESite, error) {
 	var e ESite
 	res, err := elasticsearch.ESClient.Get().
 		Index(s.SearchIndex.Index).
-		Type(s.SearchIndex.Type).
 		Id(id).
 		Do(context.TODO())
 	if err != nil {
 		return e, err
 	}
-	err = json.Unmarshal(*res.Source, &e)
+	err = json.Unmarshal(res.Source, &e)
 	return e, err
 }
 
@@ -123,7 +120,6 @@ func (s *Site) Read(id string) (ESite, error) {
 func (s *Site) Update(aid string, m map[string]interface{}) error {
 	_, err := elasticsearch.ESClient.Update().
 		Index(s.SearchIndex.Index).
-		Type(s.SearchIndex.Type).
 		Id(aid).
 		Doc(m).
 		Do(context.TODO())
@@ -134,7 +130,6 @@ func (s *Site) Update(aid string, m map[string]interface{}) error {
 func (s *Site) Delete(id string) error {
 	_, err := elasticsearch.ESClient.Delete().
 		Index(s.SearchIndex.Index).
-		Type(s.SearchIndex.Type).
 		Id(id).
 		Do(context.TODO())
 	return err

@@ -81,13 +81,7 @@ static void sig_usr(int signum)
         printf("signal %d received\n", signum);
     }
 }
-/*
-106.112.127.38
-221.207.71.163
-42.177.117.139
-49.72.211.71
-218.87.190.71
-*/
+
 int main(void)
 {
     char buf[512];

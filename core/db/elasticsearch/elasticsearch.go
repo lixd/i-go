@@ -8,7 +8,7 @@ import (
 	"i-go/core/logger/izap"
 	"i-go/utils"
 
-	"github.com/olivere/elastic"
+	"github.com/olivere/elastic/v7"
 	"github.com/spf13/viper"
 )
 

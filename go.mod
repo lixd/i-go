@@ -57,6 +57,7 @@ require (
 	github.com/nats-io/stan.go v0.6.0
 	github.com/olekukonko/tablewriter v0.0.4 // indirect
 	github.com/olivere/elastic v6.2.29+incompatible
+	github.com/olivere/elastic/v7 v7.0.29 // indirect
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/orcaman/concurrent-map v0.0.0-20190826125027-8c72a8bb44f6
 	github.com/oschwald/geoip2-golang v1.5.0
@@ -66,12 +67,10 @@ require (
 	github.com/prometheus/common v0.10.0
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron v1.1.0
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/shirou/gopsutil v2.20.6+incompatible
 	github.com/sirupsen/logrus v1.6.0
-	github.com/sittipongwork/GoSitemapxml v0.0.0-20161123104827-ebd05028e4be
 	github.com/smartwalle/alipay/v3 v3.1.6 // indirect
 	github.com/smartwalle/crypto4go v1.0.3 // indirect
 	github.com/sony/gobreaker v0.4.1
@@ -83,14 +82,9 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.7.0
-	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14 // indirect
-	github.com/swaggo/gin-swagger v1.3.0 // indirect
-	github.com/swaggo/swag v1.7.0 // indirect
-	github.com/tealeg/xlsx v1.0.5
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/temoto/robotstxt v0.0.0-20180810133444-97ee4a9ee6ea // indirect
 	github.com/tidwall/pretty v1.0.1 // indirect
-	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208
 	github.com/uber/jaeger-client-go v2.25.0+incompatible
 	github.com/uber/jaeger-lib v2.4.0+incompatible // indirect
 	github.com/unrolled/secure v1.0.8
@@ -102,23 +96,16 @@ require (
 	go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
 	go.uber.org/zap v1.15.0
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
-	golang.org/x/image v0.0.0-20200924062109-4578eab98f00 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	golang.org/x/text v0.3.6 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
 	golang.org/x/tools v0.1.7 // indirect
-	gonum.org/v1/plot v0.8.0
 	google.golang.org/grpc v1.35.0
-	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/grpc/examples v0.0.0-20201217184027-15458d28204f // indirect
 	google.golang.org/protobuf v1.25.0
-	gopkg.in/Clever/optimus.v3 v3.8.0 // indirect
-	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
-	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
-	gopl.io v0.0.0-20200323155855-65c318dde95e // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+
 	"github.com/sirupsen/logrus"
 	"i-go/core/conf"
 	"i-go/core/db/elasticsearch"
@@ -50,7 +51,6 @@ func main() {
 	Init()
 	h := hello{
 		Index: HelloIndex,
-		Type:  "_doc",
 		Cli:   elasticsearch.ESClient,
 	}
 	h.CreateIndex()
@@ -82,7 +82,7 @@ func (s *hello) createIndex() {
 	logrus.Info("create index successful")
 }
 
-// alias remove index alias from old and add to new
+// AddAlias alias remove index alias from old and add to new
 func (s *hello) AddAlias(old, new string) {
 	alias := s.Cli.Alias()
 	if old != "" {
