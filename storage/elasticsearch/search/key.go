@@ -1,9 +1,5 @@
 package search
 
-// es 文档类型
-const (
-	TypeDoc = "_doc"
-)
 
 // Index ES索引结构 index+type
 type Index struct {

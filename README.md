@@ -12,19 +12,15 @@ Thanks
 
 ## type
 
-feat :新功能
 
-fix :修复bug
-
-doc : 文档改变
-
-style : 代码格式改变
-
-refactor :某个已有功能重构
-
-perf :性能优化
-
-test :增加测试
+feat: A new feature
+fix: A bug fix
+docs: Documentation only changes
+style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+refactor: A code change that neither fixes a bug nor adds a feature
+perf: A code change that improves performance
+test: Adding missing or correcting existing tests
+chore: Changes to the build process or auxiliary tools and libraries such as documentation generation
 
 build :改变了build工具 如 grunt换成了 npm
 

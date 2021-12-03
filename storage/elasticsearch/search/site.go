@@ -26,7 +26,6 @@ type Site struct {
 var SiteClient = &Site{
 	SearchIndex: Index{
 		Index: SiteIndex,
-		Type:  TypeDoc,
 	},
 }
 
