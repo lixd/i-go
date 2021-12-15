@@ -37,6 +37,7 @@ require (
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5 // indirect
@@ -44,6 +45,7 @@ require (
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/kennygrant/sanitize v1.2.4 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
@@ -70,7 +72,7 @@ require (
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/shirou/gopsutil v2.20.6+incompatible
-	github.com/sirupsen/logrus v1.6.0
+	github.com/sirupsen/logrus v1.8.1
 	github.com/smartwalle/alipay/v3 v3.1.6 // indirect
 	github.com/smartwalle/crypto4go v1.0.3 // indirect
 	github.com/sony/gobreaker v0.4.1
@@ -98,6 +100,7 @@ require (
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sys v0.0.0-20211210111614-af8b64212486 // indirect
 	golang.org/x/text v0.3.6 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
 	golang.org/x/tools v0.1.7 // indirect

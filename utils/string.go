@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"i-go/utils/murmur"
 )
 
@@ -16,12 +16,13 @@ var StringHelper = &stringHelper{}
 
 // GetUUID 生成UUID
 /*
-两个uuid库
+几个uuid库
 https://github.com/google/uuid
-https://github.com/satori/go.uuid
+https://github.com/gofrs/uuid
+https://github.com/satori/go.uuid 不推荐
 */
 func (stringHelper) GetUUID() string {
-	return uuid.NewV4().String()
+	return uuid.New().String()
 }
 
 // ShuffleSlice 数组乱序

@@ -2,6 +2,7 @@ package channel
 
 import (
 	"fmt"
+	"net/url"
 	"testing"
 )
 
@@ -12,7 +13,10 @@ func TestMain(m *testing.M) {
 }
 
 func TestA(t *testing.T) {
-	fmt.Println("A")
+	// rawUrl := "https://www.douban.com/accounts/connect/wechat/callback"
+	rawUrl := "https://www.puug.com?url=https://www.puug.com"
+	escape := url.QueryEscape(rawUrl)
+	fmt.Println(escape)
 }
 
 func TestB(t *testing.T) {
