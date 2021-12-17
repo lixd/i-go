@@ -3,6 +3,7 @@ package utils
 import (
 	"math"
 	"math/rand"
+	"strings"
 
 	"github.com/google/uuid"
 	"i-go/utils/murmur"
@@ -19,10 +20,11 @@ var StringHelper = &stringHelper{}
 几个uuid库
 https://github.com/google/uuid
 https://github.com/gofrs/uuid
-https://github.com/satori/go.uuid 不推荐
+// google 和 gofrs 二者未对比
+https://github.com/satori/go.uuid 不推荐 https://github.com/satori/go.uuid/issues/84
 */
 func (stringHelper) GetUUID() string {
-	return uuid.New().String()
+	return strings.ReplaceAll(uuid.NewString(), "-", "")
 }
 
 // ShuffleSlice 数组乱序

@@ -15,6 +15,7 @@ const (
 	port = ":50051"
 )
 
+// https://github.com/bloomrpc/bloomrpc grpc 测试软件,类似于postman于http
 // greeterServer 定义一个结构体用于实现 .proto文件中定义的方法
 // 新版本 gRPC 要求必须嵌入 pb.UnimplementedGreeterServer 结构体
 type regionServer struct {

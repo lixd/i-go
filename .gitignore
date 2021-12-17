@@ -14,7 +14,7 @@
 .idea
 go.sum
 /wbl/
-# ip2latlong 数据库
+# ip2geo 数据库
 *.mmdb
 # ip2region 数据库
 *.db

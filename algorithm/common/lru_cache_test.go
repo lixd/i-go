@@ -1,8 +1,9 @@
-package redis
+package common
 
 import (
-	"github.com/sirupsen/logrus"
 	"testing"
+
+	"github.com/sirupsen/logrus"
 )
 
 func TestLRUCache(t *testing.T) {

@@ -49,6 +49,7 @@ type Node struct {
 	children children
 	isEnd    bool // 是否是单词的结束，如打人受伤  打(true) 人(true) 受(false)伤(true)，可以有三个词汇（打/打人/打人受伤）
 }
+
 type children map[rune]*Node // 每个子节点都可以包含多个节点
 
 func NewDFA() *DFA {
@@ -64,13 +65,6 @@ func newTrieNode() *Node {
 	}
 }
 
-func newDFANode() *Node {
-	return &Node{
-		children: make(children),
-		isEnd:    false,
-	}
-}
-
 // Append 增加敏感词库 构建Trie树
 func (dfa *DFA) Append(words []rune) {
 	if dfa.root == nil {
@@ -80,20 +74,22 @@ func (dfa *DFA) Append(words []rune) {
 	dfa.mu.Lock()
 	defer dfa.mu.Unlock()
 
-	currNode := dfa.root
+	currNode := dfa.root // 默认从主节点开始
 	for _, word := range words {
 		targetNode, exist := currNode.children[word]
 		if !exist {
 			// 当前单词不存在则添加到Trie中
-			targetNode = newDFANode()
+			targetNode = newTrieNode()
 			currNode.children[word] = targetNode
 			currNode = targetNode
 		} else {
-			// 存在则移动到下一个节点继续判断
+			// 存在则移动到下一个节点继续判断，下一个字是否存在与下一个节点上。
 			currNode = targetNode
 		}
 	}
-	// 最后一个节点是完整单词 修改标记
+	// 循环结束后，当前节点一定是完整单词 修改标记
+	// （这个判断依赖于：输入的一定是一个完整的单词）
+	// 完整单词：不是真正意义上的完整单词，只能表明使用者往Trie树中添加过这个单词。
 	currNode.isEnd = true
 }
 

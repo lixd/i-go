@@ -1,8 +1,9 @@
-package redis
+package others
 
 import (
-	"github.com/sirupsen/logrus"
 	"testing"
+
+	"github.com/sirupsen/logrus"
 )
 
 func TestHyper(t *testing.T) {

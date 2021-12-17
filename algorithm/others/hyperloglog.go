@@ -1,11 +1,12 @@
-package redis
+package others
 
 import (
-	"github.com/axiomhq/hyperloglog"
 	"sync"
 	"sync/atomic"
 	"time"
 	"unsafe"
+
+	"github.com/axiomhq/hyperloglog"
 )
 
 type hyper struct {
