@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"net/http"
-	"os"
 )
 
 var (
 	customLogger *zap.SugaredLogger
 )
 
+// LogPath 日志文件路径
 const (
-	// LogPath 日志文件路径
 	LogPathInfo  = "./log/zap/logs/info.log"
 	LogPathError = "./log/zap/logs/error.log"
 )
@@ -34,12 +35,12 @@ func InitLogger() {
 	// 实现两个判断日志等级的interface
 	// 如果每个级别的日志都需要分开输出的话 这里再加几个即可
 	infoLevel := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
-		// info中只打印 info 和warn
+		// info中只打印 info 和 warn
 		return lvl <= zapcore.WarnLevel
 	})
 
 	errorLevel := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
-		// error及其以上的都打印在error中
+		// error 及其以上的都打印在 error 中
 		return lvl >= zapcore.ErrorLevel
 	})
 
@@ -79,7 +80,6 @@ func getLogWriter(path string) zapcore.WriteSyncer {
 		Compress:   false, // 是否压缩/归档旧文件
 	}
 	return zapcore.AddSync(lumberJackLogger)
-
 }
 
 // getLogWriterSimple 创建一个WriterSyncer

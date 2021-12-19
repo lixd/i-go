@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"go.uber.org/zap"
-	"i-go/core/logger/izap"
 	"i-go/utils"
 
 	"github.com/olivere/elastic/v7"
@@ -17,6 +15,7 @@ import (
 官方:https://github.com/elastic/go-elasticsearch
 社区与官方库的差异:https://github.com/olivere/elastic/issues/1240
 */
+
 var ESClient *elastic.Client
 
 type conf struct {
@@ -67,7 +66,7 @@ func newClient(c conf) (*elastic.Client, error) {
 		*/
 		elastic.SetSniff(false), // 关闭客户端嗅探
 		// elastic.SetErrorLog(logger), // 指定用什么来打印日志
-		elastic.SetErrorLog(zap.NewStdLog(izap.Logger.Desugar())), // 指定用什么来打印日志
+		// elastic.SetErrorLog(zap.NewStdLog(izap.Logger.Desugar())), // 指定用什么来打印日志
 		elastic.SetURL(c.Addr),
 		elastic.SetBasicAuth(c.Username, c.Password))
 	if err != nil {

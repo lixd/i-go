@@ -1,8 +1,9 @@
 package main
 
 import (
-	"go.uber.org/zap"
 	"net/http"
+
+	"go.uber.org/zap"
 )
 
 var sugarLogger *zap.SugaredLogger
@@ -19,6 +20,7 @@ func InitLogger() {
 	sugarLogger = logger.Sugar()
 }
 
+// simpleHttpGet Sugar 可以使用fmt格式进行日志打印，比较方便，但是效率上会低一些
 func simpleHttpGet(url string) {
 	sugarLogger.Debugf("Trying to hit GET request for %s", url)
 	resp, err := http.Get(url)
