@@ -17,7 +17,7 @@ func main() {
 	fmt.Printf("%b \n", Unknown)
 	fmt.Printf("%b \n", IsVisited)
 	fmt.Printf("%b \n", IsCN)
-	return
+
 	s1 := "你好世界 hello word!,2020 street 188#"
 	var count int
 	for _, v := range s1 {
