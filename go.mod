@@ -3,12 +3,10 @@ module i-go
 go 1.17
 
 require (
-	github.com/Comdex/imgo v0.0.0-20200213094239-bb8d436f1e5a
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/Shopify/sarama v1.30.1
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
-	github.com/aliyun/aliyun-oss-go-sdk v1.9.8
 	github.com/antchfx/htmlquery v1.0.0 // indirect
 	github.com/antchfx/xmlquery v1.0.0 // indirect
 	github.com/antchfx/xpath v0.0.0-20190319080838-ce1d48779e67 // indirect
@@ -124,16 +122,19 @@ require (
 require (
 	entgo.io/ent v0.9.1 // indirect
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
+	github.com/beevik/etree v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.2.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect
 	github.com/eapache/queue v1.1.0 // indirect
+	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-bindata/go-bindata v1.0.1-0.20190711162640-ee3c2418e368 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/ikeikeikeike/go-sitemap-generator/v2 v2.0.2 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
 	github.com/jcmturner/dnsutils/v2 v2.0.0 // indirect

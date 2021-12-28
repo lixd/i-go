@@ -7,11 +7,11 @@ swag:
 	swag fmt -g main.go
 
 # dev,带docs,二进制文件会比较大
-.PHONY:build-dev
+.PHONY:dev
 dev:
-	go build -tags "docs"
+	go build -tags "doc"
 
 # prod,不带docs,二进制文件会小一些,而且生产环境也不应该把docs暴露出去
-.PHONY:build_prod
+.PHONY:prod
 prod:
 	go build

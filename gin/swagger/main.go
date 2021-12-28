@@ -18,7 +18,7 @@ var swagHandler gin.HandlerFunc
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host      127.0.0.1:8080
+// @host      localhost:8080
 // @BasePath  /api/v1
 
 // SwaggerUI: http://localhost:8080/swagger/index.html
@@ -28,12 +28,8 @@ func main() {
 
 	v1 := e.Group("/api/v1")
 	{
-		v1.GET("/hello", HandleHello)
-		v1.POST("/login", HandleLogin)
-		v1.POST("/upload", HandleUpload)
-		v1.GET("/list", HandleList)
-		v1.GET("/file/:id", HandleGetFile)
-		v1.POST("/json", HandleJSON)
+		v1.GET("/hello", Hello)
+		v1.POST("/login", Login)
 	}
 
 	if swagHandler != nil {

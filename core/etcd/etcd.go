@@ -2,20 +2,20 @@ package etcd
 
 import (
 	"errors"
-	"i-go/utils"
-	"strings"
 	"time"
 
-	"github.com/coreos/etcd/clientv3"
+	"i-go/utils"
+
 	"github.com/coreos/etcd/pkg/transport"
 	"github.com/spf13/viper"
+	"go.etcd.io/etcd/clientv3"
 )
 
 /*
 	当前etcd v3包有下面俩个manager
-	"github.com/coreos/etcd/clientv3"
+	"github.com/etcd-io/etcd"
 	"go.etcd.io/etcd/clientv3"
-	推荐使用	"github.com/coreos/etcd/clientv3" 这个
+	推荐使用	"go.etcd.io/etcd/clientv3" 这个
 */
 var (
 	CliV3 *clientv3.Client
@@ -91,11 +91,4 @@ func Release() {
 	if CliV3 != nil {
 		_ = CliV3.Close()
 	}
-}
-func Endpoints() []string {
-	endpoints := viper.GetString("endpoints")
-	if endpoints == "" {
-		panic("cannot find endpoints")
-	}
-	return strings.Split(endpoints, ",")
 }

@@ -3,7 +3,6 @@ package core
 import (
 	"image"
 
-	"github.com/Comdex/imgo"
 	"github.com/pkg/errors"
 	"i-go/image/util"
 )
@@ -11,10 +10,6 @@ import (
 // AdjustSaturation 调整图像饱和度 percent 饱和度控制参数 (0,1)
 func AdjustSaturation(origin image.Image, percent float64) (image.Image, error) {
 	// 1.解析图片加载矩阵
-	// imgMatrix, err := imgo.Read(origin)
-	// if err != nil {
-	// 	return origin, errors.Wrap(err, "image对象转颜色矩阵")
-	// }
 	imgMatrix := util.Image2Matrix(origin)
 	// 2.饱和度调整
 	rgb2Gray := doAdjustSaturation(imgMatrix, percent)
@@ -29,7 +24,7 @@ func doAdjustSaturation(src [][][]uint8, percent float64) [][][]uint8 {
 		height = len(src)
 		width  = len(src[0])
 	)
-	imgMatrix := imgo.NewRGBAMatrix(height, width)
+	imgMatrix := util.NewRGBAMatrix(height, width)
 	copy(imgMatrix, src)
 
 	for i := 0; i < height; i++ {

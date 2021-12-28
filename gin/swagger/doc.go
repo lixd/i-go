@@ -1,5 +1,4 @@
 //go:build doc
-// +build doc
 
 package main
 

@@ -32,43 +32,11 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/file/{id}": {
-            "get": {
-                "description": "获取文件",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/octet-stream"
-                ],
-                "tags": [
-                    "文件处理"
-                ],
-                "summary": "获取某个文件",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "文件ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "/hello": {
             "get": {
                 "description": "向你说Hello",
                 "consumes": [
-                    "multipart/form-data"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -88,72 +56,15 @@ var doc = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"msg\": \"hello Razeen\"}",
+                        "description": "{\"msg\": \"hello  lixd\"}",
                         "schema": {
                             "type": "string"
                         }
                     },
                     "400": {
-                        "description": "{\"msg\": \"who are you\"}",
+                        "description": "{\"msg\": \"who    are  you\"}",
                         "schema": {
                             "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/json": {
-            "post": {
-                "description": "获取JSON的示例",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "JSON"
-                ],
-                "summary": "获取JSON的示例",
-                "parameters": [
-                    {
-                        "description": "需要上传的JSON",
-                        "name": "param",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.JSONParams"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "返回",
-                        "schema": {
-                            "$ref": "#/definitions/main.JSONParams"
-                        }
-                    }
-                }
-            }
-        },
-        "/list": {
-            "get": {
-                "description": "文件列表",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "文件处理"
-                ],
-                "summary": "查看文件列表",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Files"
                         }
                     }
                 }
@@ -163,75 +74,49 @@ var doc = `{
             "post": {
                 "description": "登入",
                 "consumes": [
-                    "multipart/form-data"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "登陆"
+                    "登陆注册"
                 ],
                 "summary": "登陆",
                 "parameters": [
                     {
-                        "type": "string",
-                        "default": "admin",
-                        "description": "用户名",
+                        "description": "用户名密码",
                         "name": "user",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "密码",
-                        "name": "password",
-                        "in": "formData",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.LoginReq"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"msg\":\"login success\"}",
+                        "description": "token",
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ret.Result"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/main.LoginResp"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
-                        "description": "{\"msg\": \"user or password error\"}",
+                        "description": "错误提示",
                         "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload": {
-            "post": {
-                "description": "上传文件",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "文件处理"
-                ],
-                "summary": "上传文件",
-                "parameters": [
-                    {
-                        "type": "file",
-                        "description": "文件",
-                        "name": "file",
-                        "in": "formData",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.File"
+                            "$ref": "#/definitions/ret.Result"
                         }
                     }
                 }
@@ -239,60 +124,34 @@ var doc = `{
         }
     },
     "definitions": {
-        "main.File": {
+        "main.LoginReq": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer"
+                "password": {
+                    "type": "string"
                 },
-                "len": {
-                    "type": "integer"
-                },
-                "name": {
+                "username": {
                     "type": "string"
                 }
             }
         },
-        "main.Files": {
+        "main.LoginResp": {
             "type": "object",
             "properties": {
-                "files": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/main.File"
-                    }
-                },
-                "len": {
-                    "type": "integer"
+                "token": {
+                    "type": "string"
                 }
             }
         },
-        "main.JSONParams": {
+        "ret.Result": {
             "type": "object",
             "properties": {
-                "array": {
-                    "description": "这是一个字符串数组",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "int": {
-                    "description": "这是一个数字",
+                "code": {
                     "type": "integer"
                 },
-                "str": {
-                    "description": "这是一个字符串",
+                "data": {},
+                "msg": {
                     "type": "string"
-                },
-                "struct": {
-                    "description": "这是一个结构",
-                    "type": "object",
-                    "properties": {
-                        "field": {
-                            "type": "string"
-                        }
-                    }
                 }
             }
         }
@@ -311,7 +170,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "127.0.0.1:8080",
+	Host:        "localhost:8080",
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
 	Title:       "Swagger Example API",
