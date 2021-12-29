@@ -2,6 +2,7 @@ package ratelimit
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -21,7 +22,7 @@ func TestLeakyBucket(t *testing.T) {
 }
 
 /*
-// uber ratelimit 部分代码
+// uber ratelimit 漏桶算法-部分核心代码
 func (t *limiter) Take() {
 	// 1.首先获取当前时间
 	now := t.clock.Now()
@@ -34,3 +35,25 @@ func (t *limiter) Take() {
 	}
 }
 */
+
+func Test_leakyBucket_allow(t *testing.T) {
+	l := newLeakyBucket(4, 1)
+	for i := 0; i < 10; i++ {
+		if l.allow() {
+			fmt.Println("通过")
+		} else {
+			fmt.Println("wait...")
+		}
+		time.Sleep(time.Millisecond * 300)
+	}
+
+	fmt.Println(strings.Repeat("~", 20))
+	time.Sleep(time.Second * 2) // sleep 两秒,两秒后漏桶中最少已经空出两个位置了，后续2个请求可以立马执行
+	for i := 0; i < 2; i++ {
+		if l.allow() {
+			fmt.Println("通过")
+		} else {
+			fmt.Println("wait...")
+		}
+	}
+}

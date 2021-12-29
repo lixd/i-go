@@ -10,6 +10,7 @@ func TestGetZeroTime(t *testing.T) {
 	zeroTime := GetZeroTime(time.Now().Unix())
 	fmt.Println("当日零点时间:", zeroTime.Unix())
 }
+
 func TestGetZeroTime2(t *testing.T) {
 	zeroTime := getZeroTime2(time.Now().Unix())
 	fmt.Println("当日零点时间:", zeroTime.Unix())

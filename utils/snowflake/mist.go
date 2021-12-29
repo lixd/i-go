@@ -1,5 +1,5 @@
 /*
-* 薄雾算法
+* 薄雾算法 https://github.com/asyncins/mist
 *
 * 1      2                                                     48         56       64
 * +------+-----------------------------------------------------+----------+----------+
@@ -20,7 +20,6 @@ package main
 
 import (
 	"crypto/rand"
-	"fmt"
 	"math/big"
 	"sync"
 )
@@ -55,12 +54,4 @@ func (c *Mist) Generate() int64 {
 	mist := c.inc<<incShift | (c.saltA << saltShift) | c.saltB
 	c.Unlock()
 	return mist
-}
-
-func main() {
-	// 使用方法
-	mist := NewMist()
-	for i := 0; i < 10000; i++ {
-		fmt.Println(mist.Generate())
-	}
 }

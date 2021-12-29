@@ -15,14 +15,14 @@ filepath包：
 	在处理路径时，应尽量使用filepath包，处理url时，使用path包。
 */
 
-// GetFilePrefix 文件名(不带后缀)
+// GetFilePrefix 获取文件名(不带后缀)
 func GetFilePrefix(filename string) string {
 	base := filepath.Base(filename)
 	suffix := filepath.Ext(filename)
 	return strings.TrimSuffix(base, suffix)
 }
 
-// GetFileSuffix 文件后缀
-func GetFileSuffix(filename string) string {
+// GetFileExt 获取文件扩展名(后缀)
+func GetFileExt(filename string) string {
 	return filepath.Ext(filename)
 }

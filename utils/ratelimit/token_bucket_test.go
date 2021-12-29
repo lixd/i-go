@@ -3,6 +3,7 @@ package ratelimit
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -40,7 +41,7 @@ func TestTokenBucketWait(t *testing.T) {
 }
 
 /*
-//rate包部分代码
+// x/time/rate 包中的令牌桶算法-部分核心代码
 func reserveN(n int){
 	// 1.计算当前的 token 数
 	// 也是按时间计算 当前时间和上次请求的时间这中间的时候 又增加了多少 token 数。
@@ -61,3 +62,24 @@ func reserveN(n int){
 	// 如果 需要等待的时间 waitDuration 大于 指定时间(maxFutureReserve) 也是 false
 	ok := n <= lim.burst && waitDuration <= maxFutureReserve
 }*/
+
+func Test_tokenBucket_allow(t *testing.T) {
+	l := newTokenBucket(10, 2)
+	for i := 0; i < 10; i++ {
+		if l.allow() {
+			fmt.Println("通过")
+		} else {
+			fmt.Println("wait...")
+		}
+		time.Sleep(time.Millisecond * 300)
+	}
+	fmt.Println(strings.Repeat("~", 20))
+	time.Sleep(time.Second * 2) // sleep 两秒,两秒后已经累计了4个 token，后续4个请求可以立马执行
+	for i := 0; i < 4; i++ {
+		if l.allow() {
+			fmt.Println("通过")
+		} else {
+			fmt.Println("wait...")
+		}
+	}
+}
