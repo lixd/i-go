@@ -16,7 +16,7 @@ import (
 所以:BloomFilter不能100%确定数据在列表中(有hash冲突)，但是可以确定100%不在。
 */
 func main() {
-	// 参数表示:1W 个位置,1%的误差 位置越多,误差越小则占用的内容越大
+	// 参数含义:1W 个位置,1%的误差 位置越多,误差越小则占用的内容越大
 	filter := bloom.NewWithEstimates(1_0000, 0.01)
 	// 添加数据
 	filter.Add([]byte("Golang"))

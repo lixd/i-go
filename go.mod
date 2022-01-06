@@ -131,6 +131,7 @@ require (
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/gqcn/structs v1.1.1 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/ikeikeikeike/go-sitemap-generator/v2 v2.0.2 // indirect

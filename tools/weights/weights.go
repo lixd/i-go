@@ -24,11 +24,6 @@ type Item struct {
 	Range  []int64 // 当前项目所占区间(左闭右开区间)
 }
 
-// GetAllWeights 获取总权重
-func (w *Weights) GetAllWeights() int64 {
-	return w.totalWeight
-}
-
 // NewWeight new 一个 weight 实例
 func NewWeight() *Weights {
 	var weights = &Weights{

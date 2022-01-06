@@ -12,12 +12,10 @@ const (
 )
 
 func TestCompress(t *testing.T) {
-	origin := convert.String2Bytes(LocusPoint)
-	compress := Compress(origin)
+	compress := Compress(convert.String2Bytes(LocusPoint))
 	deCompress, err := DeCompress(compress)
 	if err != nil {
-		fmt.Println(err)
-		return
+		t.Fatal(err)
 	}
 	bytes2String := convert.Bytes2String(deCompress)
 	fmt.Println(bytes2String == LocusPoint)

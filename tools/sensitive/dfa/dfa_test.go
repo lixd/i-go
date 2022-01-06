@@ -8,12 +8,14 @@ import (
 func TestDFA(t *testing.T) {
 	dfa := NewDFA()
 
-	dfa.Append([]rune("abc"))
-	dfa.Append([]rune("abcdef"))
-	contains := dfa.Contains("abc")
-	fmt.Println(contains)
-	search := dfa.Search("abc", MatchAll)
-	fmt.Println(search)
-	_, marked := dfa.Cover("abcff", '*')
-	fmt.Println(marked)
+	dfa.Append([]rune("abd"))
+	dfa.Append([]rune("bcd"))
+	hasPrefix := dfa.HasPrefix("abc")
+	fmt.Println("是否存在前缀:", hasPrefix)
+	contains := dfa.Contains("abcd")
+	fmt.Println("是否存在敏感词:", contains)
+	search := dfa.Search("abcdef", MatchAll)
+	fmt.Println("敏感词出现位置:", search)
+	_, marked := dfa.Cover("abcdef", '*')
+	fmt.Println("对敏感词进行标记:", marked)
 }

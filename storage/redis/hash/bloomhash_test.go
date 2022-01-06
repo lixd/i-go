@@ -19,14 +19,3 @@ func BenchmarkNewBloomFilterHash(b *testing.B) {
 		_ = hash.BloomHash(key)
 	}
 }
-
-func TestA(t *testing.T) {
-	type tmp struct {
-	}
-	type Arr struct {
-		A []tmp
-	}
-	var a Arr
-	a.A = append(a.A, tmp{})
-	fmt.Println(a.A)
-}

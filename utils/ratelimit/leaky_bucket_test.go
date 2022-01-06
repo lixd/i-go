@@ -9,6 +9,7 @@ import (
 	"go.uber.org/ratelimit"
 )
 
+// go.uber.org/ratelimit 漏桶算法使用
 func TestLeakyBucket(t *testing.T) {
 	// 限制每秒 100 次请求 即 10ms 一次
 	rl := ratelimit.New(100) // per second

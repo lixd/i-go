@@ -10,6 +10,7 @@ import (
 	"golang.org/x/time/rate"
 )
 
+// golang.org/x/time/rate 令牌桶算法使用
 func TestTokenBucketAllow(t *testing.T) {
 	// 1st: 每秒新增 token 数
 	// 2ed: 桶中令牌最大数
