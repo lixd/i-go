@@ -1,0 +1,117 @@
+apiVersion: networking.istio.io/v1alpha3
+# 通过kind指定这是一个 虚拟服务 虚拟服务让您配置如何在服务网格内将请求路由到服务，这基于 Istio 和平台提供的基本的连通性和服务发现能力
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  # hosts 指定虚拟服务对应的 host，可以有多个 类似于nginx service 中配置的 domain
+  # 满足条件的 host 请求就会进入到这个虚拟服务,这个 reviews 是在destination_rule中指定的
+  hosts:
+    - reviews
+  # 在 http 字段包含了虚拟服务的路由规则，用来描述匹配条件和路由行为，它们把 HTTP/1.1、HTTP2 和 gRPC 等流量发送到 hosts 字段指定的目标（
+  # 您也可以用 tcp 和 tls 片段为 TCP 和未终止的 TLS 流量设置路由规则）。一个路由规则包含了指定的请求要流向哪个目标地址，具有 0 或多个匹配条件，取决于您的使用场景。
+  http:
+    # match 自定义匹配规则，即 header 中有指定 end-user=jason 的请求会转到reviews的v2版本
+    - match:
+        # 自定义匹配条件
+        - headers:
+            end-user:
+              exact: jason
+      # 指定匹配上该条件时的转发规则
+      route:
+        - destination:
+            host: reviews
+            subset: v2
+    # 这是另一个路由规则(没有match条件，可以看做时默认规则)，多个优先级按照从上到下的优先级执行，因此没有匹配上前面的路由规则的请求都会进入这个规则 即转发到 reviews的v3版本
+    # 在生产环境中建议提供一个默认的“无条件”或基于权重的规则作为每一个虚拟服务的最后一条规则，如案例所示，从而确保流经虚拟服务的流量至少能够匹配一条路由规则。
+    - route:
+        - destination:
+            host: reviews
+            subset: v3
+
+# 还可以按百分比”权重“分发请求。这在 A/B 测试和金丝雀发布中非常有用
+# spec:
+#  hosts:
+#  - reviews
+#  http:
+#  - route:
+#    - destination:
+#        host: reviews
+#        subset: v1
+#      weight: 75
+#    - destination:
+#        host: reviews
+#        subset: v2
+#      weight: 25
+
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ratings
+spec:
+  hosts:
+    - ratings
+  http:
+    - route:
+        - destination:
+            host: ratings
+            subset: v1
+      # 配置超时
+      timeout: 10s
+      # 配置重试
+      retries:
+        attempts: 3
+        perTryTimeout: 2s
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ratings
+spec:
+  hosts:
+    - ratings
+  http:
+    # 设置故障注入，用于测试
+    # 手动在 virtualservice中配置故障注入，以测试在故障情况下服务是否能正常运行
+    - fault:
+        delay:
+          # 为千分之一的请求配置了一个 5 秒的延迟：
+          percentage:
+            value: 0.1 # 百分比，当前为0.1%
+          fixedDelay: 5s
+      route:
+        - destination:
+            host: ratings
+            subset: v1
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helloworld
+spec:
+  hosts:
+    - helloworld
+  http:
+    # 只有满足条件的用户才会进行金丝雀发布
+    - match:
+        - headers:
+            cookie:
+              regex: "^(.*?;)?(email=[^;]*@some-company-name.com)(;.*)?$"
+      route:
+        - destination:
+            host: helloworld
+            subset: v1
+            weight: 50
+        - destination:
+            host: helloworld
+            subset: v2
+            weight: 50
+    # 其他用户还是全部走的v1版本
+    - route:
+        - destination:
+            host: helloworld
+            subset: v1

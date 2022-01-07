@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+# Istio 中网关用于处理入站和出站的流量。
+kind: Gateway
+metadata:
+  # 指定网关名，虚拟服务中通过该名字进行关联
+  name: ext-host-gwy
+spec:
+  # 通过这个Label来找到执行 Gateway 规则的 Envoy
+  selector:
+    app: my-gateway-controller
+  # 开放的服务列表
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      # Gateway 发布的服务地址，是一个 FQDN 域名，可以支持左侧通配符来进行模糊查询
+      hosts:
+        - ext-host.example.com
+      tls:
+        mode: SIMPLE
+        serverCertificate: /tmp/tls.crt
+        privateKey: /tmp/tls.key
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: virtual-svc
+spec:
+  hosts:
+    - ext-host.example.com
+  # 虚拟服务中指定网关，通过name来关联，这样网关中的流量就可以根据这个虚拟服务中的规则进行转发了
+  gateways:
+    - ext-host-gwy

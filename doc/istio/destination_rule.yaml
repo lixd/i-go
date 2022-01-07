@@ -1,0 +1,49 @@
+apiVersion: networking.istio.io/v1alpha3
+# 目标规则 您可以将虚拟服务视为将流量如何路由到给定目标地址，然后使用目标规则来配置该目标的流量
+kind: DestinationRule
+metadata:
+  name: my-destination-rule
+spec:
+  # 虚拟服务中指定的 host 就是这里定义的
+  host: my-svc
+  trafficPolicy:
+    loadBalancer:
+      simple: RANDOM
+  # 虚拟服务中指定的subset也是由此定义
+  subsets:
+    - name: v1
+      # 每个子集都是基于一个或多个 labels 定义的，在 Kubernetes 中它是附加到像 Pod 这种对象上的键/值对。
+      # 这些标签应用于 Kubernetes 服务的 Deployment 并作为 metadata 来识别不同的版本。
+      # v1 subset 具体对应的即使有 version=v1这个标签的服务
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
+      # 这里也定义了一个 trafficPolicy，这个v2子集则会最终是由这个trafficPolicy，而不是前面全局定义的trafficPolicy
+      # 相当于可以给每个 subset 定义不同的规则
+      trafficPolicy:
+        loadBalancer:
+          simple: ROUND_ROBIN
+    - name: v3
+      labels:
+        version: v3
+
+# for a in {1..10000}; do curl http://192.168.49.2:32177/productpage;sleep 1; done
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: reviews
+spec:
+  host: reviews
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+      # 配置熔断，限制100个并发连接
+      trafficPolicy:
+        connectionPool:
+          tcp:
+            maxConnections: 100
+
