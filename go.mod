@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/Shopify/sarama v1.30.1
-	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
+	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/antchfx/htmlquery v1.0.0 // indirect
 	github.com/antchfx/xmlquery v1.0.0 // indirect
@@ -23,7 +23,7 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-ego/gse v0.63.2
 	github.com/go-kit/kit v0.10.0
-	github.com/go-ole/go-ole v1.2.4 // indirect
+	github.com/go-ole/go-ole v1.2.5 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/locales v0.14.0
@@ -118,6 +118,8 @@ require (
 // grpcv1.26.0以上版本 和 etcd 冲突
 //replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
+require github.com/go-kratos/aegis v0.1.1
+
 require (
 	entgo.io/ent v0.9.1 // indirect
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
@@ -148,14 +150,19 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
+	github.com/shirou/gopsutil/v3 v3.21.8 // indirect
 	github.com/spf13/cobra v1.1.3 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
+	github.com/tklauser/go-sysconf v0.3.9 // indirect
+	github.com/tklauser/numcpus v0.3.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 	gorm.io/driver/mysql v1.2.1 // indirect
 	gorm.io/gorm v1.22.4 // indirect
 )
