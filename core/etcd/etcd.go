@@ -6,9 +6,9 @@ import (
 
 	"i-go/utils"
 
-	"github.com/coreos/etcd/pkg/transport"
 	"github.com/spf13/viper"
 	"go.etcd.io/etcd/clientv3"
+	"go.etcd.io/etcd/pkg/transport"
 )
 
 /*

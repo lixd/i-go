@@ -2,11 +2,12 @@ package config
 
 import (
 	"fmt"
+	"io"
+
 	"github.com/opentracing/opentracing-go"
 	"github.com/spf13/viper"
 	"github.com/uber/jaeger-client-go"
 	jaegerConfig "github.com/uber/jaeger-client-go/config"
-	"io"
 )
 
 const (
@@ -16,7 +17,7 @@ const (
 	LocalAgentHostPort2 = "localhost:6831"
 )
 
-// NewTracer
+// NewTracer 使用 opentracing 统一标准
 func NewTracer(service string) (opentracing.Tracer, io.Closer) {
 	// config := parseConfig()
 	return newTracer(service, "")

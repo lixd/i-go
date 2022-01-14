@@ -32,7 +32,7 @@ require (
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gocolly/colly v1.2.0
 	github.com/gogf/gf v1.13.1
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.5.2
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
@@ -159,6 +159,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	github.com/tklauser/numcpus v0.3.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/automaxprocs v1.4.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect

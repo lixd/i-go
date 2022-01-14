@@ -4,24 +4,28 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"strconv"
+	"strings"
+	"sync"
+
 	elasticsearch7 "github.com/elastic/go-elasticsearch/v7"
 	esapi "github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/sirupsen/logrus"
 	"i-go/core/conf"
 	"i-go/core/db/elasticsearch-official"
-	"strconv"
-	"strings"
-	"sync"
 )
 
 var es *elasticsearch7.Client
 
 func Init() {
-	conf.Load("D:/lillusory/projects/i-go/conf/config.yml")
+	if err := conf.Load("D:/lillusory/projects/i-go/conf/config.yml"); err != nil {
+		panic(err)
+	}
 	elasticsearch.Init()
 	es = elasticsearch.ESClientOfficial
 }
 
+// es 官方库，需要手动拼 json，不建议使用
 func main() {
 	Init()
 	var (

@@ -4,8 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/coreos/etcd/clientv3"
 	"sync"
+
+	"go.etcd.io/etcd/clientv3"
 )
 
 type EtcdMutex struct {
@@ -17,7 +18,7 @@ type EtcdMutex struct {
 	leaseID  clientv3.LeaseID
 }
 
-// NewEtcdMutex
+// NewEtcdMutex etcdMutex
 func NewEtcdMutex(ttl int64, prefix string, ctx context.Context, client *clientv3.Client) *EtcdMutex {
 	var em = EtcdMutex{
 		prefix:   prefix,
@@ -56,7 +57,7 @@ func (em *EtcdMutex) Lock() error {
 	return nil
 }
 
-// Lock 抢锁
+// LockSync 抢锁
 func (em *EtcdMutex) LockSync() error {
 	// LOCK:
 	txn := em.clientV3.Txn(em.ctx)

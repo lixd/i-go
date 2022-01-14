@@ -27,7 +27,7 @@ type CustomClaims struct {
 }
 
 // GenerateJWT 生成jwt
-func GenerateJWT(userId int64) (string, error) {
+func Generate(userId int64) (string, error) {
 	claim := CustomClaims{
 		UserId: userId,
 		StandardClaims: jwt.StandardClaims{
@@ -54,8 +54,8 @@ func secret() []byte {
 	return []byte("my secret")
 }
 
-// ParseJWT 解析jwt
-func ParseJWT(token string) (CustomClaims, error) {
+// Parse 解析jwt
+func Parse(token string) (CustomClaims, error) {
 	t, err := jwt.ParseWithClaims(token, &CustomClaims{}, keyFunc())
 	if err != nil {
 		return CustomClaims{}, err

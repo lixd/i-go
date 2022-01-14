@@ -13,6 +13,7 @@ func minMutation(start string, end string, bank []string) int {
 	// 采用广度优先的方式
 	return bfs(0, start, end, bankMap, changes)
 }
+
 func bfs(changeTimes int, start string, end string, bankMap map[string]bool, changes []string) int {
 	if start == end {
 		return changeTimes
@@ -46,6 +47,7 @@ func bfs(changeTimes int, start string, end string, bankMap map[string]bool, cha
 	}
 	return -1
 }
+
 func isInBank(str string, bankMap map[string]bool) bool {
 	if _, ok := bankMap[str]; ok {
 		return true

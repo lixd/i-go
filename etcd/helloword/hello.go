@@ -9,8 +9,8 @@ import (
 	"i-go/core/conf"
 	"i-go/core/etcd"
 
-	"github.com/coreos/etcd/clientv3"
 	"github.com/sirupsen/logrus"
+	"go.etcd.io/etcd/clientv3"
 )
 
 var (
@@ -39,13 +39,13 @@ func main() {
 	// put()
 	// get()
 	// delete()
-	//leaseFunc()
+	// leaseFunc()
 	txn()
 	watch()
 	// go putForWatch()
 	// go watch()
 	// select {}
-	//compact()
+	// compact()
 }
 
 func compact() {

@@ -10,6 +10,7 @@ func subsets(nums []int) [][]int {
 	dfs(&result, nums, []int{}, 0)
 	return result
 }
+
 func dfs(result *[][]int, nums []int, curr []int, index int) {
 	// 1.terminator
 	if index == len(nums) {

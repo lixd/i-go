@@ -33,7 +33,7 @@ func levelOrder(root *TreeNode) [][]int {
 	return result
 }
 
-// dfs 深度优先 遍历第一层的时候把值存到数组第一个元素、第二层则存到第二个元素 通过 level 来记住当前的层级即可
+// dfs 深度优先 遍历第一层的时候把值存到数组第一个元素(索引0)、第二层则存到第二个元素（索引1） 通过 level 来记住当前的层级即可
 func dfs(root *TreeNode, level int, res [][]int) [][]int {
 	if root == nil {
 		return res

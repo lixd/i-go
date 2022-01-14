@@ -3,12 +3,13 @@ package interceptor
 import (
 	"context"
 	"fmt"
+	"strings"
+
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/opentracing/opentracing-go/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-	"strings"
 )
 
 // ClientInterceptor grpc client
@@ -42,8 +43,8 @@ func ClientInterceptor(tracer opentracing.Tracer) grpc.UnaryClientInterceptor {
 	}
 }
 
-// metadata
-// 为了做载体 carrier，必须要实现 `opentracing.TextMapWriter` `opentracing.TextMapReader` 这两个接口。
+// MDReaderWriter 自定义的metadata
+// 为了做载体(carrier),必须要实现 `opentracing.TextMapWriter` `opentracing.TextMapReader` 这两个接口。
 type MDReaderWriter struct {
 	metadata.MD
 }

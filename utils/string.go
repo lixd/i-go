@@ -1,12 +1,11 @@
 package utils
 
 import (
-	"math"
 	"math/rand"
 	"strings"
 
 	"github.com/google/uuid"
-	"i-go/utils/murmur"
+	"github.com/spaolacci/murmur3"
 )
 
 type stringHelper struct {
@@ -49,9 +48,7 @@ func Subset(backends []string, clientID string, subsetSize int64) []string {
 }
 
 func hashDemo(str string) int64 {
-	clientHash := int64(murmur.Murmur3([]byte(str)))
-	if clientHash < 0 {
-		clientHash = int64(math.Abs(float64(clientHash)))
-	}
-	return clientHash
+	her := murmur3.New32()
+	_, _ = her.Write([]byte(str)) // #nosec
+	return int64(her.Sum32())
 }
