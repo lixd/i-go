@@ -12,7 +12,6 @@
 *.out
 *.log
 .idea
-go.sum
 /wbl/
 # ip2geo 数据库
 *.mmdb
