@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // options 模式 go-micro 使用的这种模式
 // 对外提供 option 方法用于修改默认配置
@@ -60,4 +62,24 @@ func NewCli(opts ...option) *Cli {
 	//	merge config
 	configure(cli, opts...)
 	return cli
+}
+
+// 也可以通过接口来实现
+
+// Option holmes option type.
+type Option interface {
+	apply(*options)
+}
+
+type optionFunc func(*options)
+
+func (f optionFunc) apply(opts *options) {
+	f(opts)
+}
+
+// WithHost 自定义配置
+func WithHost(host string) Option {
+	return optionFunc(func(opts *options) {
+		opts.Host = host
+	})
 }

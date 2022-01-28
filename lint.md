@@ -6,6 +6,7 @@
 * gofmt
 * govet
 * revive
+* gocyclo 圈复杂度检测
 * ...
 
 

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package helloworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/go-kratos/service-layout/api/helloworld/v1;v1";
+// https://github.com/googleapis/googleapis/tree/master/google/api
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply)  {
+    option (google.api.http) = {
+      // 定义一个 GET 接口，并且把 name 映射到 HelloRequest
+      get: "/helloworld/{name}",
+      // 可以添加附加接口
+      additional_bindings {
+        // 定义一个 POST 接口，并且把 body 映射到 HelloRequest
+        post: "/v1/greeter/say_hello",
+        body: "*",
+      }
+    };
+  }
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}

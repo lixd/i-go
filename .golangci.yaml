@@ -21,10 +21,25 @@ linters-settings:
             allowStrs: '""'
             allowInts: "0,1,2"
             allowFloats: "0.0,0.,1.0,1.,2.0,2."
+  gocyclo:
+    # Minimal code complexity to report.
+    # Default: 30 (but we recommend 10-20)
+    min-complexity: 15
+  funlen:
+    # Checks the number of lines in a function.
+    # If lower than 0, disable the check.
+    # Default: 60
+    lines: -1
+    # Checks the number of statements in a function.
+    # If lower than 0, disable the check.
+    # Default: 40
+    statements: -1
 # all linters see: https://golangci-lint.run/usage/linters/
 linters:
   disable-all: true
   enable:
+    - bodyclose # checks whether HTTP response body is closed successfully
+    - gocyclo
     - revive
     - goimports
     - misspell
@@ -37,5 +52,6 @@ linters:
     - deadcode
     - structcheck
     - errcheck
+    - funlen #	Tool for detection of long functions
 service:
   golangci-lint-version: 1.43.0 # use the fixed version to not introduce new linters unexpectedly

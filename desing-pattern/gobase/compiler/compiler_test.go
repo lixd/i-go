@@ -1,4 +1,4 @@
-package gobase
+package compiler
 
 import (
 	"fmt"
