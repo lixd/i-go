@@ -6,6 +6,13 @@ go 1.17
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
 require (
+	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
+	github.com/mosn/holmes v0.0.0-20220125114618-8cb365eb42ac
+	github.com/shirou/gopsutil/v3 v3.21.8
+	google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368
+)
+
+require (
 	entgo.io/ent v0.9.1
 	github.com/PuerkitoBio/goquery v1.5.1 // indirect
 	github.com/Shopify/sarama v1.30.1
@@ -109,11 +116,6 @@ require (
 	gorm.io/driver/mysql v1.2.1
 	gorm.io/gorm v1.22.4
 	mellium.im/sasl v0.2.1 // indirect
-)
-
-require google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368
-
-require (
 	github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78 // indirect
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
@@ -178,7 +180,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/morikuni/aec v0.0.0-20170113033406-39771216ff4c // indirect
-	github.com/mosn/holmes v0.0.0-20220125114618-8cb365eb42ac // indirect
 	github.com/nats-io/jwt v0.3.2 // indirect
 	github.com/nats-io/nats-server/v2 v2.1.4 // indirect
 	github.com/nats-io/nkeys v0.1.4 // indirect
@@ -193,7 +194,6 @@ require (
 	github.com/prometheus/procfs v0.6.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
-	github.com/shirou/gopsutil/v3 v3.21.8 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/streadway/handy v0.0.0-20190108123426-d5acb3125c2a // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
