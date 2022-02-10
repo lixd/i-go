@@ -39,4 +39,5 @@ func main() {
 	}
 
 	log.Println("Server exiting")
+
 }

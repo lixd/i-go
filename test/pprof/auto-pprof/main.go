@@ -7,6 +7,7 @@ import (
 	"github.com/mosn/holmes"
 )
 
+// 相关笔记-pprof 自动采样:https://github.com/lixd/daily-notes/blob/master/Golang/%E8%BF%9B%E9%98%B6/%E5%9F%BA%E7%A1%80%E5%BA%93/pprof/03-pprof%E8%87%AA%E5%8A%A8%E9%87%87%E6%A0%B7dump.md
 func init() {
 	http.HandleFunc("/make1gb", make1gbSlice)
 	go http.ListenAndServe(":10003", nil)

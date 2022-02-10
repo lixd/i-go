@@ -39,19 +39,19 @@ linters:
   disable-all: true
   enable:
     - bodyclose # checks whether HTTP response body is closed successfully
-    - gocyclo
+    - gocyclo # 圈复杂度
     - revive
-    - goimports
-    - misspell
-    - gofmt
-    - unused
+    - goimports # 导包
+    - misspell # 拼写检查
+    - gofmt # 代码格式化
+    - unused # 未使用的func
     - typecheck
     - govet
-    - ineffassign
-    - gosimple
-    - deadcode
+    - ineffassign # 无效分配 比如 ok := false 就无效，可以改成 var ok bool
+    - gosimple # 代码简化
+    - deadcode # 死代码
     - structcheck
-    - errcheck
-    - funlen #	Tool for detection of long functions
+    - errcheck # 错误处理
+    - funlen # 检查函数长度
 service:
   golangci-lint-version: 1.43.0 # use the fixed version to not introduce new linters unexpectedly

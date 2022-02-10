@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# mongodb 日志切割
 # rotate mongodb log, https://docs.mongodb.com/manual/tutorial/rotate-log-files/
 # logrotate is not used, as mongodb will not be able to know the log file is changed.
 # using copytruncate could avoid it. but there is a window between copy and truncate,
