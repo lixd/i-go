@@ -2,6 +2,7 @@ package repository
 
 import (
 	"errors"
+
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 	"i-go/demo/account/model"
@@ -50,7 +51,7 @@ func (a *account) Insert(req *model.Account) error {
 
 // DeleteByUserId
 func (a *account) DeleteByUserId(userId uint) error {
-	//return a.DB.Delete(model.Account{}, "user_id = ? ", userId).Error
+	// return a.DB.Delete(model.Account{}, "user_id = ? ", userId).Error
 	return a.DB.Where("user_id = ? ", userId).Delete(model.Account{}).Error
 }
 
