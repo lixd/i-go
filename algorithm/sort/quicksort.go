@@ -1,7 +1,7 @@
 package sort
 
 /*
-quickSort  步骤
+quickSort  步骤 O(nlogn)
 1）选取一个 pivot（基准元素）
 2）将数组分为两个子数组
 	比 pivot 大的装到右侧数组
@@ -23,5 +23,6 @@ func quickSort(arr []int) []int {
 		}
 	}
 	// 最后对左右两边的数组分别递归调用 quickSort
+	// 返回结果为 左侧数组+pivot+右侧数组
 	return append(quickSort(left), append([]int{pivot}, quickSort(right)...)...)
 }
