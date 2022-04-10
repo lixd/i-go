@@ -25,6 +25,7 @@ func quickSort(arr []int) []int {
 		}
 	}
 	// 最后对左右两边的数组分别递归调用 quickSort
+	// 返回结果为 左侧数组+pivot+右侧数组
 	return append(quickSort(left), append([]int{pivot}, quickSort(right)...)...)
 }
 
