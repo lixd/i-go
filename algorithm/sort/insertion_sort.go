@@ -26,3 +26,16 @@ func InsertionSort(arr []int) []int {
 	}
 	return arr
 }
+
+func InsertionSort2(arr []int) []int {
+	for i := 0; i < len(arr); i++ {
+		v := arr[i]
+		j := i - 1
+		for j >= 0 && arr[j] > v {
+			arr[j+1] = arr[j]
+			j--
+		}
+		arr[j+1] = v
+	}
+	return arr
+}

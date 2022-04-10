@@ -9,7 +9,7 @@ import (
 func TestSS(t *testing.T) {
 	arr := []int{1, 3, 5, 2, 4, 6}
 	fmt.Printf("before sort:%v \n", arr)
-	sort := SelectionSort(arr)
+	sort := SelectionSort2(arr)
 	fmt.Printf("after  sort:%v \n", sort)
 }
 

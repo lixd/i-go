@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-api
+  namespace: v2
+spec:
+  selector:
+    app: api
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: rpc
+      protocol: TCP
+      port: 23333
+      targetPort: 23333
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-serial
+  namespace: v2
+spec:
+  selector:
+    app: api
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: rpc
+      protocol: TCP
+      port: 23341
+      targetPort: 23341
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-analyze
+  namespace: v2
+spec:
+  selector:
+    app: api
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: rpc
+      protocol: TCP
+      port: 55555
+      targetPort: 55555

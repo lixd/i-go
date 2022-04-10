@@ -1,6 +1,8 @@
 package array_linkedlist_skiplist
 
-// https://leetcode-cn.com/problems/move-zeroes/
+import "fmt"
+
+// https://leetcode-cn.com/problems/movez-zeroes/
 func moveZeroes(nums []int) {
 	j := 0
 	for i := 0; i < len(nums); i++ {
@@ -9,6 +11,20 @@ func moveZeroes(nums []int) {
 			j++
 		}
 	}
+}
+
+func moveZeroesxx(nums []int) {
+	var c int
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == 0 {
+			c++
+			nums = append(nums[:i], nums[i+1:]...)
+		}
+	}
+	for i := 0; i < c; i++ {
+		nums = append(nums, 0)
+	}
+	fmt.Println(nums)
 }
 
 // snowball 解法 https://leetcode.com/problems/move-zeroes/discuss/172432/THE-EASIEST-but-UNUSUAL-snowball-JAVA-solution-BEATS-100-(O(n))-%2B-clear-explanation

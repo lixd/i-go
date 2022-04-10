@@ -9,7 +9,7 @@ import (
 func TestIS(t *testing.T) {
 	arr := []int{1, 3, 5, 2, 4, 6}
 	fmt.Printf("before sort:%v \n", arr)
-	sort := InsertionSort(arr)
+	sort := InsertionSort2(arr)
 	fmt.Printf("after  sort:%v \n", sort)
 }
 

@@ -18,3 +18,18 @@ func mySqrt(x int) int {
 	}
 	return ans
 }
+
+func mySqrt2(x int) int {
+	var left, right = 0, x
+	var mid, ans int
+	for left < right {
+		mid = (right + left) / 2
+		if mid*mid > x {
+			right = mid - 1
+		} else {
+			left = mid + 1
+			ans = mid
+		}
+	}
+	return ans
+}

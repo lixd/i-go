@@ -35,17 +35,37 @@ func init() {
 
 func main() {
 	defer etcd.Release()
-
+	testLease()
 	// put()
 	// get()
 	// delete()
 	// leaseFunc()
-	txn()
-	watch()
+	// txn()
+	// watch()
 	// go putForWatch()
 	// go watch()
 	// select {}
 	// compact()
+}
+
+func testLease() {
+	// 	put+lease
+	response, err := lease.Grant(context.Background(), 100)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "etcd delete"}).Error(err)
+	}
+	leaseID := response.ID
+	fmt.Printf("leaseID:%v TTL:%v \n", leaseID, response.TTL)
+	_, err = kv.Put(context.Background(), Prefix+"/lease1", "lease1", clientv3.WithLease(leaseID))
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "etcd Put"}).Error(err)
+	}
+	_, err = kv.Put(context.Background(), Prefix+"/lease1", "noLease") // 更新时若不带leaseID会移除旧Lease
+	getResponse, err := kv.Get(context.Background(), Prefix+"/lease1")
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "etcd Put"}).Error(err)
+	}
+	fmt.Printf("resp:%+v\n", getResponse)
 }
 
 func compact() {

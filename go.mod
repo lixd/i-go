@@ -11,10 +11,14 @@ require (
 	github.com/mosn/holmes v0.0.0-20220125114618-8cb365eb42ac
 	github.com/pyroscope-io/client v0.2.0
 	github.com/shirou/gopsutil/v3 v3.21.8
+	github.com/spf13/cobra v1.3.0
 	google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368
 )
 
-require entgo.io/ent v0.10.0 // indirect
+require (
+	entgo.io/ent v0.10.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+)
 
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78 // indirect
@@ -86,7 +90,7 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	github.com/golang/mock v1.4.4
+	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.5.2
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.3.0
