@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"i-go/cloud-natinve/clientgo"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -14,8 +15,7 @@ import (
 
 func main() {
 	// 1) 配置 kubeConfig
-	kubeConfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil {
 		panic(err.Error())
 	}

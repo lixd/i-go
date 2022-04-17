@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	log "github.com/sirupsen/logrus"
+	"i-go/cloud-natinve/clientgo"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -23,11 +24,9 @@ func main() {
 
 func pods() {
 	// 1) 加载配置文件
-	// kubeconfig := "~/.kube/config"
-	kubeconfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
 	// 从指定的URL加载kubeconfig配置文件
 	// 这里直接从本机加载，因此第一个参数为空字符串
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil { // kubeconfig加载失败就直接退出了
 		panic(err.Error())
 	}
@@ -73,10 +72,9 @@ func pods() {
 func deployment() {
 	// 1) 加载配置文件
 	// kubeconfig := "~/.kube/config"
-	kubeconfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
 	// 从指定的URL加载kubeconfig配置文件
 	// 这里直接从本机加载，因此第一个参数为空字符串
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil { // kubeconfig加载失败就直接退出了
 		panic(err.Error())
 	}
@@ -120,8 +118,8 @@ func deployment() {
 }
 
 func createPod() {
-	kubeconfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -203,8 +201,7 @@ func createPod() {
 }
 
 func deletePod() {
-	kubeconfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -232,8 +229,7 @@ func deletePod() {
 }
 
 func updatePod() {
-	kubeconfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil {
 		panic(err.Error())
 	}

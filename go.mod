@@ -14,24 +14,31 @@ require (
 	github.com/spf13/cobra v1.3.0
 	google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368
 	k8s.io/api v0.20.1
-	k8s.io/apimachinery v0.20.1
+	k8s.io/apimachinery v0.23.5
 	k8s.io/client-go v0.20.1
 )
 
 require (
 	entgo.io/ent v0.10.0 // indirect
-	github.com/go-logr/logr v0.2.0 // indirect
+	github.com/emicklei/go-restful v2.15.0+incompatible // indirect
+	github.com/go-logr/logr v1.2.3 // indirect
+	github.com/google/gnostic v0.6.8 // indirect
 	github.com/google/gofuzz v1.1.0 // indirect
-	github.com/googleapis/gnostic v0.4.1 // indirect
+	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
-	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
+	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
+	golang.org/x/xerrors v0.0.0-20220411194840-2f41105eb62f // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
-	k8s.io/klog/v2 v2.4.0 // indirect
-	k8s.io/utils v0.0.0-20201110183641-67b214c5f920 // indirect
-	sigs.k8s.io/structured-merge-diff/v4 v4.0.2 // indirect
-	sigs.k8s.io/yaml v1.2.0 // indirect
+	k8s.io/code-generator v0.23.5 // indirect
+	k8s.io/gengo v0.0.0-20220307231824-4627b89bbf1b // indirect
+	k8s.io/klog/v2 v2.60.1 // indirect
+	k8s.io/kube-openapi v0.0.0-20220413171646-5e7f5fdc6da6 // indirect
+	k8s.io/utils v0.0.0-20211116205334-6203023598ed // indirect
+	sigs.k8s.io/structured-merge-diff/v4 v4.2.1 // indirect
+	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
 require (
@@ -88,9 +95,9 @@ require (
 	github.com/go-logfmt/logfmt v0.5.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
-	github.com/go-openapi/jsonreference v0.19.6 // indirect
+	github.com/go-openapi/jsonreference v0.20.0 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
-	github.com/go-openapi/swag v0.19.15 // indirect
+	github.com/go-openapi/swag v0.21.1 // indirect
 	github.com/go-pg/pg v8.0.6+incompatible
 	github.com/go-playground/locales v0.14.0
 	github.com/go-playground/universal-translator v0.18.0
@@ -214,15 +221,15 @@ require (
 	go.uber.org/ratelimit v0.2.0
 	go.uber.org/zap v1.19.1
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292
-	golang.org/x/net v0.0.0-20211216030914-fe4d6282115f
+	golang.org/x/net v0.0.0-20220412020605-290c469a71a5
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
+	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
-	golang.org/x/tools v0.1.9-0.20211216111533-8d383106f7e7 // indirect
+	golang.org/x/tools v0.1.10 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/grpc v1.43.0
-	google.golang.org/protobuf v1.27.1
+	google.golang.org/protobuf v1.28.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

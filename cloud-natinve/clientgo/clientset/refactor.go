@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"i-go/cloud-natinve/clientgo"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -17,8 +18,7 @@ func main() {
 
 func refactorPod() {
 	// 1）加载配置文件
-	kubeconfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil {
 		panic(err.Error())
 	}

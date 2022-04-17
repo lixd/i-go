@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"i-go/cloud-natinve/clientgo"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -22,9 +23,8 @@ const (
 
 var operate string
 
-// go build main.go
-// ./main -operate create
-// ./main -operate clean
+// go run main.go -operate create
+// go run main.go -operate clean
 func init() {
 	// 获取用户输入的操作类型，默认是create，还可以输入clean，用于清理所有资源
 	flag.StringVar(&operate, "operate", "create", "operate type : create or clean")
@@ -38,8 +38,7 @@ func main() {
 
 func tomcat() {
 	// 1）加载配置文件
-	kubeConfig := "D:\\Home\\17x\\Projects\\i-go\\cloud-natinve\\kubeconfig"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	config, err := clientcmd.BuildConfigFromFlags("", clientgo.KubeConfig)
 	if err != nil {
 		panic(err.Error())
 	}
