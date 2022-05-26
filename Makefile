@@ -17,3 +17,8 @@ clean:
 .PHONY:run
 run:
 	go run main.go
+
+
+install_deps:
+	$(info ******************** downloading dependencies ********************)
+	go get -v ./...

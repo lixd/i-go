@@ -16,7 +16,7 @@ var (
 
 func StartMany(count int, subject, queue string, msgHandler func(msg []byte)) {
 	// 开启多个订阅
-	//NATS内置负载均衡 虽然有多个Subscribe,但消息来时只会选择其中一个来消费。
+	// NATS内置负载均衡 虽然有多个Subscribe,但消息来时只会选择其中一个来消费。
 	// Although queue groups have multiple subscribers, each message is consumed by only one
 	for i := 0; i < count; i++ {
 		nsc := conn.NewQueueNATSConfig(subject, queue, msgHandler)
@@ -40,7 +40,7 @@ func queueSubscribe(nsc conn.NATSConfig) {
 		}
 	}, stan.DurableName(nsc.DurableName),
 		stan.MaxInflight(nsc.MaxInFlight),
-		stan.SetManualAckMode(), //开启手动确认模式 一旦你配置为手动发送ACK，你必须显式调用 NATS Streaming 消息的函数Ack。 即上边msgHandler中手动调用msg.Ack()
+		stan.SetManualAckMode(), // 开启手动确认模式 一旦你配置为手动发送ACK，你必须显式调用 NATS Streaming 消息的函数Ack。 即上边msgHandler中手动调用msg.Ack()
 		stan.AckWait(nsc.AckWait))
 
 	if err != nil {
