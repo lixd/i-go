@@ -51,6 +51,7 @@ func NewQueueNATSConfig(subject, queue string, msgHandler func(msg []byte)) NATS
 		MsgHandler:  msgHandler,
 	}
 }
+
 func NewConn(nsc NATSConfig) (nc *nats.Conn, sc stan.Conn, err error) {
 	// nats基础连接
 	nc, err = nats.Connect(constant.DefaultNatsURL, nil)

@@ -9,6 +9,7 @@ require (
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/google/gopacket v1.1.19
 	github.com/mosn/holmes v0.0.0-20220125114618-8cb365eb42ac
+	github.com/pkg/sftp v1.10.1
 	github.com/pyroscope-io/client v0.2.0
 	github.com/shirou/gopsutil/v3 v3.21.8
 	github.com/spf13/cobra v1.3.0
@@ -27,6 +28,7 @@ require (
 	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/kr/fs v0.1.0 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
