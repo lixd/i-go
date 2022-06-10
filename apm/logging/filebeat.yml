@@ -2,16 +2,16 @@ version: '3.2'
 services:
   # filebeat 从文件中读取日志并发送给 Logstash
   filebeat:
-  image: elastic/filebeat:7.8.0
-  container_name: elk-filebeat
-  restart: always
-  volumes:
-    # 将宿主机目录隐射到容器中
-    - /var/logs:/var/logs
-    # 指定配置文件
-    - ./filebeat.conf.yml:/usr/share/filebeat/filebeat.yml
-    - ./logs:/usr/share/filebeat/logs
-    - ./data:/usr/share/filebeat/data
+    image: elastic/filebeat:7.8.0
+    container_name: elk-filebeat
+    restart: always
+    volumes:
+      # 将宿主机目录隐射到容器中
+      - /var/logs:/var/logs
+      # 指定配置文件
+      - ./filebeat.conf.yml:/usr/share/filebeat/filebeat.yml
+      - ./logs:/usr/share/filebeat/logs
+      - ./data:/usr/share/filebeat/data
 networks:
   default:
     external:
