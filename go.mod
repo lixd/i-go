@@ -7,9 +7,7 @@ replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
 require (
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
-	github.com/google/gopacket v1.1.19
 	github.com/mosn/holmes v0.0.0-20220125114618-8cb365eb42ac
-	github.com/pkg/sftp v1.10.1
 	github.com/pyroscope-io/client v0.2.0
 	github.com/shirou/gopsutil/v3 v3.21.8
 	github.com/spf13/cobra v1.3.0
