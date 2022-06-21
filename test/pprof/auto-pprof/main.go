@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mosn/holmes"
+	"mosn.io/holmes"
 )
 
 // 相关笔记-pprof 自动采样:https://github.com/lixd/daily-notes/blob/master/Golang/%E8%BF%9B%E9%98%B6/%E5%9F%BA%E7%A1%80%E5%BA%93/pprof/03-pprof%E8%87%AA%E5%8A%A8%E9%87%87%E6%A0%B7dump.md
@@ -27,10 +27,9 @@ func init() {
 func main() {
 	h, _ := holmes.New(
 		holmes.WithCollectInterval("2s"),
-		holmes.WithCoolDown("1m"),
 		holmes.WithDumpPath("./tmp"),
 		holmes.WithTextDump(),
-		holmes.WithMemDump(3, 25, 80),
+		holmes.WithMemDump(3, 25, 80, time.Minute),
 	)
 	h.EnableCPUDump()
 	h.EnableThreadDump()

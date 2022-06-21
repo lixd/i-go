@@ -1,11 +1,11 @@
 package util
 
 import (
-	"github.com/prometheus/common/log"
+	"log"
 )
 
 func HandError(msg string, err error) {
 	if err != nil {
-		log.Error(msg, err)
+		log.Printf("msg:%s err:%v", msg, err)
 	}
 }

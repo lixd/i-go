@@ -17,3 +17,6 @@
 *.mmdb
 # ip2region 数据库
 *.db
+/cloud-natinve/certs/ca.crt
+/cloud-natinve/certs/server.crt
+/cloud-natinve/certs/server.key
