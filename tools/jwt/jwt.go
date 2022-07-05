@@ -26,7 +26,7 @@ type CustomClaims struct {
 	jwt.StandardClaims
 }
 
-// GenerateJWT 生成jwt
+// Generate 生成jwt
 func Generate(userId int64) (string, error) {
 	claim := CustomClaims{
 		UserId: userId,
