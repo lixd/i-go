@@ -1,9 +1,10 @@
 package nats_sub
 
 import (
+	"i-go/mq/nats/nats/conn"
+
 	"github.com/nats-io/nats.go"
 	"github.com/sirupsen/logrus"
-	"i-go/mq/nats/nats/conn"
 )
 
 var (

@@ -4,8 +4,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/Shopify/sarama"
 	"i-go/mq/kafka"
+
+	"github.com/Shopify/sarama"
 )
 
 var defaultMsg = strings.Repeat("Golang", 1000)

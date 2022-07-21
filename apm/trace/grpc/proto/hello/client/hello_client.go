@@ -2,14 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"time"
+
+	"i-go/apm/trace/config"
+	"i-go/apm/trace/grpc/interceptor"
+	"i-go/apm/trace/grpc/proto/hello/proto"
+
 	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"i-go/apm/trace/config"
-	"i-go/apm/trace/grpc/interceptor"
-	"i-go/grpc/hello/proto"
-	"log"
-	"time"
 )
 
 func main() {

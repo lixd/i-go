@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strconv"
 	"sync"
@@ -70,7 +69,7 @@ func main() {
 	defer cancel()
 	conn, err := grpc.DialContext(
 		ctx,
-		fmt.Sprintf("xxx"),
+		"target",
 		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`), // 指定轮询负载均衡算法
 		grpc.WithInsecure(),
 		grpc.WithBlock(),

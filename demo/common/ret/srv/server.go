@@ -1,4 +1,4 @@
-// Server层返回值
+// Package srv Service 层返回值
 package srv
 
 import "i-go/demo/common/ret"

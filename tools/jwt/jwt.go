@@ -3,8 +3,9 @@ package jwt
 import (
 	"time"
 
-	"github.com/golang-jwt/jwt"
 	"i-go/utils"
+
+	"github.com/golang-jwt/jwt"
 )
 
 // https://jwt.io/ 在线解码

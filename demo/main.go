@@ -1,17 +1,18 @@
 package main
 
 import (
-	"github.com/gin-contrib/pprof"
-	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
-	"i-go/core/logger/izap"
+	"i-go/core/logger"
 	amodel "i-go/demo/account/model"
 	arouter "i-go/demo/account/router"
 	omodel "i-go/demo/order/model"
 	orouter "i-go/demo/order/router"
 	umodel "i-go/demo/user/model"
 	urouter "i-go/demo/user/router"
+
+	"github.com/gin-contrib/pprof"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -40,6 +41,5 @@ func Init() {
 	mysqldb.MySQL.AutoMigrate(&amodel.Account{})
 	mysqldb.MySQL.AutoMigrate(&omodel.Order{})
 
-	// ilogrus.InitLogger()
-	izap.InitLogger()
+	logger.InitLogger()
 }

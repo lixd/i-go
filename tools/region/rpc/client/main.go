@@ -5,8 +5,9 @@ import (
 	"log"
 	"time"
 
-	"google.golang.org/grpc"
 	pb "i-go/tools/region/rpc/proto"
+
+	"google.golang.org/grpc"
 )
 
 const (

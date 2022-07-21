@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 
-	_ "github.com/mattn/go-sqlite3"
 	orm2 "i-go/7days/orm"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // func main() {

@@ -3,12 +3,14 @@ package repository
 import (
 	"errors"
 	"fmt"
-	"github.com/jinzhu/gorm"
-	"github.com/sirupsen/logrus"
+
 	amodel "i-go/demo/account/model"
 	"i-go/demo/cmodel"
 	"i-go/demo/user/model"
 	"i-go/utils"
+
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type IUser interface {
@@ -75,7 +77,6 @@ func (u *user) InsertCustom(req *model.User) error {
 		tx.Rollback()
 		return err
 	}
-
 	user, ok := cmd.Value.(*model.User)
 	if !ok {
 		fmt.Println("断言失败: ", cmd.Value)
@@ -97,7 +98,6 @@ func (u *user) InsertCustom(req *model.User) error {
 	return tx.Commit().Error
 }
 
-// DeleteById
 func (u *user) DeleteById(userId uint) error {
 	return u.DB.Transaction(func(tx *gorm.DB) error {
 		// 1. 检查账户金额
@@ -123,9 +123,8 @@ func (u *user) DeleteById(userId uint) error {
 	})
 }
 
-// UpdateById
 func (u *user) UpdateById(user *model.User) error {
-	cmd := u.DB.Model(&model.User{}).Where("id = ? ", user.ID).Update(user)
+	cmd := u.DB.Model(&model.User{}).Where("id = ? ", user.ID).Updates(user)
 	if err := cmd.Error; err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller()}).Error(err)
 		return err
@@ -134,11 +133,10 @@ func (u *user) UpdateById(user *model.User) error {
 		return gorm.ErrRecordNotFound
 	}
 	return nil
-	//return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update("name",user.Name,"age",user.Age).Error
-	//return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update(map[string]interface{}{"name":user.Name,"age":user.Age}).Error
+	// return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update("name",user.Name,"age",user.Age).Error
+	// return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update(map[string]interface{}{"name":user.Name,"age":user.Age}).Error
 }
 
-// FindById
 func (u *user) FindById(id uint) (*model.User, error) {
 	var user model.User
 	err := u.DB.Where("id = ? ", id).Find(&user).Error
@@ -151,7 +149,6 @@ func (u *user) FindById(id uint) (*model.User, error) {
 	return &user, nil
 }
 
-// Find
 func (u *user) Find(page *cmodel.Page) ([]model.User, error) {
 	users := make([]model.User, 0, page.Size)
 
@@ -159,7 +156,7 @@ func (u *user) Find(page *cmodel.Page) ([]model.User, error) {
 	if err != nil {
 		return users, err
 	}
-	err = u.DB.Model(&model.User{}).Offset(page.Skip()).Limit(page.Size).Find(&users).Error
+	err = u.DB.Model(&model.User{}).Offset(int(page.Skip())).Limit(page.Size).Find(&users).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return users, nil

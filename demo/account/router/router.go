@@ -1,12 +1,13 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"i-go/core/db/mysqldb"
 	"i-go/demo/account/controller"
 	"i-go/demo/account/repository"
 	"i-go/demo/account/server"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func RegisterRouter(e *gin.Engine) {

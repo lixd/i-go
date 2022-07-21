@@ -3,10 +3,12 @@ package repository
 import (
 	"errors"
 	"fmt"
-	"github.com/jinzhu/gorm"
+
 	amodel "i-go/demo/account/model"
 	"i-go/demo/cmodel"
 	"i-go/demo/order/model"
+
+	"gorm.io/gorm"
 )
 
 type IOrder interface {
@@ -61,9 +63,8 @@ func (o *order) Delete(id uint) error {
 	return o.DB.Delete(model.Order{}, "id = ? ", id).Error
 }
 
-// UpdateById
 func (o *order) Update(order *model.Order) error {
-	cmd := o.DB.Model(&model.Order{}).Where("id = ? ", order.ID).Update(order)
+	cmd := o.DB.Model(&model.Order{}).Where("id = ? ", order.ID).Updates(order)
 	if err := cmd.Error; err != nil {
 		return err
 	}
@@ -71,11 +72,10 @@ func (o *order) Update(order *model.Order) error {
 		return gorm.ErrRecordNotFound
 	}
 	return nil
-	//return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update("name",user.Name,"age",user.Age).Error
-	//return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update(map[string]interface{}{"name":user.Name,"age":user.Age}).Error
+	// return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update("name",user.Name,"age",user.Age).Error
+	// return u.DB.Model(&model.User{}).Where("id = ? ", user.Id).Update(map[string]interface{}{"name":user.Name,"age":user.Age}).Error
 }
 
-// FindById
 func (o *order) FindById(id uint) (*model.Order, error) {
 	var order model.Order
 	err := o.DB.Where("id = ? ", id).Find(&order).Error
@@ -88,7 +88,6 @@ func (o *order) FindById(id uint) (*model.Order, error) {
 	return &order, nil
 }
 
-// Find
 func (o *order) Find(userId uint, page *cmodel.Page) ([]model.Order, error) {
 	users := make([]model.Order, 0, page.Size)
 
@@ -97,7 +96,7 @@ func (o *order) Find(userId uint, page *cmodel.Page) ([]model.Order, error) {
 		return users, err
 	}
 
-	err = o.DB.Model(&model.Order{}).Offset(page.Skip()).Limit(page.Size).Find(&users).Error
+	err = o.DB.Model(&model.Order{}).Offset(int(page.Skip())).Limit(page.Size).Find(&users).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return users, nil
@@ -114,20 +113,20 @@ func (o *order) FindOrderAndUser() error {
 		Joins("JOIN x_users as u ON u.id = x_orders.user_id").Find(&out)
 
 	fmt.Println(out)
-	//if err != nil {
+	// if err != nil {
 	//	fmt.Println("error: ", err)
 	//	if err == gorm.ErrRecordNotFound {
 	//		return nil
 	//	}
 	//	return err
-	//}
-	//for cursor.Next() {
+	// }
+	// for cursor.Next() {
 	//	var out []interface{}
 	//	err:=cursor(&out)
 	//	if err!=nil {
 	//		fmt.Println("Scan error: ", err)
 	//	}
 	//	fmt.Println(out)
-	//}
+	// }
 	return nil
 }

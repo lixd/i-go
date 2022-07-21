@@ -39,7 +39,7 @@ func Test_longestPalindrome2(t *testing.T) {
 		args args
 		want string
 	}{
-		{name: "1", args: args{s: "babad"}, want: "aba"},
+		{name: "1", args: args{s: "babad"}, want: "bab"},
 		{name: "2", args: args{s: "a"}, want: "a"},
 		{name: "3", args: args{s: "ac"}, want: "a"},
 	}

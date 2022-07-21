@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"runtime/trace"
-	"sync"
 )
 
 // go run trace.go 生成 trace.out
@@ -27,6 +26,4 @@ func main() {
 
 	// main
 	fmt.Println("Hello World")
-	var m sync.Map
-
 }

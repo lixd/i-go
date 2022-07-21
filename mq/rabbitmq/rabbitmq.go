@@ -47,7 +47,7 @@ type QueueExchange struct {
 // 链接rabbitMQ
 func (r *RabbitMQ) mqConnect() {
 	var err error
-	//schema://username:password@host:port/ e.g. amqp://admin:username@192.168.0.2:5672
+	// schema://username:password@host:port/ e.g. amqp://admin:username@192.168.0.2:5672
 	RabbitUrl := fmt.Sprintf("amqp://%s:%s@%s:%d/", "guest", "guest", "192.168.100.111", 5672)
 	mqConn, err = amqp.Dial(RabbitUrl)
 	r.connection = mqConn
@@ -164,8 +164,8 @@ func (r *RabbitMQ) RegisterReceiver(receiver Receiver) {
 
 // 监听接收者接收任务
 func (r *RabbitMQ) listenReceiver(receiver Receiver) {
-	//// 处理结束关闭链接
-	//defer r.mqClose()
+	// // 处理结束关闭链接
+	// defer r.mqClose()
 	// 验证链接是否正常
 	if r.channel == nil {
 		r.mqConnect()
@@ -190,6 +190,10 @@ func (r *RabbitMQ) listenReceiver(receiver Receiver) {
 	}
 	// 获取消费通道,确保rabbitMQ一个一个发送消息
 	err = r.channel.Qos(1, 0, true)
+	if err != nil {
+		fmt.Printf("qos err:%s \n", err)
+		return
+	}
 	msgList, err := r.channel.Consume(r.queueName, "", false, false, false, false, nil)
 	if err != nil {
 		fmt.Printf("获取消费通道异常:%s \n", err)

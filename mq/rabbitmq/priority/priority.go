@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"github.com/streadway/amqp"
 	"strconv"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"github.com/streadway/amqp"
 )
 
 const (

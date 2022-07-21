@@ -4,8 +4,7 @@ import "fmt"
 
 func main() {
 	a := 10
-	var b *int
-	b = &a
+	b := &a
 	fmt.Println(b)
 	fmt.Printf("a %T %d \n", a, a)
 	fmt.Printf("&a %T %d \n", &a, &a)
@@ -41,16 +40,14 @@ func main() {
 	}
 	fmt.Println("------------------------")
 	f := 10
-	var ptr1 *int
-	ptr1 = &f
-	var ptr2 **int
-	ptr2 = &ptr1
+	ptr1 := &f
+	ptr2 := &ptr1
 	fmt.Printf("f %T %d \n", f, f)
-	//ptr1 *int 0xc0000560d8
+	// ptr1 *int 0xc0000560d8
 	fmt.Printf("ptr1 %T %v \n", ptr1, ptr1)
-	//ptr2 **int 0xc000082020
+	// ptr2 **int 0xc000082020
 	fmt.Printf("ptr2 %T %v \n", ptr2, ptr2)
-	//*ptr2 *int 0xc0000560d8
+	// *ptr2 *int 0xc0000560d8
 	fmt.Printf("*ptr2 %T %v \n", *ptr2, *ptr2)
 }
 

@@ -106,7 +106,7 @@ func main() {
 	//2.对切片排序
 	//3.遍历切片 按照key输出map的值
 	var keys []int
-	for i, _ := range sortMap {
+	for i := range sortMap {
 		keys = append(keys, i)
 	}
 	//排序sort.Ints()

@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 
-	"github.com/sirupsen/logrus"
 	"i-go/core/conf"
 	"i-go/core/db/elasticsearch"
 	"i-go/utils"
+
+	"github.com/sirupsen/logrus"
 )
 
 const (

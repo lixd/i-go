@@ -1,11 +1,12 @@
 package main
 
 import (
-	ut "github.com/go-playground/universal-translator"
-	"github.com/go-playground/validator/v10"
 	"reflect"
 	"strings"
 	"time"
+
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
 )
 
 // JsonTag

@@ -1,10 +1,11 @@
 package tokenizer
 
 import (
-	"github.com/go-ego/gse"
 	"path"
 	"runtime"
 	"sync"
+
+	"github.com/go-ego/gse"
 )
 
 type tokenizer struct {

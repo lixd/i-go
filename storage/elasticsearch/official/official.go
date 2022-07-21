@@ -8,11 +8,12 @@ import (
 	"strings"
 	"sync"
 
+	"i-go/core/conf"
+	"i-go/core/db/elasticsearch-official"
+
 	elasticsearch7 "github.com/elastic/go-elasticsearch/v7"
 	esapi "github.com/elastic/go-elasticsearch/v7/esapi"
 	"github.com/sirupsen/logrus"
-	"i-go/core/conf"
-	"i-go/core/db/elasticsearch-official"
 )
 
 var es *elasticsearch7.Client

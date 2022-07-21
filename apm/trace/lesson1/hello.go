@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/opentracing/opentracing-go"
-	"github.com/opentracing/opentracing-go/log"
 	"i-go/apm/trace/config"
 	"os"
+
+	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/log"
 )
 
 // Instantiate a Tracer

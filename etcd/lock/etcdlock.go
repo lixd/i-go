@@ -6,9 +6,10 @@ import (
 	"sync"
 	"time"
 
+	"i-go/core/etcd"
+
 	"github.com/sirupsen/logrus"
 	"go.etcd.io/etcd/clientv3/concurrency"
-	"i-go/core/etcd"
 )
 
 var (

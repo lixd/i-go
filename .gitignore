@@ -20,3 +20,4 @@
 /cloud-natinve/certs/ca.crt
 /cloud-natinve/certs/server.crt
 /cloud-natinve/certs/server.key
+/dist

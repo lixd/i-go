@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-pg/pg"
-	"github.com/go-pg/pg/orm"
 	"i-go/core/conf"
 	"i-go/core/db/pgsqldb"
 	"i-go/storage/postgresql/util"
+
+	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
 var db *pg.DB

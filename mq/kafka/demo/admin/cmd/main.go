@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/Shopify/sarama"
 	"i-go/mq/kafka"
 	"i-go/mq/kafka/demo/admin"
+
+	"github.com/Shopify/sarama"
 )
 
 func main() {

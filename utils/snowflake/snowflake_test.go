@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
+	"i-go/utils/ip"
+
 	"github.com/bwmarrin/snowflake"
 	"github.com/sony/sonyflake"
-	"i-go/utils/ip"
 )
 
 // SnowFlake SonyFlake Mist 3种算法，生成全局自增Id相关测试.

@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"i-go/tools/region/core"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Ip2LatLong ip 转经纬度

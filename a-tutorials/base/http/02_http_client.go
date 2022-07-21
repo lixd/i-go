@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"net/http/httputil"
+
+	"github.com/sirupsen/logrus"
 )
 
 func main() {

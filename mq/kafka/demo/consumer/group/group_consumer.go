@@ -6,8 +6,9 @@ import (
 	"log"
 	"sync"
 
-	"github.com/Shopify/sarama"
 	"i-go/mq/kafka"
+
+	"github.com/Shopify/sarama"
 )
 
 /*

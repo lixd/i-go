@@ -25,13 +25,11 @@ func main() {
 	})
 	c.OnScraped(func(response *colly.Response) {
 		fmt.Println("OnScraped")
-		return
 	})
 	// 对响应的HTML元素处理
 	c.OnHTML("title", func(e *colly.HTMLElement) {
 		// e.Request.Visit(e.Attr("href"))
 		fmt.Println("title:", e.Text)
-		return
 	})
 	// c.OnHTML("p", func(e *colly.HTMLElement) {
 	// 	space := strings.TrimSpace(e.Text)

@@ -2,13 +2,15 @@ package main
 
 import (
 	"context"
-	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	"google.golang.org/grpc"
-	"i-go/apm/trace/config"
-	"i-go/apm/trace/grpc/interceptor"
-	"i-go/grpc/hello/proto"
 	"log"
 	"net"
+
+	"i-go/apm/trace/config"
+	"i-go/apm/trace/grpc/interceptor"
+	"i-go/apm/trace/grpc/proto/hello/proto"
+
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	"google.golang.org/grpc"
 )
 
 type helloServer struct{}

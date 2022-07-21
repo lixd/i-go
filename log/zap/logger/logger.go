@@ -1,8 +1,9 @@
 package main
 
 import (
-	"go.uber.org/zap"
 	"net/http"
+
+	"go.uber.org/zap"
 )
 
 var logger *zap.Logger

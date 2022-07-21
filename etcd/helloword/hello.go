@@ -110,6 +110,7 @@ func watch() {
 			}
 		}
 	}
+	cancel()
 }
 
 func txn() {
@@ -141,7 +142,15 @@ func put() {
 	// hello前缀的所有key
 	kv.Get(context.Background(), "hello", clientv3.WithPrefix())
 	response, err := kv.Put(context.Background(), Prefix+Suffix, "hello")
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "etcd put"}).Error(err)
+	}
+	fmt.Println(response)
 	response, err = kv.Put(context.Background(), Prefix+"/equal", "equal")
+	if err != nil {
+		logrus.WithFields(logrus.Fields{"Scenes": "etcd put"}).Error(err)
+	}
+	fmt.Println(response)
 	response, err = kv.Put(context.Background(), Prefix+"/unequal", "unequal")
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"Scenes": "etcd put"}).Error(err)
@@ -187,23 +196,14 @@ func leaseFunc() {
 	if err != nil { // 有协程来帮自动续租,TTL剩余一半时就会续约。
 		fmt.Println(err)
 		return
-	} else {
-		go func() {
-			for {
-				select {
-				case resp := <-keepAliveChan:
-					fmt.Println("续租:", resp)
-					// if resp == nil {
-					// 	fmt.Println("续租失败")
-					// 	break
-					// } else {
-					// 	fmt.Println("续租成功")
-					// }
-				}
-				break
-			}
-		}()
 	}
+
+	go func() {
+		for resp := range keepAliveChan {
+			fmt.Println("续租:", resp)
+		}
+	}()
+
 	for {
 		time.Sleep(time.Millisecond * 500)
 		liveResponse, err := lease.TimeToLive(context.Background(), leaseID)

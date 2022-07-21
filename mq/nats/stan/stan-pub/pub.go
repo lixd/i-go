@@ -5,12 +5,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/nats-io/nats.go"
-	"github.com/nats-io/stan.go"
-	"github.com/sirupsen/logrus"
 	"i-go/mq/nats/constant"
 	"i-go/mq/nats/stan/conn"
 	"i-go/mq/nats/stan/msghandler"
+
+	"github.com/nats-io/nats.go"
+	"github.com/nats-io/stan.go"
+	"github.com/sirupsen/logrus"
 )
 
 const (

@@ -26,6 +26,9 @@ install_deps:
 	go get -v ./...
 
 
+.PHONY: format-deps checkfmt fmt goimports vet lint
+
+checkfmt: format-deps fmt goimports lint
 format-deps:
     ifeq (, $(shell which golangci-lint))
 		go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.46.2
@@ -34,5 +37,18 @@ format-deps:
 		go install golang.org/x/tools/cmd/goimports@latest
     endif
 
-lint: format-deps
-	golangci-lint run ./.. --timeout=5m --config .golangci.yaml
+goimports:
+	@hack/update-goimports.sh
+fmt:
+	gofmt -s -w .
+
+lint:
+	golangci-lint run ./... --timeout=5m --config .golangci.yaml
+
+
+.PHONY: coverage-ui test
+test:
+	go test ./... -coverprofile=dist/coverage.out
+
+coverage-ui:test
+	go tool cover -html=dist/coverage.out -o dist/coverage.html

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-kit/kit/metrics"
 	"time"
+
+	"github.com/go-kit/kit/metrics"
 )
 
 type instrumentingMiddleware struct {

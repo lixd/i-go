@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"i-go/core/db/mongodb"
+	"i-go/storage/mongodb/model"
+
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -12,8 +15,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readconcern"
 	"go.mongodb.org/mongo-driver/mongo/writeconcern"
-	"i-go/core/db/mongodb"
-	"i-go/storage/mongodb/model"
 )
 
 type userInfo struct {

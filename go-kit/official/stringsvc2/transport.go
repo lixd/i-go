@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"github.com/go-kit/kit/endpoint"
 	"net/http"
+
+	"github.com/go-kit/kit/endpoint"
 )
 
 func makeUppercaseEndpoint(svc StringService) endpoint.Endpoint {

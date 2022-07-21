@@ -15,7 +15,7 @@ func Test_generateParenthesis(t *testing.T) {
 		want []string
 	}{
 		// TODO: Add test cases.
-		{name: "3", args: args{n: 3}, want: nil},
+		{name: "3", args: args{n: 3}, want: []string{"((()))", "(()())", "(())()", "()(())", "()()()"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

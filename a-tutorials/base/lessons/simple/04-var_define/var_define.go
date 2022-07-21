@@ -25,10 +25,10 @@ func simple() {
 	fmt.Printf("%T ,%v \n", e, e)
 	x := 10
 	y := 20
-	//10 20
+	// 10 20
 	fmt.Println(x, y)
 	x, y = y, x
-	//20 10
+	// 20 10
 	fmt.Println(x, y)
 }
 
@@ -39,7 +39,7 @@ type user struct {
 
 func constant() {
 	const NAME string = "illusory"
-	user := user{30, NAME}
+	u := user{30, NAME}
 	const (
 		A = 10
 		B
@@ -47,7 +47,7 @@ func constant() {
 		D = iota
 		E = iota
 	)
-	fmt.Println(user, A, B, C, D, E)
+	fmt.Println(u, A, B, C, D, E)
 }
 func arithmetic() {
 	var a = 21.0

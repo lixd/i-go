@@ -1,13 +1,14 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"i-go/demo/cmodel"
 	"i-go/demo/common/ret"
 	"i-go/demo/user/dto"
 	"i-go/demo/user/server"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 type IUser interface {

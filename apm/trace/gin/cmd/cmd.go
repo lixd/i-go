@@ -2,14 +2,16 @@ package main
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
-	"i-go/apm/trace/gin/middleware"
-	"i-go/apm/trace/gin/router"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"i-go/apm/trace/gin/middleware"
+	"i-go/apm/trace/gin/router"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -31,7 +33,7 @@ func main() {
 	}()
 
 	// 等待中断信号以优雅地关闭服务器
-	signalChan := make(chan os.Signal)
+	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, os.Interrupt)
 	sig := <-signalChan
 	log.Println("Get Signal:", sig)

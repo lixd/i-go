@@ -137,11 +137,13 @@ func parseConf() (*Conf, error) {
 
 func Release() {
 	if TestClient != nil {
-		ctx, _ := context.WithTimeout(context.Background(), timeout)
+		ctx, cancel := context.WithTimeout(context.Background(), timeout)
+		defer cancel()
 		_ = TestClient.Disconnect(ctx)
 	}
 	if JobClient != nil {
-		ctx, _ := context.WithTimeout(context.Background(), timeout)
+		ctx, cancel := context.WithTimeout(context.Background(), timeout)
+		defer cancel()
 		_ = JobClient.Disconnect(ctx)
 	}
 	logrus.Info("mongodb is closed")

@@ -1,22 +1,23 @@
 package server
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/sirupsen/logrus"
 	"i-go/demo/cmodel"
-	"i-go/demo/common/ret"
+	"i-go/demo/common/ret/srv"
 	"i-go/demo/user/dto"
 	"i-go/demo/user/model"
 	"i-go/demo/user/repository"
 	"i-go/utils"
+
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type IUser interface {
-	Insert(req *dto.UserReq) *ret.Result
-	DeleteById(req *dto.UserReq) *ret.Result
-	UpdateById(req *dto.UserReq) *ret.Result
-	FindById(id uint) *ret.Result
-	Find(req *cmodel.Page) *ret.Result
+	Insert(req *dto.UserReq) *srv.Result
+	DeleteById(req *dto.UserReq) *srv.Result
+	UpdateById(req *dto.UserReq) *srv.Result
+	FindById(id uint) *srv.Result
+	Find(req *cmodel.Page) *srv.Result
 }
 
 type user struct {
@@ -27,7 +28,7 @@ func NewUser(dao repository.IUser) IUser {
 	return &user{Dao: dao}
 }
 
-func (u *user) Insert(req *dto.UserReq) *ret.Result {
+func (u *user) Insert(req *dto.UserReq) *srv.Result {
 	user := model.User{
 		Model:      gorm.Model{ID: req.ID},
 		Name:       req.Name,
@@ -38,24 +39,24 @@ func (u *user) Insert(req *dto.UserReq) *ret.Result {
 		LoginIP:    req.LoginIP,
 	}
 	err := u.Dao.Insert(&user)
-	//err := u.Dao.InsertCustom(&user)
+	// err := u.Dao.InsertCustom(&user)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "新增用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
-	return ret.Success("")
+	return srv.Success("")
 }
 
-func (u *user) DeleteById(req *dto.UserReq) *ret.Result {
+func (u *user) DeleteById(req *dto.UserReq) *srv.Result {
 	err := u.Dao.DeleteById(req.ID)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "删除用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
-	return ret.Success("")
+	return srv.Success("")
 }
 
-func (u *user) UpdateById(req *dto.UserReq) *ret.Result {
+func (u *user) UpdateById(req *dto.UserReq) *srv.Result {
 	user := model.User{
 		Model: gorm.Model{ID: req.ID},
 		Name:  req.Name,
@@ -66,19 +67,19 @@ func (u *user) UpdateById(req *dto.UserReq) *ret.Result {
 	err := u.Dao.UpdateById(&user)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return ret.Fail(err.Error())
+			return srv.Fail(err.Error())
 		}
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
-	return ret.Success("")
+	return srv.Success("")
 }
 
-func (u *user) FindById(id uint) *ret.Result {
+func (u *user) FindById(id uint) *srv.Result {
 	res, err := u.Dao.FindById(id)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
 	user := dto.UserResp{
 		ID:    res.ID,
@@ -87,15 +88,15 @@ func (u *user) FindById(id uint) *ret.Result {
 		Pwd:   res.Pwd,
 		Age:   res.Age,
 	}
-	return ret.Success(&user)
+	return srv.Success(&user)
 }
 
-func (u *user) Find(req *cmodel.Page) *ret.Result {
+func (u *user) Find(req *cmodel.Page) *srv.Result {
 	var resp dto.UserList
 	res, err := u.Dao.Find(req)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
 	users := make([]dto.UserResp, 0, len(res))
 	var user dto.UserResp
@@ -111,5 +112,5 @@ func (u *user) Find(req *cmodel.Page) *ret.Result {
 	}
 	resp.Data = users
 	resp.Page = *req
-	return ret.Success(&resp)
+	return srv.Success(&resp)
 }

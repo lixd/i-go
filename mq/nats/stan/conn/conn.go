@@ -3,12 +3,13 @@ package conn
 import (
 	"time"
 
+	"i-go/mq/nats/constant"
+
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/stan.go"
 	uuid "github.com/satori/go.uuid"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"i-go/mq/nats/constant"
 )
 
 const (

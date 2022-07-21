@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"github.com/streadway/amqp"
 	"i-go/core/mq/rabbitmq"
 	"strconv"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"github.com/streadway/amqp"
 )
 
 const (

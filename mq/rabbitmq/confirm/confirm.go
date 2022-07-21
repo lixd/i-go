@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/streadway/amqp"
-	"i-go/core/mq/rabbitmq"
 	"strconv"
 	"time"
+
+	"i-go/core/mq/rabbitmq"
+
+	"github.com/sirupsen/logrus"
+	"github.com/streadway/amqp"
 )
 
 const (
@@ -78,6 +80,9 @@ func publish(ch *amqp.Channel, deliveryMap map[uint64]*amqp.Publishing, delivery
 	for i := 0; i < 9999; i++ {
 		body := "Hello World33!"
 		err = doPublish([]byte(body), deliveryMap, deliveryTag)
+		if err != nil {
+			logrus.Error("切换到confirm模式失败:", err)
+		}
 	}
 	/*	// 为确认最大10条消息 最大100字节 不开全局
 		ch.Qos(10, 100, false)*/
@@ -93,6 +98,9 @@ func publish(ch *amqp.Channel, deliveryMap map[uint64]*amqp.Publishing, delivery
 		} else {
 			// 	未Ack则可以考虑重发等操作
 			err = doPublish(deliveryMap[v.DeliveryTag].Body, deliveryMap, deliveryTag)
+			if err != nil {
+				logrus.Error("do push:", err)
+			}
 		}
 	}
 }

@@ -5,10 +5,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-pg/pg"
-	"github.com/go-pg/pg/orm"
 	"i-go/storage/postgresql/constant"
 	"i-go/storage/postgresql/util"
+
+	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
 type Category struct {

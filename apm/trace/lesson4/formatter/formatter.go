@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"i-go/apm/trace/config"
 	"log"
 	"net/http"
+
+	"i-go/apm/trace/config"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
@@ -25,12 +26,12 @@ func main() {
 			greeting = "Hello"
 		}
 		helloTo := r.FormValue("helloTo")
-		helloStr := fmt.Sprintf("Hello, %s!", helloTo)
+		helloStr := fmt.Sprintf("%s, %s!", greeting, helloTo)
 		span.LogFields(
 			otlog.String("event", "string-format"),
 			otlog.String("value", helloStr),
 		)
-		w.Write([]byte(helloStr))
+		_, _ = w.Write([]byte(helloStr))
 	})
 
 	log.Fatal(http.ListenAndServe(":8081", nil))

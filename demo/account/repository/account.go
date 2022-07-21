@@ -3,12 +3,13 @@ package repository
 import (
 	"errors"
 
-	"github.com/jinzhu/gorm"
-	"github.com/sirupsen/logrus"
 	"i-go/demo/account/model"
 	"i-go/demo/cmodel"
 	umodel "i-go/demo/user/model"
 	"i-go/utils"
+
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type IAccount interface {
@@ -91,7 +92,7 @@ func (a *account) FindList(page *cmodel.Page) ([]model.Account, error) {
 	if err != nil {
 		return users, err
 	}
-	err = a.DB.Model(&model.Account{}).Offset(page.Skip()).Limit(page.Size).Find(&users).Error
+	err = a.DB.Model(&model.Account{}).Offset(int(page.Skip())).Limit(page.Size).Find(&users).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return users, nil

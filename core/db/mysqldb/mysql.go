@@ -4,11 +4,12 @@ import (
 	"errors"
 	"fmt"
 
+	"i-go/utils"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"i-go/utils"
 )
 
 var (

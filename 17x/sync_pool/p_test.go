@@ -66,7 +66,6 @@ var emptyStu = Student{}
 func BenchmarkUnmarshal(b *testing.B) {
 	expire, _ := time.Parse("2006-01-02 15:04:05", "2021-10-19 12:50:43")
 	fmt.Println(expire.Unix())
-	return
 	for n := 0; n < b.N; n++ {
 		stu := &Student{}
 		json.Unmarshal(defaultStu, stu)

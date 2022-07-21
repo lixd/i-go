@@ -3,8 +3,9 @@ package main
 import (
 	"testing"
 
-	"github.com/sirupsen/logrus"
 	"i-go/core/db/redisdb"
+
+	"github.com/sirupsen/logrus"
 )
 
 func TestRedisBloomFilter(t *testing.T) {

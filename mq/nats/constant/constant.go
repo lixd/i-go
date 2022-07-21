@@ -8,7 +8,7 @@ const (
 	DurableId      = "durable-test"
 	MaxInflight    = 1000
 	AckWait        = time.Second * 3
-	DefaultNatsURL = "nats://127.0.0.1:4222"
+	DefaultNatsURL = "nats://172.20.150.199:4222"
 	DefaultSubject = "defaultSubject"
 	DefaultQueue   = "defaultQueue"
 	DefaultId      = "client_testId"

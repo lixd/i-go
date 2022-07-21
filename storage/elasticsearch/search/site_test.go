@@ -7,7 +7,7 @@ import (
 
 	"i-go/core/conf"
 	"i-go/core/db/elasticsearch"
-	"i-go/core/logger/izap"
+	"i-go/core/logger"
 )
 
 func TestMain(m *testing.M) {
@@ -18,13 +18,13 @@ func TestMain(m *testing.M) {
 	if err := conf.Load(file); err != nil {
 		panic(err)
 	}
-	izap.InitLogger()
+	logger.InitLogger()
 	elasticsearch.Init()
 	m.Run()
 }
 
 func TestSite_Search(t *testing.T) {
-	total, data, err := SiteClient.Search("澳门")
+	total, data, err := SiteClient.Search("服装")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -34,7 +34,7 @@ func TestSite_Search(t *testing.T) {
 }
 
 func TestSite_SearchAll(t *testing.T) {
-	data, err := SiteClient.SearchAll("赌博")
+	data, err := SiteClient.SearchAll("服装")
 	if err != nil {
 		fmt.Println(err)
 		return

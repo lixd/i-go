@@ -8,7 +8,7 @@ func buildTree(preorder []int, inorder []int) *tree.TreeNode {
 		return nil
 	}
 	// 前序遍历顺序为根-左-右 所以第一个元素为 root
-	root := &tree.TreeNode{preorder[0], nil, nil}
+	root := &tree.TreeNode{Val: preorder[0]}
 	// 然后这里找到中序遍历中 根节点所在的位置
 	i := 0
 	for ; i < len(inorder); i++ {

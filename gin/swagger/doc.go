@@ -3,8 +3,9 @@
 package main
 
 import (
-	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "i-go/gin/swagger/docs"
+
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func init() {

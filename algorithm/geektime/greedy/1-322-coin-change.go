@@ -69,5 +69,4 @@ func (s *solution) DFS(currVal, index, currCount int) {
 		s.DFS(currVal, i, currCount+1)
 		currVal -= s.coins[i]
 	}
-	return
 }

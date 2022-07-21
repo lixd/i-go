@@ -3,8 +3,9 @@ package core
 import (
 	"image"
 
-	"github.com/pkg/errors"
 	"i-go/image/util"
+
+	"github.com/pkg/errors"
 )
 
 // RGB2Gray 图像灰度处理-基于人眼感知算法

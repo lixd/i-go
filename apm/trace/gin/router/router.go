@@ -3,9 +3,10 @@ package router
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	"time"
 )
 
 func Register(e *gin.Engine) {

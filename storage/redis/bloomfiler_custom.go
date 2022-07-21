@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/go-redis/redis"
-	"github.com/sirupsen/logrus"
 	"i-go/storage/redis/hash"
 	"i-go/utils"
+
+	"github.com/go-redis/redis"
+	"github.com/sirupsen/logrus"
 )
 
 // 使用 Redis Bitmap 自己实现的一个 BloomFilter

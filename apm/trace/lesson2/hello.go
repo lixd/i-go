@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/opentracing/opentracing-go"
 	"i-go/apm/trace/config"
 	"os"
 	"time"
+
+	"github.com/opentracing/opentracing-go"
 )
 
 // Trace individual functions

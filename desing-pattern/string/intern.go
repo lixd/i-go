@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"reflect"
 	"strconv"
 	"unsafe"
@@ -8,9 +9,6 @@ import (
 
 // https://ms2008.github.io/2019/08/18/golang-string-interning/
 // 字符串内部化
-import (
-	"fmt"
-)
 
 // stringPtr returns a pointer to the string data.
 func stringPtr(s string) uintptr {

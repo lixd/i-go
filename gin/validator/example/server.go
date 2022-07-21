@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/go-playground/validator/v10"
 	"net/http"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
 
 	"github.com/gin-gonic/gin"
 )

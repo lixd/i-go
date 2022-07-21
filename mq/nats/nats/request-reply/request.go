@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"time"
 
+	"i-go/mq/nats/nats/conn"
+
 	"github.com/nats-io/nats.go"
 	"github.com/sirupsen/logrus"
-	"i-go/mq/nats/nats/conn"
 )
 
 var (
@@ -22,9 +23,10 @@ func init() {
 }
 
 func Request(subject string, msg []byte) {
-	resp, err := nc.Request(subject, msg, time.Second)
+	resp, err := nc.Request(subject, msg, time.Minute*10)
 	if err != nil {
 		logrus.WithField("scene", "nats publish").Error(err)
+		return
 	}
 	fmt.Printf("request %v reply:%+v\n", string(msg), string(resp.Data))
 }

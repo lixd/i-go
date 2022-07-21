@@ -5,8 +5,9 @@ import (
 	"log"
 	"os"
 
+	router "i-go/gin/routers"
+
 	"github.com/gin-gonic/gin"
-	"i-go/gin/routers"
 )
 
 func main() {

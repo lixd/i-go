@@ -1,23 +1,24 @@
 package server
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/sirupsen/logrus"
 	"i-go/demo/cmodel"
-	"i-go/demo/common/ret"
+	"i-go/demo/common/ret/srv"
 	"i-go/demo/order/dto"
 	"i-go/demo/order/model"
 	"i-go/demo/order/repository"
 	"i-go/utils"
+
+	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type IOrder interface {
-	Insert(req *dto.OrderReq) *ret.Result
-	Delete(req *dto.OrderReq) *ret.Result
-	Update(req *dto.OrderReq) *ret.Result
-	FindById(id uint) *ret.Result
-	Find(req *dto.OrderReq) *ret.Result
-	FindOrderAndUser() *ret.Result
+	Insert(req *dto.OrderReq) *srv.Result
+	Delete(req *dto.OrderReq) *srv.Result
+	Update(req *dto.OrderReq) *srv.Result
+	FindById(id uint) *srv.Result
+	Find(req *dto.OrderReq) *srv.Result
+	FindOrderAndUser() *srv.Result
 }
 
 type order struct {
@@ -28,7 +29,7 @@ func NewOrder(dao repository.IOrder) IOrder {
 	return &order{Dao: dao}
 }
 
-func (o *order) Insert(req *dto.OrderReq) *ret.Result {
+func (o *order) Insert(req *dto.OrderReq) *srv.Result {
 	order := model.Order{
 		Model:  gorm.Model{ID: req.Id},
 		UserId: req.UserId,
@@ -38,7 +39,7 @@ func (o *order) Insert(req *dto.OrderReq) *ret.Result {
 	err := o.Dao.Insert(&order)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "新增订单"}).Error(err)
-		return ret.Fail("", err.Error())
+		return srv.Fail("", err.Error())
 	}
 
 	res := dto.OrderResp{
@@ -46,20 +47,19 @@ func (o *order) Insert(req *dto.OrderReq) *ret.Result {
 		UserId: req.UserId,
 		Amount: req.Amount,
 	}
-	return ret.Success(&res)
+	return srv.Success(&res)
 }
 
-func (o *order) Delete(req *dto.OrderReq) *ret.Result {
+func (o *order) Delete(req *dto.OrderReq) *srv.Result {
 	err := o.Dao.Delete(req.Id)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "删除用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
-	return ret.Success(&dto.OrderResp{})
+	return srv.Success(&dto.OrderResp{})
 }
 
-// Update
-func (o *order) Update(req *dto.OrderReq) *ret.Result {
+func (o *order) Update(req *dto.OrderReq) *srv.Result {
 	order := model.Order{
 		Model:  gorm.Model{ID: req.Id},
 		UserId: req.UserId,
@@ -68,42 +68,41 @@ func (o *order) Update(req *dto.OrderReq) *ret.Result {
 	err := o.Dao.Update(&order)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return ret.Fail(err.Error())
+			return srv.Fail(err.Error())
 		}
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("")
+		return srv.Fail("")
 	}
 	res := dto.OrderResp{
 		Id:     req.Id,
 		UserId: req.UserId,
 		Amount: req.Amount,
 	}
-	return ret.Success(&res)
+	return srv.Success(&res)
 }
 
-// FindById
-func (o *order) FindById(id uint) *ret.Result {
+func (o *order) FindById(id uint) *srv.Result {
 	res, err := o.Dao.FindById(id)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller()}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
 	order := dto.OrderResp{
 		Id:     res.ID,
 		UserId: res.UserId,
 		Amount: res.Amount,
 	}
-	return ret.Success(&order)
+	return srv.Success(&order)
 }
 
-func (o *order) Find(req *dto.OrderReq) *ret.Result {
+func (o *order) Find(req *dto.OrderReq) *srv.Result {
 	var resp dto.OrderList
 
 	page := cmodel.NewPaging(req.Page.Page, req.Page.Size)
 	res, err := o.Dao.Find(req.UserId, page)
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
 	users := make([]dto.OrderResp, 0, len(res))
 	var user dto.OrderResp
@@ -117,14 +116,14 @@ func (o *order) Find(req *dto.OrderReq) *ret.Result {
 	}
 	resp.Data = users
 	resp.Page = *page
-	return ret.Success(&resp)
+	return srv.Success(&resp)
 }
 
-func (o *order) FindOrderAndUser() *ret.Result {
+func (o *order) FindOrderAndUser() *srv.Result {
 	err := o.Dao.FindOrderAndUser()
 	if err != nil {
 		logrus.WithFields(logrus.Fields{"caller": utils.Caller(), "scenes": "更新用户"}).Error(err)
-		return ret.Fail("", "db error")
+		return srv.Fail("", "db error")
 	}
-	return ret.Success("")
+	return srv.Success("")
 }

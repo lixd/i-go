@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
 	"i-go/tools/region/core"
 	"i-go/tools/region/http/router"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {

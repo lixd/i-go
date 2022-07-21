@@ -13,8 +13,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-
-
 var (
 	AliClient *alipay.Client
 	conf      ConfAlipay
@@ -127,8 +125,8 @@ func AliTrans(amount, fee float64, account, realName, withdrawNo string) (bool, 
 
 func alipayCallback(req *http.Request) bool {
 	var (
-		outTradeNo     string
-		orderNo        string
+		outTradeNo string
+		orderNo    string
 	)
 	notify, err := AliClient.GetTradeNotification(req)
 	if err != nil {
@@ -144,7 +142,7 @@ func alipayCallback(req *http.Request) bool {
 		outTradeNo = notify.OutTradeNo
 		orderNo = notify.TradeNo
 	}
-	fmt.Printf("商户订单号:%s 支付宝订单号:%s \n",outTradeNo,orderNo)
+	fmt.Printf("商户订单号:%s 支付宝订单号:%s \n", outTradeNo, orderNo)
 	// 	订单重复校验
 	// 	逻辑处理
 	return true

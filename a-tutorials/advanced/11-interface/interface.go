@@ -49,5 +49,3 @@ func main() {
 	bar(a)
 	bar(b)
 }
-
-curl -X POST -H 'Content-Type: application/json' -d '{"id":"","secretkey":"","scene":0,"token":"","ip":""}' http://0.vaptcha.com/verify

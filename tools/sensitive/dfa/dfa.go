@@ -120,7 +120,7 @@ func (dfa *DFA) Contains(sentence string) bool {
 // HasPrefix 是否存在以 prefix 为前缀的词则返回 true 否则返回 false
 func (dfa *DFA) HasPrefix(prefix string) bool {
 	// 统一转换成小写
-	sentenceRune := []rune(strings.ToLower(prefix))
+	sentenceRune := strings.ToLower(prefix)
 	currNode := dfa.root
 	for _, v := range sentenceRune {
 		targetNode, exist := currNode.children[v]

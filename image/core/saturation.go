@@ -3,8 +3,9 @@ package core
 import (
 	"image"
 
-	"github.com/pkg/errors"
 	"i-go/image/util"
+
+	"github.com/pkg/errors"
 )
 
 // AdjustSaturation 调整图像饱和度 percent 饱和度控制参数 (0,1)

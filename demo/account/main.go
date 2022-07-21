@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
 	"i-go/core/logger"
 	"i-go/demo/account/model"
 	"i-go/demo/account/router"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {

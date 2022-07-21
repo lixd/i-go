@@ -146,7 +146,7 @@ func wxpayCallback(req *http.Request) bool {
 	log.Printf("订单号:%s 状态:%s\n", *transaction.OutTradeNo, notifyReq.Summary)
 	orderId := *transaction.OutTradeNo
 	orderNo := *transaction.TransactionId
-	fmt.Print("商户订单号:%s 微信支付订单号:%s \n", orderId, orderNo)
+	fmt.Printf("商户订单号:%s 微信支付订单号:%s \n", orderId, orderNo)
 
 	// 判断是否重复
 	// 	具体逻辑

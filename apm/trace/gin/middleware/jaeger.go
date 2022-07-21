@@ -2,10 +2,11 @@ package middleware
 
 import (
 	"context"
+	"i-go/apm/trace/config"
+
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"i-go/apm/trace/config"
 )
 
 // Jaeger 通过 middleware 将 tracer 和 ctx 注入到 gin.Context 中

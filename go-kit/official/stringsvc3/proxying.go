@@ -4,6 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/url"
+	"strings"
+	"time"
+
 	"github.com/go-kit/kit/circuitbreaker"
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
@@ -13,9 +17,6 @@ import (
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/sony/gobreaker"
 	"golang.org/x/time/rate"
-	"net/url"
-	"strings"
-	"time"
 )
 
 // proxymw implements StringService, forwarding Uppercase requests to the

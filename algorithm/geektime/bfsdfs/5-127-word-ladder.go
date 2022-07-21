@@ -60,8 +60,5 @@ func hasOneDiff(x, y string) bool {
 			return false
 		}
 	}
-	if count == 1 {
-		return true
-	}
-	return false
+	return count == 1
 }

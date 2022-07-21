@@ -48,11 +48,11 @@ func NewRGBAMatrix(x int, y int) [][][]uint8 {
 }
 
 func new3DSlice(x int, y int, z int) (theSlice [][][]uint8) {
-	theSlice = make([][][]uint8, x, x)
+	theSlice = make([][][]uint8, x)
 	for i := 0; i < x; i++ {
-		s2 := make([][]uint8, y, y)
+		s2 := make([][]uint8, y)
 		for j := 0; j < y; j++ {
-			s3 := make([]uint8, z, z)
+			s3 := make([]uint8, z)
 			s2[j] = s3
 		}
 		theSlice[i] = s2

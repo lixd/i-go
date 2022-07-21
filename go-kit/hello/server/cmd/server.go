@@ -3,8 +3,9 @@ package main
 import (
 	"net/http"
 
-	httpTransport "github.com/go-kit/kit/transport/http"
 	"i-go/go-kit/hello/server/services"
+
+	httpTransport "github.com/go-kit/kit/transport/http"
 )
 
 func main() {

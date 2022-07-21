@@ -1,10 +1,11 @@
 package stan_sub
 
 import (
+	"i-go/mq/nats/stan/conn"
+
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/stan.go"
 	"github.com/sirupsen/logrus"
-	"i-go/mq/nats/stan/conn"
 )
 
 var (

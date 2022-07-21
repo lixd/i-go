@@ -22,15 +22,15 @@ func (t *TestPro) Consumer(dataByte []byte) error {
 }
 
 func main() {
-	msg := fmt.Sprintf("这是测试任务")
+	msg := "这是测试任务"
 	t := &TestPro{
 		msg,
 	}
 	queueExchange := &rabbitmq.QueueExchange{
-		"test.rabbit",
-		"rabbit.key",
-		"test.rabbit.mq",
-		"direct",
+		QuName: "test.rabbit",
+		RtKey:  "rabbit.key",
+		ExName: "test.rabbit.mq",
+		ExType: "direct",
 	}
 	mq := rabbitmq.New(queueExchange)
 	mq.RegisterProducer(t)

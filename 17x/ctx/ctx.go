@@ -58,9 +58,7 @@ func main() {
 		// }
 	}(ctx)
 	defer cancel()
-	select {
-	case <-ctx.Done():
-		time.Sleep(time.Second)
-		fmt.Println("main process exit!")
-	}
+	<-ctx.Done()
+	time.Sleep(time.Second)
+	fmt.Println("main process exit!")
 }

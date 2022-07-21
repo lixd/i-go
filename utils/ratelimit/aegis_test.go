@@ -21,7 +21,6 @@ func TestRateLimit(t *testing.T) {
 			fmt.Printf("限流状态：%+v\n", limiter.Stat())
 		}
 	}()
-
 	r := gin.New()
 	gin.SetMode(gin.ReleaseMode)
 	r.GET("/limit", limit(), logic)

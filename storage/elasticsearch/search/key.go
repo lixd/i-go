@@ -1,6 +1,5 @@
 package search
 
-
 // Index ES索引结构 index+type
 type Index struct {
 	Index string // 索引名

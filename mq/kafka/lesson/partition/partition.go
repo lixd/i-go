@@ -6,8 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Shopify/sarama"
 	"i-go/mq/kafka"
+
+	"github.com/Shopify/sarama"
 )
 
 type myPartitioner struct {

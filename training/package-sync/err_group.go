@@ -41,6 +41,7 @@ func main() {
 	g := new(errgroup.Group)
 	var urls = []string{
 		"http://www.golang.org/",
+		"http://www.gola123123ng.org/",
 		"http://www.google.com/",
 		"http://www.somestupidname.com/",
 	}
@@ -50,14 +51,15 @@ func main() {
 		g.Go(func() error {
 			// Fetch the URL.
 			resp, err := http.Get(url)
-			if err == nil {
-				resp.Body.Close()
+			if err != nil {
+				return err
 			}
-			return err
+			defer resp.Body.Close()
+			return nil
 		})
 	}
 	// Wait for all HTTP fetches to complete.
-	if err := g.Wait(); err == nil {
+	if err := g.Wait(); err != nil {
 		fmt.Println("err:", err)
 	}
 	fmt.Println("Successfully fetched all URLs.")

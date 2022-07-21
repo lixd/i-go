@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	httpTransport "github.com/go-kit/kit/transport/http"
 	"i-go/go-kit/hello/client/services"
 	"net/url"
 	"os"
+
+	httpTransport "github.com/go-kit/kit/transport/http"
 )
 
 func main() {

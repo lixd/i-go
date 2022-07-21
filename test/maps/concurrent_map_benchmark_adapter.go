@@ -1,6 +1,6 @@
 package maps
 
-import "github.com/orcaman/concurrent-map"
+import cmap "github.com/orcaman/concurrent-map"
 
 type ConcurrentMapBenchmarkAdapter struct {
 	cm cmap.ConcurrentMap

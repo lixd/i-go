@@ -2,10 +2,12 @@ package request_reply
 
 import (
 	"fmt"
+	"time"
+
+	"i-go/mq/nats/nats/conn"
 
 	"github.com/nats-io/nats.go"
 	"github.com/sirupsen/logrus"
-	"i-go/mq/nats/nats/conn"
 )
 
 func Subscribe(subject string, buildHandler func(nc *nats.Conn) func(msg *nats.Msg), stopChan <-chan struct{}) {
@@ -27,6 +29,7 @@ func Subscribe(subject string, buildHandler func(nc *nats.Conn) func(msg *nats.M
 func demoHandler(nc *nats.Conn) func(msg *nats.Msg) {
 	return func(msg *nats.Msg) {
 		fmt.Printf("subject:%s msg:%s\n", msg.Subject, string(msg.Data))
+		time.Sleep(time.Minute * 11)
 		_ = nc.Publish(msg.Reply, msg.Data)
 	}
 }

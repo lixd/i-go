@@ -43,8 +43,6 @@ func IsChineseChar(str string) bool {
 
 func doSomething(ctx context.Context) {
 	go func() {}()
-	select {
-	case <-ctx.Done():
-		fmt.Println("超时")
-	}
+	<-ctx.Done()
+	fmt.Println("超时")
 }

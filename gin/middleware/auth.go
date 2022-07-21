@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func AuthMiddleWare() gin.HandlerFunc {
@@ -11,6 +12,5 @@ func AuthMiddleWare() gin.HandlerFunc {
 		if auth != "true" {
 			c.JSON(http.StatusForbidden, gin.H{"status": "403", "message": "auth false"})
 		}
-		return
 	}
 }

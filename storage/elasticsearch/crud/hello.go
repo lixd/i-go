@@ -5,9 +5,10 @@ import (
 	"reflect"
 	"sync"
 
+	"i-go/utils"
+
 	"github.com/olivere/elastic/v7"
 	"github.com/sirupsen/logrus"
-	"i-go/utils"
 )
 
 type IHello interface {

@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
+	"time"
+
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
-	"time"
+
+	"gorm.io/gorm"
 )
 
 var db *gorm.DB
@@ -15,22 +17,22 @@ func Init() {
 	conf.Load(path)
 	mysqldb.Init()
 	db = mysqldb.MySQL
-	db.DropTableIfExists(&User{})
-	db.CreateTable(&User{})
+	// db.DropTableIfExists(&User{})
+	// db.CreateTable(&User{})
 }
 
 func main() {
 	Init()
 	create()
 	query()
-	//update()
+	// update()
 }
 
 type User struct {
-	//ID        uint       `gorm:"primary_key"`
-	//CreatedAt time.Time  `gorm:"type:timestamp;"`
-	//UpdatedAt time.Time  `gorm:"type:timestamp;"`
-	//DeletedAt *time.Time `gorm:"type:timestamp;index:idx_del"`
+	// ID        uint       `gorm:"primary_key"`
+	// CreatedAt time.Time  `gorm:"type:timestamp;"`
+	// UpdatedAt time.Time  `gorm:"type:timestamp;"`
+	// DeletedAt *time.Time `gorm:"type:timestamp;index:idx_del"`
 	gorm.Model
 	Name         string    `gorm:"type:varchar(20);unique_index:idx_name;NOT NULL;default:'guest'"`
 	Phone        string    `gorm:"type:varchar(20);unique_index;NOT NULL"`
@@ -69,22 +71,20 @@ func create() {
 		Sex:          2,
 		Remark:       "second user",
 	}
-	fmt.Println(db.NewRecord(&user))
 	db.Create(&user)
-	fmt.Println(db.NewRecord(&user))
 }
 
 func query() {
-	//simple()
-	//where()
-	//structMap()
-	//not()
-	//or()
-	//inlineCondition()
-	//extraOptions()
-	//order()
+	// simple()
+	// where()
+	// structMap()
+	// not()
+	// or()
+	// inlineCondition()
+	// extraOptions()
+	// order()
 	groupHaving()
-	//joins()
+	// joins()
 }
 
 func update() {
@@ -110,9 +110,9 @@ func where() {
 	db.Where("name = ?", "root").Find(&user)
 	fmt.Println(user)
 	// Find 传入单个结构体对象则会返回一个值 传入切片则返回多个值
-	//var userTime User
+	// var userTime User
 	var users = make([]User, 0)
-	//db.Where("register_time < ?", time.Now()).Find(&userTime)
+	// db.Where("register_time < ?", time.Now()).Find(&userTime)
 	db.Where("register_time < ?", time.Now()).Find(&users)
 	fmt.Println(users)
 	// BETWEEN  AND
@@ -149,7 +149,7 @@ func extraOptions() {
 	var user User
 	// 为查询 SQL 添加额外的 SQL 操作
 	db.Set("gorm:query_option", "FOR UPDATE").First(&user, 1)
-	//// SELECT * FROM users WHERE id = 10 FOR UPDATE;
+	// // SELECT * FROM users WHERE id = 10 FOR UPDATE;
 }
 func order() {
 	var users = make([]User, 0)

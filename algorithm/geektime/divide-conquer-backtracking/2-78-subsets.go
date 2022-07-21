@@ -33,10 +33,10 @@ func dfs(result *[][]int, nums []int, curr []int, index int) {
 
 // 迭代
 func subsets2(nums []int) [][]int {
-	result := [][]int{[]int{}}
+	result := [][]int{{}}
 	for i := 0; i < len(nums); i++ {
 		for _, old := range result {
-			// cpoy出一个和old数组 len cap 都一样的数组
+			// copy出一个和old数组 len cap 都一样的数组
 			new := make([]int, len(old), cap(old)+1)
 			copy(new, old)
 			// 添加当前数值到数组中

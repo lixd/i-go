@@ -51,13 +51,13 @@ func FeatureSelect(list_words [][]string) {
 		}
 	}
 	wordTf := make(map[string]float64)
-	for k, _ := range docFrequency {
+	for k := range docFrequency {
 		wordTf[k] = docFrequency[k] / float64(sumWorlds)
 	}
 	docNum := float64(len(list_words))
 	wordIdf := make(map[string]float64)
 	wordDoc := make(map[string]float64, 0)
-	for k, _ := range docFrequency {
+	for k := range docFrequency {
 		for _, v := range list_words {
 			for _, vs := range v {
 				if k == vs {
@@ -67,11 +67,11 @@ func FeatureSelect(list_words [][]string) {
 			}
 		}
 	}
-	for k, _ := range docFrequency {
+	for k := range docFrequency {
 		wordIdf[k] = math.Log(docNum / (wordDoc[k] + 1))
 	}
 	var wordifS wordTfIdfs
-	for k, _ := range docFrequency {
+	for k := range docFrequency {
 		var wti wordTfIdf
 		wti.nworld = k
 		wti.value = wordTf[k] * wordIdf[k]
@@ -85,7 +85,7 @@ func Load() [][]string {
 	slice := [][]string{
 		{"my", "dog", "has", "flea", "problems", "help", "please"},
 		{"maybe", "not", "take", "him", "to", "dog", "park", "stupid"},
-		{"my", "dalmation", "is", "so", "cute", "I", "love", "him"},
+		{"my", "dalmatian", "is", "so", "cute", "I", "love", "him"},
 		{"stop", "posting", "stupid", "worthless", "garbage"},
 		{"mr", "licks", "ate", "my", "steak", "how", "to", "stop", "him"},
 		{"quit", "buying", "worthless", "dog", "food", "stupid"},

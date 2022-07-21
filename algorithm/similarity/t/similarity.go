@@ -52,7 +52,7 @@ func CosineSimilar(srcWords, dstWords []string) float64 {
 
 	// stable the sort
 	allWordsSlice := make([]string, 0)
-	for word, _ := range allWordsMap {
+	for word := range allWordsMap {
 		allWordsSlice = append(allWordsSlice, word)
 	}
 	// assemble vector

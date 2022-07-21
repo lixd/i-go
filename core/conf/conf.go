@@ -7,12 +7,13 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/fsnotify/fsnotify"
-	"github.com/spf13/viper"
 	"i-go/core/db/elasticsearch"
 	"i-go/data"
 	"i-go/data/conf"
 	"i-go/utils"
+
+	"github.com/fsnotify/fsnotify"
+	"github.com/spf13/viper"
 )
 
 // Loads 手动调用加载配置文件

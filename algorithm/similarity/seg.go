@@ -11,16 +11,22 @@ var (
 	seg    gse.Segmenter
 	posSeg pos.Segmenter
 
-	new = gse.New("zh,testdata/test_dict3.txt", "alpha")
-
 	text = "你好世界, Hello world, Helloworld."
 )
 
+func init() {
+	var err error
+	seg, err = gse.New("zh,testdata/test_dict3.txt", "alpha")
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	// cut()
-
 	segCut()
 }
+
 func segCut() {
 	// 加载默认字典
 	seg.LoadDict()
@@ -48,13 +54,13 @@ func segCut() {
 }
 
 func cut() {
-	hmm := new.Cut(text, true)
+	hmm := seg.Cut(text, true)
 	fmt.Println("cut use hmm: ", hmm)
 
-	hmm = new.CutSearch(text, true)
+	hmm = seg.CutSearch(text, true)
 	fmt.Println("cut search use hmm: ", hmm)
 
-	hmm = new.CutAll(text)
+	hmm = seg.CutAll(text)
 	fmt.Println("cut all: ", hmm)
 }
 

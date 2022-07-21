@@ -1,10 +1,12 @@
-// Controller层返回值
+// Package ctl Controller层返回值
 package ctl
 
 import (
-	"github.com/gin-gonic/gin"
-	"i-go/demo/common/ret/srv"
 	"net/http"
+
+	"i-go/demo/common/ret/srv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func BadRequest(c *gin.Context, msg string) {

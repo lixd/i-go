@@ -33,7 +33,6 @@ func Test_isOk(t *testing.T) {
 
 func Test_hashSha256(t *testing.T) {
 	fmt.Println(1 > 0 && 2 < 1 || 1 > 0 && 2 > 1 && 3 > 2)
-	return
 	str := "vid" + "4729934"
 	sha256 := hashSha256([]byte(str))
 	fmt.Printf("src:%s hash:%s\n", str, sha256)

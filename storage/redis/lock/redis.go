@@ -10,9 +10,10 @@ import (
 	"i-go/core/db/redisdb"
 	_ "i-go/core/db/redisdb"
 
-	"github.com/sirupsen/logrus"
 	"i-go/tools/lock"
 	"i-go/utils"
+
+	"github.com/sirupsen/logrus"
 )
 
 const (

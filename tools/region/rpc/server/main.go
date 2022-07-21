@@ -5,10 +5,11 @@ import (
 	"log"
 	"net"
 
-	"google.golang.org/grpc"
 	"i-go/core/conf"
 	"i-go/tools/region/core"
 	pb "i-go/tools/region/rpc/proto"
+
+	"google.golang.org/grpc"
 )
 
 const (

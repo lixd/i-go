@@ -6,9 +6,10 @@ import (
 	"log"
 	"time"
 
-	"gorm.io/gorm"
 	"i-go/core/conf"
 	"i-go/core/db/mysqldb"
+
+	"gorm.io/gorm"
 )
 
 var mysqlDB *gorm.DB

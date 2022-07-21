@@ -27,8 +27,6 @@ func AA(i int) {
 	if i > 1 {
 		defer A2("hello", "world")
 	}
-
-	return
 }
 func A1(a, b int) {
 	fmt.Println(a, b)

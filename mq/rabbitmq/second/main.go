@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
-	"time"
 )
 
 // 测试备份交换器
