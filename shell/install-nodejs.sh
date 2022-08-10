@@ -1,5 +1,6 @@
 #!/bin/bash
 # 使用 NVM 安装 NodeJS 多个版本并进行管理
+# source install-nodejs.sh
 # 安装Git
 set -e
 yum install git -y
@@ -12,7 +13,9 @@ echo ". ~/.nvm/nvm.sh" >> /etc/profile
 source /etc/profile
 #查看 nodejs 版本
 nvm list-remote
-#安装 v1.16.0
+#安装 v16.10.0
 nvm install v16.10.0
 
 #可以安装多个版本，使用 nvm ls 查看，使用 nvm use <版本号> 切换
+
+docker buildx build --platform linux/amd64,linux/arm64/v8 -t ks-console/v3.0.0-blue . -f Dockerfile.new

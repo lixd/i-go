@@ -1,0 +1,16 @@
+{
+  "ssh": {
+    "host": "172.20.149.53",
+    "user": "root",
+    "secret": "root",
+    "port": 22
+  },
+  "tunnels": [
+    {
+      "ident": "hello",
+      "localPort": 50051,
+      "remoteHost": "192.168.10.193",
+      "remotePort": 50051
+    }
+  ]
+}

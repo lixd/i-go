@@ -2,6 +2,7 @@ package certs
 
 import (
 	"crypto/x509"
+	"net"
 	"testing"
 )
 
@@ -38,9 +39,11 @@ func TestGenerateCert(t *testing.T) {
 	}
 	// 	2. Generate a self-signed certificate and key.
 	c := &Config{
-		CommonName:         "webhook.kube-system.svc",
-		Organization:       nil,
-		AltNames:           AltNames{DNSNames: []string{"webhook.kube-system.svc"}},
+		CommonName:   "webhook.kube-system.svc",
+		Organization: nil,
+		AltNames: AltNames{
+			DNSNames: []string{"webhook.kube-system.svc"},
+			IPs:      []net.IP{net.ParseIP("192.168.10.89"), net.ParseIP("172.20.148.199")}},
 		Usages:             []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		NotAfter:           nil,
 		PublicKeyAlgorithm: 0,
@@ -50,6 +53,26 @@ func TestGenerateCert(t *testing.T) {
 		t.Fatalf("cert and key failed to generate: %v", err)
 	}
 	err = WriteCertAndKey("", "server", cert, key)
+	if err != nil {
+		t.Fatalf("cert and key failed to write: %v", err)
+	}
+
+	c = &Config{
+		CommonName:   "webhook.kube-system.svc",
+		Organization: nil,
+		AltNames: AltNames{
+			DNSNames: []string{"webhook.kube-system.svc"},
+			IPs:      []net.IP{net.ParseIP("192.168.20.163")},
+		},
+		Usages:             []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth},
+		NotAfter:           nil,
+		PublicKeyAlgorithm: 0,
+	}
+	cert, key, err = NewCertAndKey(ca, caKey, c)
+	if err != nil {
+		t.Fatalf("cert and key failed to generate: %v", err)
+	}
+	err = WriteCertAndKey("", "client", cert, key)
 	if err != nil {
 		t.Fatalf("cert and key failed to write: %v", err)
 	}
