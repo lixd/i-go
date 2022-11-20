@@ -15,6 +15,9 @@ func NewConn() (*nats.Conn, error) {
 	reconnectDelay := time.Second
 	nc, err := nats.Connect(
 		StanURL(),
+		nats.UserInfo("admin", "think"),
+		nats.ClientCert("../../../../dist/cert/client.crt", "../../../../dist/cert/client.key"),
+		nats.RootCAs("../../../../dist/cert/ca.crt"),
 		nats.ReconnectWait(reconnectDelay),
 		nats.MaxReconnects(int(totalWait/reconnectDelay)),
 		nats.DisconnectErrHandler(func(nc *nats.Conn, err error) {
@@ -35,6 +38,9 @@ func NewConn() (*nats.Conn, error) {
 }
 
 func StanURL() string {
+	// return "nats://127.0.0.1:9889"
+	return "nats://localhost:4222"
+	// return "nats://172.20.149.197:4222"
 	url := viper.GetString("stanurl")
 	if url == "" {
 		url = constant.DefaultNatsURL

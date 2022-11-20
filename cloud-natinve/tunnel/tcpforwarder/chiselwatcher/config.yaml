@@ -1,0 +1,10 @@
+hosts:
+  # 主机名，需要能免密登录
+  kc-agent1:
+    # 隧道名
+    nats:
+      local: 9889
+      remote: 9889
+    staticServer:
+      local: 8081
+      remote: 8081

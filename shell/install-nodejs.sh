@@ -17,5 +17,3 @@ nvm list-remote
 nvm install v16.10.0
 
 #可以安装多个版本，使用 nvm ls 查看，使用 nvm use <版本号> 切换
-
-docker buildx build --platform linux/amd64,linux/arm64/v8 -t ks-console/v3.0.0-blue . -f Dockerfile.new

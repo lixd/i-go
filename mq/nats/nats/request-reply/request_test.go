@@ -9,7 +9,7 @@ import (
 func TestRequest(t *testing.T) {
 	stopChan := make(chan struct{})
 	Subscribe("hello", demoHandler, stopChan)
-	for i := 0; i < 1; i++ {
+	for i := 0; i < 10; i++ {
 		Request("hello", []byte(strconv.Itoa(i)))
 	}
 	stopChan <- struct{}{}

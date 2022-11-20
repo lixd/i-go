@@ -42,8 +42,9 @@ func TestGenerateCert(t *testing.T) {
 		CommonName:   "webhook.kube-system.svc",
 		Organization: nil,
 		AltNames: AltNames{
-			DNSNames: []string{"webhook.kube-system.svc"},
-			IPs:      []net.IP{net.ParseIP("192.168.10.89"), net.ParseIP("172.20.148.199")}},
+			DNSNames: []string{"localhost", "webhook.kube-system.svc"},
+			IPs:      []net.IP{net.ParseIP("192.168.10.89"), net.ParseIP("172.20.148.199"), net.ParseIP("172.20.149.197")},
+		},
 		Usages:             []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		NotAfter:           nil,
 		PublicKeyAlgorithm: 0,
@@ -52,7 +53,7 @@ func TestGenerateCert(t *testing.T) {
 	if err != nil {
 		t.Fatalf("cert and key failed to generate: %v", err)
 	}
-	err = WriteCertAndKey("", "server", cert, key)
+	err = WriteCertAndKey("../../dist/cert", "server", cert, key)
 	if err != nil {
 		t.Fatalf("cert and key failed to write: %v", err)
 	}
@@ -62,7 +63,7 @@ func TestGenerateCert(t *testing.T) {
 		Organization: nil,
 		AltNames: AltNames{
 			DNSNames: []string{"webhook.kube-system.svc"},
-			IPs:      []net.IP{net.ParseIP("192.168.20.163")},
+			IPs:      []net.IP{net.ParseIP("192.168.10.89"), net.ParseIP("172.20.148.199"), net.ParseIP("172.20.149.197")},
 		},
 		Usages:             []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth},
 		NotAfter:           nil,
@@ -72,11 +73,11 @@ func TestGenerateCert(t *testing.T) {
 	if err != nil {
 		t.Fatalf("cert and key failed to generate: %v", err)
 	}
-	err = WriteCertAndKey("", "client", cert, key)
+	err = WriteCertAndKey("../../dist/cert", "client", cert, key)
 	if err != nil {
 		t.Fatalf("cert and key failed to write: %v", err)
 	}
-	err = WriteCert("", "ca", ca)
+	err = WriteCert("../../dist/cert", "ca", ca)
 	if err != nil {
 		t.Fatalf("ca failed to write: %v", err)
 	}
