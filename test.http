@@ -1,5 +1,6 @@
 # 简单使用教程 https://www.freesion.com/article/7155384974/
 # 官方教程https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
+# 使用 xxx.env.json 文件进行环境配置
 
 ### 新建账户
 POST http://{{host}}{{baseUrl}}/accounts
@@ -36,4 +37,11 @@ Content-Type: application/json
 GET http://{{host}}{{baseUrl}}accounts?page=1&size=20
 Content-Type: application/json
 
-###
+
+### 文件下载
+# 使用 >> 指定响应保存到文件，! 表示文件存在时直接覆盖，默认文件存储时会增加后缀
+GET http://{{host}}{{baseUrl}}accounts/export?format=xlsx
+content-type: application/json
+Authorization: {{authorization}}
+
+>>! report.xlsx

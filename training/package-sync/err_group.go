@@ -36,7 +36,7 @@ type result struct {
 }*/
 
 // 使用 errgroup 对上述代码进行改造
-
+// 更多用例请查看 golang.org/x/sync/errgroup 目录下的 example
 func main() {
 	g := new(errgroup.Group)
 	var urls = []string{

@@ -14,10 +14,22 @@ yum install -y docker-ce
 mkdir -p /etc/docker
 echo '{
   "registry-mirrors": [
-  "https://ekxinbbh.mirror.aliyuncs.com"
+    "https://reg-mirror.qiniu.com",
+    "https://hub-mirror.c.163.com",
+    "https://mirror.baidubce.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://ekxinbbh.mirror.aliyuncs.com"
   ]
 }' > /etc/docker/daemon.json
 #启动并加入开机启动
 systemctl enable docker --now
 docker version
 echo "docker install finish."
+
+# 镜像仓库可用性测试 https://github.com/docker-practice/docker-registry-cn-mirror-test/blob/master/.github/workflows/ci.yaml
+
+# 开启 buildx
+##方式1（临时设置，只在当前终端管用，下次进入终端就不生效了）
+#export DOCKER_CLI_EXPERIMENTAL=enabled
+##方式2（永久生效，直接修改 /etc/docker/daemon.json 配置文件，新增以下内容
+#{"experimental": true}
