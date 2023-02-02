@@ -26,8 +26,8 @@ const (
 var salt = []byte{0xc8, 0x28, 0xf2, 0x58, 0xa7, 0x6a, 0xad, 0x7b}
 
 func main() {
-	// argon2Demo()
-	// scryptDemo()
+	argon2Demo()
+	scryptDemo()
 	bcryptDemo()
 }
 
@@ -35,12 +35,13 @@ func argon2Demo() {
 	// dbPwd 加密,DB中就存储这个Key即可。
 	key := argon2.IDKey([]byte(dbPwd), salt, 1, 64*1024, 4, 32)
 	b1 := base64.StdEncoding.EncodeToString(key)
-	fmt.Println(b1)
+	fmt.Println("argon2: ", b1)
+
 	// userPwd 加密
 
 	key2 := argon2.IDKey([]byte(userPwd), salt, 1, 64*1024, 4, 32)
 	b2 := base64.StdEncoding.EncodeToString(key2)
-	fmt.Println(b2)
+	fmt.Println("argon2: ", b2)
 	// 对比二者是否一致来检测用户密码输对没有
 	fmt.Println(b1 == b2)
 }
@@ -51,13 +52,14 @@ func scryptDemo() {
 		log.Fatal(err)
 	}
 	b1 := base64.StdEncoding.EncodeToString(key)
-	fmt.Println(b1)
+	fmt.Println("scrypt: ", b1)
 	key2, err := scrypt.Key([]byte(userPwd), salt, 1<<15, 8, 1, 32)
 	if err != nil {
 		log.Fatal(err)
 	}
 	b2 := base64.StdEncoding.EncodeToString(key2)
-	fmt.Println(b2)
+	fmt.Println("scrypt: ", b2)
+
 	fmt.Println(b1 == b2)
 }
 
@@ -72,6 +74,8 @@ func bcryptDemo() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("bcrypt: ", string(hash))
+
 	// 密码验证 返回 error = nil 时即正确。
 	err = bcrypt.CompareHashAndPassword(hash, []byte(userPwd))
 	if err != nil {

@@ -1,6 +1,6 @@
 #!/bin/bash
 # 使用 NVM 安装 NodeJS 多个版本并进行管理
-# source install-nodejs.sh
+# 使用方式：source install-nodejs.sh
 # 安装Git
 set -e
 yum install git -y

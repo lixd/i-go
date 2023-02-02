@@ -1,13 +1,16 @@
 #!/bin/bash
 set -e
-# this shell is used to install go1.18 on linux amd64
+# this shell is used to install go1.19.1 on linux amd64
 # usage: source install-go.sh
+
+version="1.19.1"
+
 function downloadGo() {
   echo "1.download go"
   cd ~ \
-  && wget https://studygolang.com/dl/golang/go1.18.linux-amd64.tar.gz -O go1.18.linux-amd64.tar.gz \
-  && tar -C ~/ -xzf go1.18.linux-amd64.tar.gz \
-  && rm -f ~/go1.18.linux-amd64.tar.gz
+  && wget https://studygolang.com/dl/golang/go$version.linux-amd64.tar.gz -O go$version.linux-amd64.tar.gz \
+  && tar -C ~/ -xzf go$version.linux-amd64.tar.gz \
+  && rm -f ~/go$version.linux-amd64.tar.gz
 }
 
 function setEnv() {
@@ -47,5 +50,6 @@ go run hello.go
   setEnv
   checkVersion
   runHelloWorld
-  echo "go1.18 install and check finished"
+  echo "go $version install and check finished"
+  go version
 }

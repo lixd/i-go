@@ -26,11 +26,12 @@ function test() {
 {
   install-yasm
   install-ffmpeg
+#  installByYum
   test
 }
 
 # 也可以用 yum 安装
-function configYum() {
+function installByYum() {
     # 配置第三方 yum 源
     sudo rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
     sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm

@@ -9,6 +9,7 @@ import (
 )
 
 // go语言的一个爬虫框架
+// goquery 解析html 库用法 https://blog.csdn.net/yang731227/article/details/89338745
 func main() {
 	c := colly.NewCollector(colly.UserAgent("Opera/9.80 (Windows NT 6.1; U; zh-cn) Presto/2.9.168 Version/11.50"))
 	c.OnRequest(func(r *colly.Request) {

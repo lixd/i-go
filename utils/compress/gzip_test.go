@@ -1,7 +1,9 @@
 package compress
 
 import (
+	"errors"
 	"fmt"
+	"os"
 	"testing"
 
 	"i-go/utils/convert"
@@ -13,6 +15,12 @@ const (
 
 func TestCompress(t *testing.T) {
 	compress := Compress(convert.String2Bytes(LocusPoint))
+	create, err := os.Create("1.gz")
+	if err != nil {
+		return
+	}
+	defer create.Close()
+	create.Write(compress)
 	deCompress, err := DeCompress(compress)
 	if err != nil {
 		t.Fatal(err)
@@ -38,4 +46,35 @@ func BenchmarkDeCompress(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, _ = DeCompress(compress)
 	}
+}
+
+// IsGzipFile check file is compressed by gzip.
+func IsGzipFile(path string) (bool, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return false, err
+	}
+	// https://www.ietf.org/rfc/rfc1952.txt
+	// There is a magic number at the beginning of the file.
+	// Just read the first two bytes and check if they are equal to 0x1f8b.
+	magic := make([]byte, 2)
+	read, err := file.Read(magic)
+	if err != nil {
+		return false, err
+	}
+	if read != 2 {
+		return false, errors.New("read magic number failed")
+	}
+	return magic[0] == 31 && magic[1] == 139, nil
+}
+
+func TestA(t *testing.T) {
+	path := "/Users/lixueduan/17x/projects/i-go/utils/compress/1.gz"
+	//path := "/Users/lixueduan/17x/projects/i-go/utils/compress/Docker.dmg"
+	ok, err := IsGzipFile(path)
+	if err != nil {
+		t.Log("check fail:", err)
+		return
+	}
+	t.Log("is gzip file:", ok)
 }
