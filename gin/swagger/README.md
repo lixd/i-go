@@ -11,7 +11,6 @@ categories: ["Golang"]
 本文主要记录了如何在 Go 中使用 swaggo 根据注释自动生成 API 文档，以及如何使用条件编译来降低二进制文件大小。
 
 
-
 <!--more-->
 
 > 之前也用过其他的API文档工具，但是最大的问题还是文档和代码是分离的。总是出现文档和代码不同步的情况。
@@ -504,3 +503,51 @@ func init() {
 
 
 [github]:https://github.com/lixd/i-go/tree/master/gin/swagger
+
+## 7. 添加鉴权
+1、在main函数中增加全局配置，其中@name就是你确定的鉴权参数名，我的是 X-Auth-Token,    @in header 说明参数放在header，你的鉴权代码需要从header中获取
+```go
+// @title gin-blog API
+// @version 0.0.1
+// @description This is a gin blog example
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name X-Auth-Token
+// @BasePath /
+```
+主要是添加了下面这三行
+```go
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name X-Auth-Token
+```
+第一行指定 apikey
+第二行表示参数填在 header 里
+第三行为具体的参数名，需要注意的是只能有一个 name，填多个只有最后一个会生效。
+2.在具体的handler里添加如下注释，此处的ApiKeyAuth和main中的apike对应，切记不要修改
+```go
+// @Security ApiKeyAuth
+```
+添加这行注释即表名这条 api 需要用指定 apikey 对应的认证方式进行认证。
+
+3. 使用时添加对应鉴权参数即可,添加 token 后，后续所有有鉴权接口的 header 里自动携带 token
+![](swagger-auth.png)
+
+如果不同接口有不同认证方式，只需要定义多个 apikey 即可，就像这样
+```go
+// @securityDefinitions.apikey ApiKeyAuth1
+// @in header
+// @name X-Auth-Token
+
+// @securityDefinitions.apikey ApiKeyAuth2
+// @in header
+// @name X-Auth-Token2
+```
+对应 Handler 选择不同 apikey 即可实现
+```go
+// @Security ApiKeyAuth
+func hander1(){}
+
+// @Security ApiKeyAuth2
+func hander2(){}
+```

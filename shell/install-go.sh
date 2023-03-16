@@ -8,18 +8,18 @@ version="1.19.1"
 function downloadGo() {
   echo "1.download go"
   cd ~ \
+  && mkdir -p ~/env/go \
   && wget https://studygolang.com/dl/golang/go$version.linux-amd64.tar.gz -O go$version.linux-amd64.tar.gz \
-  && tar -C ~/ -xzf go$version.linux-amd64.tar.gz \
+  && tar -C ~/env/go -xzf go$version.linux-amd64.tar.gz \
   && rm -f ~/go$version.linux-amd64.tar.gz
 }
 
 function setEnv() {
   echo "2.set env"
-  cd ~
-  mkdir ~/gopath
+  mkdir -p ~/env/go/gopath
   echo 'export GOPROXY=https://goproxy.cn' >> ~/.bashrc
-  echo 'export GOPATH=~/gopath' >> ~/.bashrc
-  echo 'export PATH=$PATH:~/go/bin:$GOPATH/bin' >> ~/.bashrc
+  echo 'export GOPATH=~/env/go/gopath' >> ~/.bashrc
+  echo 'export PATH=$PATH:~/env/go/go/bin:$GOPATH/bin' >> ~/.bashrc
   source ~/.bashrc
 }
 
@@ -42,6 +42,7 @@ func main() {
 }
 EOF
 go run hello.go
+rm -rf hello.go
 }
 
 
