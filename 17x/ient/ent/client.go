@@ -87,6 +87,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
+		ctx:    ctx,
 		config: cfg,
 		User:   NewUserClient(cfg),
 	}, nil
@@ -98,7 +99,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 //		User.
 //		Query().
 //		Count(ctx)
-//
 func (c *Client) Debug() *Client {
 	if c.debug {
 		return c

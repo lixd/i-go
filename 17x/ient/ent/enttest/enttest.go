@@ -5,7 +5,6 @@ package enttest
 import (
 	"context"
 	"i-go/17x/ient/ent"
-
 	// required by schema hooks.
 	_ "i-go/17x/ient/ent/runtime"
 

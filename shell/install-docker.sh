@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 # centos一键安装docker脚本.
+# usage: sh install-docker.sh
 
 #卸载旧版本
 yum remove -y docker  docker-common docker-selinux docker-engine

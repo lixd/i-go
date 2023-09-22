@@ -79,7 +79,6 @@ type AggregateFunc func(*sql.Selector) string
 //	GroupBy(field1, field2).
 //	Aggregate(ent.As(ent.Sum(field1), "sum_field1"), (ent.As(ent.Sum(field2), "sum_field2")).
 //	Scan(ctx, &v)
-//
 func As(fn AggregateFunc, end string) AggregateFunc {
 	return func(s *sql.Selector) string {
 		return sql.As(fn(s), end)
@@ -141,7 +140,7 @@ func Sum(field string) AggregateFunc {
 	}
 }
 
-// ValidationError returns when validating a field fails.
+// ValidationError returns when validating a field or edge fails.
 type ValidationError struct {
 	Name string // Field or edge name.
 	err  error

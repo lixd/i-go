@@ -37,8 +37,7 @@ var (
 
 // Schema is the API for creating, migrating and dropping a schema.
 type Schema struct {
-	drv         dialect.Driver
-	universalID bool
+	drv dialect.Driver
 }
 
 // NewSchema creates a new schema client.
@@ -55,10 +54,9 @@ func (s *Schema) Create(ctx context.Context, opts ...schema.MigrateOption) error
 
 // WriteTo writes the schema changes to w instead of running them against the database.
 //
-// 	if err := client.Schema.WriteTo(context.Background(), os.Stdout); err != nil {
+//	if err := client.Schema.WriteTo(context.Background(), os.Stdout); err != nil {
 //		log.Fatal(err)
-// 	}
-//
+//	}
 func (s *Schema) WriteTo(ctx context.Context, w io.Writer, opts ...schema.MigrateOption) error {
 	drv := &schema.WriteDriver{
 		Writer: w,

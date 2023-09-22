@@ -10,30 +10,30 @@ import (
 	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDB is a mock of DB interface
+// MockDB is a mock of DB interface.
 type MockDB struct {
 	ctrl     *gomock.Controller
 	recorder *MockDBMockRecorder
 }
 
-// MockDBMockRecorder is the mock recorder for MockDB
+// MockDBMockRecorder is the mock recorder for MockDB.
 type MockDBMockRecorder struct {
 	mock *MockDB
 }
 
-// NewMockDB creates a new mock instance
+// NewMockDB creates a new mock instance.
 func NewMockDB(ctrl *gomock.Controller) *MockDB {
 	mock := &MockDB{ctrl: ctrl}
 	mock.recorder = &MockDBMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDB) EXPECT() *MockDBMockRecorder {
 	return m.recorder
 }
 
-// Get mocks base method
+// Get mocks base method.
 func (m *MockDB) Get(key string) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", key)
@@ -42,7 +42,7 @@ func (m *MockDB) Get(key string) (int, error) {
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get
+// Get indicates an expected call of Get.
 func (mr *MockDBMockRecorder) Get(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockDB)(nil).Get), key)

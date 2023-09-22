@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"i-go/17x/ient/ent/predicate"
 	"i-go/17x/ient/ent/user"
@@ -122,7 +123,7 @@ func (uu *UserUpdate) ExecX(ctx context.Context) {
 func (uu *UserUpdate) check() error {
 	if v, ok := uu.mutation.Age(); ok {
 		if err := user.AgeValidator(v); err != nil {
-			return &ValidationError{Name: "age", err: fmt.Errorf("ent: validator failed for field \"age\": %w", err)}
+			return &ValidationError{Name: "age", err: fmt.Errorf(`ent: validator failed for field "User.age": %w`, err)}
 		}
 	}
 	return nil
@@ -289,7 +290,7 @@ func (uuo *UserUpdateOne) ExecX(ctx context.Context) {
 func (uuo *UserUpdateOne) check() error {
 	if v, ok := uuo.mutation.Age(); ok {
 		if err := user.AgeValidator(v); err != nil {
-			return &ValidationError{Name: "age", err: fmt.Errorf("ent: validator failed for field \"age\": %w", err)}
+			return &ValidationError{Name: "age", err: fmt.Errorf(`ent: validator failed for field "User.age": %w`, err)}
 		}
 	}
 	return nil
@@ -308,7 +309,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	id, ok := uuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing User.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "User.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := uuo.fields; len(fields) > 0 {
