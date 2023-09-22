@@ -12,7 +12,7 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/coredns/corefile-migration v1.0.19
 	github.com/elastic/go-elasticsearch/v7 v7.17.1
-	github.com/emicklei/go-restful v2.9.5+incompatible
+	github.com/emicklei/go-restful v2.16.0+incompatible
 	github.com/fsnotify/fsnotify v1.5.4
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-contrib/pprof v1.3.0
