@@ -1,4 +1,4 @@
-package main
+package aes
 
 import (
 	"bytes"
@@ -6,7 +6,6 @@ import (
 	"crypto/cipher"
 	"encoding/base64"
 	"errors"
-	"fmt"
 )
 
 var (
@@ -14,6 +13,10 @@ var (
 	key = []byte("keykeykeykeykeyk")
 	iv  = []byte("1234567890123456")
 )
+
+/*
+AES 中的 CBC 模式，也是默认模式
+*/
 
 // 加密过程：
 //  1、处理数据，对数据进行填充，采用PKCS7（当密钥长度不够时，缺几位补几个几）的方式。
@@ -100,17 +103,4 @@ func DecryptByAes(data string) ([]byte, error) {
 		return nil, err
 	}
 	return AesDecrypt(dataByte)
-}
-
-func main() {
-	var origin = []byte("123456")
-	// 加密
-	encrypt, _ := EncryptByAes(origin)
-	// 解密
-	decrypt, _ := DecryptByAes(encrypt)
-	// 打印
-	fmt.Printf("加密前: %s\n", origin)
-	fmt.Printf("加密后: %s\n", encrypt)
-	fmt.Printf("解密后：%s\n", decrypt)
-
 }

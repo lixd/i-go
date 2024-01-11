@@ -3,7 +3,7 @@ set -e
 # this shell is used to install go1.19.1 on linux amd64
 # usage: source install-go.sh
 
-version="1.19.1"
+version="1.21.5"
 
 function downloadGo() {
   echo "1.download go"
