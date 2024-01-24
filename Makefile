@@ -52,3 +52,17 @@ test:
 
 coverage-ui:test
 	go tool cover -html=dist/coverage.out -o dist/coverage.html
+
+
+
+
+.PHONY: ent-install
+ent-install:
+    ifeq (, $(shell which golangci-lint))
+		echo "ent not found, installing...";
+		go install entgo.io/ent/cmd/ent@v0.12.3
+    endif
+
+.PHONY: ent ent-instal
+ent:  ## generate ent
+	ent generate ./ient/ent/schema

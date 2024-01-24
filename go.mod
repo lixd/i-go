@@ -5,7 +5,7 @@ go 1.20
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
 require (
-	entgo.io/ent v0.10.1
+	entgo.io/ent v0.12.5
 	github.com/Shopify/sarama v1.34.1
 	github.com/axiomhq/hyperloglog v0.0.0-20220105174342-98591331716a
 	github.com/bits-and-blooms/bloom/v3 v3.2.0
@@ -39,7 +39,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/ikeikeikeike/go-sitemap-generator/v2 v2.0.2
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
-	github.com/mattn/go-sqlite3 v1.14.13
+	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/mfonda/simhash v0.0.0-20151007195837-79f94a1100d6
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
@@ -62,10 +62,10 @@ require (
 	github.com/sony/gobreaker v0.5.0
 	github.com/sony/sonyflake v1.0.0
 	github.com/spaolacci/murmur3 v1.1.0
-	github.com/spf13/cobra v1.6.0
+	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.12.0
 	github.com/streadway/amqp v1.0.0
-	github.com/stretchr/testify v1.7.4
+	github.com/stretchr/testify v1.8.2
 	github.com/swaggo/gin-swagger v1.5.0
 	github.com/swaggo/swag v1.8.3
 	github.com/testcontainers/testcontainers-go v0.13.0
@@ -98,7 +98,7 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.3.7-0.20220303204946-787354f533c3 // indirect
+	ariga.io/atlas v0.14.1-0.20230918065911-83ad451a4935 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/Microsoft/go-winio v0.6.0 // indirect
@@ -169,9 +169,9 @@ require (
 	github.com/hashicorp/go-syslog v1.0.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/hashicorp/hcl/v2 v2.10.0 // indirect
+	github.com/hashicorp/hcl/v2 v2.13.0 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
-	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
 	github.com/jcmturner/dnsutils/v2 v2.0.0 // indirect
 	github.com/jcmturner/gofork v1.0.0 // indirect
@@ -244,7 +244,7 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	github.com/zclconf/go-cty v1.8.0 // indirect
-	go.opencensus.io v0.23.0 // indirect
+	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
 	golang.org/x/mod v0.11.0 // indirect
