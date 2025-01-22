@@ -13,7 +13,7 @@ echo ". ~/.nvm/nvm.sh" >> /etc/profile
 source /etc/profile
 #查看 nodejs 版本
 nvm list-remote
-#安装 v16.10.0
-nvm install v16.10.0
+#安装 v16.13.0
+nvm install v16.13.0
 
 #可以安装多个版本，使用 nvm ls 查看，使用 nvm use <版本号> 切换

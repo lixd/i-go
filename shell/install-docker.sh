@@ -15,11 +15,7 @@ yum install -y docker-ce
 mkdir -p /etc/docker
 echo '{
   "registry-mirrors": [
-    "https://reg-mirror.qiniu.com",
-    "https://hub-mirror.c.163.com",
-    "https://mirror.baidubce.com",
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://ekxinbbh.mirror.aliyuncs.com"
+    "https://docker.lixd.xyz"
   ]
 }' > /etc/docker/daemon.json
 #启动并加入开机启动

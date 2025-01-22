@@ -2,16 +2,16 @@
 #  一键安装 python 脚本
 # centos 可以使用 yum 一键安装，或者从源码编译安装
 # ubuntu 同样可以使用 apt 安装
+# source install-python.sh
 
 
-version="3.7.0"
+version="3.12.0"
 tarDir="Python-$version"
 fileName="Python-$version.tgz"
 
 function installBySourceCode() {
   # 安装编译依赖包
-#  yum install -y gcc patch libffi-devel python-devel  zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
-
+  yum install -y gcc patch libffi-devel python-devel zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
   # 下载 Python 包,官网下载很慢，使用国内镜像
   rm -rf $fileName
 #  https://registry.npmmirror.com/binary.html?path=python/
